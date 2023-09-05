@@ -1,4 +1,3 @@
 package com.seallook.android.ui.mypage
 
-class MypageViewModel {
-}
+class MypageViewModel

@@ -1,4 +1,3 @@
 package com.seallook.android.ui.diary.list
 
-class CounselingDiaryListViewModel {
-}
+class CounselingDiaryListViewModel

@@ -1,4 +1,3 @@
 package com.seallook.android.ui.mypage.setting
 
-class SettingViewModel {
-}
+class SettingViewModel

@@ -1,4 +1,3 @@
 package com.seallook.android.ui.reserved.client.detail
 
-class ReservedClientDetailViewModel {
-}
+class ReservedClientDetailViewModel
