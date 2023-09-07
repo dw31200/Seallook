@@ -1,11 +1,12 @@
 [versions]
 android-application-plugin = "7.4.2"
 android-library-plugin = "7.4.2"
-androidx-core-ktx = "1.9.0"
-google-material = "1.8.0"
-kotlin-plugin = "1.8.0"
+androidx-core-ktx = "1.10.1"
+google-material = "1.9.0"
+kotlin-plugin = "1.8.10"
 hilt-plugin = "2.44"
-androidx-navigation-safeargs-plugin = "2.6.0"
+androidx-navigation-safeargs-plugin = "2.7.2"
+google-services = "4.3.15"
 
 core-ktx = "1.10.1"
 appcompat = "1.6.1"
@@ -39,6 +40,8 @@ paging-runtime-ktx = "3.2.0"
 datastore-preferences = "1.0.0"
 navigation-fragment-ktx = "2.6.0"
 navigation-ui-ktx = "2.6.0"
+firebase-bom = "32.2.3"
+play-services-auth = "20.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -51,6 +54,7 @@ material-1_8_0 = { module = "com.google.android.material:material", version.ref 
 test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "test-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 androidx-fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity-ktx" }
 androidx-lifecycle-common = { group = "androidx.lifecycle", name = "lifecycle-common", version.ref = "lifecycle-common" }
@@ -73,8 +77,12 @@ androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", vers
 androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging-runtime" }
 androidx-paging-runtime-ktx = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "paging-runtime-ktx" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore-preferences" }
-androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation-fragment-ktx"}
-androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-ui-ktx"}
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-ui-ktx" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx" }
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "play-services-auth"}
 
 
 [plugins]
@@ -83,3 +91,4 @@ android-library = { id = "com.android.library", version.ref = "android-library-p
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-plugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-plugin" }
 androidx-navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "androidx-navigation-safeargs-plugin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services"}

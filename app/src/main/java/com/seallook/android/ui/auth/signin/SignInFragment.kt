@@ -1,12 +1,9 @@
 package com.seallook.android.ui.auth.signin
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.seallook.android.BR
 import com.seallook.android.databinding.FragmentSignInBinding
+import com.seallook.android.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 /* TODO
@@ -20,20 +17,11 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 
 @AndroidEntryPoint
-class SignInFragment : Fragment() {
-    private var _binding: FragmentSignInBinding? = null
-    private val binding
-        get() = _binding!!
-    private val viewModel: SignInViewModel by viewModels()
+class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
+    FragmentSignInBinding::inflate,
+) {
+    override val viewModel: SignInViewModel by viewModels()
+    override fun viewModelVariableId(): Int = BR.vm
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        _binding = FragmentSignInBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    override fun onViewCreatedAfterBinding() = Unit
 }
