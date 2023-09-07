@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.seallook.android.databinding.FragmentSignInBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 /* TODO
     0.InitView: id,password EditText, 각 로그인 방식 버튼, 회원가입 버튼, 비밀번호 리겟 버튼 보여주기
@@ -16,10 +18,13 @@ import com.seallook.android.databinding.FragmentSignInBinding
     5.NavigateToReset: 비밀번호 리셋 클릭시 ResetPassword로 이동
     6.NavigateToSighUp: 회원가입 클릭시 SelectSignUpType으로 이동
  */
+
+@AndroidEntryPoint
 class SignInFragment : Fragment() {
     private var _binding: FragmentSignInBinding? = null
     private val binding
         get() = _binding!!
+    private val viewModel: SignInViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
