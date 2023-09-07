@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "231457367826",
+    "project_id": "seallook-3e59d",
+    "storage_bucket": "seallook-3e59d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231457367826:android:85cd748fec9cee4d5135cb",
+        "android_client_info": {
+          "package_name": "com.seallook.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231457367826-c1ohql3cr5g87o0usstj32dvt87jhips.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.seallook.android",
+            "certificate_hash": "2bfb8ce04d81caf00bb2fa9e885250864e5f18b4"
+          }
+        },
+        {
+          "client_id": "231457367826-35d02pdufh3nf59326f4tmvf4g3toa2m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7luzjXpvXdhhC6aA8Rm6ur_jIz3J6zJU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231457367826-35d02pdufh3nf59326f4tmvf4g3toa2m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
