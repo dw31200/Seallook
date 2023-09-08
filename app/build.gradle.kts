@@ -13,7 +13,7 @@ android {
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.seallook.android"
+        applicationId = "com.seallook.androidx"
         minSdk = 24
         targetSdk = 33
         versionCode = 1

@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "231457367826",
-    "project_id": "seallook-3e59d",
-    "storage_bucket": "seallook-3e59d.appspot.com"
+    "project_number": "131258226069",
+    "project_id": "seallook-9d51d",
+    "storage_bucket": "seallook-9d51d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:231457367826:android:85cd748fec9cee4d5135cb",
+        "mobilesdk_app_id": "1:131258226069:android:16d6558f949b392c76529c",
         "android_client_info": {
-          "package_name": "com.seallook.android"
+          "package_name": "com.seallook.androidx"
         }
       },
       "oauth_client": [
         {
-          "client_id": "231457367826-c1ohql3cr5g87o0usstj32dvt87jhips.apps.googleusercontent.com",
+          "client_id": "131258226069-3bb3b734j0oo728neavoqmv253ropj19.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.seallook.android",
+            "package_name": "com.seallook.androidx",
             "certificate_hash": "2bfb8ce04d81caf00bb2fa9e885250864e5f18b4"
           }
         },
         {
-          "client_id": "231457367826-1q2s2b8fnf7o12q103vc4nkq4dcnf9tu.apps.googleusercontent.com",
+          "client_id": "131258226069-ifp8m6aob9h2c9uqptc9vqgrvgm7ka1b.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC7luzjXpvXdhhC6aA8Rm6ur_jIz3J6zJU"
+          "current_key": "AIzaSyCGxilzJ1CI9KOTSR4boBiA5bNLwhE7f6M"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "231457367826-1q2s2b8fnf7o12q103vc4nkq4dcnf9tu.apps.googleusercontent.com",
+              "client_id": "131258226069-basd4mnc54sueninjiko9ukthd9epeff.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
