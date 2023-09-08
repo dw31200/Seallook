@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.seallook.android"
+    namespace = "com.seallook.androidx"
     compileSdk = 33
 
     defaultConfig {
