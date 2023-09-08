@@ -7,7 +7,10 @@ import dagger.hilt.components.SingletonComponent
 
 @InstallIn(SingletonComponent::class)
 @Module
-abstract class SignInApiServiceModule {
+abstract class ApiServiceModule {
     @Binds
     abstract fun bindSignInApiService(signInApiServiceImpl: SignInApiServiceImpl): SignInApiService
+
+    @Binds
+    abstract fun bindSignUpApiService(signUpApiServiceImpl: SignUpApiServiceImpl): SignUpApiService
 }

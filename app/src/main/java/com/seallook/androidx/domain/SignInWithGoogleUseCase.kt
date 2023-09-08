@@ -5,7 +5,7 @@ import dagger.Reusable
 import javax.inject.Inject
 
 @Reusable
-class SignInWithGoogle @Inject constructor(
+class SignInWithGoogleUseCase @Inject constructor(
     private val signInRepository: SignInRepository,
 ) {
     suspend operator fun invoke(token: String) = signInRepository.signInWithGoogle(token)

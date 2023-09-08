@@ -6,9 +6,9 @@ import com.google.firebase.firestore.ServerTimestamp
 import java.util.Date
 
 @IgnoreExtraProperties
-data class Profile(
+data class ProfileResponse(
     @get: Exclude
-    val id: Int,
+    val key: String,
     val email: String,
     val name: String,
     val gender: Int,
