@@ -8,5 +8,5 @@ import javax.inject.Inject
 class SignInWithGoogle @Inject constructor(
     private val signInRepository: SignInRepository,
 ) {
-    suspend fun invoke(token: String) = signInRepository.signInWithGoogle(token)
+    suspend operator fun invoke(token: String) = signInRepository.signInWithGoogle(token)
 }

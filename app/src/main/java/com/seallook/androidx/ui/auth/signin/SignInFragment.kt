@@ -46,17 +46,19 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             .setGoogleIdTokenRequestOptions(
                 BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                     .setSupported(true)
-                    .setServerClientId(getString(R.string.google_oauth_client_id))
+                    .setServerClientId(getString(R.string.google_web_client_id))
                     .setFilterByAuthorizedAccounts(false)
                     .build(),
             )
             .setAutoSelectEnabled(false)
             .build()
     }
+
     private val googleSignInIntentResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             if (it.resultCode != Activity.RESULT_OK) {
-                cancelSignIn().also { Timber.d("cancel") }
+                Timber.d("${it.resultCode}")
+                cancelSignIn()
                 return@registerForActivityResult
             }
             val credential = oneTapClient.getSignInCredentialFromIntent(it.data)
@@ -65,7 +67,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             if (idToken != null) {
                 lifecycleScope.launch {
                     val result = viewModel.signInWithGoogle(idToken)
-                    Timber.d("idToken not null")
                     if (result != null) {
                         failSignIn(result)
                     }
@@ -114,7 +115,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         } else {
             if (isProgressDialogShown()) return
         }
-
         val binding = LayoutInflater.from(requireContext()).let {
             DialogProgressBinding.inflate(it)
         }
@@ -132,6 +132,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         progressDialog?.dismiss()
         progressDialog = null
     }
+
     private fun failSignIn(e: Throwable) {
         dismissProgressDialog()
 
@@ -143,6 +144,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             Toast.LENGTH_SHORT,
         ).show()
     }
+
     private fun isSigningIn() = isProgressDialogShown()
     private fun isProgressDialogShown() = progressDialog != null
 }

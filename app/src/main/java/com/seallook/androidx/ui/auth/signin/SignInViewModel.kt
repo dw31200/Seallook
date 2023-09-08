@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val signInWithGoogle: SignInWithGoogle,
+    private val signInWithGoogleUseCase: SignInWithGoogle,
 ) : BaseViewModel() {
-    suspend fun signInWithGoogle(token: String) = signInWithGoogle.invoke(token)
+    suspend fun signInWithGoogle(token: String) = signInWithGoogleUseCase(token)
 }
