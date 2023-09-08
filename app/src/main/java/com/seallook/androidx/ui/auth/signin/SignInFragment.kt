@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 
 /* TODO
     0.InitView: id,password EditText, 각 로그인 방식 버튼, 회원가입 버튼, 비밀번호 리겟 버튼 보여주기
@@ -55,7 +56,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     private val googleSignInIntentResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             if (it.resultCode != Activity.RESULT_OK) {
-                cancelSignIn()
+                cancelSignIn().also { Timber.d("cancel") }
                 return@registerForActivityResult
             }
             val credential = oneTapClient.getSignInCredentialFromIntent(it.data)
@@ -64,6 +65,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             if (idToken != null) {
                 lifecycleScope.launch {
                     val result = viewModel.signInWithGoogle(idToken)
+                    Timber.d("idToken not null")
                     if (result != null) {
                         failSignIn(result)
                     }
@@ -92,7 +94,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             val result = oneTapClient.beginSignIn(signInRequest).await()
             googleSignInIntentResultLauncher.launch(
                 IntentSenderRequest.Builder(result.pendingIntent.intentSender).build(),
-            )
+            ).also { Timber.d("launch sign") }
         } catch (e: Exception) {
             failSignIn(e)
         }
@@ -144,4 +146,3 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     private fun isSigningIn() = isProgressDialogShown()
     private fun isProgressDialogShown() = progressDialog != null
 }
-
