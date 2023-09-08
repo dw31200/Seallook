@@ -23,7 +23,7 @@ import kotlinx.coroutines.tasks.await
 import timber.log.Timber
 
 abstract class SignInBaseFragment<T : ViewDataBinding>(
-    private val inflate: (
+    inflate: (
         LayoutInflater,
         ViewGroup?,
         Boolean,
