@@ -2,7 +2,9 @@ package com.seallook.androidx.ui.auth.signin
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
+import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentSignInBinding
 import com.seallook.androidx.ui.base.auth.SignInBaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +33,9 @@ class SignInFragment : SignInBaseFragment<FragmentSignInBinding>(
                 lifecycleScope.launch {
                     signInWithGoogle()
                 }
+            }
+            emailSignUpButton.setOnClickListener {
+                findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
             }
         }
     }
