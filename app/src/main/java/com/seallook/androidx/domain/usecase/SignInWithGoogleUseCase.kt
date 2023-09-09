@@ -1,4 +1,4 @@
-package com.seallook.androidx.domain
+package com.seallook.androidx.domain.usecase
 
 import com.seallook.androidx.data.repository.SignInRepository
 import dagger.Reusable

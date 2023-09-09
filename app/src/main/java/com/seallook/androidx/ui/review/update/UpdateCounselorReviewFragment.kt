@@ -6,4 +6,4 @@ package com.seallook.androidx.ui.review.update
     3.UploadReview: 완료 클릭시 리뷰 내용 업로드
     4.Navigation: 완료 > 이전화면, 뒤로가기 > 이전화면
  */
-class UpdateCounselerReviewFragment
+class UpdateCounselorReviewFragment

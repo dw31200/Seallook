@@ -1,4 +1,4 @@
-package com.seallook.androidx.ui.mypage.office.counseler.detail
+package com.seallook.androidx.ui.mypage.office.counselor.detail
 
 /* TODO
     1.GetCounselerItem: 리스트에서 선택한 상담사 정보 가져오기
@@ -6,4 +6,4 @@ package com.seallook.androidx.ui.mypage.office.counseler.detail
     3.UploadApprove: 기관 상담사로 승인하기/제거하기 클릭시 업로드
     4.Navigation: 기관 소속에서 제거하기/뒤로가기 > List
  */
-class OfficeCounselerDetailFragment
+class OfficeCounselorDetailFragment

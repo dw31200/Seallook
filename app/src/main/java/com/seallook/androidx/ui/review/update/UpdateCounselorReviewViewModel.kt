@@ -1,3 +1,3 @@
 package com.seallook.androidx.ui.review.update
 
-class UpdateCounselerReviewViewModel
+class UpdateCounselorReviewViewModel

@@ -1,56 +1,44 @@
 package com.seallook.androidx.data.model
 
-import com.google.firebase.firestore.DocumentSnapshot
 import com.seallook.androidx.data.remote.model.ProfileResponse
-import org.json.JSONObject
+import com.seallook.androidx.share.GenderOption
+import com.seallook.androidx.share.TypeOption
 import java.util.Date
 
 data class Profile(
     val key: String,
     val email: String,
+    val nickname: String,
     val name: String,
-    val gender: Int,
+    val gender: GenderOption,
     val birth: Date,
+    val type: TypeOption,
     val timestamp: Date,
 ) {
     fun toResponse(): ProfileResponse {
         return ProfileResponse(
             key = key,
             email = email,
+            nickname = nickname,
             name = name,
             gender = gender,
             birth = birth,
+            type = type,
             timestamp = timestamp,
         )
     }
-    fun toJson() = JSONObject().apply {
-        put("id", key)
-        put("email", email)
-        put("name", name)
-        put("gender", gender)
-        put("birth", birth.time)
-        put("timestamp", timestamp.time)
-    }
-    companion object {
-        operator fun invoke(snapshot: DocumentSnapshot): Profile {
-            return Profile(
-                key = snapshot.id,
-                email = snapshot.getString("email")!!,
-                name = snapshot.getString("name")!!,
-                gender = snapshot.getLong("gender")!!.toInt(),
-                birth = snapshot.getDate("birth")!!,
-                timestamp = snapshot.getDate("timestamp")!!,
-            )
-        }
 
-        operator fun invoke(json: JSONObject): Profile {
+    companion object {
+        operator fun invoke(profileResponse: ProfileResponse): Profile {
             return Profile(
-                key = json.getString("id"),
-                email = json.getString("email"),
-                name = json.getString("name"),
-                gender = json.getInt("gender"),
-                birth = json.getLong("birth").let { Date(it) },
-                timestamp = json.getLong("timestamp").let { Date(it) },
+                key = profileResponse.key,
+                email = profileResponse.email,
+                nickname = profileResponse.nickname,
+                name = profileResponse.name,
+                gender = profileResponse.gender,
+                birth = profileResponse.birth,
+                type = profileResponse.type,
+                timestamp = profileResponse.timestamp,
             )
         }
     }
