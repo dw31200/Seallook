@@ -8,7 +8,9 @@ import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentSignInBinding
 import com.seallook.androidx.ui.base.auth.SignInBaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /* TODO
     0.InitView: id,password EditText, 각 로그인 방식 버튼, 회원가입 버튼, 비밀번호 리겟 버튼 보여주기
@@ -37,6 +39,31 @@ class SignInFragment : SignInBaseFragment<FragmentSignInBinding>(
             emailSignUpButton.setOnClickListener {
                 findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
             }
+        }
+        lifecycleScope.launch {
+            viewModel.profile.collectLatest {
+                if (!isResumed) return@collectLatest
+                Timber.d("$it")
+                if (it != null) {
+                    if (it.exists()) {
+                        findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
+                        dismissProgressDialog()
+                    } else {
+                        findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+                        dismissProgressDialog()
+                    }
+                }
+            }
+//            if (viewModel.profile.value != null) {
+//                Timber.d("${viewModel.profile.value}")
+//                if (viewModel.profile.value?.exists() == true) {
+//                    findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
+//                    dismissProgressDialog()
+//                } else {
+//                    findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+//                    dismissProgressDialog()
+//                }
+//            }
         }
     }
 }

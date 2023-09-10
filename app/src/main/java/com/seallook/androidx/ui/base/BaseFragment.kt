@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.seallook.androidx.databinding.DialogProgressBinding
 
 abstract class BaseFragment<T : ViewDataBinding, VM : BaseViewModel>(
     private val inflate: (
@@ -21,6 +24,7 @@ abstract class BaseFragment<T : ViewDataBinding, VM : BaseViewModel>(
 
     protected abstract fun viewModelVariableId(): Int
 
+    protected var progressDialog: AlertDialog? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,4 +52,30 @@ abstract class BaseFragment<T : ViewDataBinding, VM : BaseViewModel>(
         super.onDestroyView()
         _binding = null
     }
+
+    protected fun showProgressDialog(message: String, enforce: Boolean = false) {
+        if (enforce) {
+            dismissProgressDialog()
+        } else {
+            if (isProgressDialogShown()) return
+        }
+        val binding = LayoutInflater.from(requireContext()).let {
+            DialogProgressBinding.inflate(it)
+        }
+
+        binding.messageTextView.text = message
+
+        progressDialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(binding.root)
+            .setCancelable(false)
+            .create()
+        progressDialog!!.show()
+    }
+
+    protected fun dismissProgressDialog() {
+        progressDialog?.dismiss()
+        progressDialog = null
+    }
+
+    protected fun isProgressDialogShown() = progressDialog != null
 }

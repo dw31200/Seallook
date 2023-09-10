@@ -34,7 +34,6 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
     abstract override val viewModel: SignInViewModel
     override fun viewModelVariableId(): Int = BR.vm
 
-    private var progressDialog: AlertDialog? = null
     private val oneTapClient by lazy { Identity.getSignInClient(requireContext()) }
     private val signInRequest by lazy {
         BeginSignInRequest.builder()
@@ -93,30 +92,6 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
         dismissProgressDialog()
     }
 
-    private fun showProgressDialog(message: String, enforce: Boolean = false) {
-        if (enforce) {
-            dismissProgressDialog()
-        } else {
-            if (isProgressDialogShown()) return
-        }
-        val binding = LayoutInflater.from(requireContext()).let {
-            DialogProgressBinding.inflate(it)
-        }
-
-        binding.messageTextView.text = message
-
-        progressDialog = MaterialAlertDialogBuilder(requireContext())
-            .setView(binding.root)
-            .setCancelable(false)
-            .create()
-        progressDialog!!.show()
-    }
-
-    private fun dismissProgressDialog() {
-        progressDialog?.dismiss()
-        progressDialog = null
-    }
-
     private fun failSignIn(e: Throwable) {
         dismissProgressDialog()
 
@@ -130,5 +105,4 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
     }
 
     private fun isSigningIn() = isProgressDialogShown()
-    private fun isProgressDialogShown() = progressDialog != null
 }

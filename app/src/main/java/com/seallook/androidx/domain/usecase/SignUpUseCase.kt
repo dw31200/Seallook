@@ -9,7 +9,7 @@ import javax.inject.Inject
 class SignUpUseCase @Inject constructor(
     private val signUpRepository: SignUpRepository,
 ) {
-    suspend operator fun invoke(profile: ProfileEntity, password: String? = null) {
-        signUpRepository.signUp(profile.toProfileModel(), password)
+    suspend operator fun invoke(profile: ProfileEntity, password: String? = null): Exception? {
+        return signUpRepository.signUp(profile.toProfile(), password)
     }
 }

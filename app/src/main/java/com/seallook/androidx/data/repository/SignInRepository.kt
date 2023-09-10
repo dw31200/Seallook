@@ -1,10 +1,15 @@
 package com.seallook.androidx.data.repository
 
 import com.seallook.androidx.data.model.Profile
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 interface SignInRepository {
-    fun getProfile(): Flow<Profile?>
+    fun getProfile(): StateFlow<Profile?>
+
+    suspend fun cacheProfile(profile: Profile)
+
+    suspend fun signOut()
+
     suspend fun signInWithGoogle(
         token: String,
     ): Exception?

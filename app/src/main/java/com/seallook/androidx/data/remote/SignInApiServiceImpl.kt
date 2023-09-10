@@ -6,12 +6,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.snapshots
 import com.seallook.androidx.data.remote.model.ProfileResponse
 import com.seallook.androidx.share.Constants
-import com.seallook.androidx.share.Gender
-import com.seallook.androidx.share.GenderOption
-import com.seallook.androidx.share.TypeOption
-import com.seallook.androidx.share.UserType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -21,12 +18,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.util.Date
 import javax.inject.Inject
 
 class SignInApiServiceImpl @Inject constructor(
     private val auth: FirebaseAuth,
     private val db: FirebaseFirestore,
+    @RemoteCoroutine private val externalScope: CoroutineScope,
 ) : SignInApiService {
     private val _authStateFlow by lazy {
         callbackFlow {
@@ -37,9 +36,10 @@ class SignInApiServiceImpl @Inject constructor(
             awaitClose {
                 auth.removeAuthStateListener(listener)
             }
-        }
+        }.shareIn(externalScope, SharingStarted.WhileSubscribed(), replay = 1)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val _profile by lazy {
         _authStateFlow.flatMapLatest { user ->
             val uid = user?.uid
@@ -49,24 +49,27 @@ class SignInApiServiceImpl @Inject constructor(
             } else {
                 db.collection(Constants.USERS).document(uid).snapshots().map {
                     if (it.exists()) {
+                        Timber.d("$it")
                         return@map ProfileResponse(it)
                     } else {
                         return@map ProfileResponse(
                             "",
                             user.email ?: "",
-                            "",
                             user.displayName ?: "",
-                            GenderOption(Gender.FEMALE),
+                            0,
                             Date(),
-                            TypeOption(UserType.CLIENT),
                             Date(),
                         )
                     }
                 }
             }
-        }
+        }.shareIn(externalScope, SharingStarted.WhileSubscribed(), replay = 1)
     }
+
     override fun getProfile() = _profile
+    override suspend fun signOut() {
+        auth.signOut()
+    }
 
     override suspend fun signInWithGoogle(token: String): Exception? {
         return withContext(Dispatchers.IO) {

@@ -12,13 +12,21 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class RemoteModule {
+object RemoteModule {
+    @Singleton
     @Provides
     fun provideAuth(): FirebaseAuth = Firebase.auth
 
+    @Singleton
     @Provides
     fun provideFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
+
+    @Singleton
+    @RemoteCoroutine
+    @Provides
+    fun provideCoroutineScope(): CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 }
