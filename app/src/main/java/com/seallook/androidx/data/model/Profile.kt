@@ -12,6 +12,7 @@ data class Profile(
     val birth: Date,
     val timestamp: Date,
 ) {
+    fun exists() = key.isNotBlank()
     fun toResponse(): ProfileResponse {
         return ProfileResponse(
             key = key,

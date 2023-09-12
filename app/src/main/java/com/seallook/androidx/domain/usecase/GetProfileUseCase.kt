@@ -1,6 +1,7 @@
 package com.seallook.androidx.domain.usecase
 
 import com.seallook.androidx.data.DataCoroutine
+import com.seallook.androidx.data.model.Profile
 import com.seallook.androidx.data.repository.SignInRepository
 import com.seallook.androidx.domain.model.ProfileEntity
 import dagger.Reusable

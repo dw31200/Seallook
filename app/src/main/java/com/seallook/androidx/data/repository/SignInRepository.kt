@@ -8,7 +8,7 @@ interface SignInRepository {
 
     suspend fun cacheProfile(profile: Profile)
 
-    suspend fun signOut()
+    fun signOut()
 
     suspend fun signInWithGoogle(
         token: String,

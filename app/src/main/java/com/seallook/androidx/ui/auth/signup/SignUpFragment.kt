@@ -19,14 +19,10 @@ import com.seallook.androidx.BuildConfig
 import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentSignUpBinding
 import com.seallook.androidx.domain.model.ProfileEntity
-import com.seallook.androidx.share.Gender
-import com.seallook.androidx.share.GenderOption
-import com.seallook.androidx.share.TypeOption
-import com.seallook.androidx.share.UserType
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
@@ -67,6 +63,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     override fun onViewCreatedAfterBinding() {
         with(binding) {
             if (isSignedIn()) {
+                Timber.d("${isSignedIn()}")
                 val profile = viewModel.profile.value!!
 
                 requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
@@ -91,6 +88,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                 passwordTextField.isVisible = false
                 passwordConfirmationTextField.isVisible = false
             } else {
+                Timber.d("${isSignedIn()}")
                 passwordConfirmationTextField.editText!!.setOnEditorActionListener { _, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
                         if (validateFields()) signUp()
@@ -136,12 +134,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             signUpButton.setOnClickListener { signUp() }
         }
 
-        lifecycleScope.launch {
-            viewModel.profile.collectLatest {
-                if (it?.exists() == true) {
-                    findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
-                    dismissProgressDialog()
-                }
+        viewModel.profile.observe(viewLifecycleOwner) {
+            if (it?.exists() == true) {
+                findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
+                dismissProgressDialog()
             }
         }
     }

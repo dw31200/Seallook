@@ -33,7 +33,7 @@ class SignInRepositoryImpl @Inject constructor(
         signInSharedPreferences.cacheProfile(profile.toProfileModel())
     }
 
-    override suspend fun signOut() {
+    override fun signOut() {
         signInApiService.signOut()
     }
 

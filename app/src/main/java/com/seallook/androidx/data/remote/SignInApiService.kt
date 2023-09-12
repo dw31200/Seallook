@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.SharedFlow
 
 interface SignInApiService {
     fun getProfile(): SharedFlow<ProfileResponse?>
-    suspend fun signOut()
+    fun signOut()
     suspend fun signInWithGoogle(
         token: String,
     ): Exception?

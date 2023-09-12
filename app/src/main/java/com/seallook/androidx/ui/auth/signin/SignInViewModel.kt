@@ -1,5 +1,6 @@
 package com.seallook.androidx.ui.auth.signin
 
+import androidx.lifecycle.asLiveData
 import com.seallook.androidx.domain.usecase.GetProfileUseCase
 import com.seallook.androidx.domain.usecase.SignInWithGoogleUseCase
 import com.seallook.androidx.domain.usecase.SignOutUseCase
@@ -13,11 +14,11 @@ class SignInViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase,
     private val signOutUseCase: SignOutUseCase,
 ) : BaseViewModel() {
-    val profile = getProfileUseCase()
+    val profile = getProfileUseCase().asLiveData()
 
     suspend fun signInWithGoogle(token: String) = signInWithGoogleUseCase(token)
 
-    suspend fun signOut() {
-        signOutUseCase
+    fun signOut() {
+        signOutUseCase()
     }
 }

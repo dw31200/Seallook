@@ -8,7 +8,6 @@ import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentSignInBinding
 import com.seallook.androidx.ui.base.auth.SignInBaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -40,30 +39,16 @@ class SignInFragment : SignInBaseFragment<FragmentSignInBinding>(
                 findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
             }
         }
-        lifecycleScope.launch {
-            viewModel.profile.collectLatest {
-                if (!isResumed) return@collectLatest
-                Timber.d("$it")
-                if (it != null) {
-                    if (it.exists()) {
-                        findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
-                        dismissProgressDialog()
-                    } else {
-                        findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
-                        dismissProgressDialog()
-                    }
+        viewModel.profile.observe(viewLifecycleOwner) {
+            if (it != null) {
+                if (it.exists()) {
+                    findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
+                    dismissProgressDialog()
+                } else {
+                    findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+                    dismissProgressDialog()
                 }
             }
-//            if (viewModel.profile.value != null) {
-//                Timber.d("${viewModel.profile.value}")
-//                if (viewModel.profile.value?.exists() == true) {
-//                    findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
-//                    dismissProgressDialog()
-//                } else {
-//                    findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
-//                    dismissProgressDialog()
-//                }
-//            }
         }
     }
 }

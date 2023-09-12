@@ -67,7 +67,7 @@ class SignInApiServiceImpl @Inject constructor(
     }
 
     override fun getProfile() = _profile
-    override suspend fun signOut() {
+    override fun signOut() {
         auth.signOut()
     }
 

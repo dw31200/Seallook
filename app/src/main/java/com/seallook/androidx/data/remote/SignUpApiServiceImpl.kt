@@ -13,8 +13,8 @@ class SignUpApiServiceImpl @Inject constructor(
     private val auth: FirebaseAuth,
     private val db: FirebaseFirestore,
 ) : SignUpApiService {
-    override suspend fun signUp(profile: ProfileResponse, password: String?): Exception? {
-        return withContext(Dispatchers.IO) {
+    override suspend fun signUp(profile: ProfileResponse, password: String?): Exception? =
+        withContext(Dispatchers.IO) {
             val uid = if (auth.currentUser == null) {
                 try {
                     val result =
@@ -36,5 +36,4 @@ class SignUpApiServiceImpl @Inject constructor(
 
             return@withContext null
         }
-    }
 }
