@@ -22,6 +22,9 @@ import timber.log.Timber
 import java.util.Date
 import javax.inject.Inject
 
+/* TODO
+    로그인 기능 세분화
+ */
 class SignInApiServiceImpl @Inject constructor(
     private val auth: FirebaseAuth,
     private val db: FirebaseFirestore,
