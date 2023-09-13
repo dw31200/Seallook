@@ -13,3 +13,7 @@ annotation class WebClientId
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class CurrentUser
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class BeginSignInResultQualifier
