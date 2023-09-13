@@ -9,3 +9,7 @@ annotation class RemoteCoroutine
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class WebClientId
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CurrentUser
