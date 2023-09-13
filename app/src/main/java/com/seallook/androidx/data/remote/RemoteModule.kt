@@ -28,13 +28,6 @@ object RemoteModule {
     @Provides
     fun provideAuth(): FirebaseAuth = Firebase.auth
 
-    @CurrentUser
-    @Provides
-    fun provideCurrentUser(
-        auth: FirebaseAuth,
-    ): Boolean =
-        auth.currentUser != null
-
     @Singleton
     @Provides
     fun provideFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
