@@ -2,6 +2,7 @@ package com.seallook.androidx.ui.auth.signin
 
 import androidx.lifecycle.asLiveData
 import com.google.android.gms.auth.api.identity.BeginSignInResult
+import com.google.firebase.auth.AuthResult
 import com.seallook.androidx.domain.usecase.GetBeginSignInResultUseCase
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.GetProfileUseCase
@@ -26,7 +27,7 @@ class SignInViewModel @Inject constructor(
         return getBeginSignInResultUseCase()
     }
 
-    suspend fun signInWithGoogle(token: String) = signInWithGoogleUseCase(token)
+    suspend fun signInWithGoogle(token: String): AuthResult? = signInWithGoogleUseCase(token)
 
     fun signOut() {
         signOutUseCase()

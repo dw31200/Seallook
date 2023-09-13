@@ -1,5 +1,6 @@
 package com.seallook.androidx.data.repository
 
+import com.google.firebase.auth.AuthResult
 import com.seallook.androidx.data.model.Profile
 import kotlinx.coroutines.flow.StateFlow
 
@@ -12,5 +13,5 @@ interface SignInRepository {
 
     suspend fun signInWithGoogle(
         token: String,
-    ): Exception?
+    ): AuthResult?
 }

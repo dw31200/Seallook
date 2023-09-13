@@ -1,5 +1,6 @@
 package com.seallook.androidx.data.remote.auth
 
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
@@ -75,15 +76,8 @@ class SignInApiServiceImpl @Inject constructor(
         auth.signOut()
     }
 
-    override suspend fun signInWithGoogle(token: String): Exception? {
-        return withContext(Dispatchers.IO) {
-            try {
-                val firebaseCredential = GoogleAuthProvider.getCredential(token, null)
-                auth.signInWithCredential(firebaseCredential).await()
-                return@withContext null
-            } catch (e: Exception) {
-                return@withContext e
-            }
-        }
+    override suspend fun signInWithGoogle(token: String): AuthResult? {
+        val firebaseCredential = GoogleAuthProvider.getCredential(token, null)
+        return auth.signInWithCredential(firebaseCredential).await()
     }
 }
