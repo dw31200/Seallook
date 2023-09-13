@@ -6,7 +6,7 @@ import dagger.Reusable
 import javax.inject.Inject
 
 @Reusable
-class getBeginSignInResultUseCase @Inject constructor(
+class GetBeginSignInResultUseCase @Inject constructor(
     private val beginSignInResultRepository: BeginSignInResultRepository,
 ) {
     suspend operator fun invoke(): BeginSignInResult {
