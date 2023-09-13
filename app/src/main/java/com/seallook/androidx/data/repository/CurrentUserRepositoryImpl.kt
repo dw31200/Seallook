@@ -1,6 +1,6 @@
 package com.seallook.androidx.data.repository
 
-import com.seallook.androidx.data.remote.CurrentUserApiService
+import com.seallook.androidx.data.remote.auth.CurrentUserApiService
 import javax.inject.Inject
 
 class CurrentUserRepositoryImpl @Inject constructor(

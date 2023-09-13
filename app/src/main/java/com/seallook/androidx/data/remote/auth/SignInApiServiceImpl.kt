@@ -1,9 +1,10 @@
-package com.seallook.androidx.data.remote
+package com.seallook.androidx.data.remote.auth
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.snapshots
+import com.seallook.androidx.data.remote.RemoteCoroutine
 import com.seallook.androidx.data.remote.model.ProfileResponse
 import com.seallook.androidx.share.Constants
 import kotlinx.coroutines.CoroutineScope

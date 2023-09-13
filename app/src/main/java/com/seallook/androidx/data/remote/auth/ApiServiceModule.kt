@@ -1,4 +1,4 @@
-package com.seallook.androidx.data.remote
+package com.seallook.androidx.data.remote.auth
 
 import dagger.Binds
 import dagger.Module
@@ -13,4 +13,10 @@ abstract class ApiServiceModule {
 
     @Binds
     abstract fun bindSignUpApiService(signUpApiServiceImpl: SignUpApiServiceImpl): SignUpApiService
+
+    @Binds
+    abstract fun bindBeginSignInResultApiService(beginSignInResultApiServiceImpl: BeginSignInResultApiServiceImpl): BeginSignInResultApiService
+
+    @Binds
+    abstract fun bindCurrentUserApiService(currentUserApiServiceImpl: CurrentUserApiServiceImpl): CurrentUserApiService
 }

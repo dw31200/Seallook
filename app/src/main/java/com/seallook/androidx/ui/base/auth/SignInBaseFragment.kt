@@ -6,15 +6,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
-import com.seallook.androidx.databinding.DialogProgressBinding
 import com.seallook.androidx.ui.auth.signin.SignInViewModel
 import com.seallook.androidx.ui.base.BaseFragment
 import kotlinx.coroutines.coroutineScope
@@ -47,7 +44,6 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
             .setAutoSelectEnabled(false)
             .build()
     }
-
     private val googleSignInIntentResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             if (it.resultCode != Activity.RESULT_OK) {
@@ -69,13 +65,14 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
                 cancelSignIn()
             }
         }
+
     protected suspend fun signInWithGoogle() = coroutineScope {
         if (isSigningIn()) return@coroutineScope
 
         startSignIn()
 
         try {
-            val result = oneTapClient.beginSignIn(signInRequest).await()
+            val result = viewModel.getBeginSignInResult()
             googleSignInIntentResultLauncher.launch(
                 IntentSenderRequest.Builder(result.pendingIntent.intentSender).build(),
             ).also { Timber.d("launch sign") }

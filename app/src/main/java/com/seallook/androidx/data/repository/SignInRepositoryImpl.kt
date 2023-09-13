@@ -3,7 +3,7 @@ package com.seallook.androidx.data.repository
 import com.seallook.androidx.data.DataCoroutine
 import com.seallook.androidx.data.local.SignInSharedPreferences
 import com.seallook.androidx.data.model.Profile
-import com.seallook.androidx.data.remote.SignInApiService
+import com.seallook.androidx.data.remote.auth.SignInApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
