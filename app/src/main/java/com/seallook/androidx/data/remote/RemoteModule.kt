@@ -69,12 +69,4 @@ object RemoteModule {
             )
             .setAutoSelectEnabled(true)
             .build()
-
-    @BeginSignInResultQualifier
-    @Provides
-    suspend fun provideBeginSignInResult(
-        oneTapClient: SignInClient,
-        signInRequest: BeginSignInRequest,
-    ): BeginSignInResult =
-        oneTapClient.beginSignIn(signInRequest).await()
 }
