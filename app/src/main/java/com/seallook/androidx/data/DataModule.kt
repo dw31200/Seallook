@@ -1,5 +1,9 @@
 package com.seallook.androidx.data
 
+import com.seallook.androidx.data.repository.BeginSignInResultRepository
+import com.seallook.androidx.data.repository.BeginSignInResultRepositoryImpl
+import com.seallook.androidx.data.repository.CurrentUserRepository
+import com.seallook.androidx.data.repository.CurrentUserRepositoryImpl
 import com.seallook.androidx.data.repository.SignInRepository
 import com.seallook.androidx.data.repository.SignInRepositoryImpl
 import com.seallook.androidx.data.repository.SignUpRepository
@@ -24,6 +28,14 @@ abstract class DataModule {
     @Singleton
     @Binds
     abstract fun bindSignUpRepository(signUpRepositoryImpl: SignUpRepositoryImpl): SignUpRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindBeginSignInResultRepository(beginSignInResultRepositoryImpl: BeginSignInResultRepositoryImpl): BeginSignInResultRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindCurrentUserRepository(currentUserRepositoryImpl: CurrentUserRepositoryImpl): CurrentUserRepository
 
     companion object {
         @Singleton

@@ -1,7 +1,7 @@
 package com.seallook.androidx.data.repository
 
 import com.seallook.androidx.data.model.Profile
-import com.seallook.androidx.data.remote.SignUpApiService
+import com.seallook.androidx.data.remote.auth.SignUpApiService
 import javax.inject.Inject
 
 class SignUpRepositoryImpl @Inject constructor(

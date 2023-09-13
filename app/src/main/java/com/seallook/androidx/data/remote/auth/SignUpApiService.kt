@@ -1,4 +1,4 @@
-package com.seallook.androidx.data.remote
+package com.seallook.androidx.data.remote.auth
 
 import com.seallook.androidx.data.remote.model.ProfileResponse
 
