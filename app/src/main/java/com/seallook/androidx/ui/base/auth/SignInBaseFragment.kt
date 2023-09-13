@@ -64,7 +64,7 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
                     }
                 }
             } else {
-                cancelSignIn()
+                failSignIn()
             }
         }
 
@@ -72,15 +72,10 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
         if (isSigningIn()) return@coroutineScope
 
         startSignIn()
-
-        try {
-            val result = viewModel.getBeginSignInResult()
-            googleSignInIntentResultLauncher.launch(
-                IntentSenderRequest.Builder(result.pendingIntent.intentSender).build(),
-            ).also { Timber.d("launch sign") }
-        } catch (e: Exception) {
-            failSignIn(e)
-        }
+        val result = viewModel.getBeginSignInResult()
+        googleSignInIntentResultLauncher.launch(
+            IntentSenderRequest.Builder(result.pendingIntent.intentSender).build(),
+        )
     }
 
     private fun startSignIn() {
@@ -99,10 +94,8 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
         dismissProgressDialog()
     }
 
-    private fun failSignIn(e: Throwable) {
+    private fun failSignIn() {
         dismissProgressDialog()
-
-        e.printStackTrace()
 
         Toast.makeText(
             requireContext(),
