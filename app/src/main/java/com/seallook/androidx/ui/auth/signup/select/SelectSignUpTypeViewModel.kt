@@ -1,3 +1,6 @@
 package com.seallook.androidx.ui.auth.signup.select
 
-class SelectSignUpTypeViewModel
+import com.seallook.androidx.ui.base.BaseViewModel
+import javax.inject.Inject
+
+class SelectSignUpTypeViewModel @Inject constructor() : BaseViewModel()
