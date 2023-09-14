@@ -9,14 +9,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.auth.AuthResult
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
 import com.seallook.androidx.ui.auth.signin.SignInViewModel
 import com.seallook.androidx.ui.base.BaseFragment
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -33,18 +31,6 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
     override fun viewModelVariableId(): Int = BR.vm
 
     private val oneTapClient by lazy { Identity.getSignInClient(requireContext()) }
-    private val signInRequest by lazy {
-        BeginSignInRequest.builder()
-            .setGoogleIdTokenRequestOptions(
-                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                    .setSupported(true)
-                    .setServerClientId(getString(R.string.google_web_client_id))
-                    .setFilterByAuthorizedAccounts(false)
-                    .build(),
-            )
-            .setAutoSelectEnabled(false)
-            .build()
-    }
     private val googleSignInIntentResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             if (it.resultCode != Activity.RESULT_OK) {
@@ -68,8 +54,8 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
             }
         }
 
-    protected suspend fun signInWithGoogle() = coroutineScope {
-        if (isSigningIn()) return@coroutineScope
+    protected suspend fun signInWithGoogle() {
+        if (isSigningIn()) return
 
         startSignIn()
         val result = viewModel.getBeginSignInResult()
