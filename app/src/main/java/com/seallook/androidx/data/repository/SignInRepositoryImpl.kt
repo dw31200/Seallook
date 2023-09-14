@@ -34,10 +34,6 @@ class SignInRepositoryImpl @Inject constructor(
         signInSharedPreferences.cacheProfile(profile.toProfileModel())
     }
 
-    override fun signOut() {
-        signInApiService.signOut()
-    }
-
     override suspend fun signInWithGoogle(token: String): AuthResult? {
         return signInApiService.signInWithGoogle(token)
     }

@@ -19,4 +19,7 @@ abstract class ApiServiceModule {
 
     @Binds
     abstract fun bindCurrentUserApiService(currentUserApiServiceImpl: CurrentUserApiServiceImpl): CurrentUserApiService
+
+    @Binds
+    abstract fun bindSignOutApiService(signOutApiServiceImpl: SignOutApiServiceImpl): SignOutApiService
 }

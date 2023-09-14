@@ -6,6 +6,8 @@ import com.seallook.androidx.data.repository.CurrentUserRepository
 import com.seallook.androidx.data.repository.CurrentUserRepositoryImpl
 import com.seallook.androidx.data.repository.SignInRepository
 import com.seallook.androidx.data.repository.SignInRepositoryImpl
+import com.seallook.androidx.data.repository.SignOutRepository
+import com.seallook.androidx.data.repository.SignOutRepositoryImpl
 import com.seallook.androidx.data.repository.SignUpRepository
 import com.seallook.androidx.data.repository.SignUpRepositoryImpl
 import dagger.Binds
@@ -36,6 +38,9 @@ abstract class DataModule {
     @Singleton
     @Binds
     abstract fun bindCurrentUserRepository(currentUserRepositoryImpl: CurrentUserRepositoryImpl): CurrentUserRepository
+
+    @Binds
+    abstract fun bindSignOutRepository(signOutRepositoryImpl: SignOutRepositoryImpl): SignOutRepository
 
     companion object {
         @Singleton

@@ -72,9 +72,6 @@ class SignInApiServiceImpl @Inject constructor(
     }
 
     override fun getProfile() = _profile
-    override fun signOut() {
-        auth.signOut()
-    }
 
     override suspend fun signInWithGoogle(token: String): AuthResult? {
         val firebaseCredential = GoogleAuthProvider.getCredential(token, null)
