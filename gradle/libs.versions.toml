@@ -5,7 +5,7 @@ androidx-core-ktx = "1.10.1"
 google-material = "1.9.0"
 kotlin-plugin = "1.8.10"
 hilt-plugin = "2.44"
-androidx-navigation-safeargs-plugin = "2.7.2"
+androidx-navigation-safeargs-plugin = "2.6.0"
 google-services = "4.3.15"
 
 core-ktx = "1.10.1"
@@ -92,4 +92,5 @@ android-library = { id = "com.android.library", version.ref = "android-library-p
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-plugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-plugin" }
 androidx-navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "androidx-navigation-safeargs-plugin" }
+androidx-navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidx-navigation-safeargs-plugin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services"}

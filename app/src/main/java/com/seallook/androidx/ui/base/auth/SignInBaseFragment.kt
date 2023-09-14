@@ -72,7 +72,7 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
         if (result.user?.displayName == "d song") {
             findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
         } else {
-            findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+            findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
         }
     }
 

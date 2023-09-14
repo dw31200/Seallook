@@ -12,12 +12,8 @@ import com.seallook.androidx.data.repository.SignUpRepository
 import com.seallook.androidx.data.repository.SignUpRepositoryImpl
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -41,11 +37,4 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindSignOutRepository(signOutRepositoryImpl: SignOutRepositoryImpl): SignOutRepository
-
-    companion object {
-        @Singleton
-        @DataCoroutine
-        @Provides
-        fun provideCoroutineScope(): CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
-    }
 }
