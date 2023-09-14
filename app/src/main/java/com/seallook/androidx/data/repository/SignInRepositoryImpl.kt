@@ -1,5 +1,6 @@
 package com.seallook.androidx.data.repository
 
+import com.google.firebase.auth.AuthResult
 import com.seallook.androidx.data.DataCoroutine
 import com.seallook.androidx.data.local.SignInSharedPreferences
 import com.seallook.androidx.data.model.Profile
@@ -37,7 +38,7 @@ class SignInRepositoryImpl @Inject constructor(
         signInApiService.signOut()
     }
 
-    override suspend fun signInWithGoogle(token: String): Exception? {
+    override suspend fun signInWithGoogle(token: String): AuthResult? {
         return signInApiService.signInWithGoogle(token)
     }
 }

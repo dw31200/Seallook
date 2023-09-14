@@ -39,16 +39,5 @@ class SignInFragment : SignInBaseFragment<FragmentSignInBinding>(
                 findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
             }
         }
-        viewModel.profile.observe(viewLifecycleOwner) {
-            if (it != null) {
-                if (it.exists()) {
-                    findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
-                    dismissProgressDialog()
-                } else {
-                    findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
-                    dismissProgressDialog()
-                }
-            }
-        }
     }
 }

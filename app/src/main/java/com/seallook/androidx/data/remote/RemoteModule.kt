@@ -55,9 +55,9 @@ object RemoteModule {
                 BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                     .setSupported(true)
                     .setServerClientId(webClientId)
-                    .setFilterByAuthorizedAccounts(true)
+                    .setFilterByAuthorizedAccounts(false)
                     .build(),
             )
-            .setAutoSelectEnabled(true)
+            .setAutoSelectEnabled(false)
             .build()
 }
