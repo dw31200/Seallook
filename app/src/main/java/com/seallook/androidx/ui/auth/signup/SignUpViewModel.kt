@@ -6,7 +6,6 @@ import com.seallook.androidx.domain.usecase.GetProfileUseCase
 import com.seallook.androidx.domain.usecase.SignUpUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
