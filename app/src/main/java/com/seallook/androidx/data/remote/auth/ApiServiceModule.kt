@@ -22,4 +22,7 @@ abstract class ApiServiceModule {
 
     @Binds
     abstract fun bindSignOutApiService(signOutApiServiceImpl: SignOutApiServiceImpl): SignOutApiService
+
+    @Binds
+    abstract fun bindSetProfileApiService(setProfileApiServiceImpl: SetProfileApiServiceImpl): SetProfileApiService
 }

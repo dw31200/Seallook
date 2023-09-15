@@ -214,6 +214,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                 Date(),
             )
             val result = viewModel.signUp(profile, password)
+            viewModel.setProfile(profile)
             if (result != null) {
                 when (result) {
                     is FirebaseAuthWeakPasswordException -> {
