@@ -22,9 +22,7 @@ import com.seallook.androidx.databinding.FragmentSignUpBinding
 import com.seallook.androidx.domain.model.ProfileEntity
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
@@ -196,6 +194,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
         if (isSignedIn()) {
             showProgressDialog("프로필 생성 중... 잠시만 기다려 주세요.")
             findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
+            dismissProgressDialog()
         } else {
             showProgressDialog("회원가입 중... 잠시만 기다려 주세요.")
         }
