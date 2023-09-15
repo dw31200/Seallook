@@ -2,7 +2,6 @@ package com.seallook.androidx.ui.auth.signup
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.model.ProfileEntity
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase

@@ -10,11 +10,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.identity.Identity
-import com.google.firebase.auth.AuthResult
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
 import com.seallook.androidx.ui.auth.signin.SignInViewModel
 import com.seallook.androidx.ui.base.BaseFragment
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -45,7 +45,7 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
                 lifecycleScope.launch {
                     val result = viewModel.signInWithGoogle(idToken)
                     if (result != null) {
-                        navigation(result)
+                        navigation()
                         cancelSignIn()
                     }
                 }
@@ -68,11 +68,15 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
         showProgressDialog("로그인 중... 잠시만 기다려 주세요.")
     }
 
-    private fun navigation(result: AuthResult) {
-        if (result.user?.displayName == "d song") {
-            findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
-        } else {
-            findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
+    private fun navigation() {
+        lifecycleScope.launch {
+            viewModel.profile.collectLatest {
+                if (it != null) {
+                    findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
+                } else {
+                    findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
+                }
+            }
         }
     }
 
