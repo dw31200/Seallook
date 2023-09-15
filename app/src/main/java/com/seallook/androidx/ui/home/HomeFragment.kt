@@ -1,12 +1,10 @@
 package com.seallook.androidx.ui.home
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentHomeBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 /* TODO
     1.GetAuthType: 로그인한 계정의 타입 가져오기
@@ -18,7 +16,7 @@ import kotlinx.coroutines.launch
  */
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
-    FragmentHomeBinding::inflate
+    FragmentHomeBinding::inflate,
 ) {
     override val viewModel: HomeViewModel by viewModels()
     override fun viewModelVariableId(): Int = BR.vm
