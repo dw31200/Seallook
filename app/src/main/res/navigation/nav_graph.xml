@@ -36,6 +36,9 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectSignUpTypeFragment"

@@ -1,5 +1,6 @@
 package com.seallook.androidx.data.remote.auth
 
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.seallook.androidx.data.remote.model.ProfileResponse
 import kotlinx.coroutines.Dispatchers
