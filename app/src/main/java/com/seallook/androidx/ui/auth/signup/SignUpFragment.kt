@@ -63,7 +63,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     override fun onViewCreatedAfterBinding() {
         with(binding) {
             if (isSignedIn()) {
-                Timber.d("${isSignedIn()}")
                 val profile = viewModel.profile.value!!
 
                 requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
