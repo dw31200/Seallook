@@ -6,6 +6,7 @@ import com.google.firebase.auth.AuthResult
 import com.seallook.androidx.domain.usecase.GetBeginSignInResultUseCase
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.GetProfileUseCase
+import com.seallook.androidx.domain.usecase.SignInWithEmailAndPasswordUseCase
 import com.seallook.androidx.domain.usecase.SignInWithGoogleUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val signInWithGoogleUseCase: SignInWithGoogleUseCase,
+    private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPasswordUseCase,
     private val getProfileUseCase: GetProfileUseCase,
     private val getBeginSignInResultUseCase: GetBeginSignInResultUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
@@ -32,4 +34,6 @@ class SignInViewModel @Inject constructor(
     }
 
     suspend fun signInWithGoogle(token: String): AuthResult? = signInWithGoogleUseCase(token)
+
+    suspend fun signInWithEmailAndPassword(email: String, password: String): AuthResult? = signInWithEmailAndPasswordUseCase(email, password)
 }

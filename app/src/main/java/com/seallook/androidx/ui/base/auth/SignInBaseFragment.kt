@@ -30,8 +30,8 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
     abstract override val viewModel: SignInViewModel
     override fun viewModelVariableId(): Int = BR.vm
 
-    private val oneTapClient by lazy { Identity.getSignInClient(requireContext()) }
-    private val googleSignInIntentResultLauncher =
+    protected val oneTapClient by lazy { Identity.getSignInClient(requireContext()) }
+    protected val googleSignInIntentResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             if (it.resultCode != Activity.RESULT_OK) {
                 Timber.d("${it.resultCode}")
@@ -64,11 +64,11 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
         )
     }
 
-    private fun startSignIn() {
+    protected fun startSignIn() {
         showProgressDialog("로그인 중... 잠시만 기다려 주세요.")
     }
 
-    private fun navigation() {
+    protected fun navigation() {
         lifecycleScope.launch {
             viewModel.profile.collectLatest {
                 if (it != null) {
@@ -80,11 +80,11 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
         }
     }
 
-    private fun cancelSignIn() {
+    protected fun cancelSignIn() {
         dismissProgressDialog()
     }
 
-    private fun failSignIn() {
+    protected fun failSignIn() {
         dismissProgressDialog()
 
         Toast.makeText(
@@ -94,5 +94,5 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
         ).show()
     }
 
-    private fun isSigningIn() = isProgressDialogShown()
+    protected fun isSigningIn() = isProgressDialogShown()
 }

@@ -23,4 +23,8 @@ class SignInRepositoryImpl @Inject constructor(
     override suspend fun signInWithGoogle(token: String): AuthResult? {
         return signInApiService.signInWithGoogle(token)
     }
+
+    override suspend fun signInWithEmailAndPassword(email: String, password: String): AuthResult? {
+        return signInApiService.signInWithEmailAndPassword(email, password)
+    }
 }
