@@ -1,6 +1,5 @@
 package com.seallook.androidx.ui.splash
 
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -20,14 +19,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
 
     override fun viewModelVariableId(): Int = BR.vm
 
-    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-        }
-    }
     private val auth: FirebaseAuth = Firebase.auth
 
     override fun onViewCreatedAfterBinding() {
-        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
         if (auth.currentUser != null) {
             findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
         } else {
