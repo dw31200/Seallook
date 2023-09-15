@@ -5,7 +5,6 @@ import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.OnBackPressedCallback
-import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +13,8 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.seallook.androidx.BR
 import com.seallook.androidx.BuildConfig
 import com.seallook.androidx.R
@@ -22,7 +23,6 @@ import com.seallook.androidx.domain.model.ProfileEntity
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
@@ -63,32 +63,19 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     override fun onViewCreatedAfterBinding() {
         with(binding) {
             if (isSignedIn()) {
-                Timber.d("${isSignedIn()}")
-                val profile = viewModel.profile.value!!
-
                 requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
-                nameTextField.editText!!.setText(profile.name)
                 with(emailTextField) {
-                    if (profile.email.isNotBlank()) {
-                        editText!!.setText(profile.email)
-                        isEnabled = false
-                    } else {
-                        editText!!.imeOptions = EditorInfo.IME_ACTION_DONE
-                        editText!!.setOnEditorActionListener { _, actionId, _ ->
-                            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                                if (validateFields()) signUp()
-                            }
-
-                            return@setOnEditorActionListener false
+                    editText!!.imeOptions = EditorInfo.IME_ACTION_DONE
+                    editText!!.setOnEditorActionListener { _, actionId, _ ->
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            if (validateFields()) signUp()
                         }
+
+                        return@setOnEditorActionListener false
                     }
                 }
-
-                passwordTextField.isVisible = false
-                passwordConfirmationTextField.isVisible = false
             } else {
-                Timber.d("${isSignedIn()}")
                 passwordConfirmationTextField.editText!!.setOnEditorActionListener { _, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
                         if (validateFields()) signUp()
@@ -142,7 +129,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
         }
     }
 
-    private fun isSignedIn() = viewModel.profile.value != null
+    private fun isSignedIn(): Boolean {
+        return Firebase.auth.currentUser != null
+    }
 
     private fun validateFields(): Boolean = with(binding) {
         val validation =

@@ -9,7 +9,6 @@ import com.seallook.androidx.data.remote.RemoteCoroutine
 import com.seallook.androidx.data.remote.model.ProfileResponse
 import com.seallook.androidx.share.Constants
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +18,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.Date
 import javax.inject.Inject

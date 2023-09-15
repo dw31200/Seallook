@@ -1,4 +1,4 @@
-package com.seallook.androidx
+package com.seallook.androidx.ui
 
 import com.seallook.androidx.databinding.ActivityMainBinding
 import com.seallook.androidx.ui.base.BaseActivity
