@@ -1,5 +1,6 @@
 package com.seallook.androidx.data.repository
 
+import com.google.firebase.auth.AuthResult
 import com.seallook.androidx.data.model.Profile
 import com.seallook.androidx.data.remote.auth.SignUpApiService
 import javax.inject.Inject
