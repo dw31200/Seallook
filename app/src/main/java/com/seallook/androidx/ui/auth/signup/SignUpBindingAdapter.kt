@@ -4,6 +4,6 @@ import androidx.databinding.BindingAdapter
 import com.google.android.material.textfield.TextInputEditText
 
 @BindingAdapter("bind:setTextInProfileInfo")
-fun TextInputEditText.setTextInProfileInfo(profileInfo: String) {
-    setText(profileInfo)
+fun TextInputEditText.setTextInProfileInfo(profileInfo: String?) {
+    if (profileInfo == null) setText("") else setText(profileInfo)
 }
