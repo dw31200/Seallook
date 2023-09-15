@@ -14,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,11 +26,24 @@ class SignUpViewModel @Inject constructor(
     private val setProfileUseCase: SetProfileUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
-    val profile = getProfileUseCase()
+    val profileFromCurrentUser = getCurrentUserUseCase()
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(),
             null,
+        )
+    val profile = getProfileUseCase()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            ProfileEntity(
+                "",
+                "",
+                "",
+                0,
+                Date(),
+                Date(),
+            ),
         )
     val signUpType = savedStateHandle.getStateFlow("selectSignUpType", 0)
     val currentUser: StateFlow<FirebaseUser?> = getCurrentUserUseCase()

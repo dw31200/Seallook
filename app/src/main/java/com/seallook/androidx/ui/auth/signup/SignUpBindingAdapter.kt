@@ -5,4 +5,5 @@ import com.google.android.material.textfield.TextInputEditText
 
 @BindingAdapter("bind:setTextInProfileInfo")
 fun TextInputEditText.setTextInProfileInfo(profileInfo: String) {
+    setText(profileInfo)
 }
