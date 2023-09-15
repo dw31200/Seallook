@@ -14,6 +14,8 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.seallook.androidx.BR
 import com.seallook.androidx.BuildConfig
 import com.seallook.androidx.R
@@ -141,7 +143,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
         }
     }
 
-    private fun isSignedIn() = viewModel.profile.value != null
+    private fun isSignedIn(): Boolean {
+        return Firebase.auth.currentUser != null
+    }
 
     private fun validateFields(): Boolean = with(binding) {
         val validation =
