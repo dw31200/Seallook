@@ -12,7 +12,7 @@ class SetProfileApiServiceImpl @Inject constructor(
 ) : SetProfileApiService {
     override suspend fun setProfile(profile: ProfileResponse) {
         db.collection(Constants.USERS)
-            .document(auth.uid!!)
+            .document(auth.currentUser?.uid!!)
             .set(profile)
     }
 }

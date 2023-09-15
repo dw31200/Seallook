@@ -20,6 +20,12 @@ fun View.setEnable(enable: Boolean) {
 }
 
 @BindingAdapter("bind:setEnableProfileInfo")
-fun View.setEnable(profileInfo: String) {
-    isEnabled = if (profileInfo.isNotBlank()) false else true
+fun View.setEnable(profileInfo: String?) {
+    if (profileInfo == null) {
+        isEnabled = true
+    } else if (profileInfo.isNotBlank()) {
+        isEnabled = false
+    } else if (profileInfo.isBlank()) {
+        isEnabled = true
+    }
 }
