@@ -4,6 +4,8 @@ import com.seallook.androidx.data.repository.BeginSignInResultRepository
 import com.seallook.androidx.data.repository.BeginSignInResultRepositoryImpl
 import com.seallook.androidx.data.repository.CurrentUserRepository
 import com.seallook.androidx.data.repository.CurrentUserRepositoryImpl
+import com.seallook.androidx.data.repository.SetProfileRepository
+import com.seallook.androidx.data.repository.SetProfileRepositoryImpl
 import com.seallook.androidx.data.repository.SignInRepository
 import com.seallook.androidx.data.repository.SignInRepositoryImpl
 import com.seallook.androidx.data.repository.SignOutRepository
@@ -37,4 +39,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindSignOutRepository(signOutRepositoryImpl: SignOutRepositoryImpl): SignOutRepository
+
+    @Binds
+    abstract fun bindSetProfileRepository(setProfileRepositoryImpl: SetProfileRepositoryImpl): SetProfileRepository
 }

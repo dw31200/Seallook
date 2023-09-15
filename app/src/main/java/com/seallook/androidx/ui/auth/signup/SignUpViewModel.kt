@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.model.ProfileEntity
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.GetProfileUseCase
+import com.seallook.androidx.domain.usecase.SetProfileUseCase
 import com.seallook.androidx.domain.usecase.SignUpUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,7 @@ class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase,
     private val getProfileUseCase: GetProfileUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val setProfileUseCase: SetProfileUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
     val profile = getProfileUseCase().asLiveData()
@@ -33,5 +35,9 @@ class SignUpViewModel @Inject constructor(
 
     suspend fun signUp(profile: ProfileEntity, password: String? = null): Exception? {
         return signUpUseCase(profile, password)
+    }
+
+    suspend fun setProfile(profile: ProfileEntity) {
+        setProfileUseCase(profile.toProfile())
     }
 }

@@ -18,14 +18,6 @@ data class ProfileResponse(
     @ServerTimestamp
     val timestamp: Date,
 ) {
-    fun toJson() = JSONObject().apply {
-        put("id", key)
-        put("email", email)
-        put("name", name)
-        put("gender", gender)
-        put("birth", birth.time)
-        put("timestamp", timestamp.time)
-    }
     companion object {
         operator fun invoke(snapshot: DocumentSnapshot): ProfileResponse {
             return ProfileResponse(

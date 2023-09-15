@@ -1,9 +1,7 @@
 package com.seallook.androidx.data.remote.auth
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.seallook.androidx.data.remote.model.ProfileResponse
-import com.seallook.androidx.share.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -11,7 +9,6 @@ import javax.inject.Inject
 
 class SignUpApiServiceImpl @Inject constructor(
     private val auth: FirebaseAuth,
-    private val db: FirebaseFirestore,
 ) : SignUpApiService {
     override suspend fun signUp(profile: ProfileResponse, password: String?): Exception? =
         withContext(Dispatchers.IO) {
@@ -28,11 +25,6 @@ class SignUpApiServiceImpl @Inject constructor(
             }
 
             assert(uid != null)
-
-            db.collection(Constants.USERS)
-                .document(uid!!)
-                .set(profile)
-                .await()
 
             return@withContext null
         }
