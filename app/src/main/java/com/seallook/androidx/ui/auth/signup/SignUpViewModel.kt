@@ -26,12 +26,6 @@ class SignUpViewModel @Inject constructor(
     private val setProfileUseCase: SetProfileUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
-    val profileFromCurrentUser = getCurrentUserUseCase()
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(),
-            null,
-        )
     val profile = getProfileUseCase()
         .stateIn(
             viewModelScope,

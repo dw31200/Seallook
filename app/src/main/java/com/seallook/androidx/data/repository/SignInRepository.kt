@@ -12,4 +12,9 @@ interface SignInRepository {
     suspend fun signInWithGoogle(
         token: String,
     ): AuthResult?
+
+    suspend fun signInWithEmailAndPassword(
+        email: String,
+        password: String,
+    ): AuthResult?
 }
