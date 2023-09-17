@@ -72,7 +72,7 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
         lifecycleScope.launch {
             viewModel.profile.collectLatest {
                 if (it != null) {
-                    findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
+                    findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
                 } else {
                     findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
                 }
