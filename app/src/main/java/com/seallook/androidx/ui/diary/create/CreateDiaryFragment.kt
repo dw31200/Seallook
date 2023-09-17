@@ -7,4 +7,4 @@ package com.seallook.androidx.ui.diary.create
     4.NavigateToDetailDiary: 일지 생성하기 클릭시 해당 내담자의 상담일지 Detail 로 이동
     5.NavigateToDiaryList: 뒤로가기 클릭시 DiaryList로 이동
  */
-class CreateCounselingDiaryFragment
+class CreateDiaryFragment
