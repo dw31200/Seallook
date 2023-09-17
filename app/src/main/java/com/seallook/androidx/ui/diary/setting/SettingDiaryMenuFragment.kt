@@ -6,4 +6,4 @@ package com.seallook.androidx.ui.diary.setting
     3.ListView: 가져온 바텀 메뉴 왼쪽 리스트에 보여주기
     4.SetBottomMenuList: 완료 클릭시 체크되어 있는 바텀메뉴로 바텀 메뉴 설정하기. (+ 버튼 클릭 후 EditText에 적힌 메뉴도 포함)
  */
-class SettingCounselingDiaryMenuFragment
+class SettingDiaryMenuFragment

@@ -6,4 +6,4 @@ package com.seallook.androidx.ui.diary.detail
     3.UploadDiaryDetail: 저장하기 클릭시 상담일지 업로드
     4.NavigateToDiaryList: 취소하기 혹은 저장하기 클릭시 DiaryList로 이동
  */
-class CounselingDiaryDetailFragment
+class DiaryDetailFragment
