@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentCalendarBinding
 import com.seallook.androidx.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 /* TODO
     1.GetReserved: 로그인 계정의 예약 현황을 가져오기
@@ -13,6 +14,8 @@ import com.seallook.androidx.ui.base.BaseFragment
     5.NavigateToReservedDetail: 플로팅뷰에서 특정 일정을 클릭시 해당 일정의 ReservedDetail로 이동
     6.NavigateToSettingSchedule: 기본 화면에서 +버튼 클릭시 SettingSchedule로 이동
  */
+
+@AndroidEntryPoint
 class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel>(
     FragmentCalendarBinding::inflate,
 ) {
