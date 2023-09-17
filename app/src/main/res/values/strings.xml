@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Seallook</string>
     <string name="google_web_client_id">131258226069-ifp8m6aob9h2c9uqptc9vqgrvgm7ka1b.apps.googleusercontent.com</string>
+    <string name="home">Home</string>
+    <string name="calendar">Calendar</string>
+    <string name="chat">Chat</string>
+    <string name="mypage">Mypage</string>
+    <string name="diary">Diary</string>
+    <string name="diary_setting">Diary Setting</string>
 </resources>

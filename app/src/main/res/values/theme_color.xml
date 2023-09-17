@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="window_background">@color/white</color>
+    <color name="bottom_item_filled">@color/black</color>
+    <color name="bottom_item">@color/grey_100</color>
 </resources>
