@@ -9,8 +9,8 @@
         android:name="com.seallook.androidx.ui.auth.signin.SignInFragment"
         android:label="SignInFragment" >
         <action
-            android:id="@+id/action_signInFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_signInFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true"/>
@@ -18,10 +18,12 @@
             android:id="@+id/action_signInFragment_to_selectSignUpTypeFragment"
             app:destination="@id/selectSignUpTypeFragment" />
     </fragment>
+
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.seallook.androidx.ui.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:id="@+id/mainFragment"
+        android:name="com.seallook.androidx.ui.main.MainFragment"
+        android:label="MainFragment" />
+
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.seallook.androidx.ui.auth.signup.SignUpFragment"
@@ -31,8 +33,8 @@
             app:argType="integer"
             android:defaultValue="0" />
         <action
-            android:id="@+id/action_signUpFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_signUpFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="true"/>
@@ -40,6 +42,7 @@
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/selectSignUpTypeFragment"
         android:name="com.seallook.androidx.ui.auth.signup.select.SelectSignUpTypeFragment"
@@ -53,6 +56,7 @@
                 android:defaultValue="0" />
         </action>
     </fragment>
+
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.seallook.androidx.ui.splash.SplashFragment"
@@ -64,8 +68,8 @@
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true"/>
         <action
-            android:id="@+id/action_splashFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_splashFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true"/>
