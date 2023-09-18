@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.seallook.androidx.ui.reserve.counseling.policy.ReserveCounselingPolicyViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/reserved_policy_text"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="서약서 등등"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/reserve_policy_checkbox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/next_button"
+            android:layout_marginStart="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="동의합니다." />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/next_button"
+            style="@style/Widget.Material3.Button.UnelevatedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            android:enabled="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="다음" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
