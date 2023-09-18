@@ -3,4 +3,5 @@
     <color name="window_background">@color/white</color>
     <color name="bottom_item_filled">@color/black</color>
     <color name="bottom_item">@color/grey_100</color>
+    <color name="date_selector">@color/grey</color>
 </resources>

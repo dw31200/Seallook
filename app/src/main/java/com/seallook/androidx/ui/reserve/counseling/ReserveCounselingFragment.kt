@@ -1,5 +1,11 @@
 package com.seallook.androidx.ui.reserve.counseling
 
+import androidx.fragment.app.viewModels
+import com.seallook.androidx.BR
+import com.seallook.androidx.databinding.FragmentReserveCounselingBinding
+import com.seallook.androidx.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
+
 /* TODO
     1.GetCounselingInfo: 예약하려는 상담 정보 가져오기
     2.ListView: 가져온 상담 정보 보여주기
@@ -7,4 +13,15 @@ package com.seallook.androidx.ui.reserve.counseling
     4.SaveReserveSchedule: 신청하기 클릭시 예약하려는 일정 저장하기
     5.DeleteReserveSchedule: 뒤로가기 혹은 앱 종료시 예약하려는 일정 삭제하기
  */
-class ReserveCounselingFragment
+@AndroidEntryPoint
+class ReserveCounselingFragment : BaseFragment<FragmentReserveCounselingBinding, ReserveCounselingViewModel>(
+    FragmentReserveCounselingBinding::inflate,
+) {
+    override val viewModel: ReserveCounselingViewModel by viewModels()
+
+    override fun viewModelVariableId(): Int = BR.vm
+
+    override fun onViewCreatedAfterBinding() {
+        Unit
+    }
+}
