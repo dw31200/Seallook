@@ -1,5 +1,11 @@
 package com.seallook.androidx.ui.mypage.counselor.info.update.basic
 
+import androidx.fragment.app.viewModels
+import com.seallook.androidx.BR
+import com.seallook.androidx.databinding.FragmentUpdateCounselorBasicInfoBinding
+import com.seallook.androidx.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
+
 /* TODO
     1.GetMainImage: 대표사진 등록 클릭시 갤러리 혹은 카메라 앱에서 가져오기
     2.GetOfficeItem: 소속기관 등록 클릭시 네비 갔다와서 해당 기관 아이템 가져오기
@@ -8,4 +14,15 @@ package com.seallook.androidx.ui.mypage.counselor.info.update.basic
     5.Navigation: 대표사진 등록 > 갤러리/카메라, 소속기관 등록 > UpdateOffice, 증빙서류 등록 > 디바이스 저장소,
         다음 > 상담 유형 선택
  */
-class UpdateCounselorBasicInfoFragment
+@AndroidEntryPoint
+class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBasicInfoBinding, UpdateCounselorBasicInfoViewModel>(
+    FragmentUpdateCounselorBasicInfoBinding::inflate,
+) {
+    override val viewModel: UpdateCounselorBasicInfoViewModel by viewModels()
+
+    override fun viewModelVariableId(): Int = BR.vm
+
+    override fun onViewCreatedAfterBinding() {
+        Unit
+    }
+}
