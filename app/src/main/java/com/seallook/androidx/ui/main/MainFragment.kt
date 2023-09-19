@@ -68,18 +68,18 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainGraphViewModel>(
                 onBottomMenuItemClick(R.id.diarySettingContainerFragment, navController)
             }
 
-            topAppBar.setNavigationOnClickListener {
+            backButton.setOnClickListener {
                 viewModel.submitToolbarBackEvent()
             }
 
             viewModel.showToolbarBackButton
                 .flowWithLifecycle(viewLifecycleOwner.lifecycle)
-                .onEach { topAppBar.isVisible = it }
+                .onEach { backButton.isVisible = it }
                 .launchIn(viewLifecycleOwner.lifecycleScope)
 
             viewModel.toolbarTitle
                 .flowWithLifecycle(viewLifecycleOwner.lifecycle)
-                .onEach { topAppBar.title = getString(it) }
+                .onEach { toolbarTitle.text = getString(it) }
                 .launchIn(viewLifecycleOwner.lifecycleScope)
 
             addDestinationChangeListener(navController)
