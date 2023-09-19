@@ -63,7 +63,7 @@ class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding, MainGra
                     destination: NavDestination,
                     arguments: Bundle?,
                 ) {
-                    if (binding == null) {
+                    if (_binding == null) {
                         controller.removeOnDestinationChangedListener(this)
                         return
                     }
