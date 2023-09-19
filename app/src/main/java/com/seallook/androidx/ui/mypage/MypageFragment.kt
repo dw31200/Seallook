@@ -1,7 +1,9 @@
 package com.seallook.androidx.ui.mypage
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
+import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentMypageBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +26,8 @@ class MypageFragment : BaseFragment<FragmentMypageBinding, MypageViewModel>(
     override fun viewModelVariableId(): Int = BR.vm
 
     override fun onViewCreatedAfterBinding() {
-        Unit
+        binding.settingButton.setOnClickListener {
+            findNavController().navigate(R.id.action_mypageFragment_to_settingFragment)
+        }
     }
 }
