@@ -17,7 +17,8 @@ abstract class BaseFragment<T : ViewDataBinding, VM : BaseViewModel>(
         Boolean,
     ) -> T,
 ) : Fragment() {
-    private var _binding: T? = null
+    protected var _binding: T? = null
+        private set
     protected val binding
         get() = _binding!!
     protected abstract val viewModel: VM

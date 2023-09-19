@@ -63,7 +63,7 @@ class CalendarContainerFragment : BaseFragment<FragmentCalendarContainerBinding,
                     destination: NavDestination,
                     arguments: Bundle?,
                 ) {
-                    if (binding == null) {
+                    if (_binding == null) {
                         controller.removeOnDestinationChangedListener(this)
                         return
                     }

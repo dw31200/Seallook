@@ -134,7 +134,11 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainGraphViewModel>(
                     destination: NavDestination,
                     arguments: Bundle?,
                 ) {
-                    binding?.apply {
+                    if (_binding == null) {
+                        navController.removeOnDestinationChangedListener(this)
+                        return
+                    }
+                    binding.apply {
                         homeItem.setImageDrawable(iconHomeInactive)
                         calendarItem.setImageDrawable(iconCalendarInactive)
                         chatItem.setImageDrawable(iconChatInactive)
@@ -152,7 +156,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainGraphViewModel>(
                                 R.id.diarySettingContainerFragment -> diarySettingItem.setImageDrawable(iconDiarySettingActive)
                             }
                         }
-                    } ?: navController.removeOnDestinationChangedListener(this)
+                    }
                 }
             },
         )
