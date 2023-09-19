@@ -10,6 +10,9 @@
     <string name="calendar">Calendar</string>
     <string name="chat">Chat</string>
     <string name="mypage">Mypage</string>
+    <string name="update_counselor_basicinfo">UpdateCounselorBasicInfo</string>
+    <string name="update_counseling_type">UpdateCounselingType</string>
+    <string name="update_office">UpdateOffice</string>
     <string name="diary">Diary</string>
     <string name="diary_setting">Diary Setting</string>
 </resources>

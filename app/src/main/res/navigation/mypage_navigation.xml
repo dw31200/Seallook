@@ -7,5 +7,28 @@
     <fragment
         android:id="@+id/mypageFragment"
         android:name="com.seallook.androidx.ui.mypage.MypageFragment"
-        android:label="MypageFragment" />
+        android:label="MypageFragment" >
+        <action
+            android:id="@+id/action_mypageFragment_to_updateCounselorBasicInfoFragment"
+            app:destination="@id/updateCounselorBasicInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateCounselorBasicInfoFragment"
+        android:name="com.seallook.androidx.ui.mypage.counselor.info.update.basic.UpdateCounselorBasicInfoFragment"
+        android:label="UpdateCounselorBasicInfoFragment" >
+        <action
+            android:id="@+id/action_updateCounselorBasicInfoFragment_to_updateCounselingTypeFragment"
+            app:destination="@id/updateCounselingTypeFragment" />
+        <action
+            android:id="@+id/action_updateCounselorBasicInfoFragment_to_updateOfficeFragment"
+            app:destination="@id/updateOfficeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateCounselingTypeFragment"
+        android:name="com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.UpdateCounselingTypeFragment"
+        android:label="UpdateCounselingTypeFragment" />
+    <fragment
+        android:id="@+id/updateOfficeFragment"
+        android:name="com.seallook.androidx.ui.mypage.counselor.info.update.office.UpdateOfficeFragment"
+        android:label="UpdateOfficeFragment" />
 </navigation>
