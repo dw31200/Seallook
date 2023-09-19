@@ -26,10 +26,10 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>(
         binding.signOutButton.setOnClickListener {
             viewModel.signOut()
             findRootNavController().navigate(
-                R.id.splashFragment,
+                R.id.nav_graph,
                 null,
                 navOptions {
-                    popUpTo(R.id.splashFragment)
+                    popUpTo(R.id.nav_graph)
                 },
             )
         }
