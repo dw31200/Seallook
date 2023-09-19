@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_mypageFragment_to_updateCounselorBasicInfoFragment"
             app:destination="@id/updateCounselorBasicInfoFragment" />
+        <action
+            android:id="@+id/action_mypageFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateCounselorBasicInfoFragment"
@@ -31,4 +34,8 @@
         android:id="@+id/updateOfficeFragment"
         android:name="com.seallook.androidx.ui.mypage.counselor.info.update.office.UpdateOfficeFragment"
         android:label="UpdateOfficeFragment" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.seallook.androidx.ui.mypage.setting.SettingFragment"
+        android:label="SettingFragment" />
 </navigation>
