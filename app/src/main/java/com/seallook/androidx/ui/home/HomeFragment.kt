@@ -1,7 +1,9 @@
 package com.seallook.androidx.ui.home
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
+import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentHomeBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,5 +22,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 ) {
     override val viewModel: HomeViewModel by viewModels()
     override fun viewModelVariableId(): Int = BR.vm
-    override fun onViewCreatedAfterBinding() = Unit
+    override fun onViewCreatedAfterBinding() {
+        binding.counselorNameTextField.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchCounselorFragment)
+        }
+        binding.reserveCounselingButton.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchCounselorFragment)
+        }
+    }
 }
