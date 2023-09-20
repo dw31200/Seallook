@@ -1,5 +1,6 @@
 package com.seallook.androidx.data.model
 
+import com.google.firebase.firestore.DocumentSnapshot
 import com.seallook.androidx.data.local.model.ProfileModel
 import com.seallook.androidx.data.remote.model.ProfileResponse
 import java.util.Date
@@ -54,6 +55,17 @@ data class Profile(
                 gender = profileModel.gender,
                 birth = profileModel.birth,
                 timestamp = profileModel.timestamp,
+            )
+        }
+
+        operator fun invoke(snapshot: DocumentSnapshot): Profile {
+            return Profile(
+                key = snapshot.id,
+                email = snapshot.getString("email")!!,
+                name = snapshot.getString("name")!!,
+                gender = snapshot.getLong("gender")!!.toInt(),
+                birth = snapshot.getDate("birth")!!,
+                timestamp = snapshot.getDate("timestamp")!!,
             )
         }
     }

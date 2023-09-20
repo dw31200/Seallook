@@ -1,5 +1,6 @@
 package com.seallook.androidx.domain.model
 
+import com.google.firebase.firestore.DocumentSnapshot
 import com.seallook.androidx.data.model.Profile
 import java.util.Date
 
@@ -22,6 +23,7 @@ data class ProfileEntity(
             timestamp = timestamp,
         )
     }
+
     companion object {
         operator fun invoke(profile: Profile): ProfileEntity {
             return ProfileEntity(
@@ -31,6 +33,17 @@ data class ProfileEntity(
                 gender = profile.gender,
                 birth = profile.birth,
                 timestamp = profile.timestamp,
+            )
+        }
+
+        operator fun invoke(snapshot: DocumentSnapshot): ProfileEntity {
+            return ProfileEntity(
+                key = snapshot.id,
+                email = snapshot.getString("email")!!,
+                name = snapshot.getString("name")!!,
+                gender = snapshot.getLong("gender")!!.toInt(),
+                birth = snapshot.getDate("birth")!!,
+                timestamp = snapshot.getDate("timestamp")!!,
             )
         }
     }
