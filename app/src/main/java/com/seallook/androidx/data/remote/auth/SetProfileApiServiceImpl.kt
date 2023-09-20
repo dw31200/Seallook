@@ -11,8 +11,10 @@ class SetProfileApiServiceImpl @Inject constructor(
     private val db: FirebaseFirestore,
 ) : SetProfileApiService {
     override suspend fun setProfile(profile: ProfileResponse) {
-        db.collection(Constants.USERS)
-            .document(auth.currentUser?.uid!!)
-            .set(profile)
+        auth.currentUser?.uid?.let {
+            db.collection(Constants.USERS)
+                .document(it)
+                .set(profile)
+        }
     }
 }
