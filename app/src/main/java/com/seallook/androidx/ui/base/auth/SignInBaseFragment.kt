@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -71,10 +72,14 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
     protected fun navigation() {
         lifecycleScope.launch {
             viewModel.profile.collectLatest {
-                if (it != null) {
-                    findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
-                } else {
-                    findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
+                it?.let {
+                    it.addOnSuccessListener { document ->
+                        if (document != null) {
+                            findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+                        } else {
+                            findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
+                        }
+                    }
                 }
             }
         }
