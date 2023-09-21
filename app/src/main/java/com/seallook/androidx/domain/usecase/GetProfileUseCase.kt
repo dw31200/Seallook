@@ -11,9 +11,9 @@ import javax.inject.Inject
 class GetProfileUseCase @Inject constructor(
     private val getProfileRepository: GetProfileRepository,
 ) {
-    operator fun invoke(): Flow<ProfileEntity> {
+    operator fun invoke(): Flow<ProfileEntity?> {
         return getProfileRepository.getProfile().map {
-            ProfileEntity(it)
+            it?.let { ProfileEntity(it) }
         }
     }
 }

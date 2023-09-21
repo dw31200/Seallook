@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.model.ProfileEntity
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
+import com.seallook.androidx.domain.usecase.GetProfileSnapshotUseCase
 import com.seallook.androidx.domain.usecase.GetProfileUseCase
+import com.seallook.androidx.domain.usecase.GetTaskProfileUseCase
 import com.seallook.androidx.domain.usecase.SetProfileUseCase
 import com.seallook.androidx.domain.usecase.SignOutUseCase
 import com.seallook.androidx.domain.usecase.SignUpUseCase
@@ -14,7 +16,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,6 +24,8 @@ class SignUpViewModel @Inject constructor(
     private val signOutUseCase: SignOutUseCase,
     private val getProfileUseCase: GetProfileUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val getTaskProfileUseCase: GetTaskProfileUseCase,
+    private val getProfileSnapshotUseCase: GetProfileSnapshotUseCase,
     private val setProfileUseCase: SetProfileUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
@@ -30,14 +33,19 @@ class SignUpViewModel @Inject constructor(
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(),
-            ProfileEntity(
-                "",
-                "",
-                "",
-                0,
-                Date(),
-                Date(),
-            ),
+            null,
+        )
+    val taskProfile = getTaskProfileUseCase()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            null,
+        )
+    val profileSnapshot = getProfileSnapshotUseCase()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            null,
         )
     val signUpType = savedStateHandle.getStateFlow("selectSignUpType", 0)
     val currentUser: StateFlow<FirebaseUser?> = getCurrentUserUseCase()
