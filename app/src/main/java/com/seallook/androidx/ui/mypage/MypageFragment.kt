@@ -26,8 +26,13 @@ class MypageFragment : BaseFragment<FragmentMypageBinding, MypageViewModel>(
     override fun viewModelVariableId(): Int = BR.vm
 
     override fun onViewCreatedAfterBinding() {
-        binding.settingButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mypageFragment_to_settingFragment)
+        with(binding) {
+            settingButton.setOnClickListener {
+                findNavController().navigate(R.id.action_mypageFragment_to_settingFragment)
+            }
+            editCounselorInfo.setOnClickListener {
+                findNavController().navigate(R.id.action_mypageFragment_to_updateCounselorBasicInfoFragment)
+            }
         }
     }
 }
