@@ -15,6 +15,7 @@ import com.seallook.androidx.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -41,19 +42,29 @@ class SignUpViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(),
             null,
         )
-    val profileSnapshot = getProfileSnapshotUseCase()
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(),
-            null,
-        )
-    val signUpType = savedStateHandle.getStateFlow("selectSignUpType", 0)
     val currentUser: StateFlow<FirebaseUser?> = getCurrentUserUseCase()
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(),
             null,
         )
+    val profileSnapshot: StateFlow<ProfileEntity?> =
+        currentUser
+            .flatMapLatest { currentUser ->
+                getProfileSnapshotUseCase(currentUser)
+            }.stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(),
+                null,
+            )
+
+    //    val profileSnapshot = getProfileSnapshotUseCase(currentUser.value)
+//        .stateIn(
+//            viewModelScope,
+//            SharingStarted.WhileSubscribed(),
+//            null,
+//        )
+    val signUpType = savedStateHandle.getStateFlow("selectSignUpType", 0)
 
     suspend fun signUp(profile: ProfileEntity, password: String? = null): Exception? {
         return signUpUseCase(profile, password)

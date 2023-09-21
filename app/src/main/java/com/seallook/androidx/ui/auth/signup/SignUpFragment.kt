@@ -127,7 +127,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                 if (it != null) {
                     Timber.d("data is non null")
                     dismissProgressDialog()
-                    findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
+                    findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
                 } else {
                     Timber.d("data is null")
                 }
@@ -260,6 +260,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
 
                 dismissProgressDialog()
             } else {
+                viewModel.signOut()
+                findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
                 dismissProgressDialog()
             }
         }
