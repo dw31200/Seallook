@@ -132,18 +132,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                     Timber.d("data is null")
                 }
             }
-//            viewModel.taskProfile.collectLatest {
-//                it?.let {
-//                    it.addOnSuccessListener { document ->
-//                        if (document.data != null) {
-//                            Timber.d("data is non null")
-//                            findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
-//                        } else {
-//                            Timber.d("data is null")
-//                        }
-//                    }
-//                }
-//            }
         }
     }
 
