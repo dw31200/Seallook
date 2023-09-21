@@ -2,6 +2,7 @@ package com.seallook.androidx.ui.auth.signup
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.model.ProfileEntity
 import com.seallook.androidx.domain.model.UserTypeEntity
@@ -60,11 +61,21 @@ class SignUpViewModel @Inject constructor(
                 SharingStarted.WhileSubscribed(),
                 null,
             )
-
     val signUpType = savedStateHandle.getStateFlow("selectSignUpType", 0)
+    lateinit var result: StateFlow<AuthResult?>
 
-    suspend fun signUp(profile: ProfileEntity, password: String? = null): Exception? {
-        return signUpUseCase(profile, password)
+    fun signUp(profile: ProfileEntity, password: String? = null): Exception? {
+        return try {
+            result = signUpUseCase(profile, password)
+                .stateIn(
+                    viewModelScope,
+                    SharingStarted.WhileSubscribed(),
+                    null,
+                )
+            null
+        } catch (e: Exception) {
+            e
+        }
     }
 
     suspend fun setProfile(profile: ProfileEntity) {

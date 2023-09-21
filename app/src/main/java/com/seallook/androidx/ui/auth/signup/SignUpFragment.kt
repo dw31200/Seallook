@@ -237,8 +237,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                     Date(),
                 )
                 val result = viewModel.signUp(profile, password)
-                viewModel.setProfile(profile)
-                viewModel.setUserType()
                 if (result != null) {
                     when (result) {
                         is FirebaseAuthWeakPasswordException -> {
@@ -265,16 +263,20 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                     }
 
                     dismissProgressDialog()
-                } else {
-                    viewModel.signOut()
-                    findNavController().navigate(
-                        R.id.action_signUpFragment_to_signInFragment,
-                        null,
-                        navOptions {
-                            popUpTo(R.id.nav_graph)
-                        },
-                    )
-                    dismissProgressDialog()
+                }
+                viewModel.result.collectLatest {
+                    if (it != null) {
+                        viewModel.setProfile(profile)
+                        viewModel.setUserType()
+                        findNavController().navigate(
+                            R.id.action_signUpFragment_to_mainFragment,
+                            null,
+                            navOptions {
+                                popUpTo(R.id.nav_graph)
+                            },
+                        )
+                        dismissProgressDialog()
+                    }
                 }
             }
         }
