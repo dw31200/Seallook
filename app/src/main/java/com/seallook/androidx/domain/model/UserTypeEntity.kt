@@ -10,4 +10,12 @@ data class UserTypeEntity(
             usertype = usertype,
         )
     }
+
+    companion object {
+        operator fun invoke(userType: UserType): UserTypeEntity {
+            return UserTypeEntity(
+                usertype = userType.usertype,
+            )
+        }
+    }
 }
