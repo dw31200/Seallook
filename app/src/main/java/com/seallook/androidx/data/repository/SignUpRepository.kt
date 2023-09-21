@@ -4,5 +4,5 @@ import com.google.firebase.auth.AuthResult
 import com.seallook.androidx.data.model.Profile
 
 interface SignUpRepository {
-    suspend fun signUp(profile: Profile, password: String? = null): Exception?
+    suspend fun signUp(profile: Profile, password: String? = null): AuthResult?
 }
