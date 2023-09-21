@@ -12,6 +12,8 @@ import com.seallook.androidx.data.repository.GetTaskProfileRepository
 import com.seallook.androidx.data.repository.GetTaskProfileRepositoryImpl
 import com.seallook.androidx.data.repository.SetProfileRepository
 import com.seallook.androidx.data.repository.SetProfileRepositoryImpl
+import com.seallook.androidx.data.repository.SetUserTypeRepository
+import com.seallook.androidx.data.repository.SetUserTypeRepositoryImpl
 import com.seallook.androidx.data.repository.SignInRepository
 import com.seallook.androidx.data.repository.SignInRepositoryImpl
 import com.seallook.androidx.data.repository.SignOutRepository
@@ -57,4 +59,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindGetProfileSnapshotRepository(getProfileSnapshotRepositoryImpl: GetProfileSnapshotRepositoryImpl): GetProfileSnapshotRepository
+
+    @Binds
+    abstract fun bindSetUserTypeRepository(setUserTypeRepositoryImpl: SetUserTypeRepositoryImpl): SetUserTypeRepository
 }

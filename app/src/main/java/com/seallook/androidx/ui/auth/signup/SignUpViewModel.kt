@@ -4,11 +4,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.model.ProfileEntity
+import com.seallook.androidx.domain.model.UserTypeEntity
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.GetProfileSnapshotUseCase
 import com.seallook.androidx.domain.usecase.GetProfileUseCase
 import com.seallook.androidx.domain.usecase.GetTaskProfileUseCase
 import com.seallook.androidx.domain.usecase.SetProfileUseCase
+import com.seallook.androidx.domain.usecase.SetUserTypeUseCase
 import com.seallook.androidx.domain.usecase.SignOutUseCase
 import com.seallook.androidx.domain.usecase.SignUpUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
@@ -28,6 +30,7 @@ class SignUpViewModel @Inject constructor(
     private val getTaskProfileUseCase: GetTaskProfileUseCase,
     private val getProfileSnapshotUseCase: GetProfileSnapshotUseCase,
     private val setProfileUseCase: SetProfileUseCase,
+    private val setUserTypeUseCase: SetUserTypeUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
     val profile = getProfileUseCase()
@@ -66,6 +69,10 @@ class SignUpViewModel @Inject constructor(
 
     suspend fun setProfile(profile: ProfileEntity) {
         setProfileUseCase(profile.toProfile())
+    }
+
+    suspend fun setUserType() {
+        setUserTypeUseCase(UserTypeEntity(signUpType.value))
     }
 
     fun signOut() {

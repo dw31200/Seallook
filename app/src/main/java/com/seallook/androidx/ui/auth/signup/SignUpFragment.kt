@@ -223,6 +223,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                     Date(),
                 )
                 viewModel.setProfile(profile)
+                viewModel.setUserType()
             }
         } else {
             showProgressDialog("회원가입 중... 잠시만 기다려 주세요.")
@@ -237,6 +238,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                 )
                 val result = viewModel.signUp(profile, password)
                 viewModel.setProfile(profile)
+                viewModel.setUserType()
                 if (result != null) {
                     when (result) {
                         is FirebaseAuthWeakPasswordException -> {
