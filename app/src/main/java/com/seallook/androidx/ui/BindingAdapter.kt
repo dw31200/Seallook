@@ -9,6 +9,11 @@ fun View.setVisible(visible: Boolean) {
     visibility = if (visible) View.VISIBLE else View.GONE
 }
 
+@BindingAdapter("bind:visibleOrInvisible")
+fun View.setVisibleOr(visible: Boolean) {
+    visibility = if (visible) View.VISIBLE else View.INVISIBLE
+}
+
 @BindingAdapter("bind:userTypeToHint")
 fun TextInputLayout.setHint(userType: Int) {
     hint = if (userType == 2) "기관명" else "이름"

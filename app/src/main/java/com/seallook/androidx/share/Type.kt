@@ -7,7 +7,7 @@ value class TypeOption(val value: UserType)
 value class GenderOption(val value: Gender)
 
 enum class UserType {
-    COUNSELOR, CLIENT, OFFICE,
+    CLIENT, COUNSELOR, OFFICE,
 }
 
 enum class Gender {

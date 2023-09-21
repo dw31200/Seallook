@@ -37,4 +37,7 @@ abstract class ApiServiceModule {
 
     @Binds
     abstract fun bindSetUserTypeApiService(setUserTypeApiServiceImpl: SetUserTypeApiServiceImpl): SetUserTypeApiService
+
+    @Binds
+    abstract fun bindGetUserTypeApiService(getUserTypeApiServiceImpl: GetUserTypeApiServiceImpl): GetUserTypeApiService
 }

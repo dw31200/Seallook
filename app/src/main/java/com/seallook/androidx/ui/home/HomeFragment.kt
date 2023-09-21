@@ -21,13 +21,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     FragmentHomeBinding::inflate,
 ) {
     override val viewModel: HomeViewModel by viewModels()
+
     override fun viewModelVariableId(): Int = BR.vm
+
     override fun onViewCreatedAfterBinding() {
-        binding.counselorNameTextField.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_searchCounselorFragment)
-        }
-        binding.reserveCounselingButton.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_searchCounselorFragment)
+        with(binding) {
+            counselorNameTextField.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_searchCounselorFragment)
+            }
+            reserveCounselingButton.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_searchCounselorFragment)
+            }
         }
     }
 }

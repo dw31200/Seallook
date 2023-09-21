@@ -10,4 +10,12 @@ data class UserType(
             usertype = usertype,
         )
     }
+
+    companion object {
+        operator fun invoke(userTypeResponse: UserTypeResponse): UserType {
+            return UserType(
+                usertype = userTypeResponse.usertype,
+            )
+        }
+    }
 }
