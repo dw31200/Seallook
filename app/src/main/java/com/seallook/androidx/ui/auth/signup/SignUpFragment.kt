@@ -9,6 +9,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -127,7 +128,13 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                 if (it != null) {
                     Timber.d("data is non null")
                     dismissProgressDialog()
-                    findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+                    findNavController().navigate(
+                        R.id.mainFragment,
+                        null,
+                        navOptions {
+                            popUpTo(R.id.nav_graph)
+                        },
+                    )
                 } else {
                     Timber.d("data is null")
                 }
@@ -206,51 +213,67 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
 
         if (isSignedIn()) {
             showProgressDialog("프로필 생성 중... 잠시만 기다려 주세요.")
+            lifecycleScope.launch {
+                val profile = ProfileEntity(
+                    "",
+                    email,
+                    name,
+                    gender,
+                    birth!!,
+                    Date(),
+                )
+                viewModel.setProfile(profile)
+            }
         } else {
             showProgressDialog("회원가입 중... 잠시만 기다려 주세요.")
-        }
+            lifecycleScope.launch {
+                val profile = ProfileEntity(
+                    "",
+                    email,
+                    name,
+                    gender,
+                    birth!!,
+                    Date(),
+                )
+                val result = viewModel.signUp(profile, password)
+                viewModel.setProfile(profile)
+                if (result != null) {
+                    when (result) {
+                        is FirebaseAuthWeakPasswordException -> {
+                            Timber.d("result weakpassword")
+                            binding.passwordTextField.error =
+                                "안전한 비밀번호가 아닙니다. 길이가 8자 이상이고 영어와 숫자, 특수문자가 조합되어야 합니다."
+                        }
 
-        lifecycleScope.launch {
-            val profile = ProfileEntity(
-                "",
-                email,
-                name,
-                gender,
-                birth!!,
-                Date(),
-            )
-            val result = viewModel.signUp(profile, password)
-            viewModel.setProfile(profile)
-            if (result != null) {
-                when (result) {
-                    is FirebaseAuthWeakPasswordException -> {
-                        Timber.d("result weakpassword")
-                        binding.passwordTextField.error =
-                            "안전한 비밀번호가 아닙니다. 길이가 8자 이상이고 영어와 숫자, 특수문자가 조합되어야 합니다."
+                        is FirebaseAuthInvalidCredentialsException -> {
+                            Timber.d("invalidecredential")
+                            binding.emailTextField.error = "이메일 주소를 올바르게 입력해 주세요."
+                        }
+
+                        is FirebaseAuthUserCollisionException -> {
+                            Timber.d("usercollision")
+                            binding.emailTextField.error = "이미 사용중인 이메일 주소 입니다."
+                        }
+
+                        else -> {
+                            result.printStackTrace()
+                            Timber.d("result else")
+                            binding.passwordTextField.error = "오류가 발생하였습니다. 잠시 후 다시 시도해 주세요."
+                        }
                     }
 
-                    is FirebaseAuthInvalidCredentialsException -> {
-                        Timber.d("invalidecredential")
-                        binding.emailTextField.error = "이메일 주소를 올바르게 입력해 주세요."
-                    }
-
-                    is FirebaseAuthUserCollisionException -> {
-                        Timber.d("usercollision")
-                        binding.emailTextField.error = "이미 사용중인 이메일 주소 입니다."
-                    }
-
-                    else -> {
-                        result.printStackTrace()
-                        Timber.d("result else")
-                        binding.passwordTextField.error = "오류가 발생하였습니다. 잠시 후 다시 시도해 주세요."
-                    }
+                    dismissProgressDialog()
+                } else {
+                    viewModel.signOut()
+                    findNavController().navigate(
+                        R.id.action_signUpFragment_to_signInFragment,
+                        null,
+                        navOptions {
+                            popUpTo(R.id.nav_graph)
+                        },
+                    )
+                    dismissProgressDialog()
                 }
-
-                dismissProgressDialog()
-            } else {
-                viewModel.signOut()
-                findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
-                dismissProgressDialog()
             }
         }
     }
