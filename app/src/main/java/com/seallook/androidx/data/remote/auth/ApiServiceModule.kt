@@ -34,4 +34,7 @@ abstract class ApiServiceModule {
 
     @Binds
     abstract fun bindGetProfileSnapshotApiService(getProfileSnapshotApiServiceImpl: GetProfileSnapshotApiServiceImpl): GetProfileSnapshotApiService
+
+    @Binds
+    abstract fun bindSetUserTypeApiService(setUserTypeApiServiceImpl: SetUserTypeApiServiceImpl): SetUserTypeApiService
 }
