@@ -9,10 +9,10 @@ import javax.inject.Inject
 class GetProfileRepositoryImpl @Inject constructor(
     private val getProfileApiService: GetProfileApiService,
 ) : GetProfileRepository {
-    override fun getProfile(): Flow<Profile> {
+    override fun getProfile(): Flow<Profile?> {
         return flow {
-            val profile = getProfileApiService.getProfile().result
-            emit(Profile(profile))
+            val profile = getProfileApiService.getProfile()
+            emit(profile?.let { Profile(it) })
         }
     }
 }

@@ -71,10 +71,18 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
 
     protected fun navigation() {
         lifecycleScope.launch {
+//            viewModel.profileSnapshot.collectLatest {
+//                if (it != null) {
+//                    findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+//                } else {
+//                    Timber.d("${it}")
+//                    findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
+//                }
+//            }
             viewModel.profile.collectLatest {
                 it?.let {
                     it.addOnSuccessListener { document ->
-                        if (document != null) {
+                        if (document.data != null) {
                             findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
                         } else {
                             findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)

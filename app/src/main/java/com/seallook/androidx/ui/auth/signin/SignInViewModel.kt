@@ -5,6 +5,7 @@ import com.google.android.gms.auth.api.identity.BeginSignInResult
 import com.google.firebase.auth.AuthResult
 import com.seallook.androidx.domain.usecase.GetBeginSignInResultUseCase
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
+import com.seallook.androidx.domain.usecase.GetProfileSnapshotUseCase
 import com.seallook.androidx.domain.usecase.GetProfileUseCase
 import com.seallook.androidx.domain.usecase.GetTaskProfileUseCase
 import com.seallook.androidx.domain.usecase.SignInWithEmailAndPasswordUseCase
@@ -21,10 +22,17 @@ class SignInViewModel @Inject constructor(
     private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPasswordUseCase,
     private val getProfileUseCase: GetProfileUseCase,
     private val getTaskProfileUseCase: GetTaskProfileUseCase,
+    private val getProfileSnapshotUseCase: GetProfileSnapshotUseCase,
     private val getBeginSignInResultUseCase: GetBeginSignInResultUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
 ) : BaseViewModel() {
     val profile = getTaskProfileUseCase()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            null,
+        )
+    val profileSnapshot = getProfileSnapshotUseCase()
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(),

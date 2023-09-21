@@ -24,6 +24,7 @@ import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
@@ -122,11 +123,27 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             signUpButton.setOnClickListener { signUp() }
         }
         lifecycleScope.launch {
-            viewModel.profile.collectLatest {
+            viewModel.profileSnapshot.collectLatest {
                 if (it != null) {
+                    Timber.d("data is non null")
+                    dismissProgressDialog()
                     findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
+                } else {
+                    Timber.d("data is null")
                 }
             }
+//            viewModel.taskProfile.collectLatest {
+//                it?.let {
+//                    it.addOnSuccessListener { document ->
+//                        if (document.data != null) {
+//                            Timber.d("data is non null")
+//                            findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
+//                        } else {
+//                            Timber.d("data is null")
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 
@@ -219,24 +236,30 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             if (result != null) {
                 when (result) {
                     is FirebaseAuthWeakPasswordException -> {
+                        Timber.d("result weakpassword")
                         binding.passwordTextField.error =
                             "안전한 비밀번호가 아닙니다. 길이가 8자 이상이고 영어와 숫자, 특수문자가 조합되어야 합니다."
                     }
 
                     is FirebaseAuthInvalidCredentialsException -> {
+                        Timber.d("invalidecredential")
                         binding.emailTextField.error = "이메일 주소를 올바르게 입력해 주세요."
                     }
 
                     is FirebaseAuthUserCollisionException -> {
+                        Timber.d("usercollision")
                         binding.emailTextField.error = "이미 사용중인 이메일 주소 입니다."
                     }
 
                     else -> {
                         result.printStackTrace()
+                        Timber.d("result else")
                         binding.passwordTextField.error = "오류가 발생하였습니다. 잠시 후 다시 시도해 주세요."
                     }
                 }
 
+                dismissProgressDialog()
+            } else {
                 dismissProgressDialog()
             }
         }
