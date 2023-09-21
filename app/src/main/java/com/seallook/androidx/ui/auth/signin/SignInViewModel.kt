@@ -51,14 +51,6 @@ class SignInViewModel @Inject constructor(
                 SharingStarted.WhileSubscribed(),
                 null,
             )
-
-//    val profileSnapshot = getProfileSnapshotUseCase(currentUser.value)
-//        .stateIn(
-//            viewModelScope,
-//            SharingStarted.WhileSubscribed(),
-//            null,
-//        )
-
     suspend fun getBeginSignInResult(): BeginSignInResult {
         return getBeginSignInResultUseCase()
     }

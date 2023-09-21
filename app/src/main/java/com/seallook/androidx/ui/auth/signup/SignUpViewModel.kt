@@ -58,12 +58,6 @@ class SignUpViewModel @Inject constructor(
                 null,
             )
 
-    //    val profileSnapshot = getProfileSnapshotUseCase(currentUser.value)
-//        .stateIn(
-//            viewModelScope,
-//            SharingStarted.WhileSubscribed(),
-//            null,
-//        )
     val signUpType = savedStateHandle.getStateFlow("selectSignUpType", 0)
 
     suspend fun signUp(profile: ProfileEntity, password: String? = null): Exception? {
