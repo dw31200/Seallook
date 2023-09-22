@@ -6,6 +6,7 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.seallook.androidx.domain.model.CounselingTypeModel
+import com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.DeleteCounselingType
 import kotlinx.coroutines.launch
 
 @BindingAdapter("bind:countToString")
@@ -28,4 +29,9 @@ fun RecyclerView.setGalleryList(list: List<CounselingTypeModel>?) {
     this.findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
         (adapter as? CounselingTypeAdapter)?.fetchData(list ?: emptyList())
     }
+}
+
+@BindingAdapter("bind:onItemDeleteClickListener")
+fun RecyclerView.setItemDeleteClickListener(deleteCounselingType: DeleteCounselingType) {
+    (adapter as? CounselingTypeAdapter)?.deleteCounselingType = deleteCounselingType
 }

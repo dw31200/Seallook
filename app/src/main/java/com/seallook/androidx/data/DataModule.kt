@@ -4,6 +4,8 @@ import com.seallook.androidx.data.repository.BeginSignInResultRepository
 import com.seallook.androidx.data.repository.BeginSignInResultRepositoryImpl
 import com.seallook.androidx.data.repository.CurrentUserRepository
 import com.seallook.androidx.data.repository.CurrentUserRepositoryImpl
+import com.seallook.androidx.data.repository.DeleteCounselingTypeRepository
+import com.seallook.androidx.data.repository.DeleteCounselingTypeRepositoryImpl
 import com.seallook.androidx.data.repository.GetCounselingTypeRepository
 import com.seallook.androidx.data.repository.GetCounselingTypeRepositoryImpl
 import com.seallook.androidx.data.repository.GetProfileRepository
@@ -77,4 +79,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindSetCounselingTypeRepository(setCounselingTypeRepositoryImpl: SetCounselingTypeRepositoryImpl): SetCounselingTypeRepository
+
+    @Binds
+    abstract fun bindDeleteCounselingTypeRepository(deleteCounselingTypeRepositoryImpl: DeleteCounselingTypeRepositoryImpl): DeleteCounselingTypeRepository
 }
