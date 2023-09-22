@@ -8,6 +8,8 @@ import com.seallook.androidx.data.repository.DeleteCounselingTypeRepository
 import com.seallook.androidx.data.repository.DeleteCounselingTypeRepositoryImpl
 import com.seallook.androidx.data.repository.GetCounselingTypeRepository
 import com.seallook.androidx.data.repository.GetCounselingTypeRepositoryImpl
+import com.seallook.androidx.data.repository.GetNaverSearchRepository
+import com.seallook.androidx.data.repository.GetNaverSearchRepositoryImpl
 import com.seallook.androidx.data.repository.GetProfileRepository
 import com.seallook.androidx.data.repository.GetProfileRepositoryImpl
 import com.seallook.androidx.data.repository.GetProfileSnapshotRepository
@@ -82,4 +84,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindDeleteCounselingTypeRepository(deleteCounselingTypeRepositoryImpl: DeleteCounselingTypeRepositoryImpl): DeleteCounselingTypeRepository
+
+    @Binds
+    abstract fun bindGetNaverSearchRepository(getNaverSearchRepositoryImpl: GetNaverSearchRepositoryImpl): GetNaverSearchRepository
 }
