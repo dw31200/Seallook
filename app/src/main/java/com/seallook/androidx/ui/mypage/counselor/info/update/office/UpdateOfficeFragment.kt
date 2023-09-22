@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentUpdateOfficeBinding
 import com.seallook.androidx.ui.base.BaseFragment
+import com.seallook.androidx.ui.mypage.counselor.info.update.office.adapter.UpdateOfficeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 /* TODO
@@ -20,6 +21,8 @@ class UpdateOfficeFragment : BaseFragment<FragmentUpdateOfficeBinding, UpdateOff
     override fun viewModelVariableId(): Int = BR.vm
 
     override fun onViewCreatedAfterBinding() {
-        Unit
+        with(binding) {
+            officeResultList.adapter = UpdateOfficeAdapter()
+        }
     }
 }
