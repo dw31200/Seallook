@@ -36,8 +36,9 @@ class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBas
     private var photoUri: Uri? = null
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
-            Timber.d("Selected URI: $uri")
+            binding.counselorThumbnailImage.setImageURI(uri)
             photoUri = uri
+            Timber.d("Selected URI: $uri")
         } else {
             Timber.d("No media selected")
         }
