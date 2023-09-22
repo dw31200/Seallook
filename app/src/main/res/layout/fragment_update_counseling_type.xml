@@ -8,7 +8,7 @@
             type="com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.UpdateCounselingTypeViewModel" />
 
         <variable
-            name="deleteCounselingType"
+            name="delete"
             type="com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.DeleteCounselingType" />
     </data>
 
@@ -128,7 +128,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             bind:counselingTypeList="@{vm.counselingType}"
             tools:listitem="@layout/counseling_type_list_item"
-            bind:onItemDeleteClickListener="@{deleteCounselingType}"
+            bind:onItemDeleteClickListener="@{delete}"
             app:layout_constraintTop_toBottomOf="@id/type_layout"
             app:layout_constraintBottom_toTopOf="@id/next_button"/>
 

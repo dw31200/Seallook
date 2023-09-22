@@ -35,7 +35,7 @@ class UpdateCounselingTypeFragment :
             nextButton.setOnClickListener {
                 findNavController().popBackStack()
             }
-            deleteCounselingType = this@UpdateCounselingTypeFragment
+            delete = this@UpdateCounselingTypeFragment
         }
     }
 
