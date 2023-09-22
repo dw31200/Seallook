@@ -5,20 +5,20 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.seallook.androidx.data.local.model.CounselingType
+import com.seallook.androidx.data.local.model.CounselingTypeEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CounselingTypeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(counselingType: CounselingType)
+    suspend fun insert(counselingTypeEntity: CounselingTypeEntity)
 
-    @Query("SELECT * FROM counselingType ORDER BY ID ASC")
-    fun getAll(): Flow<List<CounselingType>>
+    @Query("SELECT * FROM counselingTypeEntity ORDER BY ID ASC")
+    fun getAll(): Flow<List<CounselingTypeEntity>>
 
     @Update
-    suspend fun update(counselingType: CounselingType)
+    suspend fun update(counselingTypeEntity: CounselingTypeEntity)
 
-    @Query("DELETE FROM counselingType WHERE ID = :id")
+    @Query("DELETE FROM counselingTypeEntity WHERE ID = :id")
     suspend fun deleteItem(id: Int)
 }

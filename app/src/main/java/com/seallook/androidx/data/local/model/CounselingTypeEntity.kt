@@ -3,8 +3,8 @@ package com.seallook.androidx.data.local.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
-data class CounselingType(
+@Entity("counselingTypeEntity")
+data class CounselingTypeEntity(
     @PrimaryKey
     val id: Int,
     val title: String,
