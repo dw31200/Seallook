@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.storage.CacheResetOnProcessCanceled.enabled
+
 
 plugins {
     alias(libs.plugins.android.application)
@@ -56,8 +56,7 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.lifecycle.common)
-
-    //Glide
+    // Glide
     implementation(libs.glide)
 
     implementation(libs.timber)
@@ -74,18 +73,20 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.play.services.auth)
     implementation(libs.firebase.storage.ktx)
-
     //    Navigation
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-
-    //retrofit
+    // retrofit
     implementation(libs.retrofit)
     implementation(libs.moshi.kotlin)
     implementation(libs.converter.moshi)
 
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
+    // room
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 }
 
 kapt {
