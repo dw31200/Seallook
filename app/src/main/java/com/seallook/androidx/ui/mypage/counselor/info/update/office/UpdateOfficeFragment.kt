@@ -23,6 +23,9 @@ class UpdateOfficeFragment : BaseFragment<FragmentUpdateOfficeBinding, UpdateOff
     override fun onViewCreatedAfterBinding() {
         with(binding) {
             officeResultList.adapter = UpdateOfficeAdapter()
+            officeSearchButton.setOnClickListener {
+                viewModel.searchOnClick(officeNameTextField.editText!!.text.toString().trim())
+            }
         }
     }
 }

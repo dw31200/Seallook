@@ -25,7 +25,7 @@ fun TextView.setTextFromPay(pay: Int?) {
 }
 
 @BindingAdapter("bind:counselingTypeList")
-fun RecyclerView.setGalleryList(list: List<CounselingTypeModel>?) {
+fun RecyclerView.setCounselingTypeList(list: List<CounselingTypeModel>?) {
     this.findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
         (adapter as? CounselingTypeAdapter)?.fetchData(list ?: emptyList())
     }
