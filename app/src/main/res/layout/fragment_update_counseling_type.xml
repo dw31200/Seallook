@@ -6,6 +6,10 @@
         <variable
             name="vm"
             type="com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.UpdateCounselingTypeViewModel" />
+
+        <variable
+            name="deleteCounselingType"
+            type="com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.DeleteCounselingType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -124,6 +128,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             bind:counselingTypeList="@{vm.counselingType}"
             tools:listitem="@layout/counseling_type_list_item"
+            bind:onItemDeleteClickListener="@{deleteCounselingType}"
             app:layout_constraintTop_toBottomOf="@id/type_layout"
             app:layout_constraintBottom_toTopOf="@id/next_button"/>
 

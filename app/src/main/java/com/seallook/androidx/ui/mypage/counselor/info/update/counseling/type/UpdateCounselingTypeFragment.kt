@@ -2,6 +2,7 @@ package com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentUpdateCounselingTypeBinding
 import com.seallook.androidx.domain.model.CounselingTypeModel
@@ -16,9 +17,11 @@ import kotlinx.coroutines.launch
     2.Navigation: 다음 > Preview
  */
 @AndroidEntryPoint
-class UpdateCounselingTypeFragment : BaseFragment<FragmentUpdateCounselingTypeBinding, UpdateCounselingTypeViewModel>(
-    FragmentUpdateCounselingTypeBinding::inflate,
-) {
+class UpdateCounselingTypeFragment :
+    BaseFragment<FragmentUpdateCounselingTypeBinding, UpdateCounselingTypeViewModel>(
+        FragmentUpdateCounselingTypeBinding::inflate,
+    ),
+    DeleteCounselingType {
     override val viewModel: UpdateCounselingTypeViewModel by viewModels()
 
     override fun viewModelVariableId(): Int = BR.vm
@@ -29,6 +32,10 @@ class UpdateCounselingTypeFragment : BaseFragment<FragmentUpdateCounselingTypeBi
             updateTypeButton.setOnClickListener {
                 updateCounselingType()
             }
+            nextButton.setOnClickListener {
+                findNavController().popBackStack()
+            }
+            deleteCounselingType = this@UpdateCounselingTypeFragment
         }
     }
 
@@ -37,7 +44,12 @@ class UpdateCounselingTypeFragment : BaseFragment<FragmentUpdateCounselingTypeBi
             var id: Int? = null
             lifecycleScope.launch {
                 viewModel.counselingType.collectLatest {
-                    id = it.size
+                    if (it.isEmpty()) {
+                        id = 0
+                    } else {
+                        val listSize = it.size
+                        id = it[listSize - 1].id + 1
+                    }
                 }
             }
             val title = typeNameTextField.editText!!.text.toString()
@@ -54,5 +66,9 @@ class UpdateCounselingTypeFragment : BaseFragment<FragmentUpdateCounselingTypeBi
                 ),
             )
         }
+    }
+
+    override fun deleteCounselingType(counselingTypeId: Int) {
+        viewModel.deleteCounselingType(counselingTypeId)
     }
 }
