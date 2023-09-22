@@ -59,15 +59,16 @@ class SignInFragment : SignInBaseFragment<FragmentSignInBinding>(
         }
 
         startSignIn()
-        val result = viewModel.signInWithEmailAndPassword(email, password)
-        if (result != null) {
-            if (result is FirebaseAuthInvalidCredentialsException) {
-                binding.passwordTextField.error = "비밀번호가 틀렸습니다. 다시 입력해 주세요."
-            } else {
-                findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
-            }
+        viewModel.signInWithEmailAndPassword(email, password) { result ->
+            if (result != null) {
+                if (result is FirebaseAuthInvalidCredentialsException) {
+                    binding.passwordTextField.error = "비밀번호가 틀렸습니다. 다시 입력해 주세요."
+                } else {
+                    findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+                }
 
-            cancelSignIn()
+                cancelSignIn()
+            }
         }
     }
 }

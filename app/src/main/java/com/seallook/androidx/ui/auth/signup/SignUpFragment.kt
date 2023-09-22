@@ -213,18 +213,16 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
 
         if (isSignedIn()) {
             showProgressDialog("프로필 생성 중... 잠시만 기다려 주세요.")
-            lifecycleScope.launch {
-                val profile = ProfileEntity(
-                    "",
-                    email,
-                    name,
-                    gender,
-                    birth!!,
-                    Date(),
-                )
-                viewModel.setProfile(profile)
-                viewModel.setUserType()
-            }
+            val profile = ProfileEntity(
+                "",
+                email,
+                name,
+                gender,
+                birth!!,
+                Date(),
+            )
+            viewModel.setProfile(profile)
+            viewModel.setUserType()
         } else {
             showProgressDialog("회원가입 중... 잠시만 기다려 주세요.")
             lifecycleScope.launch {

@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -78,12 +79,16 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    suspend fun setProfile(profile: ProfileEntity) {
-        setProfileUseCase(profile.toProfile())
+    fun setProfile(profile: ProfileEntity) {
+        viewModelScope.launch {
+            setProfileUseCase(profile.toProfile())
+        }
     }
 
-    suspend fun setUserType() {
-        setUserTypeUseCase(UserTypeEntity(signUpType.value))
+    fun setUserType() {
+        viewModelScope.launch {
+            setUserTypeUseCase(UserTypeEntity(signUpType.value))
+        }
     }
 
     fun signOut() {

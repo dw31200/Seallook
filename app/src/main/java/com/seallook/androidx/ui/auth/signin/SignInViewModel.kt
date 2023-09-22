@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,12 +52,25 @@ class SignInViewModel @Inject constructor(
                 SharingStarted.WhileSubscribed(),
                 null,
             )
-    suspend fun getBeginSignInResult(): BeginSignInResult {
-        return getBeginSignInResultUseCase()
+
+    fun getBeginSignInResult(callback: (BeginSignInResult) -> Unit) {
+        viewModelScope.launch {
+            val result = getBeginSignInResultUseCase()
+            callback(result)
+        }
     }
 
-    suspend fun signInWithGoogle(token: String): AuthResult? = signInWithGoogleUseCase(token)
+    fun signInWithGoogle(token: String, callback: (AuthResult?) -> Unit) {
+        viewModelScope.launch {
+            val result = signInWithGoogleUseCase(token)
+            callback(result)
+        }
+    }
 
-    suspend fun signInWithEmailAndPassword(email: String, password: String): AuthResult? =
-        signInWithEmailAndPasswordUseCase(email, password)
+    fun signInWithEmailAndPassword(email: String, password: String, callback: (AuthResult?) -> Unit) {
+        viewModelScope.launch {
+            val result = signInWithEmailAndPasswordUseCase(email, password)
+            callback(result)
+        }
+    }
 }

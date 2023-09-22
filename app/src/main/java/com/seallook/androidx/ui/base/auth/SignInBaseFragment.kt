@@ -44,10 +44,11 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
 
             if (idToken != null) {
                 lifecycleScope.launch {
-                    val result = viewModel.signInWithGoogle(idToken)
-                    if (result != null) {
-                        navigation()
-                        cancelSignIn()
+                    viewModel.signInWithGoogle(idToken) { result ->
+                        if (result != null) {
+                            navigation()
+                            cancelSignIn()
+                        }
                     }
                 }
             } else {
@@ -59,10 +60,11 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
         if (isSigningIn()) return
 
         startSignIn()
-        val result = viewModel.getBeginSignInResult()
-        googleSignInIntentResultLauncher.launch(
-            IntentSenderRequest.Builder(result.pendingIntent.intentSender).build(),
-        )
+        viewModel.getBeginSignInResult { result ->
+            googleSignInIntentResultLauncher.launch(
+                IntentSenderRequest.Builder(result.pendingIntent.intentSender).build(),
+            )
+        }
     }
 
     protected fun startSignIn() {
