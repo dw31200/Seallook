@@ -35,7 +35,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:maxLines="1"
-                    android:nextFocusDown="@id/password_confirmation_edit_text"
+                    android:nextFocusDown="@id/type_number_field"
                     tools:text="상담 제목" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -44,17 +44,19 @@
                 android:id="@+id/type_number_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/type_name_text_field"
                 android:hint="상담 인원">
 
-                <AutoCompleteTextView
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
-                    />
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:nextFocusDown="@id/type_time_field"
+                    tools:text="상담 인원"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,16 +65,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/type_number_field"
                 android:hint="상담 시간">
 
-                <AutoCompleteTextView
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
-                    />
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:nextFocusDown="@id/type_pay_field"
+                    tools:text="상담 시간"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,9 +93,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:maxLines="1"
-                    android:nextFocusDown="@id/password_confirmation_edit_text"
                     tools:text="상담 금액" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -109,6 +112,7 @@
                 app:layout_constraintTop_toBottomOf="@id/type_pay_field"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView

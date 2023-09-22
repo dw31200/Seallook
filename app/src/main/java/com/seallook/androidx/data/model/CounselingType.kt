@@ -1,4 +1,4 @@
-package com.seallook.androidx.data.remote.model
+package com.seallook.androidx.data.model
 
 import com.seallook.androidx.data.local.model.CounselingTypeEntity
 

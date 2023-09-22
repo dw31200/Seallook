@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentUpdateCounselingTypeBinding
 import com.seallook.androidx.ui.base.BaseFragment
+import com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.adapter.CounselingTypeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 /* TODO
@@ -19,6 +20,8 @@ class UpdateCounselingTypeFragment : BaseFragment<FragmentUpdateCounselingTypeBi
     override fun viewModelVariableId(): Int = BR.vm
 
     override fun onViewCreatedAfterBinding() {
-        Unit
+        with(binding) {
+            counselingTypeList.adapter = CounselingTypeAdapter()
+        }
     }
 }
