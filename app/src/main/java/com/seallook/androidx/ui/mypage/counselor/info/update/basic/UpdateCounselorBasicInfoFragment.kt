@@ -36,10 +36,20 @@ class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBas
         Firebase.storage
     }
     private var photoUri: Uri? = null
+    private var fileUri: Uri? = null
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
             binding.counselorThumbnailImage.setImageURI(uri)
             photoUri = uri
+            Timber.d("Selected URI: $uri")
+        } else {
+            Timber.d("No media selected")
+        }
+    }
+    private val pickMediaFile = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            binding.fileNameText.text = "첨부 완료"
+            fileUri = uri
             Timber.d("Selected URI: $uri")
         } else {
             Timber.d("No media selected")
@@ -56,6 +66,9 @@ class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBas
             }
             updateOfficeButton.setOnClickListener {
                 findNavController().navigate(R.id.action_updateCounselorBasicInfoFragment_to_updateOfficeFragment)
+            }
+            updateFileButton.setOnClickListener {
+                pickMediaFile.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
             finishButton.setOnClickListener {
                 if (photoUri != null) {
