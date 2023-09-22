@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.seallook.androidx.domain.model.NaverSearchModel
+import timber.log.Timber
 
 class UpdateOfficeAdapter(
     private val officeItems: MutableList<NaverSearchModel> = mutableListOf(),
@@ -20,6 +21,7 @@ class UpdateOfficeAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun fetchData(officeItems: List<NaverSearchModel>) {
         this.officeItems.clear()
+        Timber.d("$officeItems")
         this.officeItems.addAll(officeItems)
         notifyDataSetChanged()
     }

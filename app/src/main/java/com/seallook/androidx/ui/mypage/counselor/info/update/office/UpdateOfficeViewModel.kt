@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -17,12 +18,18 @@ class UpdateOfficeViewModel @Inject constructor(
 ) : BaseViewModel() {
     private val type = "local.json"
     private val _query = MutableStateFlow("")
-    val query: StateFlow<String> = _query
-
-    val naverSearchModel: StateFlow<List<NaverSearchModel>> = getNaverSearchUseCase(type, query.value)
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(),
-            mutableListOf(),
-        )
+    val query: StateFlow<String>
+        get() = _query
+    val naverSearchModel: StateFlow<List<NaverSearchModel>> =
+        query
+            .flatMapLatest {
+                getNaverSearchUseCase(type, it)
+            }.stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(),
+                mutableListOf(),
+            )
+    fun searchOnClick(query: String) {
+        _query.value = query
+    }
 }

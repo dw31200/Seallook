@@ -7,10 +7,10 @@ class NaverSearchApiServiceImpl @Inject constructor(
     private val naverSearchApi: NaverSearchApi,
 ) : NaverSearchApiService {
     override suspend fun getNaverSearchResponse(type: String, query: String): List<NaverSearchApiResponse> {
-        return kotlin.runCatching {
+        return runCatching {
             naverSearchApi.getNaverSearchResponse(type = type, query = query)
         }.fold(
-            onSuccess = { it },
+            onSuccess = { it.items },
             onFailure = { emptyList() },
         )
     }
