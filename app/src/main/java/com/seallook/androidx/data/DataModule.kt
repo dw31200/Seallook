@@ -14,6 +14,8 @@ import com.seallook.androidx.data.repository.GetTaskProfileRepository
 import com.seallook.androidx.data.repository.GetTaskProfileRepositoryImpl
 import com.seallook.androidx.data.repository.GetUserTypeRepository
 import com.seallook.androidx.data.repository.GetUserTypeRepositoryImpl
+import com.seallook.androidx.data.repository.SetCounselingTypeRepository
+import com.seallook.androidx.data.repository.SetCounselingTypeRepositoryImpl
 import com.seallook.androidx.data.repository.SetProfileRepository
 import com.seallook.androidx.data.repository.SetProfileRepositoryImpl
 import com.seallook.androidx.data.repository.SetUserTypeRepository
@@ -72,4 +74,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindGetCounselingTypeRepository(getCounselingTypeRepositoryImpl: GetCounselingTypeRepositoryImpl): GetCounselingTypeRepository
+
+    @Binds
+    abstract fun bindSetCounselingTypeRepository(setCounselingTypeRepositoryImpl: SetCounselingTypeRepositoryImpl): SetCounselingTypeRepository
 }
