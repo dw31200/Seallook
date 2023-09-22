@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.play.services.auth)
+    implementation(libs.firebase.storage.ktx)
 
     //    Navigation
     implementation(libs.androidx.navigation.fragment.ktx)
