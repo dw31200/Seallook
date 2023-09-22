@@ -9,6 +9,15 @@ data class CounselingType(
     val time: Int,
     val pay: Int,
 ) {
+    fun toEntity(): CounselingTypeEntity {
+        return CounselingTypeEntity(
+            id = id,
+            title = title,
+            count = count,
+            time = time,
+            pay = pay,
+        )
+    }
     companion object {
         operator fun invoke(counselingTypeEntity: CounselingTypeEntity): CounselingType {
             return CounselingType(
