@@ -267,7 +267,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                         viewModel.setProfile(profile)
                         viewModel.setUserType()
                         findNavController().navigate(
-                            R.id.action_signUpFragment_to_mainFragment,
+                            R.id.action_signUpFragment_to_mainGraphActivity,
                             null,
                             navOptions {
                                 popUpTo(R.id.nav_graph)

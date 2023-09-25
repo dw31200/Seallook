@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/mainFragment"
-        android:title="홈"
-        android:icon="@drawable/ic_home_filled"
+        android:id="@+id/homeFragment"
+        android:title="Home"
+        android:icon="@drawable/ic_home"
+        />
+
+    <item
+        android:id="@+id/calendarFragment"
+        android:title="Calendar"
+        android:icon="@drawable/ic_calendar"
+        />
+
+    <item
+        android:id="@+id/chatListFragment"
+        android:title="Chat"
+        android:icon="@drawable/ic_chat"
+        />
+
+    <item
+        android:id="@+id/diaryListFragment"
+        android:title="Diary"
+        android:icon="@drawable/ic_diary"
+        />
+
+    <item
+        android:id="@+id/mypageFragment"
+        android:title="Mypage"
+        android:icon="@drawable/ic_mypage"
         />
 
 </menu>

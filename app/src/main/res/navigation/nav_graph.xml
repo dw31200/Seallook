@@ -9,8 +9,8 @@
         android:name="com.seallook.androidx.ui.auth.signin.SignInFragment"
         android:label="SignInFragment" >
         <action
-            android:id="@+id/action_signInFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
+            android:id="@+id/action_signInFragment_to_mainGraphActivity"
+            app:destination="@id/mainGraphActivity"
             app:launchSingleTop="true"
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true"/>
@@ -33,8 +33,8 @@
             app:argType="integer"
             android:defaultValue="0" />
         <action
-            android:id="@+id/action_signUpFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
+            android:id="@+id/action_signUpFragment_to_mainGraphActivity"
+            app:destination="@id/mainGraphActivity"
             app:launchSingleTop="true"
             app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="true"/>
@@ -68,10 +68,14 @@
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true"/>
         <action
-            android:id="@+id/action_splashFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
+            android:id="@+id/action_splashFragment_to_mainGraphActivity"
+            app:destination="@id/mainGraphActivity"
             app:launchSingleTop="true"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true"/>
     </fragment>
+    <activity
+        android:id="@+id/mainGraphActivity"
+        android:name="com.seallook.androidx.ui.main.MainGraphActivity"
+        android:label="MainGraphActivity" />
 </navigation>

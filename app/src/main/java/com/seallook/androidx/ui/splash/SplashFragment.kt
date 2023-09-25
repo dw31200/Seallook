@@ -23,7 +23,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
 
     override fun onViewCreatedAfterBinding() {
         if (auth.currentUser != null) {
-            findNavController().navigate(R.id.action_splashFragment_to_mainFragment)
+            findNavController().navigate(R.id.action_splashFragment_to_mainGraphActivity)
         } else {
             findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
         }
