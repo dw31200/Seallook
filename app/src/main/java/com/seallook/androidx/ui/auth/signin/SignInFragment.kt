@@ -64,7 +64,7 @@ class SignInFragment : SignInBaseFragment<FragmentSignInBinding>(
                 if (result is FirebaseAuthInvalidCredentialsException) {
                     binding.passwordTextField.error = "비밀번호가 틀렸습니다. 다시 입력해 주세요."
                 } else {
-                    findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+                    findNavController().navigate(R.id.action_signInFragment_to_mainGraphActivity)
                 }
 
                 cancelSignIn()

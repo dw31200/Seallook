@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -85,7 +84,7 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
                 it?.let {
                     it.addOnSuccessListener { document ->
                         if (document.data != null) {
-                            findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+                            findNavController().navigate(R.id.action_signInFragment_to_mainGraphActivity)
                         } else {
                             findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
                         }
