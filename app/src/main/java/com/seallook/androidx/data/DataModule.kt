@@ -6,6 +6,10 @@ import com.seallook.androidx.data.repository.CurrentUserRepository
 import com.seallook.androidx.data.repository.CurrentUserRepositoryImpl
 import com.seallook.androidx.data.repository.DeleteCounselingTypeRepository
 import com.seallook.androidx.data.repository.DeleteCounselingTypeRepositoryImpl
+import com.seallook.androidx.data.repository.FirebaseAuthRepository
+import com.seallook.androidx.data.repository.FirebaseAuthRepositoryImpl
+import com.seallook.androidx.data.repository.FirebaseFirestoreRepository
+import com.seallook.androidx.data.repository.FirebaseFirestoreRepositoryImpl
 import com.seallook.androidx.data.repository.GetCounselingTypeRepository
 import com.seallook.androidx.data.repository.GetCounselingTypeRepositoryImpl
 import com.seallook.androidx.data.repository.GetNaverSearchRepository
@@ -87,4 +91,10 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindGetNaverSearchRepository(getNaverSearchRepositoryImpl: GetNaverSearchRepositoryImpl): GetNaverSearchRepository
+
+    @Binds
+    abstract fun bindFirebaseAuthRepository(firebaseAuthRepositoryImpl: FirebaseAuthRepositoryImpl): FirebaseAuthRepository
+
+    @Binds
+    abstract fun bindFirebaseFirestoreRepository(firebaseFirestoreRepositoryImpl: FirebaseFirestoreRepositoryImpl): FirebaseFirestoreRepository
 }
