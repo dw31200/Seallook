@@ -40,4 +40,10 @@ abstract class ApiServiceModule {
 
     @Binds
     abstract fun bindGetUserTypeApiService(getUserTypeApiServiceImpl: GetUserTypeApiServiceImpl): GetUserTypeApiService
+
+    @Binds
+    abstract fun bindFirebaseAuthApiService(firebaseAuthApiServiceImpl: FirebaseAuthApiServiceImpl): FirebaseAuthApiService
+
+    @Binds
+    abstract fun bindFirebaseFirestoreApiService(firebaseFirestoreApiServiceImpl: FirebaseFirestoreApiServiceImpl): FirebaseFirestoreApiService
 }
