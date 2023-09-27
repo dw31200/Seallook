@@ -6,16 +6,13 @@ import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.identity.Identity
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentSignInBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /* TODO
@@ -59,31 +56,27 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
                 signInWithGoogle()
             }
             emailSignInButton.setOnClickListener {
-                lifecycleScope.launch {
-                    signInWithEmailAndPassword()
-                }
+                signInWithEmailAndPassword()
             }
             emailSignUpButton.setOnClickListener {
                 findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
             }
-            viewModel.profile.observe(viewLifecycleOwner) {
-                if (it != null) {
-                    findNavController().navigate(R.id.action_signInFragment_to_mainGraphActivity)
-                } else {
-                    findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
-                }
-            }
             viewModel.signInWithGoogleResult.observe(viewLifecycleOwner) {
                 if (it != null) {
-                    navigation()
-                    cancelSignIn()
+                    viewModel.getCurrentUser()
+                    viewModel.currentUser.observe(viewLifecycleOwner) {
+                        if (it != null) {
+                            viewModel.getProfile(it)
+                            navigation()
+                            cancelSignIn()
+                        }
+                    }
                 }
             }
         }
     }
 
     private fun signInWithEmailAndPassword() {
-//        private suspend fun signInWithEmailAndPassword() = coroutineScope {
         if (isSigningIn()) return
         val email = binding.emailTextField.editText!!.text.toString().trim()
         val password = binding.passwordTextField.editText!!.text.toString().trim()
@@ -96,14 +89,12 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         startSignIn()
         viewModel.signInWithEmailAndPassword(email, password)
         viewModel.signInWithEmailResult.observe(viewLifecycleOwner) {
+            Timber.d("$it")
             if (it != null) {
-                if (it is FirebaseAuthInvalidCredentialsException) {
-                    binding.passwordTextField.error = "이메일 혹은 비밀번호가 일치하지 않습니다. 다시 입력해 주세요."
-                } else {
-                    findNavController().navigate(R.id.action_signInFragment_to_mainGraphActivity)
-                }
-
+                findNavController().navigate(R.id.action_signInFragment_to_mainGraphActivity)
                 cancelSignIn()
+            } else {
+                failSignIn()
             }
         }
     }

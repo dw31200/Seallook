@@ -28,6 +28,8 @@ import com.seallook.androidx.data.repository.SetProfileRepository
 import com.seallook.androidx.data.repository.SetProfileRepositoryImpl
 import com.seallook.androidx.data.repository.SetUserTypeRepository
 import com.seallook.androidx.data.repository.SetUserTypeRepositoryImpl
+import com.seallook.androidx.data.repository.SignInClientRepository
+import com.seallook.androidx.data.repository.SignInClientRepositoryImpl
 import com.seallook.androidx.data.repository.SignInRepository
 import com.seallook.androidx.data.repository.SignInRepositoryImpl
 import com.seallook.androidx.data.repository.SignOutRepository
@@ -97,4 +99,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindFirebaseFirestoreRepository(firebaseFirestoreRepositoryImpl: FirebaseFirestoreRepositoryImpl): FirebaseFirestoreRepository
+
+    @Binds
+    abstract fun bindSignInClientRepository(signInClientRepositoryImpl: SignInClientRepositoryImpl): SignInClientRepository
 }
