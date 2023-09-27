@@ -5,6 +5,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.seallook.androidx.data.remote.model.ProfileResponse
 import com.seallook.androidx.data.remote.model.UserTypeResponse
 import com.seallook.androidx.share.Constants
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class FirebaseFirestoreApiServiceImpl @Inject constructor(
@@ -12,35 +13,18 @@ class FirebaseFirestoreApiServiceImpl @Inject constructor(
 ) : FirebaseFirestoreApiService {
     override suspend fun getProfile(user: FirebaseUser?): ProfileResponse? {
         val uid = user?.uid ?: return null
-        return runCatching {
-            db.collection(Constants.USERS).document(uid).get().result
-        }.fold(
-            onSuccess = {
-                ProfileResponse(it)
-            },
-            onFailure = {
-                null
-            },
-        )
+        return ProfileResponse(db.collection(Constants.USERS).document(uid).get().await())
     }
 
     override suspend fun getUserType(user: FirebaseUser?): UserTypeResponse? {
         val uid = user?.uid ?: return null
         val userTypeValues = listOf(0, 1, 2)
-        return runCatching {
+        return UserTypeResponse(
             db.collection(Constants.USERS)
                 .document(uid)
                 .collection(Constants.USER_TYPE)
                 .whereIn(Constants.USER_TYPE, userTypeValues)
-                .get()
-                .result
-        }.fold(
-            onSuccess = {
-                UserTypeResponse(it.documents[0])
-            },
-            onFailure = {
-                UserTypeResponse(0)
-            },
+                .get().await().documents[0],
         )
     }
 
