@@ -201,6 +201,14 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             )
             viewModel.setProfile(profile)
             viewModel.setUserType()
+            findNavController().navigate(
+                R.id.action_signUpFragment_to_mainGraphActivity,
+                null,
+                navOptions {
+                    popUpTo(R.id.nav_graph)
+                },
+            )
+            dismissProgressDialog()
         } else {
             showProgressDialog("회원가입 중... 잠시만 기다려 주세요.")
             val profile = ProfileEntity(
