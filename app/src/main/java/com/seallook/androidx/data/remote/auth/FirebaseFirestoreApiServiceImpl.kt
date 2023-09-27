@@ -13,7 +13,7 @@ class FirebaseFirestoreApiServiceImpl @Inject constructor(
 ) : FirebaseFirestoreApiService {
     override suspend fun getProfile(user: FirebaseUser?): ProfileResponse? {
         val uid = user?.uid ?: return null
-        return ProfileResponse(db.collection(Constants.USERS).document(uid).get().await())
+        return db.collection(Constants.USERS).document(uid).get().await()?.let { ProfileResponse(it) }
     }
 
     override suspend fun getUserType(user: FirebaseUser?): UserTypeResponse? {

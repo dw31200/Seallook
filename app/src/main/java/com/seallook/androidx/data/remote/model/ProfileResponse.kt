@@ -22,11 +22,11 @@ data class ProfileResponse(
         operator fun invoke(snapshot: DocumentSnapshot): ProfileResponse {
             return ProfileResponse(
                 key = snapshot.id,
-                email = snapshot.getString("email")!!,
-                name = snapshot.getString("name")!!,
-                gender = snapshot.getLong("gender")!!.toInt(),
-                birth = snapshot.getDate("birth")!!,
-                timestamp = snapshot.getDate("timestamp")!!,
+                email = snapshot.getString("email") ?: "",
+                name = snapshot.getString("name") ?: "",
+                gender = snapshot.getLong("gender")?.toInt() ?: 0,
+                birth = snapshot.getDate("birth") ?: Date(),
+                timestamp = snapshot.getDate("timestamp") ?: Date(),
             )
         }
 
@@ -36,8 +36,8 @@ data class ProfileResponse(
                 email = json.getString("email"),
                 name = json.getString("name"),
                 gender = json.getInt("gender"),
-                birth = json.getLong("birth").let { Date(it) },
-                timestamp = json.getLong("timestamp").let { Date(it) },
+                birth = Date(json.getLong("birth")),
+                timestamp = Date(json.getLong("timestamp")),
             )
         }
     }
