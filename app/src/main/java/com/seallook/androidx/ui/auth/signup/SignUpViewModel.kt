@@ -49,6 +49,11 @@ class SignUpViewModel @Inject constructor(
     val emailError: LiveData<String?>
         get() = _emailError
 
+    init {
+        viewModelScope.launch {
+            _currentUser.value = getCurrentUserUseCase.getCurrentUser()
+        }
+    }
     fun signUp(profile: ProfileEntity, password: String?) {
         viewModelScope.launch {
             try {
