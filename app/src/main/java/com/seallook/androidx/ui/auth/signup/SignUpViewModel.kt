@@ -57,7 +57,7 @@ class SignUpViewModel @Inject constructor(
     fun signUp(profile: ProfileEntity, password: String?) {
         viewModelScope.launch {
             try {
-                _signUpResult.value = signUpUseCase.signUp(profile, password)
+                _signUpResult.value = signUpUseCase(profile, password)
             } catch (e: Exception) {
                 when (e) {
                     is FirebaseAuthWeakPasswordException -> {
@@ -84,17 +84,19 @@ class SignUpViewModel @Inject constructor(
 
     fun setProfile(profile: ProfileEntity) {
         viewModelScope.launch {
-            setProfileUseCase(profile.toProfile())
+            setProfileUseCase(currentUser.value, profile.toProfile())
         }
     }
 
     fun setUserType() {
         viewModelScope.launch {
-            setUserTypeUseCase(UserTypeEntity(signUpType.value))
+            setUserTypeUseCase(currentUser.value, UserTypeEntity(signUpType.value))
         }
     }
 
     fun signOut() {
-        signOutUseCase()
+        viewModelScope.launch {
+            signOutUseCase()
+        }
     }
 }

@@ -1,13 +1,13 @@
 package com.seallook.androidx.domain.usecase
 
 import com.google.firebase.auth.AuthResult
-import com.seallook.androidx.data.repository.SignInRepository
+import com.seallook.androidx.data.repository.FirebaseAuthRepository
 import dagger.Reusable
 import javax.inject.Inject
 
 @Reusable
 class SignInWithGoogleUseCase @Inject constructor(
-    private val signInRepository: SignInRepository,
+    private val firebaseAuthRepository: FirebaseAuthRepository,
 ) {
-    suspend operator fun invoke(token: String): AuthResult? = signInRepository.signInWithGoogle(token)
+    suspend operator fun invoke(token: String): AuthResult? = firebaseAuthRepository.signInWithGoogle(token)
 }
