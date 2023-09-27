@@ -1,13 +1,13 @@
 package com.seallook.androidx.domain.usecase
 
 import com.google.firebase.auth.AuthResult
-import com.seallook.androidx.data.repository.SignInRepository
+import com.seallook.androidx.data.repository.FirebaseAuthRepository
 import javax.inject.Inject
 
 class SignInWithEmailAndPasswordUseCase @Inject constructor(
-    private val signInRepository: SignInRepository,
+    private val firebaseAuthRepository: FirebaseAuthRepository,
 ) {
     suspend operator fun invoke(email: String, password: String): AuthResult? {
-        return signInRepository.signInWithEmailAndPassword(email, password)
+        return firebaseAuthRepository.signInWithEmailAndPassword(email, password)
     }
 }

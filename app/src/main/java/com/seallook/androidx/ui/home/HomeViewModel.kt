@@ -30,11 +30,13 @@ class HomeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _currentUser.value = getCurrentUserUseCase.getCurrentUser()
-            _userType.value = getUserTypeUseCase.getUserType(currentUser.value)
+            _userType.value = getUserTypeUseCase(currentUser.value)
         }
     }
 
     fun signOut() {
-        signOutUseCase()
+        viewModelScope.launch {
+            signOutUseCase()
+        }
     }
 }
