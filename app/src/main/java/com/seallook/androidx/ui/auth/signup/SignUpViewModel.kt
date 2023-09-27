@@ -1,5 +1,7 @@
 package com.seallook.androidx.ui.auth.signup
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthResult
@@ -35,12 +37,10 @@ class SignUpViewModel @Inject constructor(
     private val setUserTypeUseCase: SetUserTypeUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
-    val profile = getProfileUseCase()
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(),
-            null,
-        )
+    private val _profile = MutableLiveData<ProfileEntity?>()
+    val profile: LiveData<ProfileEntity?>
+        get() = _profile
+
     val taskProfile = getTaskProfileUseCase()
         .stateIn(
             viewModelScope,
