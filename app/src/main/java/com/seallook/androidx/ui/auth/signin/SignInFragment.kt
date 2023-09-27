@@ -8,7 +8,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.identity.Identity
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentSignInBinding
@@ -90,14 +89,12 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         startSignIn()
         viewModel.signInWithEmailAndPassword(email, password)
         viewModel.signInWithEmailResult.observe(viewLifecycleOwner) {
+            Timber.d("$it")
             if (it != null) {
-                if (it is FirebaseAuthInvalidCredentialsException) {
-                    binding.passwordTextField.error = "이메일 혹은 비밀번호가 일치하지 않습니다. 다시 입력해 주세요."
-                } else {
-                    findNavController().navigate(R.id.action_signInFragment_to_mainGraphActivity)
-                }
-
+                findNavController().navigate(R.id.action_signInFragment_to_mainGraphActivity)
                 cancelSignIn()
+            } else {
+                failSignIn()
             }
         }
     }

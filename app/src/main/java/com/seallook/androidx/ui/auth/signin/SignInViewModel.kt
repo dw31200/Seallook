@@ -67,7 +67,11 @@ class SignInViewModel @Inject constructor(
 
     fun signInWithEmailAndPassword(email: String, password: String) {
         viewModelScope.launch {
-            _signInWithEmailResult.value = signInWithEmailAndPasswordUseCase(email, password)
+            try {
+                _signInWithEmailResult.value = signInWithEmailAndPasswordUseCase(email, password)
+            } catch (e: Exception) {
+                _signInWithEmailResult.value = null
+            }
         }
     }
 }
