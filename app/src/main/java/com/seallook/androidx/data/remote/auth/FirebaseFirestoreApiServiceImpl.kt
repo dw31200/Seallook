@@ -5,7 +5,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.seallook.androidx.data.remote.model.ProfileResponse
 import com.seallook.androidx.data.remote.model.UserTypeResponse
 import com.seallook.androidx.share.Constants
-import java.util.Date
 import javax.inject.Inject
 
 class FirebaseFirestoreApiServiceImpl @Inject constructor(
@@ -20,14 +19,7 @@ class FirebaseFirestoreApiServiceImpl @Inject constructor(
                 ProfileResponse(it)
             },
             onFailure = {
-                ProfileResponse(
-                    "",
-                    user.email ?: "",
-                    user.displayName ?: "",
-                    0,
-                    Date(),
-                    Date(),
-                )
+                null
             },
         )
     }

@@ -9,9 +9,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.model.ProfileEntity
 import com.seallook.androidx.domain.usecase.GetBeginSignInResultUseCase
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
-import com.seallook.androidx.domain.usecase.GetProfileSnapshotUseCase
 import com.seallook.androidx.domain.usecase.GetProfileUseCase
-import com.seallook.androidx.domain.usecase.GetTaskProfileUseCase
 import com.seallook.androidx.domain.usecase.SignInWithEmailAndPasswordUseCase
 import com.seallook.androidx.domain.usecase.SignInWithGoogleUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
@@ -24,8 +22,6 @@ class SignInViewModel @Inject constructor(
     private val signInWithGoogleUseCase: SignInWithGoogleUseCase,
     private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPasswordUseCase,
     private val getProfileUseCase: GetProfileUseCase,
-    private val getTaskProfileUseCase: GetTaskProfileUseCase,
-    private val getProfileSnapshotUseCase: GetProfileSnapshotUseCase,
     private val getBeginSignInResultUseCase: GetBeginSignInResultUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
 ) : BaseViewModel() {
@@ -44,6 +40,12 @@ class SignInViewModel @Inject constructor(
     private val _signInWithEmailResult = MutableLiveData<AuthResult?>()
     val signInWithEmailResult: LiveData<AuthResult?>
         get() = _signInWithEmailResult
+
+    fun getCurrentUser() {
+        viewModelScope.launch {
+            _currentUser.value = getCurrentUserUseCase.getCurrentUser()
+        }
+    }
 
     fun getProfile(user: FirebaseUser) {
         viewModelScope.launch {

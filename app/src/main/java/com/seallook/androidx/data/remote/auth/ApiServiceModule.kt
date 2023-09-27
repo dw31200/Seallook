@@ -46,4 +46,7 @@ abstract class ApiServiceModule {
 
     @Binds
     abstract fun bindFirebaseFirestoreApiService(firebaseFirestoreApiServiceImpl: FirebaseFirestoreApiServiceImpl): FirebaseFirestoreApiService
+
+    @Binds
+    abstract fun bindSignInClientApiService(signInClientApiServiceImpl: SignInClientApiServiceImpl): SignInClientApiService
 }

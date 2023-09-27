@@ -124,21 +124,21 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             signUpButton.setOnClickListener { signUp() }
         }
         lifecycleScope.launch {
-            viewModel.profileSnapshot.collectLatest {
-                if (it != null) {
-                    Timber.d("data is non null")
-                    dismissProgressDialog()
-                    findNavController().navigate(
-                        R.id.mainFragment,
-                        null,
-                        navOptions {
-                            popUpTo(R.id.nav_graph)
-                        },
-                    )
-                } else {
-                    Timber.d("data is null")
-                }
-            }
+//            viewModel.profileSnapshot.collectLatest {
+//                if (it != null) {
+//                    Timber.d("data is non null")
+//                    dismissProgressDialog()
+//                    findNavController().navigate(
+//                        R.id.mainFragment,
+//                        null,
+//                        navOptions {
+//                            popUpTo(R.id.nav_graph)
+//                        },
+//                    )
+//                } else {
+//                    Timber.d("data is null")
+//                }
+//            }
         }
     }
 

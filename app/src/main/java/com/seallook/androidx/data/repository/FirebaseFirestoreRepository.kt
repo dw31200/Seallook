@@ -8,6 +8,7 @@ interface FirebaseFirestoreRepository {
     suspend fun getProfile(user: FirebaseUser?): Profile?
 
     suspend fun getUserType(user: FirebaseUser?): UserType?
+
     suspend fun setProfile(user: FirebaseUser?, profile: Profile)
 
     suspend fun setUserType(user: FirebaseUser?, type: UserType)
