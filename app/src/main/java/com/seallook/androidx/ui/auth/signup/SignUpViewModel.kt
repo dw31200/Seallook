@@ -5,6 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.model.ProfileEntity
 import com.seallook.androidx.domain.model.UserTypeEntity
@@ -16,9 +19,6 @@ import com.seallook.androidx.domain.usecase.SignOutUseCase
 import com.seallook.androidx.domain.usecase.SignUpUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,26 +35,45 @@ class SignUpViewModel @Inject constructor(
     private val _profile = MutableLiveData<ProfileEntity?>()
     val profile: LiveData<ProfileEntity?>
         get() = _profile
-    val currentUser: StateFlow<FirebaseUser?> = getCurrentUserUseCase()
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(),
-            null,
-        )
+    private val _currentUser = MutableLiveData<FirebaseUser?>()
+    val currentUser: LiveData<FirebaseUser?>
+        get() = _currentUser
     val signUpType = savedStateHandle.getStateFlow("selectSignUpType", 0)
-    lateinit var result: StateFlow<AuthResult?>
+    private val _signUpResult = MutableLiveData<AuthResult?>()
+    val signUpResult: LiveData<AuthResult?>
+        get() = _signUpResult
+    private val _passwordError = MutableLiveData<String?>()
+    val passwordError: LiveData<String?>
+        get() = _passwordError
+    private val _emailError = MutableLiveData<String?>()
+    val emailError: LiveData<String?>
+        get() = _emailError
 
-    fun signUp(profile: ProfileEntity, password: String? = null): Exception? {
-        return try {
-            result = signUpUseCase(profile, password)
-                .stateIn(
-                    viewModelScope,
-                    SharingStarted.WhileSubscribed(),
-                    null,
-                )
-            null
-        } catch (e: Exception) {
-            e
+    fun signUp(profile: ProfileEntity, password: String?) {
+        viewModelScope.launch {
+            try {
+                _signUpResult.value = signUpUseCase.signUp(profile, password)
+            } catch (e: Exception) {
+                when (e) {
+                    is FirebaseAuthWeakPasswordException -> {
+                        _passwordError.value =
+                            "안전한 비밀번호가 아닙니다. 길이가 8자 이상이고 영어와 숫자, 특수문자가 조합되어야 합니다."
+                    }
+
+                    is FirebaseAuthInvalidCredentialsException -> {
+                        _emailError.value = "이메일 주소를 올바르게 입력해 주세요."
+                    }
+
+                    is FirebaseAuthUserCollisionException -> {
+                        _emailError.value = "이미 사용중인 이메일 주소 입니다."
+                    }
+
+                    else -> {
+                        _passwordError.value = "오류가 발생하였습니다. 잠시 후 다시 시도해 주세요."
+                    }
+                }
+                _signUpResult.value = null
+            }
         }
     }
 
