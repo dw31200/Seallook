@@ -120,6 +120,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        bind:setErrorMessage="@{vm.emailError}"
                         android:hint="이메일">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -141,6 +142,7 @@
                         android:layout_marginTop="16dp"
                         bind:visible="@{vm.currentUser == null}"
                         android:hint="비밀번호"
+                        bind:setErrorMessage="@{vm.passwordError}"
                         app:passwordToggleEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText

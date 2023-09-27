@@ -2,7 +2,7 @@ package com.seallook.androidx.data.repository
 
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
-import com.seallook.androidx.data.remote.model.ProfileResponse
+import com.seallook.androidx.data.model.Profile
 
 interface FirebaseAuthRepository {
     suspend fun getCurrentUser(): FirebaseUser?
@@ -18,5 +18,5 @@ interface FirebaseAuthRepository {
 
     suspend fun signOut()
 
-    suspend fun signUp(profile: ProfileResponse, password: String?): AuthResult?
+    suspend fun signUp(profile: Profile, password: String?): AuthResult?
 }
