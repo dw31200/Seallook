@@ -10,7 +10,6 @@ import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentSignInBinding
 import com.seallook.androidx.ui.base.auth.SignInBaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 /* TODO
@@ -33,9 +32,7 @@ class SignInFragment : SignInBaseFragment<FragmentSignInBinding>(
     override fun onViewCreatedAfterBinding() {
         with(binding) {
             googleSignInButton.setOnClickListener {
-                lifecycleScope.launch {
-                    signInWithGoogle()
-                }
+                signInWithGoogle()
             }
             emailSignInButton.setOnClickListener {
                 lifecycleScope.launch {
@@ -45,24 +42,39 @@ class SignInFragment : SignInBaseFragment<FragmentSignInBinding>(
             emailSignUpButton.setOnClickListener {
                 findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
             }
+            viewModel.profile.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    findNavController().navigate(R.id.action_signInFragment_to_mainGraphActivity)
+                } else {
+                    findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
+                }
+            }
+            viewModel.signInWithGoogleResult.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    navigation()
+                    cancelSignIn()
+                }
+            }
         }
     }
 
-    private suspend fun signInWithEmailAndPassword() = coroutineScope {
-        if (isSigningIn()) return@coroutineScope
+    private fun signInWithEmailAndPassword() {
+//        private suspend fun signInWithEmailAndPassword() = coroutineScope {
+        if (isSigningIn()) return
         val email = binding.emailTextField.editText!!.text.toString().trim()
         val password = binding.passwordTextField.editText!!.text.toString().trim()
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.emailTextField.error = "이메일 주소를 올바르게 입력해 주세요."
-            return@coroutineScope
+            return
         }
 
         startSignIn()
-        viewModel.signInWithEmailAndPassword(email, password) { result ->
-            if (result != null) {
-                if (result is FirebaseAuthInvalidCredentialsException) {
-                    binding.passwordTextField.error = "비밀번호가 틀렸습니다. 다시 입력해 주세요."
+        viewModel.signInWithEmailAndPassword(email, password)
+        viewModel.signInWithEmailResult.observe(viewLifecycleOwner) {
+            if (it != null) {
+                if (it is FirebaseAuthInvalidCredentialsException) {
+                    binding.passwordTextField.error = "이메일 혹은 비밀번호가 일치하지 않습니다. 다시 입력해 주세요."
                 } else {
                     findNavController().navigate(R.id.action_signInFragment_to_mainGraphActivity)
                 }

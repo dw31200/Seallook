@@ -1,5 +1,7 @@
 package com.seallook.androidx.ui.auth.signin
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.identity.BeginSignInResult
 import com.google.firebase.auth.AuthResult
@@ -14,10 +16,6 @@ import com.seallook.androidx.domain.usecase.SignInWithEmailAndPasswordUseCase
 import com.seallook.androidx.domain.usecase.SignInWithGoogleUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,46 +29,43 @@ class SignInViewModel @Inject constructor(
     private val getBeginSignInResultUseCase: GetBeginSignInResultUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
 ) : BaseViewModel() {
-    val profile = getTaskProfileUseCase()
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(),
-            null,
-        )
-    val currentUser: StateFlow<FirebaseUser?> = getCurrentUserUseCase()
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(),
-            null,
-        )
-    val profileSnapshot: StateFlow<ProfileEntity?> =
-        currentUser
-            .flatMapLatest { currentUser ->
-                getProfileSnapshotUseCase(currentUser)
-            }.stateIn(
-                viewModelScope,
-                SharingStarted.WhileSubscribed(),
-                null,
-            )
+    private val _profile = MutableLiveData<ProfileEntity?>()
+    val profile: LiveData<ProfileEntity?>
+        get() = _profile
+    private val _currentUser = MutableLiveData<FirebaseUser?>()
+    val currentUser: LiveData<FirebaseUser?>
+        get() = _currentUser
+    private val _beginSignInResult = MutableLiveData<BeginSignInResult?>()
+    val beginSignInResult: LiveData<BeginSignInResult?>
+        get() = _beginSignInResult
+    private val _signInWithGoogleResult = MutableLiveData<AuthResult?>()
+    val signInWithGoogleResult: LiveData<AuthResult?>
+        get() = _signInWithGoogleResult
+    private val _signInWithEmailResult = MutableLiveData<AuthResult?>()
+    val signInWithEmailResult: LiveData<AuthResult?>
+        get() = _signInWithEmailResult
 
-    fun getBeginSignInResult(callback: (BeginSignInResult) -> Unit) {
+    fun getProfile(user: FirebaseUser) {
         viewModelScope.launch {
-            val result = getBeginSignInResultUseCase()
-            callback(result)
+            _profile.value = getProfileUseCase(user)
         }
     }
 
-    fun signInWithGoogle(token: String, callback: (AuthResult?) -> Unit) {
+    fun getBeginSignInResult() {
         viewModelScope.launch {
-            val result = signInWithGoogleUseCase(token)
-            callback(result)
+            _beginSignInResult.value = getBeginSignInResultUseCase()
         }
     }
 
-    fun signInWithEmailAndPassword(email: String, password: String, callback: (AuthResult?) -> Unit) {
+    fun signInWithGoogle(token: String) {
         viewModelScope.launch {
-            val result = signInWithEmailAndPasswordUseCase(email, password)
-            callback(result)
+            _signInWithGoogleResult.value = signInWithGoogleUseCase(token)
+        }
+    }
+
+    fun signInWithEmailAndPassword(email: String, password: String) {
+        viewModelScope.launch {
+            _signInWithEmailResult.value = signInWithEmailAndPasswordUseCase(email, password)
         }
     }
 }

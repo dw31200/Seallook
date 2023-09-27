@@ -6,15 +6,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.identity.Identity
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
 import com.seallook.androidx.ui.auth.signin.SignInViewModel
 import com.seallook.androidx.ui.base.BaseFragment
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -42,27 +41,23 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
             val idToken = credential.googleIdToken
 
             if (idToken != null) {
-                lifecycleScope.launch {
-                    viewModel.signInWithGoogle(idToken) { result ->
-                        if (result != null) {
-                            navigation()
-                            cancelSignIn()
-                        }
-                    }
-                }
+                viewModel.signInWithGoogle(idToken)
             } else {
                 failSignIn()
             }
         }
 
-    protected suspend fun signInWithGoogle() {
+    protected fun signInWithGoogle() {
         if (isSigningIn()) return
 
         startSignIn()
-        viewModel.getBeginSignInResult { result ->
-            googleSignInIntentResultLauncher.launch(
-                IntentSenderRequest.Builder(result.pendingIntent.intentSender).build(),
-            )
+        viewModel.getBeginSignInResult()
+        viewModel.beginSignInResult.observe(viewLifecycleOwner) {
+            if (it != null) {
+                googleSignInIntentResultLauncher.launch(
+                    IntentSenderRequest.Builder(it.pendingIntent.intentSender).build(),
+                )
+            }
         }
     }
 
@@ -71,25 +66,11 @@ abstract class SignInBaseFragment<T : ViewDataBinding>(
     }
 
     protected fun navigation() {
-        lifecycleScope.launch {
-//            viewModel.profileSnapshot.collectLatest {
-//                if (it != null) {
-//                    findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
-//                } else {
-//                    Timber.d("${it}")
-//                    findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
-//                }
-//            }
-            viewModel.profile.collectLatest {
-                it?.let {
-                    it.addOnSuccessListener { document ->
-                        if (document.data != null) {
-                            findNavController().navigate(R.id.action_signInFragment_to_mainGraphActivity)
-                        } else {
-                            findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
-                        }
-                    }
-                }
+        viewModel.profile.observe(viewLifecycleOwner) {
+            if (it != null) {
+                findNavController().navigate(R.id.action_signInFragment_to_mainGraphActivity)
+            } else {
+                findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
             }
         }
     }
