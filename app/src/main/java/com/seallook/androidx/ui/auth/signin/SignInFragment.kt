@@ -1,11 +1,13 @@
 package com.seallook.androidx.ui.auth.signin
 
 import android.app.Activity
+import android.content.Intent
 import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.identity.Identity
 import com.seallook.androidx.BR
@@ -49,6 +51,10 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
                 failSignIn()
             }
         }
+    private val extras = ActivityNavigator.Extras.Builder()
+        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        .build()
 
     override fun onViewCreatedAfterBinding() {
         with(binding) {
@@ -91,7 +97,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         viewModel.signInWithEmailResult.observe(viewLifecycleOwner) {
             Timber.d("$it")
             if (it != null) {
-                findNavController().navigate(R.id.action_signInFragment_to_mainGraphActivity)
+                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainGraphActivity(), extras)
                 cancelSignIn()
             } else {
                 failSignIn()
@@ -120,9 +126,9 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     private fun navigation() {
         viewModel.profile.observe(viewLifecycleOwner) {
             if (it != null) {
-                findNavController().navigate(R.id.action_signInFragment_to_mainGraphActivity)
+                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainGraphActivity(), extras)
             } else {
-                findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
+                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSelectSignUpTypeFragment())
             }
         }
     }

@@ -1,9 +1,10 @@
 package com.seallook.androidx.ui.mypage.setting
 
+import android.content.Intent
 import androidx.fragment.app.viewModels
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
-import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentSettingBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,10 +22,15 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>(
 
     override fun viewModelVariableId(): Int = BR.vm
 
+    private val extras = ActivityNavigator.Extras.Builder()
+        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        .build()
+
     override fun onViewCreatedAfterBinding() {
         binding.signOutButton.setOnClickListener {
             viewModel.signOut()
-            findNavController().navigate(R.id.action_settingFragment_to_splash_navigation)
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToSplashNavigation(), extras)
         }
     }
 }
