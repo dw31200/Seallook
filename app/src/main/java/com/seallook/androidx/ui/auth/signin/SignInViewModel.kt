@@ -43,7 +43,7 @@ class SignInViewModel @Inject constructor(
 
     fun getCurrentUser() {
         viewModelScope.launch {
-            _currentUser.value = getCurrentUserUseCase.getCurrentUser()
+            _currentUser.value = getCurrentUserUseCase()
         }
     }
 
