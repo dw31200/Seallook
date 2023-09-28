@@ -8,7 +8,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.seallook.androidx.BR
 import com.seallook.androidx.BuildConfig
@@ -203,10 +202,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             viewModel.setUserType()
             findNavController().navigate(
                 R.id.action_signUpFragment_to_mainGraphActivity,
-                null,
-                navOptions {
-                    popUpTo(R.id.nav_graph)
-                },
             )
             dismissProgressDialog()
         } else {
@@ -226,10 +221,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                     viewModel.setUserType()
                     findNavController().navigate(
                         R.id.action_signUpFragment_to_mainGraphActivity,
-                        null,
-                        navOptions {
-                            popUpTo(R.id.nav_graph)
-                        },
                     )
                     dismissProgressDialog()
                 } else {
