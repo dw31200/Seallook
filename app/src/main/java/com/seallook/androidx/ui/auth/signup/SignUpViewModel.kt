@@ -82,9 +82,9 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun setProfile(profile: ProfileEntity) {
+    fun setProfile(user: FirebaseUser?, profile: ProfileEntity) {
         viewModelScope.launch {
-            setProfileUseCase(currentUser.value, profile.toProfile())
+            setProfileUseCase(user, profile.toProfile())
         }
     }
 
