@@ -7,7 +7,6 @@ data class CounselorInfoModel(
     val name: String,
     val createdAt: Long,
     val description: String,
-    val counselingType: CounselingTypeModel,
     val imageUrl: String,
 ) {
     companion object {
@@ -17,7 +16,6 @@ data class CounselorInfoModel(
                 name = counselorInfo.name,
                 createdAt = counselorInfo.createdAt,
                 description = counselorInfo.description,
-                counselingType = CounselingTypeModel(counselorInfo.counselingType),
                 imageUrl = counselorInfo.imageUrl,
             )
         }

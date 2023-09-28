@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class CounselingTypeEntity(
     @PrimaryKey
     val id: Int,
+    val uid: String,
     val title: String,
     val count: Int,
     val time: Int,
