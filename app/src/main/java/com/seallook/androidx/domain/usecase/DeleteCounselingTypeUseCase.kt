@@ -1,14 +1,14 @@
 package com.seallook.androidx.domain.usecase
 
-import com.seallook.androidx.data.repository.DeleteCounselingTypeRepository
+import com.seallook.androidx.data.repository.CounselingTypeRepository
 import dagger.Reusable
 import javax.inject.Inject
 
 @Reusable
 class DeleteCounselingTypeUseCase @Inject constructor(
-    private val deleteCounselingTypeRepository: DeleteCounselingTypeRepository,
+    private val counselingTypeRepository: CounselingTypeRepository,
 ) {
     suspend operator fun invoke(counselingTypeId: Int) {
-        deleteCounselingTypeRepository.deleteCounselingType(counselingTypeId)
+        counselingTypeRepository.deleteCounselingType(counselingTypeId)
     }
 }

@@ -6,12 +6,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetNaverSearchRepositoryImpl @Inject constructor(
-    private val getNaverSearchApiService: NaverSearchApiService,
-) : GetNaverSearchRepository {
+class NaverSearchRepositoryImpl @Inject constructor(
+    private val naverSearchApiService: NaverSearchApiService,
+) : NaverSearchRepository {
     override fun getNaverSearchResponse(type: String, query: String): Flow<List<NaverSearchInfo>> {
         return flow {
-            val remote = getNaverSearchApiService.getNaverSearchResponse(type, query).map {
+            val remote = naverSearchApiService.getNaverSearchResponse(type, query).map {
                 NaverSearchInfo(it)
             }
             emit(remote)

@@ -1,6 +1,6 @@
 package com.seallook.androidx.domain.usecase
 
-import com.seallook.androidx.data.repository.GetCounselingTypeRepository
+import com.seallook.androidx.data.repository.CounselingTypeRepository
 import com.seallook.androidx.domain.model.CounselingTypeModel
 import dagger.Reusable
 import kotlinx.coroutines.flow.Flow
@@ -9,10 +9,10 @@ import javax.inject.Inject
 
 @Reusable
 class GetCounselingTypeUseCase @Inject constructor(
-    private val getCounselingTypeRepository: GetCounselingTypeRepository,
+    private val counselingTypeRepository: CounselingTypeRepository,
 ) {
     operator fun invoke(): Flow<List<CounselingTypeModel>> {
-        return getCounselingTypeRepository.getCounselingType().map {
+        return counselingTypeRepository.getCounselingType().map {
             it.map {
                 CounselingTypeModel(it)
             }

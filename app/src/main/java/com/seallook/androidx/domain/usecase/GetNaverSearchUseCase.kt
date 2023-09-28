@@ -1,6 +1,6 @@
 package com.seallook.androidx.domain.usecase
 
-import com.seallook.androidx.data.repository.GetNaverSearchRepository
+import com.seallook.androidx.data.repository.NaverSearchRepository
 import com.seallook.androidx.domain.model.NaverSearchModel
 import dagger.Reusable
 import kotlinx.coroutines.flow.Flow
@@ -9,10 +9,10 @@ import javax.inject.Inject
 
 @Reusable
 class GetNaverSearchUseCase @Inject constructor(
-    private val getNaverSearchRepository: GetNaverSearchRepository,
+    private val naverSearchRepository: NaverSearchRepository,
 ) {
     operator fun invoke(type: String, query: String): Flow<List<NaverSearchModel>> {
-        return getNaverSearchRepository.getNaverSearchResponse(type, query).map {
+        return naverSearchRepository.getNaverSearchResponse(type, query).map {
             it.map {
                 NaverSearchModel(it)
             }
