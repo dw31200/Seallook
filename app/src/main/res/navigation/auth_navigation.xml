@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    android:id="@+id/auth_navigation"
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/signInFragment"
@@ -12,17 +12,12 @@
             android:id="@+id/action_signInFragment_to_mainGraphActivity"
             app:destination="@id/mainGraphActivity"
             app:launchSingleTop="true"
-            app:popUpTo="@id/signInFragment"
+            app:popUpTo="@id/auth_navigation"
             app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_signInFragment_to_selectSignUpTypeFragment"
             app:destination="@id/selectSignUpTypeFragment" />
     </fragment>
-
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.seallook.androidx.ui.main.MainFragment"
-        android:label="MainFragment" />
 
     <fragment
         android:id="@+id/signUpFragment"
@@ -36,11 +31,8 @@
             android:id="@+id/action_signUpFragment_to_mainGraphActivity"
             app:destination="@id/mainGraphActivity"
             app:launchSingleTop="true"
-            app:popUpTo="@id/signUpFragment"
+            app:popUpTo="@id/auth_navigation"
             app:popUpToInclusive="true"/>
-        <action
-            android:id="@+id/action_signUpFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
     </fragment>
 
     <fragment
@@ -56,26 +48,9 @@
                 android:defaultValue="0" />
         </action>
     </fragment>
-
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.seallook.androidx.ui.splash.SplashFragment"
-        android:label="SplashFragment" >
-        <action
-            android:id="@+id/action_splashFragment_to_signInFragment"
-            app:destination="@id/signInFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true"/>
-        <action
-            android:id="@+id/action_splashFragment_to_mainGraphActivity"
-            app:destination="@id/mainGraphActivity"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true"/>
-    </fragment>
     <activity
         android:id="@+id/mainGraphActivity"
         android:name="com.seallook.androidx.ui.main.MainGraphActivity"
         android:label="MainGraphActivity" />
+
 </navigation>
