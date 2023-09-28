@@ -1,11 +1,7 @@
 package com.seallook.androidx.data
 
-import com.seallook.androidx.data.repository.BeginSignInResultRepository
-import com.seallook.androidx.data.repository.BeginSignInResultRepositoryImpl
 import com.seallook.androidx.data.repository.CounselingTypeRepository
 import com.seallook.androidx.data.repository.CounselingTypeRepositoryImpl
-import com.seallook.androidx.data.repository.CurrentUserRepository
-import com.seallook.androidx.data.repository.CurrentUserRepositoryImpl
 import com.seallook.androidx.data.repository.FirebaseAuthRepository
 import com.seallook.androidx.data.repository.FirebaseAuthRepositoryImpl
 import com.seallook.androidx.data.repository.FirebaseFirestoreRepository
@@ -18,19 +14,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 abstract class DataModule {
-    @Singleton
-    @Binds
-    abstract fun bindBeginSignInResultRepository(beginSignInResultRepositoryImpl: BeginSignInResultRepositoryImpl): BeginSignInResultRepository
-
-    @Singleton
-    @Binds
-    abstract fun bindCurrentUserRepository(currentUserRepositoryImpl: CurrentUserRepositoryImpl): CurrentUserRepository
-
     @Binds
     abstract fun bindNaverSearchRepository(naverSearchRepositoryImpl: NaverSearchRepositoryImpl): NaverSearchRepository
 

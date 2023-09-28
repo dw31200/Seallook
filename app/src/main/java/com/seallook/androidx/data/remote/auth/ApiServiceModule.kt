@@ -8,13 +8,6 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 @Module
 abstract class ApiServiceModule {
-
-    @Binds
-    abstract fun bindBeginSignInResultApiService(beginSignInResultApiServiceImpl: BeginSignInResultApiServiceImpl): BeginSignInResultApiService
-
-    @Binds
-    abstract fun bindCurrentUserApiService(currentUserApiServiceImpl: CurrentUserApiServiceImpl): CurrentUserApiService
-
     @Binds
     abstract fun bindFirebaseAuthApiService(firebaseAuthApiServiceImpl: FirebaseAuthApiServiceImpl): FirebaseAuthApiService
 
