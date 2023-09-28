@@ -24,13 +24,16 @@ class FirebaseFirestoreApiServiceImpl @Inject constructor(
     override suspend fun getUserType(user: FirebaseUser?): UserTypeResponse? {
         val uid = user?.uid ?: return null
         val userTypeValues = listOf(0, 1, 2)
-        return UserTypeResponse(
-            db.collection(Constants.USERS)
-                .document(uid)
-                .collection(Constants.USER_TYPE)
-                .whereIn(Constants.USER_TYPE, userTypeValues)
-                .get().await().documents[0],
-        )
+        val documentResponse = db.collection(Constants.USERS)
+            .document(uid)
+            .collection(Constants.USER_TYPE)
+            .whereIn(Constants.USER_TYPE, userTypeValues)
+            .get().await()
+        return if (!documentResponse.isEmpty) {
+            UserTypeResponse(documentResponse.documents[0])
+        } else {
+            null
+        }
     }
 
     override suspend fun setProfile(user: FirebaseUser?, profile: ProfileResponse) {

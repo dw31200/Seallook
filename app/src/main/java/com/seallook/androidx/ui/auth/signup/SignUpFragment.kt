@@ -199,7 +199,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                 birth!!,
                 Date(),
             )
-            viewModel.setProfile(profile)
+            viewModel.setProfile(viewModel.currentUser.value, profile)
             viewModel.setUserType()
             findNavController().navigate(
                 R.id.action_signUpFragment_to_mainGraphActivity,
@@ -221,8 +221,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             )
             viewModel.signUp(profile, password)
             viewModel.signUpResult.observe(viewLifecycleOwner) {
-                if (it != null) {
-                    viewModel.setProfile(profile)
+                if (it?.user != null) {
+                    viewModel.setProfile(it.user, profile)
                     viewModel.setUserType()
                     findNavController().navigate(
                         R.id.action_signUpFragment_to_mainGraphActivity,
