@@ -7,9 +7,17 @@ data class CounselorInfo(
     val name: String,
     val createdAt: Long,
     val description: String,
-    val counselingType: CounselingType,
     val imageUrl: String,
 ) {
+    fun toResponse(): CounselorInfoResponse {
+        return CounselorInfoResponse(
+            counselorId = counselorId,
+            name = name,
+            createdAt = createdAt,
+            description = description,
+            imageUrl = imageUrl,
+        )
+    }
     companion object {
         operator fun invoke(counselorInfoResponse: CounselorInfoResponse): CounselorInfo {
             return CounselorInfo(
@@ -17,7 +25,6 @@ data class CounselorInfo(
                 name = counselorInfoResponse.name,
                 createdAt = counselorInfoResponse.createdAt,
                 description = counselorInfoResponse.description,
-                counselingType = CounselingType(counselorInfoResponse.counselingType),
                 imageUrl = counselorInfoResponse.imageUrl,
             )
         }

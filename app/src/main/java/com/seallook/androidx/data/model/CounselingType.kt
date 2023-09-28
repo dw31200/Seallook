@@ -5,6 +5,7 @@ import com.seallook.androidx.data.remote.model.CounselingTypeResponse
 
 data class CounselingType(
     val id: Int,
+    val uid: String,
     val title: String,
     val count: Int,
     val time: Int,
@@ -13,6 +14,18 @@ data class CounselingType(
     fun toEntity(): CounselingTypeEntity {
         return CounselingTypeEntity(
             id = id,
+            uid = uid,
+            title = title,
+            count = count,
+            time = time,
+            pay = pay,
+        )
+    }
+
+    fun toResponse(): CounselingTypeResponse {
+        return CounselingTypeResponse(
+            id = id,
+            uid = uid,
             title = title,
             count = count,
             time = time,
@@ -24,6 +37,7 @@ data class CounselingType(
         operator fun invoke(counselingTypeEntity: CounselingTypeEntity): CounselingType {
             return CounselingType(
                 id = counselingTypeEntity.id,
+                uid = counselingTypeEntity.uid,
                 title = counselingTypeEntity.title,
                 count = counselingTypeEntity.count,
                 time = counselingTypeEntity.time,
@@ -34,6 +48,7 @@ data class CounselingType(
         operator fun invoke(counselingTypeResponse: CounselingTypeResponse): CounselingType {
             return CounselingType(
                 id = counselingTypeResponse.id,
+                uid = counselingTypeResponse.uid,
                 title = counselingTypeResponse.title,
                 count = counselingTypeResponse.count,
                 time = counselingTypeResponse.time,
