@@ -1,6 +1,7 @@
 package com.seallook.androidx.data.model
 
 import com.seallook.androidx.data.local.model.CounselingTypeEntity
+import com.seallook.androidx.data.remote.model.CounselingTypeResponse
 
 data class CounselingType(
     val id: Int,
@@ -18,6 +19,7 @@ data class CounselingType(
             pay = pay,
         )
     }
+
     companion object {
         operator fun invoke(counselingTypeEntity: CounselingTypeEntity): CounselingType {
             return CounselingType(
@@ -26,6 +28,16 @@ data class CounselingType(
                 count = counselingTypeEntity.count,
                 time = counselingTypeEntity.time,
                 pay = counselingTypeEntity.pay,
+            )
+        }
+
+        operator fun invoke(counselingTypeResponse: CounselingTypeResponse): CounselingType {
+            return CounselingType(
+                id = counselingTypeResponse.id,
+                title = counselingTypeResponse.title,
+                count = counselingTypeResponse.count,
+                time = counselingTypeResponse.time,
+                pay = counselingTypeResponse.pay,
             )
         }
     }
