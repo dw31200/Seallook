@@ -1,5 +1,6 @@
 package com.seallook.androidx.ui.auth.signup
 
+import android.content.Intent
 import android.text.format.DateUtils
 import android.util.Patterns
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.seallook.androidx.BR
@@ -50,6 +52,11 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                 )
             }
         }
+
+    private val extras = ActivityNavigator.Extras.Builder()
+        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        .build()
 
     override fun viewModelVariableId(): Int = BR.vm
 
@@ -201,7 +208,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             viewModel.setProfile(viewModel.currentUser.value, profile)
             viewModel.setUserType()
             findNavController().navigate(
-                R.id.action_signUpFragment_to_mainGraphActivity,
+                SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
+                extras,
             )
             dismissProgressDialog()
         } else {
@@ -220,7 +228,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                     viewModel.setProfile(it.user, profile)
                     viewModel.setUserType()
                     findNavController().navigate(
-                        R.id.action_signUpFragment_to_mainGraphActivity,
+                        SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
+                        extras,
                     )
                     dismissProgressDialog()
                 } else {
