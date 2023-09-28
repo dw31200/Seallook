@@ -51,7 +51,7 @@ class SignUpViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _currentUser.value = getCurrentUserUseCase.getCurrentUser()
+            _currentUser.value = getCurrentUserUseCase()
         }
     }
     fun signUp(profile: ProfileEntity, password: String?) {

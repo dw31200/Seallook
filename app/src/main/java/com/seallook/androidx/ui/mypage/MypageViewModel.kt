@@ -26,7 +26,7 @@ class MypageViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _currentUser.value = getCurrentUserUseCase.getCurrentUser()
+            _currentUser.value = getCurrentUserUseCase()
             _userType.value = getUserTypeUseCase(currentUser.value)
         }
     }

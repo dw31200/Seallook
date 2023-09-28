@@ -2,9 +2,7 @@ package com.seallook.androidx.ui.splash
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import androidx.navigation.navOptions
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentSplashBinding
@@ -19,13 +17,27 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
 
     override fun viewModelVariableId(): Int = BR.vm
 
-    private val auth: FirebaseAuth = Firebase.auth
-
     override fun onViewCreatedAfterBinding() {
-        if (auth.currentUser != null) {
-            findNavController().navigate(R.id.action_splashFragment_to_mainGraphActivity)
-        } else {
-            findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
+        viewModel.currentUser.observe(viewLifecycleOwner) {
+            if (it != null) {
+                findNavController().navigate(
+                    R.id.action_splashFragment_to_mainGraphActivity,
+                    null,
+                    navOptions {
+                        launchSingleTop = true
+                        popUpTo(R.id.splash_navigation)
+                    },
+                )
+            } else {
+                findNavController().navigate(
+                    R.id.action_splashFragment_to_signInFragment,
+                    null,
+                    navOptions {
+                        launchSingleTop = true
+                        popUpTo(R.id.splash_navigation)
+                    },
+                )
+            }
         }
     }
 }
