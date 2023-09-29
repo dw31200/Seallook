@@ -8,6 +8,9 @@
         android:id="@+id/homeFragment"
         android:name="com.seallook.androidx.ui.home.HomeFragment"
         android:label="HomeFragment" >
+        <argument
+            android:name="ShowAppBar"
+            android:defaultValue="true" />
         <action
             android:id="@+id/action_homeFragment_to_searchCounselorFragment"
             app:destination="@id/searchCounselorFragment" />
@@ -54,15 +57,26 @@
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.seallook.androidx.ui.calendar.CalendarFragment"
-        android:label="CalendarFragment" />
+        android:label="CalendarFragment" >
+        <argument
+            android:name="ShowAppBar"
+            android:defaultValue="true" />
+    </fragment>
     <fragment
         android:id="@+id/chatListFragment"
         android:name="com.seallook.androidx.ui.chat.list.ChatListFragment"
-        android:label="ChatListFragment" />
+        android:label="ChatListFragment" >
+        <argument
+            android:name="ShowAppBar"
+            android:defaultValue="true" />
+    </fragment>
     <fragment
         android:id="@+id/mypageFragment"
         android:name="com.seallook.androidx.ui.mypage.MypageFragment"
         android:label="MypageFragment" >
+        <argument
+            android:name="ShowAppBar"
+            android:defaultValue="true" />
         <action
             android:id="@+id/action_mypageFragment_to_updateCounselorBasicInfoFragment"
             app:destination="@id/updateCounselorBasicInfoFragment" />
@@ -103,6 +117,10 @@
     <fragment
         android:id="@+id/diaryListFragment"
         android:name="com.seallook.androidx.ui.diary.list.DiaryListFragment"
-        android:label="DiaryListFragment" />
+        android:label="DiaryListFragment" >
+        <argument
+            android:name="ShowAppBar"
+            android:defaultValue="true" />
+    </fragment>
     <include app:graph="@navigation/splash_navigation" />
 </navigation>

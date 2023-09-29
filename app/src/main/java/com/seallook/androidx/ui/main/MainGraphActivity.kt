@@ -2,6 +2,7 @@ package com.seallook.androidx.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -26,6 +27,9 @@ class MainGraphActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         binding.bottomNav.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, _, arguments ->
+            binding.bottomNav.isVisible = arguments?.getBoolean("ShowAppBar", false) == true
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
