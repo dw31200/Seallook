@@ -1,5 +1,11 @@
-package com.seallook.androidx.data.remote.auth
+package com.seallook.androidx.data.remote
 
+import com.seallook.androidx.data.remote.auth.FirebaseAuthApiService
+import com.seallook.androidx.data.remote.auth.FirebaseAuthApiServiceImpl
+import com.seallook.androidx.data.remote.auth.FirebaseFirestoreApiService
+import com.seallook.androidx.data.remote.auth.FirebaseFirestoreApiServiceImpl
+import com.seallook.androidx.data.remote.auth.SignInClientApiService
+import com.seallook.androidx.data.remote.auth.SignInClientApiServiceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,4 +22,7 @@ abstract class ApiServiceModule {
 
     @Binds
     abstract fun bindSignInClientApiService(signInClientApiServiceImpl: SignInClientApiServiceImpl): SignInClientApiService
+
+    @Binds
+    abstract fun bindFirebaseStorageApiService(firebaseStorageApiServiceImpl: FirebaseStorageApiServiceImpl): FirebaseStorageApiService
 }

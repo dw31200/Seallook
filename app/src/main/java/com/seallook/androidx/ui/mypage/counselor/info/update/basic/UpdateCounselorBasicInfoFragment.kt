@@ -1,14 +1,10 @@
 package com.seallook.androidx.ui.mypage.counselor.info.update.basic
 
 import android.net.Uri
-import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentUpdateCounselorBasicInfoBinding
@@ -32,9 +28,6 @@ class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBas
 
     override fun viewModelVariableId(): Int = BR.vm
 
-    private val storage: FirebaseStorage by lazy {
-        Firebase.storage
-    }
     private var photoUri: Uri? = null
     private var fileUri: Uri? = null
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -71,37 +64,12 @@ class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBas
                 pickMediaFile.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
             finishButton.setOnClickListener {
-                if (photoUri != null) {
-                    uploadPhoto(
-                        photoUri ?: return@setOnClickListener,
-                        successHandler = { uri ->
-                            Timber.d("사진업로드 $uri")
-                        },
-                        errorHandler = {
-                            Toast.makeText(requireContext(), "사진 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                        },
-                    )
-                }
+                viewModel.uploadFile(
+                    "counselor/thumbnail",
+                    "${viewModel.currentUser.value?.uid ?: return@setOnClickListener}.png",
+                    photoUri ?: return@setOnClickListener,
+                )
             }
         }
-    }
-
-    private fun uploadPhoto(uri: Uri, successHandler: (String) -> Unit, errorHandler: () -> Unit) {
-        val fileName = "${System.currentTimeMillis()}.png"
-        storage.reference.child("article/photo").child(fileName)
-            .putFile(uri)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    storage.reference.child("article/photo").child(fileName)
-                        .downloadUrl
-                        .addOnSuccessListener { uri ->
-                            successHandler(uri.toString())
-                        }.addOnFailureListener {
-                            errorHandler()
-                        }
-                } else {
-                    errorHandler()
-                }
-            }
     }
 }

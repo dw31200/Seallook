@@ -9,6 +9,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import com.seallook.androidx.BuildConfig
 import com.seallook.androidx.data.remote.naver.NaverSearchApi
 import com.squareup.moshi.Moshi
@@ -38,6 +40,10 @@ object RemoteModule {
     @Singleton
     @Provides
     fun provideFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
+
+    @Singleton
+    @Provides
+    fun provideFirebaseStorage(): FirebaseStorage = Firebase.storage
 
     @Singleton
     @RemoteCoroutine
