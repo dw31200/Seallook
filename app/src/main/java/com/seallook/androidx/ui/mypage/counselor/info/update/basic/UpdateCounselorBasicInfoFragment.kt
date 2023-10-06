@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentUpdateCounselorBasicInfoBinding
+import com.seallook.androidx.domain.model.CounselingTypeModel
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -64,10 +65,19 @@ class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBas
                 pickMediaFile.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
             finishButton.setOnClickListener {
+                val user = viewModel.currentUser.value ?: return@setOnClickListener
                 viewModel.uploadFile(
                     "counselor/thumbnail",
-                    "${viewModel.currentUser.value?.uid ?: return@setOnClickListener}.png",
+                    "$user.png",
                     photoUri ?: return@setOnClickListener,
+                )
+                viewModel.updateCounselingType(
+                    user,
+                    listOf(
+                        CounselingTypeModel(0, "개인", 100, 100, 100),
+                        CounselingTypeModel(1, "개인", 100, 100, 100),
+                        CounselingTypeModel(2, "개인", 100, 100, 100),
+                    ),
                 )
             }
         }

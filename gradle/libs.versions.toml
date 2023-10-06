@@ -42,6 +42,7 @@ navigation-fragment-ktx = "2.6.0"
 navigation-ui-ktx = "2.6.0"
 firebase-bom = "32.2.3"
 play-services-auth = "20.7.0"
+gson = "2.10.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -85,6 +86,7 @@ firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx" 
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx"}
 firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx"}
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "play-services-auth"}
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson"}
 
 
 [plugins]

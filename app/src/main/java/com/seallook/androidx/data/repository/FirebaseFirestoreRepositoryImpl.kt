@@ -5,7 +5,8 @@ import com.seallook.androidx.data.model.CounselingType
 import com.seallook.androidx.data.model.CounselorInfo
 import com.seallook.androidx.data.model.Profile
 import com.seallook.androidx.data.model.UserType
-import com.seallook.androidx.data.remote.auth.FirebaseFirestoreApiService
+import com.seallook.androidx.data.remote.FirebaseFirestoreApiService
+import com.seallook.androidx.data.remote.model.CounselingTypeListResponse
 import javax.inject.Inject
 
 class FirebaseFirestoreRepositoryImpl @Inject constructor(
@@ -43,7 +44,7 @@ class FirebaseFirestoreRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun setCounselingType(user: FirebaseUser?, type: CounselingType) {
-        firebaseFirestoreApiService.setCounselingType(user, type.toResponse())
+    override suspend fun updateCounselingType(user: FirebaseUser?, type: List<CounselingType>) {
+        firebaseFirestoreApiService.updateCounselingType(user, CounselingTypeListResponse(type.map { it.toResponse() }))
     }
 }

@@ -5,8 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
+import com.seallook.androidx.domain.model.CounselingTypeModel
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.GetDownloadUrlUseCase
+import com.seallook.androidx.domain.usecase.UpdateCounselingTypeUseCase
 import com.seallook.androidx.domain.usecase.UploadFileUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,11 +20,11 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     private val getDownloadUrlUseCase: GetDownloadUrlUseCase,
     private val uploadFileUseCase: UploadFileUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val updateCounselingTypeUseCase: UpdateCounselingTypeUseCase,
 ) : BaseViewModel() {
     private val _currentUser = MutableLiveData<FirebaseUser?>()
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
-
     private val _downloadUrl = MutableLiveData<Uri?>()
     val downloadUrl: LiveData<Uri?>
         get() = _downloadUrl
@@ -42,6 +44,12 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     fun getDownloadUrl(path: String, fileName: String) {
         viewModelScope.launch {
             _downloadUrl.value = getDownloadUrlUseCase(path, fileName)
+        }
+    }
+
+    fun updateCounselingType(user: FirebaseUser?, type: List<CounselingTypeModel>) {
+        viewModelScope.launch {
+            updateCounselingTypeUseCase(user, type)
         }
     }
 }

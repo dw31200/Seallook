@@ -1,6 +1,7 @@
-package com.seallook.androidx.data.remote.auth
+package com.seallook.androidx.data.remote
 
 import com.google.firebase.auth.FirebaseUser
+import com.seallook.androidx.data.remote.model.CounselingTypeListResponse
 import com.seallook.androidx.data.remote.model.CounselingTypeResponse
 import com.seallook.androidx.data.remote.model.CounselorInfoResponse
 import com.seallook.androidx.data.remote.model.ProfileResponse
@@ -21,5 +22,5 @@ interface FirebaseFirestoreApiService {
 
     suspend fun getCounselingType(user: FirebaseUser?): List<CounselingTypeResponse?>
 
-    suspend fun setCounselingType(user: FirebaseUser?, type: CounselingTypeResponse)
+    suspend fun updateCounselingType(user: FirebaseUser?, type: CounselingTypeListResponse)
 }
