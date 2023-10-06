@@ -59,7 +59,6 @@ class UpdateCounselingTypeFragment :
             viewModel.setCounselingType(
                 CounselingTypeModel(
                     id ?: 0,
-                    viewModel.currentUser.value?.uid ?: "",
                     title,
                     count,
                     time,

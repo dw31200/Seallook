@@ -21,5 +21,5 @@ interface FirebaseFirestoreRepository {
 
     suspend fun getCounselingType(user: FirebaseUser?): List<CounselingType?>
 
-    suspend fun setCounselingType(user: FirebaseUser?, type: CounselingType)
+    suspend fun updateCounselingType(user: FirebaseUser?, type: List<CounselingType>)
 }

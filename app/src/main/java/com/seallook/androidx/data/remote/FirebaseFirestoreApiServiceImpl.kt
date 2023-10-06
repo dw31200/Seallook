@@ -1,7 +1,8 @@
-package com.seallook.androidx.data.remote.auth
+package com.seallook.androidx.data.remote
 
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.seallook.androidx.data.remote.model.CounselingTypeListResponse
 import com.seallook.androidx.data.remote.model.CounselingTypeResponse
 import com.seallook.androidx.data.remote.model.CounselorInfoResponse
 import com.seallook.androidx.data.remote.model.ProfileResponse
@@ -83,10 +84,9 @@ class FirebaseFirestoreApiServiceImpl @Inject constructor(
     override suspend fun getCounselingType(user: FirebaseUser?): List<CounselingTypeResponse?> {
         val uid = user?.uid ?: return listOf()
         val list = mutableListOf<CounselingTypeResponse>()
-        val documentResponse = db.collection(Constants.USERS)
+        val documentResponse = db.collection(Constants.COUNSELORS)
             .document(uid)
             .collection("counselingType")
-            .whereEqualTo("uid", uid)
             .get().await()
         return if (!documentResponse.isEmpty) {
             for (i in 0 until documentResponse.documents.size) {
@@ -98,12 +98,12 @@ class FirebaseFirestoreApiServiceImpl @Inject constructor(
         }
     }
 
-    override suspend fun setCounselingType(user: FirebaseUser?, type: CounselingTypeResponse) {
+    override suspend fun updateCounselingType(user: FirebaseUser?, type: CounselingTypeListResponse) {
         user?.uid?.let {
-            db.collection(Constants.USERS)
+            db.collection(Constants.COUNSELORS)
                 .document(it)
                 .collection("counselingType")
-                .document()
+                .document(it)
                 .set(type)
         }
     }
