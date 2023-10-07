@@ -11,9 +11,6 @@ import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.SetCounselingTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,12 +21,10 @@ class UpdateCounselingTypeViewModel @Inject constructor(
     private val deleteCounselingTypeUseCase: DeleteCounselingTypeUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
 ) : BaseViewModel() {
-    val counselingType: StateFlow<List<CounselingTypeModel>> = getCounselingTypeUseCase()
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(),
-            mutableListOf(),
-        )
+    private val _counselingType = MutableLiveData<List<CounselingTypeModel>?>()
+    val counselingType: LiveData<List<CounselingTypeModel>?>
+        get() = _counselingType
+
     private val _currentUser = MutableLiveData<FirebaseUser?>()
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
@@ -37,18 +32,27 @@ class UpdateCounselingTypeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _currentUser.value = getCurrentUserUseCase()
+            _counselingType.value = getCounselingTypeUseCase()
         }
     }
 
     fun setCounselingType(counselingTypeModel: CounselingTypeModel) {
         viewModelScope.launch {
             setCounselingTypeUseCase(counselingTypeModel)
+            getCounselingType()
         }
     }
 
     fun deleteCounselingType(counselingTypeId: Int) {
         viewModelScope.launch {
             deleteCounselingTypeUseCase(counselingTypeId)
+            getCounselingType()
+        }
+    }
+
+    private fun getCounselingType() {
+        viewModelScope.launch {
+            _counselingType.value = getCounselingTypeUseCase()
         }
     }
 }
