@@ -2,7 +2,6 @@ package com.seallook.androidx.data.repository
 
 import com.seallook.androidx.data.local.CounselingTypeDao
 import com.seallook.androidx.data.model.CounselingType
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -17,9 +16,9 @@ class CounselingTypeRepositoryImpl @Inject constructor(
         counselingTypeDao.deleteItem(counselingTypeId)
     }
 
-    override fun getCounselingType(): Flow<List<CounselingType>> {
+    override suspend fun getCounselingType(): List<CounselingType> {
         return counselingTypeDao.getAll().map {
-            it.map { CounselingType(it) }
+            CounselingType(it)
         }
     }
 }

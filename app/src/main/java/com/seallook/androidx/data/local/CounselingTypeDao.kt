@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.seallook.androidx.data.local.model.CounselingTypeEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CounselingTypeDao {
@@ -14,7 +13,7 @@ interface CounselingTypeDao {
     suspend fun insert(counselingTypeEntity: CounselingTypeEntity)
 
     @Query("SELECT * FROM counselingTypeEntity ORDER BY ID ASC")
-    fun getAll(): Flow<List<CounselingTypeEntity>>
+    suspend fun getAll(): List<CounselingTypeEntity>
 
     @Update
     suspend fun update(counselingTypeEntity: CounselingTypeEntity)

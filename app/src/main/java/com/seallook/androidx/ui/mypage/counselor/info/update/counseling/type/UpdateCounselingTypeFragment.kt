@@ -1,7 +1,6 @@
 package com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentUpdateCounselingTypeBinding
@@ -9,8 +8,6 @@ import com.seallook.androidx.domain.model.CounselingTypeModel
 import com.seallook.androidx.ui.base.BaseFragment
 import com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.adapter.CounselingTypeAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 /* TODO
     1.SetView: 추가하기 클릭시 상담인원, 소요시간, 금액, 자장버튼(클릭시 '수정' 변경, '수정'클릭시 역방향 및 수정가능) 노출
@@ -42,20 +39,17 @@ class UpdateCounselingTypeFragment :
     private fun updateCounselingType() {
         with(binding) {
             var id: Int? = null
-            lifecycleScope.launch {
-                viewModel.counselingType.collectLatest {
-                    if (it.isEmpty()) {
-                        id = 0
-                    } else {
-                        val listSize = it.size
-                        id = it[listSize - 1].id + 1
-                    }
+            viewModel.counselingType.observe(viewLifecycleOwner) {
+                if (it == null) {
+                    id = 0
+                } else {
+                    id = it[it.size - 1].id + 1
                 }
             }
-            val title = typeNameTextField.editText!!.text.toString()
-            val count = typeNumberField.editText!!.text.toString().toInt()
-            val time = typeTimeField.editText!!.text.toString().toInt()
-            val pay = typePayField.editText!!.text.toString().toInt()
+            val title = typeNameTextField.editText?.text.toString()
+            val count = typeNumberField.editText?.text.toString().toInt()
+            val time = typeTimeField.editText?.text.toString().toInt()
+            val pay = typePayField.editText?.text.toString().toInt()
             viewModel.setCounselingType(
                 CounselingTypeModel(
                     id ?: 0,
