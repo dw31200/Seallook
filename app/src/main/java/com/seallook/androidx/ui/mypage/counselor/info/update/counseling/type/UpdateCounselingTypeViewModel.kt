@@ -32,9 +32,6 @@ class UpdateCounselingTypeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _currentUser.value = getCurrentUserUseCase()
-            getCounselingTypeUseCase().let {
-                _counselingType.value = it
-            }
             _counselingType.value = getCounselingTypeUseCase()
         }
     }
