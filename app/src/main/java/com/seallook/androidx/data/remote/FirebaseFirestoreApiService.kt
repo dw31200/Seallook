@@ -20,7 +20,7 @@ interface FirebaseFirestoreApiService {
 
     suspend fun setCounselorInfo(user: FirebaseUser?, info: CounselorInfoResponse)
 
-    suspend fun getCounselingType(user: FirebaseUser?): List<CounselingTypeResponse?>
+    suspend fun getCounselingType(user: FirebaseUser?): List<CounselingTypeResponse>?
 
     suspend fun updateCounselingType(user: FirebaseUser?, type: CounselingTypeListResponse)
 }

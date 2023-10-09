@@ -2,6 +2,7 @@ package com.seallook.androidx.data.remote
 
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.Gson
 import com.seallook.androidx.data.remote.model.CounselingTypeListResponse
 import com.seallook.androidx.data.remote.model.CounselingTypeResponse
 import com.seallook.androidx.data.remote.model.CounselorInfoResponse
@@ -81,20 +82,22 @@ class FirebaseFirestoreApiServiceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCounselingType(user: FirebaseUser?): List<CounselingTypeResponse?> {
+    override suspend fun getCounselingType(user: FirebaseUser?): List<CounselingTypeResponse>? {
         val uid = user?.uid ?: return listOf()
         val list = mutableListOf<CounselingTypeResponse>()
         val documentResponse = db.collection(Constants.COUNSELORS)
             .document(uid)
             .collection("counselingType")
+            .document(uid)
             .get().await()
-        return if (!documentResponse.isEmpty) {
-            for (i in 0 until documentResponse.documents.size) {
-                list.add(CounselingTypeResponse(documentResponse.documents[i]))
+        return if (documentResponse.exists()) {
+            val result = Gson().fromJson(documentResponse.getString("counselingList"), List::class.java)
+            for (i in 0 until result.size) {
+                list.add(Gson().fromJson(result[i].toString(), CounselingTypeResponse::class.java))
             }
             list
         } else {
-            listOf()
+            null
         }
     }
 
