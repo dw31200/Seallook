@@ -8,6 +8,7 @@ import com.seallook.androidx.domain.model.CounselingTypeModel
 import com.seallook.androidx.domain.usecase.DeleteCounselingTypeUseCase
 import com.seallook.androidx.domain.usecase.GetCounselingTypeUseCase
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
+import com.seallook.androidx.domain.usecase.InitCounselingTypeUseCase
 import com.seallook.androidx.domain.usecase.SetCounselingTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,7 @@ class UpdateCounselingTypeViewModel @Inject constructor(
     private val setCounselingTypeUseCase: SetCounselingTypeUseCase,
     private val deleteCounselingTypeUseCase: DeleteCounselingTypeUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val initCounselingTypeUseCase: InitCounselingTypeUseCase,
 ) : BaseViewModel() {
     private val _counselingType = MutableLiveData<List<CounselingTypeModel>?>()
     val counselingType: LiveData<List<CounselingTypeModel>?>
@@ -32,7 +34,7 @@ class UpdateCounselingTypeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _currentUser.value = getCurrentUserUseCase()
-            _counselingType.value = getCounselingTypeUseCase()
+            _counselingType.value = initCounselingTypeUseCase()
         }
     }
 

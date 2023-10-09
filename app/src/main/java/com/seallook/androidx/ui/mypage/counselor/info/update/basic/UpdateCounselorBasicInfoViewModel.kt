@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
-import com.seallook.androidx.domain.model.CounselingTypeModel
+import com.seallook.androidx.domain.usecase.GetCounselingTypeUseCase
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.GetDownloadUrlUseCase
 import com.seallook.androidx.domain.usecase.UpdateCounselingTypeUseCase
@@ -21,6 +21,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     private val uploadFileUseCase: UploadFileUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val updateCounselingTypeUseCase: UpdateCounselingTypeUseCase,
+    private val getCounselingTypeUseCase: GetCounselingTypeUseCase,
 ) : BaseViewModel() {
     private val _currentUser = MutableLiveData<FirebaseUser?>()
     val currentUser: LiveData<FirebaseUser?>
@@ -47,9 +48,9 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
         }
     }
 
-    fun updateCounselingType(user: FirebaseUser?, type: List<CounselingTypeModel>) {
+    fun updateCounselingType() {
         viewModelScope.launch {
-            updateCounselingTypeUseCase(user, type)
+            updateCounselingTypeUseCase(getCounselingTypeUseCase())
         }
     }
 }
