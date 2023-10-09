@@ -36,9 +36,9 @@ class FirebaseFirestoreRepositoryImpl @Inject constructor(
         firebaseFirestoreApiService.setCounselorInfo(user, info.toResponse())
     }
 
-    override suspend fun getCounselingType(user: FirebaseUser?): List<CounselingType?> {
-        return firebaseFirestoreApiService.getCounselingType(user).map {
-            it?.let {
+    override suspend fun getCounselingType(user: FirebaseUser?): List<CounselingType>? {
+        return firebaseFirestoreApiService.getCounselingType(user)?.let {
+            it.map {
                 CounselingType(it)
             }
         }
