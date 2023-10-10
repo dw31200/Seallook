@@ -11,9 +11,7 @@ class InitCounselingTypeUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(): List<CounselingTypeModel>? {
         return counselingTypeRepository.initCounselingType(firebaseAuthRepository.getCurrentUser())?.let {
-            for (i in 0 until it.size) {
-                counselingTypeRepository.setCounselingType(it[i])
-            }
+            counselingTypeRepository.setCounselingType(it)
             it.map {
                 CounselingTypeModel(it)
             }

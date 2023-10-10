@@ -16,6 +16,10 @@ class CounselingTypeRepositoryImpl @Inject constructor(
         counselingTypeDao.insert(counselingType.toEntity())
     }
 
+    override suspend fun setCounselingType(counselingTypeList: List<CounselingType>) {
+        counselingTypeDao.insert(counselingTypeList.map { it.toEntity() })
+    }
+
     override suspend fun deleteCounselingType(counselingTypeId: Int) {
         counselingTypeDao.deleteItem(counselingTypeId)
     }
