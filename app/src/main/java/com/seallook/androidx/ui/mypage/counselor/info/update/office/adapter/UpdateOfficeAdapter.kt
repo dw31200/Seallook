@@ -4,18 +4,21 @@ import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.seallook.androidx.domain.model.NaverSearchModel
+import com.seallook.androidx.ui.mypage.counselor.info.update.office.OfficeNavigation
 import timber.log.Timber
 
 class UpdateOfficeAdapter(
     private val officeItems: MutableList<NaverSearchModel> = mutableListOf(),
 ) : RecyclerView.Adapter<UpdateOfficeHolder>() {
+    var officeNavigation: OfficeNavigation? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UpdateOfficeHolder =
         UpdateOfficeHolder(parent)
 
     override fun getItemCount(): Int = officeItems.size
 
     override fun onBindViewHolder(holder: UpdateOfficeHolder, position: Int) {
-        holder.bind(officeItems[position])
+        holder.bind(officeItems[position], officeNavigation)
     }
 
     @SuppressLint("NotifyDataSetChanged")

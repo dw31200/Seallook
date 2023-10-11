@@ -102,7 +102,11 @@
     <fragment
         android:id="@+id/updateOfficeFragment"
         android:name="com.seallook.androidx.ui.mypage.counselor.info.update.office.UpdateOfficeFragment"
-        android:label="UpdateOfficeFragment" />
+        android:label="UpdateOfficeFragment" >
+        <action
+            android:id="@+id/action_updateOfficeFragment_to_updateCounselorBasicInfoFragment"
+            app:destination="@id/updateCounselorBasicInfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.seallook.androidx.ui.mypage.setting.SettingFragment"

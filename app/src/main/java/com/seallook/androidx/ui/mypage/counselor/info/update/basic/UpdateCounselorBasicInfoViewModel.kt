@@ -4,12 +4,15 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide.init
 import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.model.CounselorInfoModel
+import com.seallook.androidx.domain.model.OfficeInfoModel
 import com.seallook.androidx.domain.usecase.GetCounselingTypeUseCase
 import com.seallook.androidx.domain.usecase.GetCounselorInfoUseCase
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.GetDownloadUrlUseCase
+import com.seallook.androidx.domain.usecase.GetOfficeInfoUseCase
 import com.seallook.androidx.domain.usecase.SetCounselorInfoUsecase
 import com.seallook.androidx.domain.usecase.UpdateCounselingTypeUseCase
 import com.seallook.androidx.domain.usecase.UploadFileUseCase
@@ -27,6 +30,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     private val getCounselingTypeUseCase: GetCounselingTypeUseCase,
     private val getCounselorInfoUseCase: GetCounselorInfoUseCase,
     private val setCounselorInfoUsecase: SetCounselorInfoUsecase,
+    private val getOfficeInfoUseCase: GetOfficeInfoUseCase,
 ) : BaseViewModel() {
     private val _currentUser = MutableLiveData<FirebaseUser?>()
     val currentUser: LiveData<FirebaseUser?>
@@ -37,11 +41,15 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     private val _counselorInfo = MutableLiveData<CounselorInfoModel?>()
     val counselorInfo: LiveData<CounselorInfoModel?>
         get() = _counselorInfo
+    private val _officeInfo = MutableLiveData<OfficeInfoModel?>()
+    val officeInfo: LiveData<OfficeInfoModel?>
+        get() = _officeInfo
 
     init {
         viewModelScope.launch {
             _currentUser.value = getCurrentUserUseCase()
             _counselorInfo.value = getCounselorInfoUseCase()
+            _officeInfo.value = getOfficeInfoUseCase(0)
         }
     }
 
