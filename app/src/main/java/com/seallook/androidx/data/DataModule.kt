@@ -12,6 +12,8 @@ import com.seallook.androidx.data.repository.FirebaseStorageRepository
 import com.seallook.androidx.data.repository.FirebaseStorageRepositoryImpl
 import com.seallook.androidx.data.repository.NaverSearchRepository
 import com.seallook.androidx.data.repository.NaverSearchRepositoryImpl
+import com.seallook.androidx.data.repository.OfficeInfoRepository
+import com.seallook.androidx.data.repository.OfficeInfoRepositoryImpl
 import com.seallook.androidx.data.repository.SignInClientRepository
 import com.seallook.androidx.data.repository.SignInClientRepositoryImpl
 import dagger.Binds
@@ -42,4 +44,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindCounselorInfoRepository(counselorInfoRepositoryImpl: CounselorInfoRepositoryImpl): CounselorInfoRepository
+
+    @Binds
+    abstract fun bindOfficeInfoRepository(officeInfoRepositoryImpl: OfficeInfoRepositoryImpl): OfficeInfoRepository
 }

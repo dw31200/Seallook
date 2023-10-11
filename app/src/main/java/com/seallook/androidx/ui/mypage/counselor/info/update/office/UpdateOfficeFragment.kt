@@ -1,8 +1,10 @@
 package com.seallook.androidx.ui.mypage.counselor.info.update.office
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentUpdateOfficeBinding
+import com.seallook.androidx.domain.model.OfficeInfoModel
 import com.seallook.androidx.ui.base.BaseFragment
 import com.seallook.androidx.ui.mypage.counselor.info.update.office.adapter.UpdateOfficeAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,19 +15,28 @@ import dagger.hilt.android.AndroidEntryPoint
     3.Navigation: 기관 아이템/뒤로가기 > BasicInfo
  */
 @AndroidEntryPoint
-class UpdateOfficeFragment : BaseFragment<FragmentUpdateOfficeBinding, UpdateOfficeViewModel>(
-    FragmentUpdateOfficeBinding::inflate,
-) {
+class UpdateOfficeFragment :
+    BaseFragment<FragmentUpdateOfficeBinding, UpdateOfficeViewModel>(
+        FragmentUpdateOfficeBinding::inflate,
+    ),
+    OfficeNavigation {
     override val viewModel: UpdateOfficeViewModel by viewModels()
 
     override fun viewModelVariableId(): Int = BR.vm
 
     override fun onViewCreatedAfterBinding() {
         with(binding) {
+            navigation = this@UpdateOfficeFragment
             officeResultList.adapter = UpdateOfficeAdapter()
             officeSearchButton.setOnClickListener {
-                viewModel.searchOnClick(officeNameTextField.editText!!.text.toString().trim())
+                viewModel.searchOnClick(officeNameTextField.editText?.text.toString().trim())
             }
         }
+    }
+
+    override fun navigateToMypage(info: OfficeInfoModel) {
+        viewModel.setOfficeInfo(0, info)
+        val action = UpdateOfficeFragmentDirections.actionUpdateOfficeFragmentToUpdateCounselorBasicInfoFragment()
+        findNavController().navigate(action)
     }
 }

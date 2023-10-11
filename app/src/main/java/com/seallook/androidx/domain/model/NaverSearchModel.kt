@@ -13,6 +13,19 @@ data class NaverSearchModel(
     val mapx: Int,
     val mapy: Int,
 ) {
+    fun toInfo(): NaverSearchInfo {
+        return NaverSearchInfo(
+            title = title,
+            link = link,
+            category = category,
+            description = description,
+            telephone = telephone,
+            address = address,
+            roadAddress = roadAddress,
+            mapx = mapx,
+            mapy = mapy,
+        )
+    }
     companion object {
         operator fun invoke(naverSearchInfo: NaverSearchInfo): NaverSearchModel {
             return NaverSearchModel(

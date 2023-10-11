@@ -135,7 +135,7 @@ object RemoteModule {
 
     @Singleton
     @Provides
-    fun providePicsumApi(
+    fun provideNaverSearchApi(
         retrofit: Retrofit,
     ): NaverSearchApi {
         return retrofit.create(NaverSearchApi::class.java)

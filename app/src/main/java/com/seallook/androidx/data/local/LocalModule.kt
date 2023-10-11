@@ -32,4 +32,12 @@ object LocalModule {
     ): CounselingTypeDao {
         return database.counselingTypeDao()
     }
+
+    @Singleton
+    @Provides
+    fun provideOfficeInfoDao(
+        database: SealLookDatabase,
+    ): OfficeInfoDao {
+        return database.officeInfoDao()
+    }
 }
