@@ -60,13 +60,13 @@ class FirebaseFirestoreApiServiceImpl @Inject constructor(
 
     override suspend fun getCounselorInfo(user: FirebaseUser?): CounselorInfoResponse? {
         val uid = user?.uid ?: return null
-        val documentResponse = db.collection(Constants.USERS)
+        val documentResponse = db.collection(Constants.COUNSELORS)
             .document(uid)
             .collection("counselorinfo")
-            .whereEqualTo("counselorId", uid)
+            .document(uid)
             .get().await()
-        return if (!documentResponse.isEmpty) {
-            CounselorInfoResponse(documentResponse.documents[0])
+        return if (documentResponse.exists()) {
+            CounselorInfoResponse(documentResponse)
         } else {
             null
         }
@@ -74,10 +74,10 @@ class FirebaseFirestoreApiServiceImpl @Inject constructor(
 
     override suspend fun setCounselorInfo(user: FirebaseUser?, info: CounselorInfoResponse) {
         user?.uid?.let {
-            db.collection(Constants.USERS)
+            db.collection(Constants.COUNSELORS)
                 .document(it)
                 .collection("counselorinfo")
-                .document()
+                .document(it)
                 .set(info)
         }
     }

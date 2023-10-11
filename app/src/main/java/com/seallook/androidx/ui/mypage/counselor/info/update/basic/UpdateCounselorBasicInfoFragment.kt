@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentUpdateCounselorBasicInfoBinding
+import com.seallook.androidx.domain.model.CounselorInfoModel
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -71,6 +72,13 @@ class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBas
                     photoUri ?: return@setOnClickListener,
                 )
                 viewModel.updateCounselingType()
+                viewModel.setCounselorInfo(
+                    CounselorInfoModel(
+                        "홍길동",
+                        "소개",
+                        "https://firebasestorage.googleapis.com/v0/b/seallook-9d51d.appspot.com/o/counselor%2Fthumbnail%2Fcom.google.firebase.auth.internal.zzx%4056fc1eb.png?alt=media&token=c95f9239-a7c2-4dab-b49b-8f2593a4ecbf&_gl=1*1rpckjf*_ga*NDkyNDg4NzAyLjE2OTA5NTQxMDM.*_ga_CW55HF8NVT*MTY5Njk0MDA5MC4xMDMuMS4xNjk2OTQwMTI2LjI0LjAuMA..",
+                    ),
+                )
             }
         }
     }
