@@ -2,6 +2,8 @@ package com.seallook.androidx.data
 
 import com.seallook.androidx.data.repository.CounselingTypeRepository
 import com.seallook.androidx.data.repository.CounselingTypeRepositoryImpl
+import com.seallook.androidx.data.repository.CounselorInfoRepository
+import com.seallook.androidx.data.repository.CounselorInfoRepositoryImpl
 import com.seallook.androidx.data.repository.FirebaseAuthRepository
 import com.seallook.androidx.data.repository.FirebaseAuthRepositoryImpl
 import com.seallook.androidx.data.repository.FirebaseFirestoreRepository
@@ -37,4 +39,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindFirebaseStorageRepository(firebaseStorageRepositoryImpl: FirebaseStorageRepositoryImpl): FirebaseStorageRepository
+
+    @Binds
+    abstract fun bindCounselorInfoRepository(counselorInfoRepositoryImpl: CounselorInfoRepositoryImpl): CounselorInfoRepository
 }
