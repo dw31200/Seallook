@@ -54,15 +54,28 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
         }
     }
 
-    fun uploadFile(path: String, fileName: String, uri: Uri) {
+    fun uploadFile(path: String, fileName: String, uri: Uri, name: String?, pr: String?) {
         viewModelScope.launch {
             uploadFileUseCase(path, fileName, uri)
+                .addOnSuccessListener {
+                    getDownloadUrl(path, fileName, name, pr)
+                }
         }
     }
 
-    fun getDownloadUrl(path: String, fileName: String) {
+    private fun getDownloadUrl(path: String, fileName: String, name: String?, pr: String?) {
         viewModelScope.launch {
-            _downloadUrl.value = getDownloadUrlUseCase(path, fileName)
+            getDownloadUrlUseCase(path, fileName)
+                .addOnSuccessListener {
+                    _downloadUrl.value = it
+                    setCounselorInfo(
+                        CounselorInfoModel(
+                            name ?: "",
+                            pr ?: "",
+                            downloadUrl.value.toString(),
+                        ),
+                    )
+                }
         }
     }
 
