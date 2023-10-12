@@ -12,13 +12,7 @@ class OfficeInfoRepositoryImpl @Inject constructor(
     private val firebaseAuthApiService: FirebaseAuthApiService,
 ) : OfficeInfoRepository {
     override suspend fun getOfficeInfo(id: Int): OfficeInfo? {
-        val remote = firebaseFirestoreApiService.getOfficeInfo(firebaseAuthApiService.getCurrentUser())
-        if (remote != null) {
-            officeInfoDao.setInfo(OfficeInfo(remote).toEntity(id))
-            return officeInfoDao.getInfo(id)?.let { OfficeInfo(it) }
-        } else {
-            return officeInfoDao.getInfo(id)?.let { OfficeInfo(it) }
-        }
+        return officeInfoDao.getInfo(id)?.let { OfficeInfo(it) }
     }
 
     override suspend fun setOfficeInfo(id: Int, info: OfficeInfo) {
