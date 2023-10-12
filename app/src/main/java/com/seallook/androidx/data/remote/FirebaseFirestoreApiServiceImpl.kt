@@ -73,13 +73,18 @@ class FirebaseFirestoreApiServiceImpl @Inject constructor(
         }
     }
 
-    override suspend fun setCounselorInfo(user: FirebaseUser?, info: CounselorInfoResponse) {
-        user?.uid?.let {
-            db.collection(Constants.COUNSELORS)
-                .document(it)
-                .collection("counselorinfo")
-                .document(it)
-                .set(info)
+    override suspend fun setCounselorInfo(user: FirebaseUser?, info: CounselorInfoResponse): Boolean? {
+        return user?.uid?.let {
+            runCatching {
+                db.collection(Constants.COUNSELORS)
+                    .document(it)
+                    .collection("counselorinfo")
+                    .document(it)
+                    .set(info)
+            }.fold(
+                onSuccess = { true },
+                onFailure = { false },
+            )
         }
     }
 
