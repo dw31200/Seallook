@@ -1,5 +1,3 @@
-
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin)
@@ -11,11 +9,11 @@ plugins {
 
 android {
     namespace = "com.seallook.androidx"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.seallook.androidx"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -87,9 +85,11 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
-
     // Gson
     implementation(libs.gson)
+
+    // calendar-kizitonwose
+    implementation(libs.calendar.kizitonwose)
 }
 
 kapt {

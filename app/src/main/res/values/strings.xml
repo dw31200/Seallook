@@ -15,4 +15,10 @@
     <string name="update_office">UpdateOffice</string>
     <string name="diary">Diary</string>
     <string name="diary_setting">Diary Setting</string>
+    <string name="dialog_delete_confirmation">Delete this event?</string>
+    <string name="delete">Delete</string>
+    <string name="close">Close</string>
+    <string name="save">Save</string>
+    <string name="input_dialog_title">Enter event title</string>
+    <string name="empty_input_text">Text is empty</string>
 </resources>

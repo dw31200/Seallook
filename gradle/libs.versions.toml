@@ -43,6 +43,7 @@ navigation-ui-ktx = "2.6.0"
 firebase-bom = "32.2.3"
 play-services-auth = "20.7.0"
 gson = "2.10.1"
+calendar-kizitonwose = "2.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -87,6 +88,7 @@ firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-fires
 firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx"}
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "play-services-auth"}
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson"}
+calendar-kizitonwose = { group = "com.kizitonwose.calendar", name = "view", version.ref = "calendar-kizitonwose" }
 
 
 [plugins]
