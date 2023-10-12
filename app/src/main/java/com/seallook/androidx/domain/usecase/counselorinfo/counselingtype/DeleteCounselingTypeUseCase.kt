@@ -1,4 +1,4 @@
-package com.seallook.androidx.domain.usecase
+package com.seallook.androidx.domain.usecase.counselorinfo.counselingtype
 
 import com.seallook.androidx.data.repository.CounselingTypeRepository
 import dagger.Reusable

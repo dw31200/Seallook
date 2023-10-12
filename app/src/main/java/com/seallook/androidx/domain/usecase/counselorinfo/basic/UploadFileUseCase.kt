@@ -1,4 +1,4 @@
-package com.seallook.androidx.domain.usecase
+package com.seallook.androidx.domain.usecase.counselorinfo.basic
 
 import android.net.Uri
 import com.seallook.androidx.data.repository.FirebaseStorageRepository
