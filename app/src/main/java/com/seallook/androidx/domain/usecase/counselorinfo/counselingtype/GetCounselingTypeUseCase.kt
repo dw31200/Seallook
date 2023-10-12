@@ -1,9 +1,8 @@
-package com.seallook.androidx.domain.usecase
+package com.seallook.androidx.domain.usecase.counselorinfo.counselingtype
 
 import com.seallook.androidx.data.repository.CounselingTypeRepository
 import com.seallook.androidx.domain.model.CounselingTypeModel
 import dagger.Reusable
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @Reusable

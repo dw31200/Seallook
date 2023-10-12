@@ -1,4 +1,4 @@
-package com.seallook.androidx.domain.usecase
+package com.seallook.androidx.domain.usecase.counselorinfo.basic
 
 import com.seallook.androidx.data.repository.CounselorInfoRepository
 import com.seallook.androidx.domain.model.CounselorInfoModel
