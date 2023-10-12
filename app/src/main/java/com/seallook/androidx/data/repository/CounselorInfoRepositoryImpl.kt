@@ -13,7 +13,7 @@ class CounselorInfoRepositoryImpl @Inject constructor(
         return firebaseFirestoreApiService.getCounselorInfo(firebaseAuthApiService.getCurrentUser())?.let { CounselorInfo(it) }
     }
 
-    override suspend fun setCounselorInfo(info: CounselorInfo) {
-        firebaseFirestoreApiService.setCounselorInfo(firebaseAuthApiService.getCurrentUser(), info.toResponse())
+    override suspend fun setCounselorInfo(info: CounselorInfo): Boolean? {
+        return firebaseFirestoreApiService.setCounselorInfo(firebaseAuthApiService.getCurrentUser(), info.toResponse())
     }
 }

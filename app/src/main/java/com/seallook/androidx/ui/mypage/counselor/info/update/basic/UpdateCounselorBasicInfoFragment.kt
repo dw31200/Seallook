@@ -65,6 +65,7 @@ class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBas
                 pickMediaFile.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
             finishButton.setOnClickListener {
+                showProgressDialog("상담사 정보를 업로드 중입니다.")
                 val user = viewModel.currentUser.value ?: return@setOnClickListener
                 if (photoUri != null) {
                     viewModel.uploadFile(
@@ -85,6 +86,12 @@ class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBas
                 }
                 viewModel.updateOfficeInfo()
                 viewModel.updateCounselingType()
+                viewModel.uploadResult.observe(viewLifecycleOwner) {
+                    if (it) {
+                        dismissProgressDialog()
+                        findNavController().navigate(UpdateCounselorBasicInfoFragmentDirections.actionUpdateCounselorBasicInfoFragmentToMypageFragment())
+                    }
+                }
             }
         }
     }

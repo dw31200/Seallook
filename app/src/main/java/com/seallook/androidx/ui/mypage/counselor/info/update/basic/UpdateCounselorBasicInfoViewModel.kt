@@ -2,6 +2,7 @@ package com.seallook.androidx.ui.mypage.counselor.info.update.basic
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
@@ -45,6 +46,29 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     private val _officeInfo = MutableLiveData<OfficeInfoModel?>()
     val officeInfo: LiveData<OfficeInfoModel?>
         get() = _officeInfo
+    private val _uploadBasicInfoResult = MutableLiveData<Boolean?>()
+    private val _uploadOfficeInfoResult = MutableLiveData<Boolean?>()
+    private val _uploadCounselingTypeResult = MutableLiveData<Boolean?>()
+    val uploadResult: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        // Add the sources to be observed and update the uploadResult when they change
+        addSource(_uploadBasicInfoResult) { basicInfoResult ->
+            val officeInfoResult = _uploadOfficeInfoResult.value
+            val counselingTypeResult = _uploadCounselingTypeResult.value
+            value = basicInfoResult == true && officeInfoResult == true && counselingTypeResult == true
+        }
+
+        addSource(_uploadOfficeInfoResult) { officeInfoResult ->
+            val basicInfoResult = _uploadBasicInfoResult.value
+            val counselingTypeResult = _uploadCounselingTypeResult.value
+            value = basicInfoResult == true && officeInfoResult == true && counselingTypeResult == true
+        }
+
+        addSource(_uploadCounselingTypeResult) { counselingTypeResult ->
+            val basicInfoResult = _uploadBasicInfoResult.value
+            val officeInfoResult = _uploadOfficeInfoResult.value
+            value = basicInfoResult == true && officeInfoResult == true && counselingTypeResult == true
+        }
+    }
 
     init {
         viewModelScope.launch {
@@ -81,19 +105,21 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
 
     fun updateCounselingType() {
         viewModelScope.launch {
-            updateCounselingTypeUseCase(getCounselingTypeUseCase())
+            _uploadCounselingTypeResult.value = updateCounselingTypeUseCase(getCounselingTypeUseCase())
         }
     }
 
     fun setCounselorInfo(info: CounselorInfoModel) {
         viewModelScope.launch {
-            setCounselorInfoUsecase(info)
+            _uploadBasicInfoResult.value = setCounselorInfoUsecase(info)
         }
     }
 
     fun updateOfficeInfo() {
         viewModelScope.launch {
-            getOfficeInfoUseCase(0)?.let { updateOfficeInfoUseCase(it) }
+            getOfficeInfoUseCase(0)?.let {
+                _uploadOfficeInfoResult.value = updateOfficeInfoUseCase(it)
+            }
         }
     }
 }

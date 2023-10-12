@@ -11,7 +11,12 @@ class UpdateCounselingTypeUseCase @Inject constructor(
     private val counselingTypeRepository: CounselingTypeRepository,
     private val firebaseAuthRepository: FirebaseAuthRepository,
 ) {
-    suspend operator fun invoke(type: List<CounselingTypeModel>) {
-        counselingTypeRepository.updateCounselingType(firebaseAuthRepository.getCurrentUser(), type.map { it.toType() })
+    suspend operator fun invoke(type: List<CounselingTypeModel>): Boolean? {
+        return runCatching {
+            counselingTypeRepository.updateCounselingType(firebaseAuthRepository.getCurrentUser(), type.map { it.toType() })
+        }.fold(
+            onSuccess = { true },
+            onFailure = { false },
+        )
     }
 }
