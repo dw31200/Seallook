@@ -105,7 +105,10 @@
         android:label="UpdateOfficeFragment" >
         <action
             android:id="@+id/action_updateOfficeFragment_to_updateCounselorBasicInfoFragment"
-            app:destination="@id/updateCounselorBasicInfoFragment" />
+            app:destination="@id/updateCounselorBasicInfoFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/updateOfficeFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/settingFragment"

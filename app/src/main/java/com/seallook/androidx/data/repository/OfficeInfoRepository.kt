@@ -6,4 +6,6 @@ interface OfficeInfoRepository {
     suspend fun getOfficeInfo(id: Int): OfficeInfo?
 
     suspend fun setOfficeInfo(id: Int, info: OfficeInfo)
+
+    suspend fun updateOfficeInfo(info: OfficeInfo)
 }

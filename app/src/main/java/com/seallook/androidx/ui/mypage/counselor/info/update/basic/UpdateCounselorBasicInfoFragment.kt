@@ -66,11 +66,12 @@ class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBas
             }
             finishButton.setOnClickListener {
                 val user = viewModel.currentUser.value ?: return@setOnClickListener
-                viewModel.uploadFile(
-                    "counselor/thumbnail",
-                    "$user.png",
-                    photoUri ?: return@setOnClickListener,
-                )
+//                viewModel.uploadFile(
+//                    "counselor/thumbnail",
+//                    "$user.png",
+//                    photoUri ?: return@setOnClickListener,
+//                )
+                viewModel.updateOfficeInfo()
                 viewModel.updateCounselingType()
                 viewModel.setCounselorInfo(
                     CounselorInfoModel(
