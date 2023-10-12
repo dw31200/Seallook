@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.seallook.androidx.data.remote.model.CounselingTypeListResponse
 import com.seallook.androidx.data.remote.model.CounselingTypeResponse
 import com.seallook.androidx.data.remote.model.CounselorInfoResponse
+import com.seallook.androidx.data.remote.model.OfficeInfoResponse
 import com.seallook.androidx.data.remote.model.ProfileResponse
 import com.seallook.androidx.data.remote.model.UserTypeResponse
 import com.seallook.androidx.share.Constants
@@ -108,6 +109,30 @@ class FirebaseFirestoreApiServiceImpl @Inject constructor(
                 .collection("counselingType")
                 .document(it)
                 .set(type)
+        }
+    }
+
+    override suspend fun getOfficeInfo(user: FirebaseUser?): OfficeInfoResponse? {
+        val uid = user?.uid ?: return null
+        val documentResponse = db.collection(Constants.COUNSELORS)
+            .document(uid)
+            .collection("officeinfo")
+            .document(uid)
+            .get().await()
+        return if (documentResponse.exists()) {
+            OfficeInfoResponse(documentResponse)
+        } else {
+            null
+        }
+    }
+
+    override suspend fun setOfficeInfo(user: FirebaseUser?, info: OfficeInfoResponse) {
+        user?.uid?.let {
+            db.collection(Constants.COUNSELORS)
+                .document(it)
+                .collection("officeinfo")
+                .document(it)
+                .set(info)
         }
     }
 }
