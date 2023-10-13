@@ -65,7 +65,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
         addStatusBarColorUpdate(R.color.statusbar_color)
         binding.exThreeRv.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            adapter = eventsAdapter
+            adapter = scheduleAdapter
             addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
         }
 
@@ -94,11 +94,11 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
         binding.exThreeAddButton.setOnClickListener { inputDialog.show() }
     }
 
-    private val eventsAdapter = ScheduleAdapter {
+    private val scheduleAdapter = ScheduleAdapter {
         AlertDialog.Builder(requireContext())
             .setMessage(R.string.dialog_delete_confirmation)
             .setPositiveButton(R.string.delete) { _, _ ->
-                deleteEvent(it)
+                deleteSchedule(it)
             }
             .setNegativeButton(R.string.close, null)
             .show()
@@ -116,7 +116,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
             .setTitle(getString(R.string.input_dialog_title))
             .setView(layout)
             .setPositiveButton(R.string.save) { _, _ ->
-                saveEvent(editText.text.toString())
+                saveSchedule(editText.text.toString())
                 // Prepare EditText for reuse.
                 editText.setText("")
             }
@@ -153,7 +153,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
         }
     }
 
-    private fun saveEvent(text: String) {
+    private fun saveSchedule(text: String) {
         if (text.isBlank()) {
             Toast.makeText(requireContext(), R.string.empty_input_text, Toast.LENGTH_LONG)
                 .show()
@@ -166,14 +166,14 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
         }
     }
 
-    private fun deleteEvent(schedule: Schedule) {
+    private fun deleteSchedule(schedule: Schedule) {
         val date = schedule.date
         scheduleList[date] = scheduleList[date].orEmpty().minus(schedule)
         updateAdapterForDate(date)
     }
 
     private fun updateAdapterForDate(date: LocalDate) {
-        eventsAdapter.apply {
+        scheduleAdapter.apply {
             scheduleList.clear()
             scheduleList.addAll(this@CalendarFragment.scheduleList[date].orEmpty())
             notifyDataSetChanged()
