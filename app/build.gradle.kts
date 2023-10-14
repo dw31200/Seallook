@@ -21,6 +21,12 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("$rootDir/keystore/debug.keystore")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
