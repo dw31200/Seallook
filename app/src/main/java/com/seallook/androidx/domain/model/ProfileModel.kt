@@ -12,7 +12,8 @@ data class ProfileModel(
     val birth: Date,
     val timestamp: Date,
 ) {
-    fun toProfile(): Profile {
+    // Domain -> Data
+    fun toDataModel(): Profile {
         return Profile(
             key = key,
             email = email,
@@ -24,6 +25,8 @@ data class ProfileModel(
     }
 
     companion object {
+        // Mapping
+        // Data -> Domain
         operator fun invoke(profile: Profile): ProfileModel {
             return ProfileModel(
                 key = profile.key,
@@ -35,6 +38,9 @@ data class ProfileModel(
             )
         }
 
+        // DocumentSnapshot
+        // Firebase Firestore에서 데이터를 가져올 때 사용하는 클래스
+        // Remote -> Domain에서는 Remote 모른다
         operator fun invoke(snapshot: DocumentSnapshot): ProfileModel {
             return ProfileModel(
                 key = snapshot.id,

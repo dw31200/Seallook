@@ -11,6 +11,6 @@ class SetUserTypeUseCase @Inject constructor(
     private val userTypeRepository: UserTypeRepository,
 ) {
     suspend operator fun invoke(user: FirebaseUser?, userType: UserTypeModel): Boolean? {
-        return userTypeRepository.setItem(user, userType.toUserType())
+        return userTypeRepository.setItem(user, userType.toDataModel())
     }
 }

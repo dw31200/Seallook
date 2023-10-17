@@ -54,26 +54,30 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
         addSource(_uploadBasicInfoResult) { basicInfoResult ->
             val officeInfoResult = _uploadOfficeInfoResult.value
             val counselingTypeResult = _uploadCounselingTypeResult.value
-            value = basicInfoResult == true && officeInfoResult == true && counselingTypeResult == true
+            value =
+                basicInfoResult == true && officeInfoResult == true && counselingTypeResult == true
         }
 
         addSource(_uploadOfficeInfoResult) { officeInfoResult ->
             val basicInfoResult = _uploadBasicInfoResult.value
             val counselingTypeResult = _uploadCounselingTypeResult.value
-            value = basicInfoResult == true && officeInfoResult == true && counselingTypeResult == true
+            value =
+                basicInfoResult == true && officeInfoResult == true && counselingTypeResult == true
         }
 
         addSource(_uploadCounselingTypeResult) { counselingTypeResult ->
             val basicInfoResult = _uploadBasicInfoResult.value
             val officeInfoResult = _uploadOfficeInfoResult.value
-            value = basicInfoResult == true && officeInfoResult == true && counselingTypeResult == true
+            value =
+                basicInfoResult == true && officeInfoResult == true && counselingTypeResult == true
         }
     }
 
     init {
         viewModelScope.launch {
-            _currentUser.value = getCurrentUserUseCase()
-            _counselorInfo.value = getCounselorInfoUseCase()?.let { CounselorInfoUiModel(it) }
+            val user = getCurrentUserUseCase()
+            _currentUser.value = user
+            _counselorInfo.value = getCounselorInfoUseCase(user)?.let { CounselorInfoUiModel(it) }
             _officeInfo.value = getOfficeInfoUseCase(0)?.let { OfficeInfoUiModel(it) }
         }
     }
@@ -105,7 +109,8 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
 
     fun updateCounselingType() {
         viewModelScope.launch {
-            _uploadCounselingTypeResult.value = updateCounselingTypeUseCase(getCounselingTypeUseCase())
+            _uploadCounselingTypeResult.value =
+                updateCounselingTypeUseCase(getCounselingTypeUseCase())
         }
     }
 

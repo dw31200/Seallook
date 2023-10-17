@@ -9,8 +9,11 @@ import com.seallook.androidx.data.local.model.CounselingTypeEntity
 import com.seallook.androidx.data.local.model.OfficeInfoEntity
 import com.seallook.androidx.data.local.model.ReservedItemEntity
 
+// TODO entity를 하나로 합치고 entity에서 컨버터로 필드에 타입 지정하는 방식은 괜찮을까요?
+// Entity -> Database Model -> Modeling 정해야 하는 대상
+// Converter -> Database Type 지원하지 않는 형태를 저장하기 위한 도구
+
 @Database(
-//    TODO entity를 하나로 합치고 entity에서 컨버터로 필드에 타입 지정하는 방식은 괜찮을까요?
     entities = [
         CounselingTypeEntity::class,
         OfficeInfoEntity::class,

@@ -10,33 +10,33 @@ import javax.inject.Inject
 class UserTypeApiServiceImpl @Inject constructor(
     private val db: FirebaseFirestore,
 ) : UserTypeApiService {
-    override suspend fun getItem(user: FirebaseUser?): UserTypeResponse? {
-        val uid = user?.uid ?: return null
-        val userTypeValues = listOf(0, 1, 2)
+    override suspend fun getItem(user: FirebaseUser): UserTypeResponse? {
+        val uid = user.uid
+        val userTypeValues = listOf(0, 1, 2) // ??? 의미가 없다 상실
         val documentResponse = db.collection(Constants.USERS)
             .document(uid)
             .collection(Constants.USER_TYPE)
-            .whereIn(Constants.USER_TYPE, userTypeValues)
-            .get().await()
+            // .whereIn(Constants.USER_TYPE, userTypeValues)
+            .get()
+            .await()
         return if (!documentResponse.isEmpty) {
-            UserTypeResponse(documentResponse.documents[0])
+            UserTypeResponse(documentResponse.first())
         } else {
             null
         }
     }
 
-    override suspend fun setItem(user: FirebaseUser?, type: UserTypeResponse): Boolean? {
-        return user?.uid?.let {
-            runCatching {
-                db.collection(Constants.USERS)
-                    .document(it)
-                    .collection("usertype")
-                    .document()
-                    .set(type)
-            }.fold(
-                onSuccess = { true },
-                onFailure = { false },
-            )
-        }
+    override suspend fun setItem(user: FirebaseUser, type: UserTypeResponse): Boolean {
+        return runCatching {
+            db.collection(Constants.USERS)
+                .document(user.uid)
+                .collection("usertype")
+                .document()
+                .set(type)
+                .await()
+        }.fold(
+            onSuccess = { true },
+            onFailure = { false },
+        )
     }
 }

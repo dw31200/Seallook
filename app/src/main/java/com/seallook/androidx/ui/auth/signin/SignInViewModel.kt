@@ -39,6 +39,9 @@ class SignInViewModel @Inject constructor(
     val signInWithEmailResult: LiveData<AuthResult?>
         get() = _signInWithEmailResult
 
+    // LiveData ??
+    // DataHolder -> Data 감싸는 클래스 -> Lifecycle을 고려한 클래스
+
     fun getCurrentUser() {
         viewModelScope.launch {
             _currentUser.value = getCurrentUserUseCase()

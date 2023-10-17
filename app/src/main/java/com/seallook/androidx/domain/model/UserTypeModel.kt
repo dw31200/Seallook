@@ -5,7 +5,7 @@ import com.seallook.androidx.data.model.UserType
 data class UserTypeModel(
     val usertype: Int,
 ) {
-    fun toUserType(): UserType {
+    fun toDataModel(): UserType {
         return UserType(
             usertype = usertype,
         )

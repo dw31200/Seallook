@@ -14,9 +14,10 @@ class CounselorInfoApiServiceImpl @Inject constructor(
         val uid = user?.uid ?: return null
         val documentResponse = db.collection(Constants.COUNSELORS)
             .document(uid)
-            .collection("counselorinfo")
+            .collection("counselorinfo") // Magic String -> 의미를 알 수 없는 문자열
             .document(uid)
-            .get().await()
+            .get()
+            .await()
         return if (documentResponse.exists()) {
             CounselorInfoResponse(documentResponse)
         } else {
@@ -32,6 +33,7 @@ class CounselorInfoApiServiceImpl @Inject constructor(
                     .collection("counselorinfo")
                     .document(it)
                     .set(info)
+                    .await()
             }.fold(
                 onSuccess = { true },
                 onFailure = { false },

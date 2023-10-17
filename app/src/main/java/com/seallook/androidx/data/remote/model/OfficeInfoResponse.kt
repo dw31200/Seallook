@@ -3,6 +3,8 @@ package com.seallook.androidx.data.remote.model
 import com.google.firebase.firestore.DocumentSnapshot
 import com.squareup.moshi.JsonClass
 
+// DataModel Index
+// Index : 기준점
 @JsonClass(generateAdapter = true)
 data class OfficeInfoResponse(
     val title: String,
@@ -16,18 +18,12 @@ data class OfficeInfoResponse(
     val mapy: Int,
 ) {
     companion object {
-        operator fun invoke(snapshot: DocumentSnapshot): OfficeInfoResponse {
-            return OfficeInfoResponse(
-                title = snapshot.getString("title") ?: "",
-                link = snapshot.getString("link") ?: "",
-                category = snapshot.getString("category") ?: "",
-                description = snapshot.getString("description") ?: "",
-                telephone = snapshot.getString("telephone") ?: "",
-                address = snapshot.getString("address") ?: "",
-                roadAddress = snapshot.getString("roadAddress") ?: "",
-                mapx = snapshot.getLong("mapx")?.toInt() ?: 0,
-                mapy = snapshot.getLong("mapy")?.toInt() ?: 0,
-            )
+        operator fun invoke(snapshot: DocumentSnapshot): OfficeInfoResponse? {
+            snapshot.toObject(OfficeInfoResponse::class.java)?.let {
+                return it
+            } ?: run {
+                return null
+            }
         }
     }
 }

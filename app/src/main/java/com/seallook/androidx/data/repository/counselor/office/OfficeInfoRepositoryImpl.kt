@@ -1,13 +1,12 @@
 package com.seallook.androidx.data.repository.counselor.office
 
+import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.data.local.OfficeInfoDao
 import com.seallook.androidx.data.model.OfficeInfo
-import com.seallook.androidx.data.remote.auth.FirebaseAuthApiService
 import com.seallook.androidx.data.remote.counselor.office.OfficeInfoApiService
 import javax.inject.Inject
 
 class OfficeInfoRepositoryImpl @Inject constructor(
-    private val firebaseAuthApiService: FirebaseAuthApiService,
     private val officeInfoApiService: OfficeInfoApiService,
     private val officeInfoDao: OfficeInfoDao,
 ) : OfficeInfoRepository {
@@ -25,7 +24,7 @@ class OfficeInfoRepositoryImpl @Inject constructor(
         return officeInfoDao.getItem(id)?.let { OfficeInfo(it) }
     }
 
-    override suspend fun updateItem(info: OfficeInfo) {
-        officeInfoApiService.updateItem(firebaseAuthApiService.getCurrentUser(), info.toResponse())
+    override suspend fun updateItem(user: FirebaseUser, info: OfficeInfo) {
+        officeInfoApiService.updateItem(user, info.toResponse())
     }
 }

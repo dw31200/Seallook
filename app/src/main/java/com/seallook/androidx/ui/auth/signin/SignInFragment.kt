@@ -30,9 +30,7 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class SignInFragment :
-    BaseFragment<FragmentSignInBinding, SignInViewModel>(
-        FragmentSignInBinding::inflate,
-    ),
+    BaseFragment<FragmentSignInBinding, SignInViewModel>(FragmentSignInBinding::inflate),
     SignInNavigation {
     override val viewModel: SignInViewModel by viewModels()
     override fun viewModelVariableId(): Int = BR.vm
@@ -117,7 +115,10 @@ class SignInFragment :
         viewModel.signInWithEmailResult.observe(viewLifecycleOwner) {
             Timber.d("$it")
             if (it != null) {
-                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainGraphActivity(), extras)
+                findNavController().navigate(
+                    SignInFragmentDirections.actionSignInFragmentToMainGraphActivity(),
+                    extras,
+                )
                 cancelSignIn()
             } else {
                 failSignIn()
@@ -157,7 +158,10 @@ class SignInFragment :
     private fun navigation() {
         viewModel.profile.observe(viewLifecycleOwner) {
             if (it != null) {
-                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainGraphActivity(), extras)
+                findNavController().navigate(
+                    SignInFragmentDirections.actionSignInFragmentToMainGraphActivity(),
+                    extras,
+                )
             } else {
                 findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSelectSignUpTypeFragment())
             }
