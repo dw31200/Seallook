@@ -4,8 +4,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentUpdateOfficeBinding
-import com.seallook.androidx.domain.model.OfficeInfoModel
 import com.seallook.androidx.ui.base.BaseFragment
+import com.seallook.androidx.ui.model.OfficeInfoUiModel
 import com.seallook.androidx.ui.mypage.counselor.info.update.office.adapter.UpdateOfficeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,7 +34,7 @@ class UpdateOfficeFragment :
         }
     }
 
-    override fun navigateToMypage(info: OfficeInfoModel) {
+    override fun navigateToMypage(info: OfficeInfoUiModel) {
         viewModel.setOfficeInfo(0, info)
         val action = UpdateOfficeFragmentDirections.actionUpdateOfficeFragmentToUpdateCounselorBasicInfoFragment()
         findNavController().navigate(action)

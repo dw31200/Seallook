@@ -6,8 +6,6 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
-import com.seallook.androidx.domain.model.CounselorInfoModel
-import com.seallook.androidx.domain.model.OfficeInfoModel
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetCounselorInfoUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetDownloadUrlUseCase
@@ -18,6 +16,8 @@ import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.UpdateC
 import com.seallook.androidx.domain.usecase.counselorinfo.office.GetOfficeInfoUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.office.UpdateOfficeInfoUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
+import com.seallook.androidx.ui.model.CounselorInfoUiModel
+import com.seallook.androidx.ui.model.OfficeInfoUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -40,11 +40,11 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     private val _downloadUrl = MutableLiveData<Uri?>()
     val downloadUrl: LiveData<Uri?>
         get() = _downloadUrl
-    private val _counselorInfo = MutableLiveData<CounselorInfoModel?>()
-    val counselorInfo: LiveData<CounselorInfoModel?>
+    private val _counselorInfo = MutableLiveData<CounselorInfoUiModel?>()
+    val counselorInfo: LiveData<CounselorInfoUiModel?>
         get() = _counselorInfo
-    private val _officeInfo = MutableLiveData<OfficeInfoModel?>()
-    val officeInfo: LiveData<OfficeInfoModel?>
+    private val _officeInfo = MutableLiveData<OfficeInfoUiModel?>()
+    val officeInfo: LiveData<OfficeInfoUiModel?>
         get() = _officeInfo
     private val _uploadBasicInfoResult = MutableLiveData<Boolean?>()
     private val _uploadOfficeInfoResult = MutableLiveData<Boolean?>()
@@ -73,8 +73,8 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _currentUser.value = getCurrentUserUseCase()
-            _counselorInfo.value = getCounselorInfoUseCase()
-            _officeInfo.value = getOfficeInfoUseCase(0)
+            _counselorInfo.value = getCounselorInfoUseCase()?.let { CounselorInfoUiModel(it) }
+            _officeInfo.value = getOfficeInfoUseCase(0)?.let { OfficeInfoUiModel(it) }
         }
     }
 
@@ -93,7 +93,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
                 .addOnSuccessListener {
                     _downloadUrl.value = it
                     setCounselorInfo(
-                        CounselorInfoModel(
+                        CounselorInfoUiModel(
                             name ?: "",
                             pr ?: "",
                             downloadUrl.value.toString(),
@@ -109,9 +109,9 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
         }
     }
 
-    fun setCounselorInfo(info: CounselorInfoModel) {
+    fun setCounselorInfo(info: CounselorInfoUiModel) {
         viewModelScope.launch {
-            _uploadBasicInfoResult.value = setCounselorInfoUsecase(info)
+            _uploadBasicInfoResult.value = setCounselorInfoUsecase(info.toDomainModel())
         }
     }
 

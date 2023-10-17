@@ -9,8 +9,6 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.FirebaseUser
-import com.seallook.androidx.domain.model.ProfileEntity
-import com.seallook.androidx.domain.model.UserTypeEntity
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.GetProfileUseCase
 import com.seallook.androidx.domain.usecase.SetProfileUseCase
@@ -18,6 +16,8 @@ import com.seallook.androidx.domain.usecase.SetUserTypeUseCase
 import com.seallook.androidx.domain.usecase.SignOutUseCase
 import com.seallook.androidx.domain.usecase.SignUpUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
+import com.seallook.androidx.ui.model.ProfileUiModel
+import com.seallook.androidx.ui.model.UserTypeUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,8 +32,8 @@ class SignUpViewModel @Inject constructor(
     private val setUserTypeUseCase: SetUserTypeUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
-    private val _profile = MutableLiveData<ProfileEntity?>()
-    val profile: LiveData<ProfileEntity?>
+    private val _profile = MutableLiveData<ProfileUiModel?>()
+    val profile: LiveData<ProfileUiModel?>
         get() = _profile
     private val _currentUser = MutableLiveData<FirebaseUser?>()
     val currentUser: LiveData<FirebaseUser?>
@@ -42,6 +42,9 @@ class SignUpViewModel @Inject constructor(
     private val _signUpResult = MutableLiveData<AuthResult?>()
     val signUpResult: LiveData<AuthResult?>
         get() = _signUpResult
+    private val _setUserTypeResult = MutableLiveData<Boolean?>()
+    val setUserTypeResult: LiveData<Boolean?>
+        get() = _setUserTypeResult
     private val _passwordError = MutableLiveData<String?>()
     val passwordError: LiveData<String?>
         get() = _passwordError
@@ -54,10 +57,10 @@ class SignUpViewModel @Inject constructor(
             _currentUser.value = getCurrentUserUseCase()
         }
     }
-    fun signUp(profile: ProfileEntity, password: String?) {
+    fun signUp(profile: ProfileUiModel, password: String?) {
         viewModelScope.launch {
             try {
-                _signUpResult.value = signUpUseCase(profile, password)
+                _signUpResult.value = signUpUseCase(profile.toDomainModel(), password)
             } catch (e: Exception) {
                 when (e) {
                     is FirebaseAuthWeakPasswordException -> {
@@ -82,15 +85,15 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun setProfile(user: FirebaseUser?, profile: ProfileEntity) {
+    fun setProfile(user: FirebaseUser?, profile: ProfileUiModel) {
         viewModelScope.launch {
-            setProfileUseCase(user, profile.toProfile())
+            setProfileUseCase(user, profile.toDomainModel())
         }
     }
 
-    fun setUserType() {
+    fun setUserType(user: FirebaseUser?) {
         viewModelScope.launch {
-            setUserTypeUseCase(currentUser.value, UserTypeEntity(signUpType.value))
+            _setUserTypeResult.value = setUserTypeUseCase(user, UserTypeUiModel(signUpType.value).toDomainModel())
         }
     }
 

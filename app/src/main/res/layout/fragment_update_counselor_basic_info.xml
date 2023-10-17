@@ -106,7 +106,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@{vm.officeInfo.info.title}"
+                android:text="@{vm.officeInfo.title}"
                 tools:text="소속 기관명"/>
 
             <com.google.android.material.button.MaterialButton

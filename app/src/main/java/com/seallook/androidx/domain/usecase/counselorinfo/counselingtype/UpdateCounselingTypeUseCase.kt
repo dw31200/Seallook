@@ -1,7 +1,7 @@
 package com.seallook.androidx.domain.usecase.counselorinfo.counselingtype
 
-import com.seallook.androidx.data.repository.CounselingTypeRepository
-import com.seallook.androidx.data.repository.FirebaseAuthRepository
+import com.seallook.androidx.data.repository.auth.FirebaseAuthRepository
+import com.seallook.androidx.data.repository.counselor.counselingtype.CounselingTypeRepository
 import com.seallook.androidx.domain.model.CounselingTypeModel
 import dagger.Reusable
 import javax.inject.Inject
@@ -13,7 +13,7 @@ class UpdateCounselingTypeUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(type: List<CounselingTypeModel>): Boolean? {
         return runCatching {
-            counselingTypeRepository.updateCounselingType(firebaseAuthRepository.getCurrentUser(), type.map { it.toType() })
+            counselingTypeRepository.updateList(firebaseAuthRepository.getCurrentUser(), type.map { it.toType() })
         }.fold(
             onSuccess = { true },
             onFailure = { false },

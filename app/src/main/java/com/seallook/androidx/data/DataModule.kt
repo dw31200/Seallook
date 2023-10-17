@@ -1,21 +1,19 @@
 package com.seallook.androidx.data
 
-import com.seallook.androidx.data.repository.CounselingTypeRepository
-import com.seallook.androidx.data.repository.CounselingTypeRepositoryImpl
-import com.seallook.androidx.data.repository.CounselorInfoRepository
-import com.seallook.androidx.data.repository.CounselorInfoRepositoryImpl
-import com.seallook.androidx.data.repository.FirebaseAuthRepository
-import com.seallook.androidx.data.repository.FirebaseAuthRepositoryImpl
-import com.seallook.androidx.data.repository.FirebaseFirestoreRepository
-import com.seallook.androidx.data.repository.FirebaseFirestoreRepositoryImpl
 import com.seallook.androidx.data.repository.FirebaseStorageRepository
 import com.seallook.androidx.data.repository.FirebaseStorageRepositoryImpl
-import com.seallook.androidx.data.repository.NaverSearchRepository
-import com.seallook.androidx.data.repository.NaverSearchRepositoryImpl
-import com.seallook.androidx.data.repository.OfficeInfoRepository
-import com.seallook.androidx.data.repository.OfficeInfoRepositoryImpl
-import com.seallook.androidx.data.repository.SignInClientRepository
-import com.seallook.androidx.data.repository.SignInClientRepositoryImpl
+import com.seallook.androidx.data.repository.auth.FirebaseAuthRepository
+import com.seallook.androidx.data.repository.auth.FirebaseAuthRepositoryImpl
+import com.seallook.androidx.data.repository.auth.ProfileRepository
+import com.seallook.androidx.data.repository.auth.ProfileRepositoryImpl
+import com.seallook.androidx.data.repository.auth.UserTypeRepository
+import com.seallook.androidx.data.repository.auth.UserTypeRepositoryImpl
+import com.seallook.androidx.data.repository.counselor.basicinfo.CounselorInfoRepository
+import com.seallook.androidx.data.repository.counselor.basicinfo.CounselorInfoRepositoryImpl
+import com.seallook.androidx.data.repository.counselor.counselingtype.CounselingTypeRepository
+import com.seallook.androidx.data.repository.counselor.counselingtype.CounselingTypeRepositoryImpl
+import com.seallook.androidx.data.repository.counselor.office.OfficeInfoRepository
+import com.seallook.androidx.data.repository.counselor.office.OfficeInfoRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,16 +23,13 @@ import dagger.hilt.components.SingletonComponent
 @Module
 abstract class DataModule {
     @Binds
-    abstract fun bindNaverSearchRepository(naverSearchRepositoryImpl: NaverSearchRepositoryImpl): NaverSearchRepository
-
-    @Binds
     abstract fun bindFirebaseAuthRepository(firebaseAuthRepositoryImpl: FirebaseAuthRepositoryImpl): FirebaseAuthRepository
 
     @Binds
-    abstract fun bindFirebaseFirestoreRepository(firebaseFirestoreRepositoryImpl: FirebaseFirestoreRepositoryImpl): FirebaseFirestoreRepository
+    abstract fun bindProfileRepository(profileRepositoryImpl: ProfileRepositoryImpl): ProfileRepository
 
     @Binds
-    abstract fun bindSignInClientRepository(signInClientRepositoryImpl: SignInClientRepositoryImpl): SignInClientRepository
+    abstract fun bindUserTypeRepository(userTypeRepositoryImpl: UserTypeRepositoryImpl): UserTypeRepository
 
     @Binds
     abstract fun bindCounselingTypeRepository(counselingTypeRepositoryImpl: CounselingTypeRepositoryImpl): CounselingTypeRepository

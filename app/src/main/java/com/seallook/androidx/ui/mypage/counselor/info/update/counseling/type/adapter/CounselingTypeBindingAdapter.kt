@@ -5,7 +5,7 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import com.seallook.androidx.domain.model.CounselingTypeModel
+import com.seallook.androidx.ui.model.CounselingTypeUiModel
 import com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.DeleteCounselingType
 import kotlinx.coroutines.launch
 
@@ -25,7 +25,7 @@ fun TextView.setTextFromPay(pay: Int?) {
 }
 
 @BindingAdapter("bind:counselingTypeList")
-fun RecyclerView.setCounselingTypeList(list: List<CounselingTypeModel>?) {
+fun RecyclerView.setCounselingTypeList(list: List<CounselingTypeUiModel>?) {
     this.findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
         (adapter as? CounselingTypeAdapter)?.fetchData(list ?: emptyList())
     }

@@ -1,6 +1,6 @@
 package com.seallook.androidx.domain.usecase
 
-import com.seallook.androidx.data.repository.FirebaseAuthRepository
+import com.seallook.androidx.data.repository.auth.FirebaseAuthRepository
 import dagger.Reusable
 import javax.inject.Inject
 

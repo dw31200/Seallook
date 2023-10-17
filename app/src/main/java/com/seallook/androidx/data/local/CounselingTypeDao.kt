@@ -10,16 +10,16 @@ import com.seallook.androidx.data.local.model.CounselingTypeEntity
 @Dao
 interface CounselingTypeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(counselingTypeEntity: CounselingTypeEntity)
+    suspend fun insertItem(counselingTypeEntity: CounselingTypeEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(counselingTypeEntityList: List<CounselingTypeEntity>)
+    suspend fun insertList(counselingTypeEntityList: List<CounselingTypeEntity>)
 
     @Query("SELECT * FROM counselingTypeEntity ORDER BY ID ASC")
     suspend fun getAll(): List<CounselingTypeEntity>
 
     @Update
-    suspend fun update(counselingTypeEntity: CounselingTypeEntity)
+    suspend fun updateItem(counselingTypeEntity: CounselingTypeEntity)
 
     @Query("DELETE FROM counselingTypeEntity WHERE ID = :id")
     suspend fun deleteItem(id: Int)

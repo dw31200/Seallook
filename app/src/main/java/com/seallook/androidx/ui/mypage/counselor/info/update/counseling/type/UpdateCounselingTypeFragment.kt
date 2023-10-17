@@ -4,8 +4,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentUpdateCounselingTypeBinding
-import com.seallook.androidx.domain.model.CounselingTypeModel
 import com.seallook.androidx.ui.base.BaseFragment
+import com.seallook.androidx.ui.model.CounselingTypeUiModel
 import com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.adapter.CounselingTypeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,7 +51,7 @@ class UpdateCounselingTypeFragment :
             val time = typeTimeField.editText?.text.toString().toInt()
             val pay = typePayField.editText?.text.toString().toInt()
             viewModel.setCounselingType(
-                CounselingTypeModel(
+                CounselingTypeUiModel(
                     id ?: 0,
                     title,
                     count,

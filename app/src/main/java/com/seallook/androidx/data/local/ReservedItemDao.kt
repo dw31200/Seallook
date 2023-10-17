@@ -10,16 +10,16 @@ import com.seallook.androidx.data.local.model.ReservedItemEntity
 @Dao
 interface ReservedItemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(reservedItemEntity: ReservedItemEntity)
+    suspend fun insertItem(reservedItemEntity: ReservedItemEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(reservedItemEntityList: List<ReservedItemEntity>)
+    suspend fun insertList(reservedItemEntityList: List<ReservedItemEntity>)
 
     @Query("SELECT * FROM reservedItemEntity ORDER BY ID ASC")
     suspend fun getAll(): List<ReservedItemEntity>
 
     @Update
-    suspend fun update(reservedItemEntity: ReservedItemEntity)
+    suspend fun updateItem(reservedItemEntity: ReservedItemEntity)
 
     @Query("DELETE FROM reservedItemEntity WHERE ID = :id")
     suspend fun deleteItem(id: Int)

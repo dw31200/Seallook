@@ -1,6 +1,6 @@
 package com.seallook.androidx.domain.usecase.counselorinfo.office
 
-import com.seallook.androidx.data.repository.OfficeInfoRepository
+import com.seallook.androidx.data.repository.counselor.office.OfficeInfoRepository
 import com.seallook.androidx.domain.model.OfficeInfoModel
 import javax.inject.Inject
 
@@ -9,7 +9,7 @@ class UpdateOfficeInfoUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(info: OfficeInfoModel): Boolean {
         return runCatching {
-            officeInfoRepository.updateOfficeInfo(info.toInfo())
+            officeInfoRepository.updateItem(info.toInfo())
         }.fold(
             onSuccess = { true },
             onFailure = { false },
