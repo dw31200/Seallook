@@ -1,6 +1,6 @@
 package com.seallook.androidx.domain.usecase.counselorinfo.counselingtype
 
-import com.seallook.androidx.data.repository.CounselingTypeRepository
+import com.seallook.androidx.data.repository.counselor.counselingtype.CounselingTypeRepository
 import com.seallook.androidx.domain.model.CounselingTypeModel
 import dagger.Reusable
 import javax.inject.Inject
@@ -10,6 +10,6 @@ class SetCounselingTypeUseCase @Inject constructor(
     private val counselingTypeRepository: CounselingTypeRepository,
 ) {
     suspend operator fun invoke(counselingTypeModel: CounselingTypeModel) {
-        counselingTypeRepository.setCounselingType(counselingTypeModel.toType())
+        counselingTypeRepository.insertItem(counselingTypeModel.toType())
     }
 }

@@ -15,9 +15,10 @@ import com.seallook.androidx.BR
 import com.seallook.androidx.BuildConfig
 import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentSignUpBinding
-import com.seallook.androidx.domain.model.ProfileEntity
 import com.seallook.androidx.ui.base.BaseFragment
+import com.seallook.androidx.ui.model.ProfileUiModel
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
@@ -31,9 +32,10 @@ import java.util.TimeZone
     6.Navigation: SignUp 클릭시 SignIn으로 이동
  */
 @AndroidEntryPoint
-class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
-    FragmentSignUpBinding::inflate,
-) {
+class SignUpFragment :
+    BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
+        FragmentSignUpBinding::inflate,
+    ) {
     override val viewModel: SignUpViewModel by viewModels()
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -52,7 +54,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                 )
             }
         }
-
     private val extras = ActivityNavigator.Extras.Builder()
         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -197,16 +198,18 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
 
         if (isSignedIn()) {
             showProgressDialog("프로필 생성 중... 잠시만 기다려 주세요.")
-            val profile = ProfileEntity(
-                "",
+            val profile = ProfileUiModel(
+                //                sdw312 빌드 테스트
+                0,
                 email,
                 name,
                 gender,
                 birth!!,
                 Date(),
+                0,
             )
             viewModel.setProfile(viewModel.currentUser.value, profile)
-            viewModel.setUserType()
+            viewModel.setUserType(viewModel.currentUser.value)
             findNavController().navigate(
                 SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
                 extras,
@@ -214,24 +217,31 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             dismissProgressDialog()
         } else {
             showProgressDialog("회원가입 중... 잠시만 기다려 주세요.")
-            val profile = ProfileEntity(
-                "",
+            val profile = ProfileUiModel(
+//                sdw312 빌드 테스트
+                0,
                 email,
                 name,
                 gender,
                 birth!!,
                 Date(),
+                0,
             )
             viewModel.signUp(profile, password)
             viewModel.signUpResult.observe(viewLifecycleOwner) {
                 if (it?.user != null) {
+                    Timber.d("${it.user}")
                     viewModel.setProfile(it.user, profile)
-                    viewModel.setUserType()
-                    findNavController().navigate(
-                        SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
-                        extras,
-                    )
-                    dismissProgressDialog()
+                    viewModel.setUserType(it.user)
+                    viewModel.setUserTypeResult.observe(viewLifecycleOwner) { result ->
+                        if (result == true) {
+                            findNavController().navigate(
+                                SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
+                                extras,
+                            )
+                            dismissProgressDialog()
+                        }
+                    }
                 } else {
                     dismissProgressDialog()
                 }

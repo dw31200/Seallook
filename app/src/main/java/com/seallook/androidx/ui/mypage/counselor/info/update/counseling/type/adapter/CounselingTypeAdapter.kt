@@ -3,11 +3,11 @@ package com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.ad
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.seallook.androidx.domain.model.CounselingTypeModel
+import com.seallook.androidx.ui.model.CounselingTypeUiModel
 import com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.DeleteCounselingType
 
 class CounselingTypeAdapter(
-    private val counselingTypeItems: MutableList<CounselingTypeModel> = mutableListOf(),
+    private val counselingTypeItems: MutableList<CounselingTypeUiModel> = mutableListOf(),
 ) : RecyclerView.Adapter<CounselingTypeHolder>() {
     var deleteCounselingType: DeleteCounselingType? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CounselingTypeHolder = CounselingTypeHolder(parent)
@@ -19,7 +19,7 @@ class CounselingTypeAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun fetchData(counselingTypeItems: List<CounselingTypeModel>) {
+    fun fetchData(counselingTypeItems: List<CounselingTypeUiModel>) {
         this.counselingTypeItems.clear()
         this.counselingTypeItems.addAll(counselingTypeItems)
         notifyDataSetChanged()

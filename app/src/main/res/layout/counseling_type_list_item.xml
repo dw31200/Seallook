@@ -5,7 +5,7 @@
 
         <variable
             name="data"
-            type="com.seallook.androidx.domain.model.CounselingTypeModel" />
+            type="com.seallook.androidx.ui.model.CounselingTypeUiModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -30,7 +30,7 @@
             app:layout_constraintTop_toBottomOf="@id/counseling_type_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            bind:countToString="@{data.count}"
+            bind:countToString="@{data.clientCount}"
             tools:text="2명"/>
 
         <TextView
@@ -48,7 +48,7 @@
             app:layout_constraintTop_toBottomOf="@id/counseling_type_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            bind:payToString="@{data.pay}"
+            bind:payToString="@{data.price}"
             tools:text="100,000원"/>
 
         <com.google.android.material.button.MaterialButton

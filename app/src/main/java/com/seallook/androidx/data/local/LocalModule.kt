@@ -40,4 +40,36 @@ object LocalModule {
     ): OfficeInfoDao {
         return database.officeInfoDao()
     }
+
+    @Singleton
+    @Provides
+    fun provideCounselingScheduleDao(
+        database: SealLookDatabase,
+    ): CounselingScheduleDao {
+        return database.counselingScheduleDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideReservationDao(
+        database: SealLookDatabase,
+    ): ReservationDao {
+        return database.reservationDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCounselorInfoDao(
+        database: SealLookDatabase,
+    ): CounselorInfoDao {
+        return database.counselorInfoDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideProfileDao(
+        database: SealLookDatabase,
+    ): ProfileDao {
+        return database.profileDao()
+    }
 }

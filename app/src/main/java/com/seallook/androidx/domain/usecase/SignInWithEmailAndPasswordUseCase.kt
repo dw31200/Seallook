@@ -1,7 +1,7 @@
 package com.seallook.androidx.domain.usecase
 
 import com.google.firebase.auth.AuthResult
-import com.seallook.androidx.data.repository.FirebaseAuthRepository
+import com.seallook.androidx.data.repository.auth.FirebaseAuthRepository
 import javax.inject.Inject
 
 class SignInWithEmailAndPasswordUseCase @Inject constructor(

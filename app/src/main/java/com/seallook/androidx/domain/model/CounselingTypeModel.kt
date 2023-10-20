@@ -5,17 +5,17 @@ import com.seallook.androidx.data.model.CounselingType
 data class CounselingTypeModel(
     val id: Int,
     val title: String,
-    val count: Int,
+    val clientCount: Int,
     val time: Int,
-    val pay: Int,
+    val price: Int,
 ) {
     fun toType(): CounselingType {
         return CounselingType(
             id = id,
             title = title,
-            count = count,
+            clientCount = clientCount,
             time = time,
-            pay = pay,
+            price = price,
         )
     }
     companion object {
@@ -23,9 +23,9 @@ data class CounselingTypeModel(
             return CounselingTypeModel(
                 id = counselingType.id,
                 title = counselingType.title,
-                count = counselingType.count,
+                clientCount = counselingType.clientCount,
                 time = counselingType.time,
-                pay = counselingType.pay,
+                price = counselingType.price,
             )
         }
     }

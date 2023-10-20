@@ -8,8 +8,8 @@ import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentUpdateCounselorBasicInfoBinding
-import com.seallook.androidx.domain.model.CounselorInfoModel
 import com.seallook.androidx.ui.base.BaseFragment
+import com.seallook.androidx.ui.model.CounselorInfoUiModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -77,7 +77,9 @@ class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBas
                     )
                 } else {
                     viewModel.setCounselorInfo(
-                        CounselorInfoModel(
+                        CounselorInfoUiModel(
+//                            sdw312 빌드 테스트 임의 id 값
+                            0,
                             binding.nameTextField.editText?.text.toString(),
                             binding.prTextField.editText?.text.toString(),
                             viewModel.downloadUrl.value.toString(),

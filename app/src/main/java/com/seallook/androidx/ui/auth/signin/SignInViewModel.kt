@@ -6,13 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.identity.BeginSignInResult
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
-import com.seallook.androidx.domain.model.ProfileEntity
-import com.seallook.androidx.domain.usecase.GetBeginSignInResultUseCase
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.GetProfileUseCase
 import com.seallook.androidx.domain.usecase.SignInWithEmailAndPasswordUseCase
 import com.seallook.androidx.domain.usecase.SignInWithGoogleUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
+import com.seallook.androidx.ui.model.ProfileUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,11 +21,10 @@ class SignInViewModel @Inject constructor(
     private val signInWithGoogleUseCase: SignInWithGoogleUseCase,
     private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPasswordUseCase,
     private val getProfileUseCase: GetProfileUseCase,
-    private val getBeginSignInResultUseCase: GetBeginSignInResultUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
 ) : BaseViewModel() {
-    private val _profile = MutableLiveData<ProfileEntity?>()
-    val profile: LiveData<ProfileEntity?>
+    private val _profile = MutableLiveData<ProfileUiModel?>()
+    val profile: LiveData<ProfileUiModel?>
         get() = _profile
     private val _currentUser = MutableLiveData<FirebaseUser?>()
     val currentUser: LiveData<FirebaseUser?>
@@ -49,13 +47,7 @@ class SignInViewModel @Inject constructor(
 
     fun getProfile(user: FirebaseUser) {
         viewModelScope.launch {
-            _profile.value = getProfileUseCase(user)
-        }
-    }
-
-    fun getBeginSignInResult() {
-        viewModelScope.launch {
-            _beginSignInResult.value = getBeginSignInResultUseCase()
+            _profile.value = getProfileUseCase(user)?.let { ProfileUiModel(it) }
         }
     }
 

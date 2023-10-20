@@ -1,15 +1,16 @@
 package com.seallook.androidx.ui.auth.signin
 
-import android.app.Activity
 import android.content.Intent
+import android.content.IntentSender
 import android.util.Patterns
 import android.widget.Toast
-import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.gms.common.api.ApiException
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentSignInBinding
@@ -28,61 +29,80 @@ import timber.log.Timber
  */
 
 @AndroidEntryPoint
-class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
-    FragmentSignInBinding::inflate,
-) {
+class SignInFragment :
+    BaseFragment<FragmentSignInBinding, SignInViewModel>(
+        FragmentSignInBinding::inflate,
+    ),
+    SignInNavigation {
     override val viewModel: SignInViewModel by viewModels()
     override fun viewModelVariableId(): Int = BR.vm
 
-    private val oneTapClient by lazy { Identity.getSignInClient(requireContext()) }
-    private val googleSignInIntentResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
-            if (it.resultCode != Activity.RESULT_OK) {
-                Timber.d("${it.resultCode}")
-                cancelSignIn()
-                return@registerForActivityResult
-            }
-            val credential = oneTapClient.getSignInCredentialFromIntent(it.data)
-            val idToken = credential.googleIdToken
-
-            if (idToken != null) {
-                viewModel.signInWithGoogle(idToken)
-            } else {
-                failSignIn()
-            }
-        }
+    private lateinit var oneTapClient: SignInClient
+    private lateinit var signInRequest: BeginSignInRequest
     private val extras = ActivityNavigator.Extras.Builder()
         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         .build()
 
     override fun onViewCreatedAfterBinding() {
-        with(binding) {
-            googleSignInButton.setOnClickListener {
-                signInWithGoogle()
-            }
-            emailSignInButton.setOnClickListener {
-                signInWithEmailAndPassword()
-            }
-            emailSignUpButton.setOnClickListener {
-                findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
-            }
-            viewModel.signInWithGoogleResult.observe(viewLifecycleOwner) {
-                if (it != null) {
-                    viewModel.getCurrentUser()
-                    viewModel.currentUser.observe(viewLifecycleOwner) {
-                        if (it != null) {
-                            viewModel.getProfile(it)
-                            navigation()
-                            cancelSignIn()
-                        }
+        binding.navigation = this
+        oneTapClient = Identity.getSignInClient(requireActivity())
+        signInRequest = BeginSignInRequest.builder()
+            .setGoogleIdTokenRequestOptions(
+                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                    .setSupported(true)
+                    .setServerClientId(getString(R.string.google_web_client_id))
+                    .setFilterByAuthorizedAccounts(false)
+                    .build(),
+            )
+            .build()
+
+        viewModel.signInWithGoogleResult.observe(viewLifecycleOwner) {
+            if (it != null) {
+                viewModel.getCurrentUser()
+                viewModel.currentUser.observe(viewLifecycleOwner) {
+                    if (it != null) {
+                        viewModel.getProfile(it)
+                        navigation()
+                        cancelSignIn()
                     }
                 }
             }
         }
     }
 
-    private fun signInWithEmailAndPassword() {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            REQ_ONE_TAP -> {
+                try {
+                    val credential = oneTapClient.getSignInCredentialFromIntent(data)
+                    val idToken = credential.googleIdToken
+                    val username = credential.id
+                    val password = credential.password
+                    when {
+                        idToken != null -> {
+                            viewModel.signInWithGoogle(idToken)
+                            Timber.d("Got ID token.")
+                        }
+
+                        password != null -> {
+                            Timber.d("Got password.")
+                        }
+
+                        else -> {
+                            Timber.d("No ID token or password!")
+                        }
+                    }
+                } catch (e: ApiException) {
+                    Timber.d(e.localizedMessage)
+                }
+            }
+        }
+    }
+
+    override fun signInWithEmailAndPassword() {
         if (isSigningIn()) return
         val email = binding.emailTextField.editText!!.text.toString().trim()
         val password = binding.passwordTextField.editText!!.text.toString().trim()
@@ -105,18 +125,29 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         }
     }
 
-    private fun signInWithGoogle() {
+    override fun signInWithGoogle() {
         if (isSigningIn()) return
 
         startSignIn()
-        viewModel.getBeginSignInResult()
-        viewModel.beginSignInResult.observe(viewLifecycleOwner) {
-            if (it != null) {
-                googleSignInIntentResultLauncher.launch(
-                    IntentSenderRequest.Builder(it.pendingIntent.intentSender).build(),
-                )
+        oneTapClient.beginSignIn(signInRequest)
+            .addOnSuccessListener(requireActivity()) { result ->
+                try {
+                    startIntentSenderForResult(
+                        result.pendingIntent.intentSender,
+                        REQ_ONE_TAP,
+                        null,
+                        0,
+                        0,
+                        0,
+                        null,
+                    )
+                } catch (e: IntentSender.SendIntentException) {
+                    Timber.d("Couldn't start One Tap UI: ${e.localizedMessage}")
+                }
             }
-        }
+            .addOnFailureListener(requireActivity()) { e ->
+                Timber.d(e.localizedMessage)
+            }
     }
 
     private fun startSignIn() {
@@ -148,4 +179,12 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun isSigningIn() = isProgressDialogShown()
+
+    override fun navigateToSelectSignUpType() {
+        findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
+    }
+
+    companion object {
+        private const val REQ_ONE_TAP = 1001
+    }
 }

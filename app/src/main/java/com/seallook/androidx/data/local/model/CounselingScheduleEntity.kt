@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.Date
 
-@Entity("counselingScheduleEntity")
+@Entity("CounselingSchedule")
 data class CounselingScheduleEntity(
     @PrimaryKey
     val id: Int,
