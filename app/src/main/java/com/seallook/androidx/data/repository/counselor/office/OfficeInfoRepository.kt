@@ -5,7 +5,7 @@ import com.seallook.androidx.data.model.OfficeInfo
 interface OfficeInfoRepository {
     suspend fun getList(type: String, query: String): List<OfficeInfo>
 
-    suspend fun setItem(id: Int, info: OfficeInfo)
+    suspend fun setItem(info: OfficeInfo)
 
     suspend fun getItem(id: Int): OfficeInfo?
 

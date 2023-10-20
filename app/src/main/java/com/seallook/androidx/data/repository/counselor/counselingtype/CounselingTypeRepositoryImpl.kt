@@ -12,11 +12,11 @@ class CounselingTypeRepositoryImpl @Inject constructor(
     private val counselingTypeApiService: CounselingTypeApiService,
 ) : CounselingTypeRepository {
     override suspend fun insertItem(counselingType: CounselingType) {
-        counselingTypeDao.insertItem(counselingType.toEntity())
+        counselingTypeDao.insert(counselingType.toLocalModel())
     }
 
     override suspend fun insertList(counselingTypeList: List<CounselingType>) {
-        counselingTypeDao.insertList(counselingTypeList.map { it.toEntity() })
+        counselingTypeDao.insert(counselingTypeList.map { it.toLocalModel() })
     }
 
     override suspend fun deleteItem(counselingTypeId: Int) {
@@ -30,14 +30,12 @@ class CounselingTypeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun initList(user: FirebaseUser?): List<CounselingType> {
-        return counselingTypeApiService.getList(user).let {
-            it.map {
-                CounselingType(it)
-            }
+        return counselingTypeApiService.getList(user).map {
+            CounselingType(it)
         }
     }
 
     override suspend fun updateList(user: FirebaseUser?, type: List<CounselingType>) {
-        counselingTypeApiService.updateList(user, CounselingTypeListResponse(type.map { it.toResponse() }))
+        counselingTypeApiService.updateList(user, CounselingTypeListResponse(type.map { it.toRemoteModel() }))
     }
 }

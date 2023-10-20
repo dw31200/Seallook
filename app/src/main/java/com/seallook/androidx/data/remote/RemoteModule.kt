@@ -15,8 +15,6 @@ import com.seallook.androidx.data.remote.auth.FirebaseAuthApiService
 import com.seallook.androidx.data.remote.auth.FirebaseAuthApiServiceImpl
 import com.seallook.androidx.data.remote.auth.ProfileApiService
 import com.seallook.androidx.data.remote.auth.ProfileApiServiceImpl
-import com.seallook.androidx.data.remote.auth.UserTypeApiService
-import com.seallook.androidx.data.remote.auth.UserTypeApiServiceImpl
 import com.seallook.androidx.data.remote.counselor.basicinfo.CounselorInfoApiService
 import com.seallook.androidx.data.remote.counselor.basicinfo.CounselorInfoApiServiceImpl
 import com.seallook.androidx.data.remote.counselor.counselingtype.CounselingTypeApiService
@@ -48,9 +46,6 @@ abstract class RemoteModule {
 
     @Binds
     abstract fun bindProfileApiService(profileApiServiceImpl: ProfileApiServiceImpl): ProfileApiService
-
-    @Binds
-    abstract fun bindUserTypeApiService(userTypeApiServiceImpl: UserTypeApiServiceImpl): UserTypeApiService
 
     @Binds
     abstract fun bindCounselorInfoApiService(counselorInfoApiServiceImpl: CounselorInfoApiServiceImpl): CounselorInfoApiService

@@ -40,7 +40,7 @@ class UpdateCounselingTypeFragment :
         with(binding) {
             var id: Int? = null
             viewModel.counselingType.observe(viewLifecycleOwner) {
-                if (it == null) {
+                if (it.isEmpty()) {
                     id = 0
                 } else {
                     id = it[it.size - 1].id + 1

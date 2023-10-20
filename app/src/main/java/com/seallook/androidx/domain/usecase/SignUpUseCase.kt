@@ -11,6 +11,6 @@ class SignUpUseCase @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository,
 ) {
     suspend operator fun invoke(profile: ProfileModel, password: String?): AuthResult? {
-        return firebaseAuthRepository.signUp(profile.toProfile(), password)
+        return firebaseAuthRepository.signUp(profile.toDataModel(), password)
     }
 }

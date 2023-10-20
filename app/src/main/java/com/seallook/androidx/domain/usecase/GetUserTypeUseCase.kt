@@ -1,18 +1,18 @@
 package com.seallook.androidx.domain.usecase
 
 import com.google.firebase.auth.FirebaseUser
-import com.seallook.androidx.data.repository.auth.UserTypeRepository
-import com.seallook.androidx.domain.model.UserTypeModel
+import com.seallook.androidx.data.repository.auth.ProfileRepository
+import com.seallook.androidx.domain.model.ProfileModel
 import dagger.Reusable
 import javax.inject.Inject
 
 @Reusable
 class GetUserTypeUseCase @Inject constructor(
-    private val userTypeRepository: UserTypeRepository,
+    private val profileRepository: ProfileRepository,
 ) {
-    suspend operator fun invoke(user: FirebaseUser?): UserTypeModel? {
-        return userTypeRepository.getItem(user)?.let {
-            UserTypeModel(it)
+    suspend operator fun invoke(user: FirebaseUser?): ProfileModel? {
+        return profileRepository.getItem(user)?.let {
+            ProfileModel(it)
         }
     }
 }

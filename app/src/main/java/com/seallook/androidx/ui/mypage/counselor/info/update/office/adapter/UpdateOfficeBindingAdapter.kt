@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @BindingAdapter("bind:officeResultList")
-fun RecyclerView.setOfficeResultList(list: List<OfficeInfoUiModel>) {
+fun RecyclerView.setOfficeResultList(list: List<OfficeInfoUiModel>?) {
     this.findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
         Timber.d("$list")
         (adapter as? UpdateOfficeAdapter)?.fetchData(list ?: emptyList())

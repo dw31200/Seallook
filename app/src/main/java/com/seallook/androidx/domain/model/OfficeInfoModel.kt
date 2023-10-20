@@ -3,6 +3,7 @@ package com.seallook.androidx.domain.model
 import com.seallook.androidx.data.model.OfficeInfo
 
 data class OfficeInfoModel(
+    val id: Int,
     val title: String,
     val link: String,
     val category: String,
@@ -15,6 +16,7 @@ data class OfficeInfoModel(
 ) {
     fun toInfo(): OfficeInfo {
         return OfficeInfo(
+            id = id,
             title = title,
             link = link,
             category = category,
@@ -29,6 +31,7 @@ data class OfficeInfoModel(
     companion object {
         operator fun invoke(officeInfo: OfficeInfo): OfficeInfoModel {
             return OfficeInfoModel(
+                id = officeInfo.id,
                 title = officeInfo.title,
                 link = officeInfo.link,
                 category = officeInfo.category,

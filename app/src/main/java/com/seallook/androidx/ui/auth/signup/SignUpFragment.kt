@@ -199,12 +199,14 @@ class SignUpFragment :
         if (isSignedIn()) {
             showProgressDialog("프로필 생성 중... 잠시만 기다려 주세요.")
             val profile = ProfileUiModel(
-                "",
+                //                sdw312 빌드 테스트
+                0,
                 email,
                 name,
                 gender,
                 birth!!,
                 Date(),
+                0,
             )
             viewModel.setProfile(viewModel.currentUser.value, profile)
             viewModel.setUserType(viewModel.currentUser.value)
@@ -216,12 +218,14 @@ class SignUpFragment :
         } else {
             showProgressDialog("회원가입 중... 잠시만 기다려 주세요.")
             val profile = ProfileUiModel(
-                "",
+//                sdw312 빌드 테스트
+                0,
                 email,
                 name,
                 gender,
                 birth!!,
                 Date(),
+                0,
             )
             viewModel.signUp(profile, password)
             viewModel.signUpResult.observe(viewLifecycleOwner) {

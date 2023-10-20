@@ -17,8 +17,8 @@ class OfficeInfoRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun setItem(id: Int, info: OfficeInfo) {
-        officeInfoDao.insertItem(info.toEntity(id))
+    override suspend fun setItem(info: OfficeInfo) {
+        officeInfoDao.insert(info.toLocalModel())
     }
 
     override suspend fun getItem(id: Int): OfficeInfo? {
@@ -26,6 +26,6 @@ class OfficeInfoRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateItem(info: OfficeInfo) {
-        officeInfoApiService.updateItem(firebaseAuthApiService.getCurrentUser(), info.toResponse())
+        officeInfoApiService.updateItem(firebaseAuthApiService.getCurrentUser(), info.toRemoteModel())
     }
 }

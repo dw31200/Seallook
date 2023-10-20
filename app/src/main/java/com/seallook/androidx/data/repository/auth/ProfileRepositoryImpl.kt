@@ -12,7 +12,12 @@ class ProfileRepositoryImpl @Inject constructor(
         return profileApiService.getItem(user)?.let { Profile(it) }
     }
 
-    override suspend fun setItem(user: FirebaseUser?, profile: Profile) {
-        profileApiService.setItem(user, profile.toResponse())
+    override suspend fun setItem(user: FirebaseUser?, profile: Profile): Boolean? {
+        return runCatching {
+            profileApiService.setItem(user, profile.toRemoteModel())
+        }.fold(
+            onSuccess = { true },
+            onFailure = { false },
+        )
     }
 }

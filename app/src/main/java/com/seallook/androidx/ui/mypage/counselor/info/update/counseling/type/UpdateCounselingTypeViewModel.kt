@@ -26,7 +26,7 @@ class UpdateCounselingTypeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _counselingType.value = initCounselingTypeUseCase()?.map {
+            _counselingType.value = initCounselingTypeUseCase().map {
                 CounselingTypeUiModel(it)
             }
         }

@@ -5,19 +5,14 @@ import com.google.firebase.firestore.DocumentSnapshot
 data class CounselingTypeResponse(
     val id: Int,
     val title: String,
-    val count: Int,
+    val clientCount: Int,
     val time: Int,
-    val pay: Int,
+    val price: Int,
 ) {
+    constructor() : this(0, "", 0, 0, 0)
     companion object {
-        operator fun invoke(snapshot: DocumentSnapshot): CounselingTypeResponse {
-            return CounselingTypeResponse(
-                id = snapshot.getLong("id")?.toInt() ?: 0,
-                title = snapshot.getString("name") ?: "",
-                count = snapshot.getLong("createdAt")?.toInt() ?: 0,
-                time = snapshot.getLong("description")?.toInt() ?: 0,
-                pay = snapshot.getLong("imageUrl")?.toInt() ?: 0,
-            )
+        operator fun invoke(snapshot: DocumentSnapshot): CounselingTypeResponse? {
+            return snapshot.toObject(CounselingTypeResponse::class.java)
         }
     }
 }

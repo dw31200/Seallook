@@ -35,7 +35,7 @@ class UpdateOfficeFragment :
     }
 
     override fun navigateToMypage(info: OfficeInfoUiModel) {
-        viewModel.setOfficeInfo(0, info)
+        viewModel.setOfficeInfo(info)
         val action = UpdateOfficeFragmentDirections.actionUpdateOfficeFragmentToUpdateCounselorBasicInfoFragment()
         findNavController().navigate(action)
     }

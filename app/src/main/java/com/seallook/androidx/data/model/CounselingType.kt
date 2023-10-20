@@ -6,27 +6,27 @@ import com.seallook.androidx.data.remote.model.CounselingTypeResponse
 data class CounselingType(
     val id: Int,
     val title: String,
-    val count: Int,
+    val clientCount: Int,
     val time: Int,
-    val pay: Int,
+    val price: Int,
 ) {
-    fun toEntity(): CounselingTypeEntity {
+    fun toLocalModel(): CounselingTypeEntity {
         return CounselingTypeEntity(
             id = id,
             title = title,
-            count = count,
+            clientCount = clientCount,
             time = time,
-            pay = pay,
+            price = price,
         )
     }
 
-    fun toResponse(): CounselingTypeResponse {
+    fun toRemoteModel(): CounselingTypeResponse {
         return CounselingTypeResponse(
             id = id,
             title = title,
-            count = count,
+            clientCount = clientCount,
             time = time,
-            pay = pay,
+            price = price,
         )
     }
 
@@ -35,9 +35,9 @@ data class CounselingType(
             return CounselingType(
                 id = counselingTypeEntity.id,
                 title = counselingTypeEntity.title,
-                count = counselingTypeEntity.count,
+                clientCount = counselingTypeEntity.clientCount,
                 time = counselingTypeEntity.time,
-                pay = counselingTypeEntity.pay,
+                price = counselingTypeEntity.price,
             )
         }
 
@@ -45,9 +45,9 @@ data class CounselingType(
             return CounselingType(
                 id = counselingTypeResponse.id,
                 title = counselingTypeResponse.title,
-                count = counselingTypeResponse.count,
+                clientCount = counselingTypeResponse.clientCount,
                 time = counselingTypeResponse.time,
-                pay = counselingTypeResponse.pay,
+                price = counselingTypeResponse.price,
             )
         }
     }

@@ -6,6 +6,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
+import com.seallook.androidx.domain.model.CounselingTypeModel
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetCounselorInfoUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetDownloadUrlUseCase
@@ -94,6 +95,8 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
                     _downloadUrl.value = it
                     setCounselorInfo(
                         CounselorInfoUiModel(
+                            //                            sdw312 빌드 테스트 임의 id 값
+                            0,
                             name ?: "",
                             pr ?: "",
                             downloadUrl.value.toString(),
@@ -105,7 +108,8 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
 
     fun updateCounselingType() {
         viewModelScope.launch {
-            _uploadCounselingTypeResult.value = updateCounselingTypeUseCase(getCounselingTypeUseCase())
+            _uploadCounselingTypeResult.value = updateCounselingTypeUseCase(listOf(CounselingTypeModel(0, "ㄱ", 1, 1, 1), CounselingTypeModel(1, "ㄱ", 1, 1, 1)))
+//            _uploadCounselingTypeResult.value = updateCounselingTypeUseCase(getCounselingTypeUseCase())
         }
     }
 

@@ -1,6 +1,6 @@
 package com.seallook.androidx.data.remote.api.naver
 
-import com.seallook.androidx.data.remote.model.OfficeInfoListResponse
+import com.seallook.androidx.data.remote.model.NaverSearchListResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
@@ -14,5 +14,5 @@ interface NaverSearchApi {
         @Path("type") type: String,
         @Query("query") query: String,
         @Query("display") display: Int = 5,
-    ): OfficeInfoListResponse
+    ): NaverSearchListResponse
 }

@@ -51,9 +51,25 @@ object LocalModule {
 
     @Singleton
     @Provides
-    fun provideReservedItemDao(
+    fun provideReservationDao(
         database: SealLookDatabase,
-    ): ReservedItemDao {
-        return database.reservedItemDao()
+    ): ReservationDao {
+        return database.reservationDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCounselorInfoDao(
+        database: SealLookDatabase,
+    ): CounselorInfoDao {
+        return database.counselorInfoDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideProfileDao(
+        database: SealLookDatabase,
+    ): ProfileDao {
+        return database.profileDao()
     }
 }

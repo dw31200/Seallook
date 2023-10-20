@@ -10,11 +10,8 @@ class InitCounselingTypeUseCase @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository,
 ) {
     suspend operator fun invoke(): List<CounselingTypeModel> {
-        return counselingTypeRepository.initList(firebaseAuthRepository.getCurrentUser()).let {
-            counselingTypeRepository.insertList(it)
-            it.map {
-                CounselingTypeModel(it)
-            }
+        return counselingTypeRepository.initList(firebaseAuthRepository.getCurrentUser()).map {
+            CounselingTypeModel(it)
         }
     }
 }

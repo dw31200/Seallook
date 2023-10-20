@@ -2,12 +2,12 @@ package com.seallook.androidx.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.Date
 
-@Entity("CounselingSchedule")
-data class CounselingScheduleEntity(
+@Entity("CounselorInfo")
+data class CounselorInfoEntity(
     @PrimaryKey
     val id: Int,
-    val date: Date,
-    val typeId: Int,
+    val name: String,
+    val description: String,
+    val imageUrl: String,
 )

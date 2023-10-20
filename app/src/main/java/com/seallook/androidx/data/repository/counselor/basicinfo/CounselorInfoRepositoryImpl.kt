@@ -14,6 +14,6 @@ class CounselorInfoRepositoryImpl @Inject constructor(
     }
 
     override suspend fun setItem(info: CounselorInfo): Boolean? {
-        return counselorInfoApiService.setItem(firebaseAuthApiService.getCurrentUser(), info.toResponse())
+        return counselorInfoApiService.setItem(firebaseAuthApiService.getCurrentUser(), info.toRemoteModel())
     }
 }

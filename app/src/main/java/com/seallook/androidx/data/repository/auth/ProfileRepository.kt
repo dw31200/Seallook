@@ -6,5 +6,5 @@ import com.seallook.androidx.data.model.Profile
 interface ProfileRepository {
     suspend fun getItem(user: FirebaseUser?): Profile?
 
-    suspend fun setItem(user: FirebaseUser?, profile: Profile)
+    suspend fun setItem(user: FirebaseUser?, profile: Profile): Boolean?
 }

@@ -44,7 +44,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/setting_button"
-            bind:visible="@{vm.userType.usertype == UserType.CLIENT.ordinal}">
+            bind:visible="@{vm.userType.userType == UserType.CLIENT.ordinal}">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/reserved_counseling_list_button"
@@ -74,7 +74,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mypage_client_type_layout"
-            bind:visible="@{vm.userType.usertype == UserType.COUNSELOR.ordinal}">
+            bind:visible="@{vm.userType.userType == UserType.COUNSELOR.ordinal}">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/edit_counselor_info"
@@ -95,7 +95,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mypage_counselor_type_layout"
-            bind:visible="@{vm.userType.usertype == UserType.OFFICE.ordinal}">
+            bind:visible="@{vm.userType.userType == UserType.OFFICE.ordinal}">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/sales_list_button"
@@ -134,7 +134,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mypage_office_type_layout"
-            bind:visible="@{vm.userType.usertype == UserType.COUNSELOR.ordinal}">
+            bind:visible="@{vm.userType.userType == UserType.COUNSELOR.ordinal}">
 
             <TextView
                 android:id="@+id/counseling_list_text"

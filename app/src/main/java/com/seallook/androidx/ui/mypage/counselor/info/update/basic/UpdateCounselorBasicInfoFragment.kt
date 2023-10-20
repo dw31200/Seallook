@@ -78,6 +78,8 @@ class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBas
                 } else {
                     viewModel.setCounselorInfo(
                         CounselorInfoUiModel(
+//                            sdw312 빌드 테스트 임의 id 값
+                            0,
                             binding.nameTextField.editText?.text.toString(),
                             binding.prTextField.editText?.text.toString(),
                             viewModel.downloadUrl.value.toString(),

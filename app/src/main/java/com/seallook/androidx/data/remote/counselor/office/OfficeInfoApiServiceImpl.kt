@@ -16,7 +16,11 @@ class OfficeInfoApiServiceImpl @Inject constructor(
         return runCatching {
             naverSearchApi.getList(type = type, query = query)
         }.fold(
-            onSuccess = { it.items },
+            onSuccess = {
+                it.items.mapIndexed { index, naverSearchResponse ->
+                    OfficeInfoResponse(index, naverSearchResponse)
+                }
+            },
             onFailure = { emptyList() },
         )
     }

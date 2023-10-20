@@ -9,6 +9,6 @@ class SetProfileUseCase @Inject constructor(
     private val profileRepository: ProfileRepository,
 ) {
     suspend operator fun invoke(user: FirebaseUser?, profile: ProfileModel) {
-        profileRepository.setItem(user, profile.toProfile())
+        profileRepository.setItem(user, profile.toDataModel())
     }
 }

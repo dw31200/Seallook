@@ -1,10 +1,9 @@
 package com.seallook.androidx.data.remote.model
 
 import com.google.firebase.firestore.DocumentSnapshot
-import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
 data class OfficeInfoResponse(
+    val id: Int,
     val title: String,
     val link: String,
     val category: String,
@@ -15,18 +14,25 @@ data class OfficeInfoResponse(
     val mapx: Int,
     val mapy: Int,
 ) {
+    constructor() : this(0, "", "", "", "", "", "", "", 0, 0)
+
     companion object {
-        operator fun invoke(snapshot: DocumentSnapshot): OfficeInfoResponse {
+        operator fun invoke(snapshot: DocumentSnapshot): OfficeInfoResponse? {
+            return snapshot.toObject(OfficeInfoResponse::class.java)
+        }
+
+        operator fun invoke(id: Int, naverSearchResponse: NaverSearchResponse): OfficeInfoResponse {
             return OfficeInfoResponse(
-                title = snapshot.getString("title") ?: "",
-                link = snapshot.getString("link") ?: "",
-                category = snapshot.getString("category") ?: "",
-                description = snapshot.getString("description") ?: "",
-                telephone = snapshot.getString("telephone") ?: "",
-                address = snapshot.getString("address") ?: "",
-                roadAddress = snapshot.getString("roadAddress") ?: "",
-                mapx = snapshot.getLong("mapx")?.toInt() ?: 0,
-                mapy = snapshot.getLong("mapy")?.toInt() ?: 0,
+                id = id,
+                title = naverSearchResponse.title,
+                link = naverSearchResponse.link,
+                category = naverSearchResponse.category,
+                description = naverSearchResponse.description,
+                telephone = naverSearchResponse.telephone,
+                address = naverSearchResponse.address,
+                roadAddress = naverSearchResponse.roadAddress,
+                mapx = naverSearchResponse.mapx,
+                mapy = naverSearchResponse.mapy,
             )
         }
     }

@@ -4,6 +4,7 @@ import com.seallook.androidx.data.local.model.OfficeInfoEntity
 import com.seallook.androidx.data.remote.model.OfficeInfoResponse
 
 data class OfficeInfo(
+    val id: Int,
     val title: String,
     val link: String,
     val category: String,
@@ -14,7 +15,7 @@ data class OfficeInfo(
     val mapx: Int,
     val mapy: Int,
 ) {
-    fun toEntity(id: Int): OfficeInfoEntity {
+    fun toLocalModel(): OfficeInfoEntity {
         return OfficeInfoEntity(
             id = id,
             title = title,
@@ -29,8 +30,9 @@ data class OfficeInfo(
         )
     }
 
-    fun toResponse(): OfficeInfoResponse {
+    fun toRemoteModel(): OfficeInfoResponse {
         return OfficeInfoResponse(
+            id = id,
             title = title,
             link = link,
             category = category,
@@ -44,22 +46,24 @@ data class OfficeInfo(
     }
 
     companion object {
-        operator fun invoke(naverSearchApiResponse: OfficeInfoResponse): OfficeInfo {
+        operator fun invoke(officeInfoResponse: OfficeInfoResponse): OfficeInfo {
             return OfficeInfo(
-                title = naverSearchApiResponse.title,
-                link = naverSearchApiResponse.link,
-                category = naverSearchApiResponse.category,
-                description = naverSearchApiResponse.description,
-                telephone = naverSearchApiResponse.telephone,
-                address = naverSearchApiResponse.address,
-                roadAddress = naverSearchApiResponse.roadAddress,
-                mapx = naverSearchApiResponse.mapx,
-                mapy = naverSearchApiResponse.mapy,
+                id = officeInfoResponse.id,
+                title = officeInfoResponse.title,
+                link = officeInfoResponse.link,
+                category = officeInfoResponse.category,
+                description = officeInfoResponse.description,
+                telephone = officeInfoResponse.telephone,
+                address = officeInfoResponse.address,
+                roadAddress = officeInfoResponse.roadAddress,
+                mapx = officeInfoResponse.mapx,
+                mapy = officeInfoResponse.mapy,
             )
         }
 
         operator fun invoke(officeInfoEntity: OfficeInfoEntity): OfficeInfo {
             return OfficeInfo(
+                id = officeInfoEntity.id,
                 title = officeInfoEntity.title,
                 link = officeInfoEntity.link,
                 category = officeInfoEntity.category,

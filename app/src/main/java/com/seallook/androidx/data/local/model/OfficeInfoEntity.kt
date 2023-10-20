@@ -3,7 +3,7 @@ package com.seallook.androidx.data.local.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity("officeInfoEntity")
+@Entity("OfficeInfo")
 data class OfficeInfoEntity(
     @PrimaryKey
     val id: Int,

@@ -5,17 +5,17 @@ import com.seallook.androidx.domain.model.CounselingTypeModel
 data class CounselingTypeUiModel(
     val id: Int,
     val title: String,
-    val count: Int,
+    val clientCount: Int,
     val time: Int,
-    val pay: Int,
+    val price: Int,
 ) {
     fun toDomainModel(): CounselingTypeModel {
         return CounselingTypeModel(
             id = id,
             title = title,
-            count = count,
+            clientCount = clientCount,
             time = time,
-            pay = pay,
+            price = price,
         )
     }
 
@@ -24,9 +24,9 @@ data class CounselingTypeUiModel(
             return CounselingTypeUiModel(
                 id = counselingTypeModel.id,
                 title = counselingTypeModel.title,
-                count = counselingTypeModel.count,
+                clientCount = counselingTypeModel.clientCount,
                 time = counselingTypeModel.time,
-                pay = counselingTypeModel.pay,
+                price = counselingTypeModel.price,
             )
         }
     }

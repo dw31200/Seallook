@@ -17,9 +17,9 @@ import com.seallook.androidx.domain.usecase.SignOutUseCase
 import com.seallook.androidx.domain.usecase.SignUpUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.model.ProfileUiModel
-import com.seallook.androidx.ui.model.UserTypeUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -57,6 +57,7 @@ class SignUpViewModel @Inject constructor(
             _currentUser.value = getCurrentUserUseCase()
         }
     }
+
     fun signUp(profile: ProfileUiModel, password: String?) {
         viewModelScope.launch {
             try {
@@ -93,7 +94,19 @@ class SignUpViewModel @Inject constructor(
 
     fun setUserType(user: FirebaseUser?) {
         viewModelScope.launch {
-            _setUserTypeResult.value = setUserTypeUseCase(user, UserTypeUiModel(signUpType.value).toDomainModel())
+//            sdw312 빌드 테스트
+            _setUserTypeResult.value = setUserTypeUseCase(
+                user,
+                ProfileUiModel(
+                    0,
+                    "",
+                    "",
+                    0,
+                    Date(),
+                    Date(),
+                    0,
+                ).toDomainModel(),
+            )
         }
     }
 
