@@ -9,7 +9,7 @@ data class CounselingTypeModel(
     val time: Int,
     val price: Int,
 ) {
-    fun toType(): CounselingType {
+    fun toDataModel(): CounselingType {
         return CounselingType(
             id = id,
             title = title,

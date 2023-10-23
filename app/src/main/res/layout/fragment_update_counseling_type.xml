@@ -6,10 +6,6 @@
         <variable
             name="vm"
             type="com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.UpdateCounselingTypeViewModel" />
-
-        <variable
-            name="delete"
-            type="com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.DeleteCounselingType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -39,6 +35,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="text"
+                    android:text="@={vm.title}"
                     android:maxLines="1"
                     android:nextFocusDown="@id/type_number_field"
                     tools:text="상담 제목" />
@@ -59,6 +56,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="number"
+                    android:text="@={vm.clientCount}"
                     android:maxLines="1"
                     android:nextFocusDown="@id/type_time_field"
                     tools:text="상담 인원"/>
@@ -79,6 +77,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="number"
+                    android:text="@={vm.time}"
                     android:maxLines="1"
                     android:nextFocusDown="@id/type_pay_field"
                     tools:text="상담 시간"/>
@@ -99,6 +98,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="number"
+                    android:text="@={vm.price}"
                     android:maxLines="1"
                     tools:text="상담 금액" />
 
@@ -112,6 +112,7 @@
                 android:layout_margin="16dp"
                 android:enabled="true"
                 android:insetTop="0dp"
+                android:onClick="@{()->vm.setItem()}"
                 android:insetBottom="0dp"
                 android:text="추가하기"
                 app:layout_constraintTop_toBottomOf="@id/type_pay_field"
@@ -128,7 +129,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             bind:counselingTypeList="@{vm.counselingType}"
             tools:listitem="@layout/counseling_type_list_item"
-            bind:onItemDeleteClickListener="@{delete}"
+            bind:onItemDeleteClickListener="@{vm}"
             app:layout_constraintTop_toBottomOf="@id/type_layout"
             app:layout_constraintBottom_toTopOf="@id/next_button"/>
 

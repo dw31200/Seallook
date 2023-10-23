@@ -6,14 +6,14 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
-import com.seallook.androidx.domain.model.CounselingTypeModel
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetCounselorInfoUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetDownloadUrlUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.SetCounselorInfoUsecase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.UploadFileUseCase
-import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.GetCounselingTypeUseCase
+import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.GetCounselingTypeLocalUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.UpdateCounselingTypeUseCase
+import com.seallook.androidx.domain.usecase.counselorinfo.office.GetAllOfficeInfoUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.office.GetOfficeInfoUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.office.UpdateOfficeInfoUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
@@ -29,10 +29,11 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     private val uploadFileUseCase: UploadFileUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val updateCounselingTypeUseCase: UpdateCounselingTypeUseCase,
-    private val getCounselingTypeUseCase: GetCounselingTypeUseCase,
+    private val getCounselingTypeLocalUseCase: GetCounselingTypeLocalUseCase,
     private val getCounselorInfoUseCase: GetCounselorInfoUseCase,
     private val setCounselorInfoUsecase: SetCounselorInfoUsecase,
     private val getOfficeInfoUseCase: GetOfficeInfoUseCase,
+    private val getAllOfficeInfoUseCase: GetAllOfficeInfoUseCase,
     private val updateOfficeInfoUseCase: UpdateOfficeInfoUseCase,
 ) : BaseViewModel() {
     private val _currentUser = MutableLiveData<FirebaseUser?>()
@@ -51,7 +52,6 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     private val _uploadOfficeInfoResult = MutableLiveData<Boolean?>()
     private val _uploadCounselingTypeResult = MutableLiveData<Boolean?>()
     val uploadResult: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
-        // Add the sources to be observed and update the uploadResult when they change
         addSource(_uploadBasicInfoResult) { basicInfoResult ->
             val officeInfoResult = _uploadOfficeInfoResult.value
             val counselingTypeResult = _uploadCounselingTypeResult.value
@@ -108,8 +108,8 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
 
     fun updateCounselingType() {
         viewModelScope.launch {
-            _uploadCounselingTypeResult.value = updateCounselingTypeUseCase(listOf(CounselingTypeModel(0, "ㄱ", 1, 1, 1), CounselingTypeModel(1, "ㄱ", 1, 1, 1)))
-//            _uploadCounselingTypeResult.value = updateCounselingTypeUseCase(getCounselingTypeUseCase())
+            _uploadCounselingTypeResult.value =
+                getCurrentUserUseCase()?.uid?.let { updateCounselingTypeUseCase(it, getCounselingTypeLocalUseCase()) }
         }
     }
 
@@ -121,9 +121,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
 
     fun updateOfficeInfo() {
         viewModelScope.launch {
-            getOfficeInfoUseCase(0)?.let {
-                _uploadOfficeInfoResult.value = updateOfficeInfoUseCase(it)
-            }
+            _uploadOfficeInfoResult.value = updateOfficeInfoUseCase(getAllOfficeInfoUseCase()[0])
         }
     }
 }
