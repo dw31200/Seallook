@@ -21,6 +21,10 @@ class OfficeInfoRepositoryImpl @Inject constructor(
         officeInfoDao.insert(info.toLocalModel())
     }
 
+    override suspend fun getAll(): List<OfficeInfo> {
+        return officeInfoDao.getAll().map { OfficeInfo(it) }
+    }
+
     override suspend fun getItem(id: Int): OfficeInfo? {
         return officeInfoDao.getItem(id)?.let { OfficeInfo(it) }
     }

@@ -1,6 +1,5 @@
 package com.seallook.androidx.data.repository.counselor.counselingtype
 
-import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.data.local.CounselingTypeDao
 import com.seallook.androidx.data.model.CounselingType
 import com.seallook.androidx.data.remote.counselor.counselingtype.CounselingTypeApiService
@@ -11,11 +10,11 @@ class CounselingTypeRepositoryImpl @Inject constructor(
     private val counselingTypeDao: CounselingTypeDao,
     private val counselingTypeApiService: CounselingTypeApiService,
 ) : CounselingTypeRepository {
-    override suspend fun insertItem(counselingType: CounselingType) {
+    override suspend fun insert(counselingType: CounselingType) {
         counselingTypeDao.insert(counselingType.toLocalModel())
     }
 
-    override suspend fun insertList(counselingTypeList: List<CounselingType>) {
+    override suspend fun insert(counselingTypeList: List<CounselingType>) {
         counselingTypeDao.insert(counselingTypeList.map { it.toLocalModel() })
     }
 
@@ -23,19 +22,22 @@ class CounselingTypeRepositoryImpl @Inject constructor(
         counselingTypeDao.deleteItem(counselingTypeId)
     }
 
-    override suspend fun getItemList(): List<CounselingType> {
+    override suspend fun getAll(): List<CounselingType> {
         return counselingTypeDao.getAll().map {
             CounselingType(it)
         }
     }
 
-    override suspend fun initList(user: FirebaseUser?): List<CounselingType> {
-        return counselingTypeApiService.getList(user).map {
+    override suspend fun getAll(uid: String): List<CounselingType> {
+        return counselingTypeApiService.getAll(uid).map {
             CounselingType(it)
         }
     }
 
-    override suspend fun updateList(user: FirebaseUser?, type: List<CounselingType>) {
-        counselingTypeApiService.updateList(user, CounselingTypeListResponse(type.map { it.toRemoteModel() }))
+    override suspend fun updateList(uid: String, type: List<CounselingType>) {
+        counselingTypeApiService.updateList(
+            uid,
+            CounselingTypeListResponse(type.map { it.toRemoteModel() }),
+        )
     }
 }

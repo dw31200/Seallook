@@ -5,7 +5,6 @@ import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentUpdateCounselingTypeBinding
 import com.seallook.androidx.ui.base.BaseFragment
-import com.seallook.androidx.ui.model.CounselingTypeUiModel
 import com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.adapter.CounselingTypeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,8 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class UpdateCounselingTypeFragment :
     BaseFragment<FragmentUpdateCounselingTypeBinding, UpdateCounselingTypeViewModel>(
         FragmentUpdateCounselingTypeBinding::inflate,
-    ),
-    DeleteCounselingType {
+    ) {
     override val viewModel: UpdateCounselingTypeViewModel by viewModels()
 
     override fun viewModelVariableId(): Int = BR.vm
@@ -26,43 +24,9 @@ class UpdateCounselingTypeFragment :
     override fun onViewCreatedAfterBinding() {
         with(binding) {
             counselingTypeList.adapter = CounselingTypeAdapter()
-            updateTypeButton.setOnClickListener {
-                updateCounselingType()
-            }
             nextButton.setOnClickListener {
                 findNavController().popBackStack()
             }
-            delete = this@UpdateCounselingTypeFragment
         }
-    }
-
-    private fun updateCounselingType() {
-        with(binding) {
-            var id: Int? = null
-            viewModel.counselingType.observe(viewLifecycleOwner) {
-                if (it.isEmpty()) {
-                    id = 0
-                } else {
-                    id = it[it.size - 1].id + 1
-                }
-            }
-            val title = typeNameTextField.editText?.text.toString()
-            val count = typeNumberField.editText?.text.toString().toInt()
-            val time = typeTimeField.editText?.text.toString().toInt()
-            val pay = typePayField.editText?.text.toString().toInt()
-            viewModel.setCounselingType(
-                CounselingTypeUiModel(
-                    id ?: 0,
-                    title,
-                    count,
-                    time,
-                    pay,
-                ),
-            )
-        }
-    }
-
-    override fun deleteCounselingType(counselingTypeId: Int) {
-        viewModel.deleteCounselingType(counselingTypeId)
     }
 }

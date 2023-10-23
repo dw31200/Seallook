@@ -7,6 +7,8 @@ interface OfficeInfoRepository {
 
     suspend fun setItem(info: OfficeInfo)
 
+    suspend fun getAll(): List<OfficeInfo>
+
     suspend fun getItem(id: Int): OfficeInfo?
 
     suspend fun updateItem(info: OfficeInfo)

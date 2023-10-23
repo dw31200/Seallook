@@ -6,11 +6,11 @@ import dagger.Reusable
 import javax.inject.Inject
 
 @Reusable
-class GetCounselingTypeUseCase @Inject constructor(
+class GetCounselingTypeLocalUseCase @Inject constructor(
     private val counselingTypeRepository: CounselingTypeRepository,
 ) {
     suspend operator fun invoke(): List<CounselingTypeModel> {
-        return counselingTypeRepository.getItemList().map {
+        return counselingTypeRepository.getAll().map {
             CounselingTypeModel(it)
         }
     }

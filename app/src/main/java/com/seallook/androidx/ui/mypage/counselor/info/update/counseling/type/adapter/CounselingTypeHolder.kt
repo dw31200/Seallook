@@ -14,7 +14,7 @@ class CounselingTypeHolder(
         with(binding) {
             data = counselingTypeItem
             counselingTypeDeleteButton.setOnClickListener {
-                deleteCounselingType?.deleteCounselingType(counselingTypeItem.id)
+                deleteCounselingType?.deleteItem(counselingTypeItem.id)
             }
             executePendingBindings()
         }

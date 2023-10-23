@@ -10,6 +10,10 @@ class SetCounselingTypeUseCase @Inject constructor(
     private val counselingTypeRepository: CounselingTypeRepository,
 ) {
     suspend operator fun invoke(counselingTypeModel: CounselingTypeModel) {
-        counselingTypeRepository.insertItem(counselingTypeModel.toType())
+        counselingTypeRepository.insert(counselingTypeModel.toDataModel())
+    }
+
+    suspend operator fun invoke(counselingTypeListModel: List<CounselingTypeModel>) {
+        counselingTypeRepository.insert(counselingTypeListModel.map { it.toDataModel() })
     }
 }
