@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetCounselorInfoUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetDownloadUrlUseCase
-import com.seallook.androidx.domain.usecase.counselorinfo.basic.SetCounselorInfoUsecase
+import com.seallook.androidx.domain.usecase.counselorinfo.basic.SetCounselorInfoUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.UploadFileUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.GetCounselingTypeLocalUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.UpdateCounselingTypeUseCase
@@ -31,7 +31,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     private val updateCounselingTypeUseCase: UpdateCounselingTypeUseCase,
     private val getCounselingTypeLocalUseCase: GetCounselingTypeLocalUseCase,
     private val getCounselorInfoUseCase: GetCounselorInfoUseCase,
-    private val setCounselorInfoUsecase: SetCounselorInfoUsecase,
+    private val setCounselorInfoUseCase: SetCounselorInfoUseCase,
     private val getOfficeInfoUseCase: GetOfficeInfoUseCase,
     private val getAllOfficeInfoUseCase: GetAllOfficeInfoUseCase,
     private val updateOfficeInfoUseCase: UpdateOfficeInfoUseCase,
@@ -74,7 +74,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _currentUser.value = getCurrentUserUseCase()
-            _counselorInfo.value = getCounselorInfoUseCase()?.let { CounselorInfoUiModel(it) }
+            _counselorInfo.value = currentUser.value?.uid?.let { getCounselorInfoUseCase(it)?.let { CounselorInfoUiModel(it) } }
             _officeInfo.value = getOfficeInfoUseCase(0)?.let { OfficeInfoUiModel(it) }
         }
     }
@@ -90,32 +90,34 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
 
     private fun getDownloadUrl(path: String, fileName: String, name: String?, pr: String?) {
         viewModelScope.launch {
-            getDownloadUrlUseCase(path, fileName)
-                .addOnSuccessListener {
-                    _downloadUrl.value = it
-                    setCounselorInfo(
-                        CounselorInfoUiModel(
-                            //                            sdw312 빌드 테스트 임의 id 값
-                            0,
-                            name ?: "",
-                            pr ?: "",
-                            downloadUrl.value.toString(),
-                        ),
-                    )
-                }
+            _downloadUrl.value = getDownloadUrlUseCase(path, fileName)
+            setCounselorInfo(
+                CounselorInfoUiModel(
+                    //                            sdw312 빌드 테스트 임의 id 값
+                    0,
+                    name ?: "",
+                    pr ?: "",
+                    downloadUrl.value.toString(),
+                ),
+            )
         }
     }
 
     fun updateCounselingType() {
         viewModelScope.launch {
             _uploadCounselingTypeResult.value =
-                getCurrentUserUseCase()?.uid?.let { updateCounselingTypeUseCase(it, getCounselingTypeLocalUseCase()) }
+                getCurrentUserUseCase()?.uid?.let {
+                    updateCounselingTypeUseCase(it, getCounselingTypeLocalUseCase())
+                }
         }
     }
 
     fun setCounselorInfo(info: CounselorInfoUiModel) {
         viewModelScope.launch {
-            _uploadBasicInfoResult.value = setCounselorInfoUsecase(info.toDomainModel())
+            _uploadBasicInfoResult.value =
+                currentUser.value?.uid?.let {
+                    setCounselorInfoUseCase(it, info.toDomainModel())
+                }
         }
     }
 
