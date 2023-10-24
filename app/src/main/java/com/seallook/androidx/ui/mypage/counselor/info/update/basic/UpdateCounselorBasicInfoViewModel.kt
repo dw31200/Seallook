@@ -74,8 +74,16 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _currentUser.value = getCurrentUserUseCase()
-            _counselorInfo.value = currentUser.value?.uid?.let { getCounselorInfoUseCase(it)?.let { CounselorInfoUiModel(it) } }
-            _officeInfo.value = getOfficeInfoUseCase(0)?.let { OfficeInfoUiModel(it) }
+            _counselorInfo.value =
+                currentUser.value?.uid?.let {
+                    getCounselorInfoUseCase(it)?.let {
+                        CounselorInfoUiModel(it)
+                    }
+                }
+            _officeInfo.value =
+                getOfficeInfoUseCase(0)?.let {
+                    OfficeInfoUiModel(it)
+                }
         }
     }
 
@@ -123,7 +131,10 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
 
     fun updateOfficeInfo() {
         viewModelScope.launch {
-            _uploadOfficeInfoResult.value = updateOfficeInfoUseCase(getAllOfficeInfoUseCase()[0])
+            _uploadOfficeInfoResult.value =
+                currentUser.value?.uid?.let {
+                    updateOfficeInfoUseCase(it, getAllOfficeInfoUseCase()[0])
+                }
         }
     }
 }

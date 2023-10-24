@@ -7,4 +7,5 @@ object Constants {
     const val COUNSELOR_INFO = "counselorInfo"
     const val COUNSELING_TYPE = "counselingType"
     const val COUNSELING_LIST = "counselingList"
+    const val OFFICE_INFO = "officeInfo"
 }

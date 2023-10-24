@@ -11,5 +11,5 @@ interface OfficeInfoRepository {
 
     suspend fun getItem(id: Int): OfficeInfo?
 
-    suspend fun updateItem(info: OfficeInfo)
+    suspend fun updateItem(uid: String, info: OfficeInfo)
 }

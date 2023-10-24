@@ -1,6 +1,5 @@
 package com.seallook.androidx.data.remote.counselor.office
 
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.seallook.androidx.data.remote.api.naver.NaverSearchApi
 import com.seallook.androidx.data.remote.model.OfficeInfoResponse
@@ -25,11 +24,10 @@ class OfficeInfoApiServiceImpl @Inject constructor(
         )
     }
 
-    override suspend fun getItem(user: FirebaseUser?): OfficeInfoResponse? {
-        val uid = user?.uid ?: return null
+    override suspend fun getItem(uid: String): OfficeInfoResponse? {
         val documentResponse = db.collection(Constants.COUNSELORS)
             .document(uid)
-            .collection("officeinfo")
+            .collection(Constants.OFFICE_INFO)
             .document(uid)
             .get().await()
         return if (documentResponse.exists()) {
@@ -39,13 +37,12 @@ class OfficeInfoApiServiceImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateItem(user: FirebaseUser?, info: OfficeInfoResponse) {
-        user?.uid?.let {
-            db.collection(Constants.COUNSELORS)
-                .document(it)
-                .collection("officeinfo")
-                .document(it)
-                .set(info)
-        }
+    override suspend fun updateItem(uid: String, info: OfficeInfoResponse) {
+        db.collection(Constants.COUNSELORS)
+            .document(uid)
+            .collection(Constants.OFFICE_INFO)
+            .document(uid)
+            .set(info)
+            .await()
     }
 }
