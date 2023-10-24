@@ -6,10 +6,10 @@ import dagger.Reusable
 import javax.inject.Inject
 
 @Reusable
-class SetCounselorInfoUsecase @Inject constructor(
+class SetCounselorInfoUseCase @Inject constructor(
     private val counselorInfoRepository: CounselorInfoRepository,
 ) {
-    suspend operator fun invoke(info: CounselorInfoModel): Boolean? {
-        return counselorInfoRepository.setItem(info.toInfo())
+    suspend operator fun invoke(uid: String, info: CounselorInfoModel): Boolean {
+        return counselorInfoRepository.setItem(uid, info.toInfo())
     }
 }

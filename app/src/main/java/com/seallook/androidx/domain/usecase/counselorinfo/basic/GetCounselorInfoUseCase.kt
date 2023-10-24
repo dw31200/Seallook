@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetCounselorInfoUseCase @Inject constructor(
     private val counselorInfoRepository: CounselorInfoRepository,
 ) {
-    suspend operator fun invoke(): CounselorInfoModel? {
-        return counselorInfoRepository.getItem()?.let { CounselorInfoModel(it) }
+    suspend operator fun invoke(uid: String): CounselorInfoModel? {
+        return counselorInfoRepository.getItem(uid)?.let { CounselorInfoModel(it) }
     }
 }

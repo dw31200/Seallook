@@ -1,11 +1,7 @@
 package com.seallook.androidx.data.remote.api.firebase.storage
 
-import android.net.Uri
-import com.google.android.gms.tasks.Task
-import com.google.firebase.storage.UploadTask
+import com.google.firebase.storage.StorageReference
 
 interface FirebaseStorageApiService {
-    suspend fun getDownloadUrl(path: String, fileName: String): Task<Uri>
-
-    suspend fun uploadFile(path: String, fileName: String, uri: Uri): UploadTask
+    suspend fun getReference(path: String, fileName: String): StorageReference
 }

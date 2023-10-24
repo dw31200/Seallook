@@ -1,6 +1,5 @@
 package com.seallook.androidx.data.remote.counselor.basicinfo
 
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.seallook.androidx.data.remote.model.CounselorInfoResponse
 import com.seallook.androidx.share.Constants
@@ -10,13 +9,13 @@ import javax.inject.Inject
 class CounselorInfoApiServiceImpl @Inject constructor(
     private val db: FirebaseFirestore,
 ) : CounselorInfoApiService {
-    override suspend fun getItem(user: FirebaseUser?): CounselorInfoResponse? {
-        val uid = user?.uid ?: return null
+    override suspend fun getItem(uid: String): CounselorInfoResponse? {
         val documentResponse = db.collection(Constants.COUNSELORS)
             .document(uid)
-            .collection("counselorinfo")
+            .collection(Constants.COUNSELOR_INFO)
             .document(uid)
-            .get().await()
+            .get()
+            .await()
         return if (documentResponse.exists()) {
             CounselorInfoResponse(documentResponse)
         } else {
@@ -24,18 +23,17 @@ class CounselorInfoApiServiceImpl @Inject constructor(
         }
     }
 
-    override suspend fun setItem(user: FirebaseUser?, info: CounselorInfoResponse): Boolean? {
-        return user?.uid?.let {
-            runCatching {
-                db.collection(Constants.COUNSELORS)
-                    .document(it)
-                    .collection("counselorinfo")
-                    .document(it)
-                    .set(info)
-            }.fold(
-                onSuccess = { true },
-                onFailure = { false },
-            )
-        }
+    override suspend fun setItem(uid: String, info: CounselorInfoResponse): Boolean {
+        return runCatching {
+            db.collection(Constants.COUNSELORS)
+                .document(uid)
+                .collection(Constants.COUNSELOR_INFO)
+                .document(uid)
+                .set(info)
+                .await()
+        }.fold(
+            onSuccess = { true },
+            onFailure = { false },
+        )
     }
 }
