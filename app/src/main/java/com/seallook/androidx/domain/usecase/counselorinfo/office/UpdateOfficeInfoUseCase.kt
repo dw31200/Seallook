@@ -7,9 +7,9 @@ import javax.inject.Inject
 class UpdateOfficeInfoUseCase @Inject constructor(
     private val officeInfoRepository: OfficeInfoRepository,
 ) {
-    suspend operator fun invoke(info: OfficeInfoModel): Boolean {
+    suspend operator fun invoke(uid: String, info: OfficeInfoModel): Boolean {
         return runCatching {
-            officeInfoRepository.updateItem(info.toInfo())
+            officeInfoRepository.updateItem(uid, info.toInfo())
         }.fold(
             onSuccess = { true },
             onFailure = { false },
