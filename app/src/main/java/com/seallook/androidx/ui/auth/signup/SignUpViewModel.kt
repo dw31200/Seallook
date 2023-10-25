@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
-import com.seallook.androidx.domain.usecase.GetProfileUseCase
 import com.seallook.androidx.domain.usecase.SetProfileUseCase
 import com.seallook.androidx.domain.usecase.SetUserTypeUseCase
 import com.seallook.androidx.domain.usecase.SignOutUseCase
@@ -26,7 +25,6 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase,
     private val signOutUseCase: SignOutUseCase,
-    private val getProfileUseCase: GetProfileUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val setProfileUseCase: SetProfileUseCase,
     private val setUserTypeUseCase: SetUserTypeUseCase,
@@ -58,7 +56,7 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun signUp(profile: ProfileUiModel, password: String?) {
+    fun signUp(profile: ProfileUiModel, password: String) {
         viewModelScope.launch {
             try {
                 _signUpResult.value = signUpUseCase(profile.toDomainModel(), password)
@@ -86,27 +84,31 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun setProfile(user: FirebaseUser?, profile: ProfileUiModel) {
+    fun setProfile(profile: ProfileUiModel) {
         viewModelScope.launch {
-            setProfileUseCase(user, profile.toDomainModel())
+            currentUser.value?.uid?.let {
+                setProfileUseCase(it, profile.toDomainModel())
+            }
         }
     }
 
-    fun setUserType(user: FirebaseUser?) {
+    fun setUserType() {
         viewModelScope.launch {
 //            sdw312 빌드 테스트
-            _setUserTypeResult.value = setUserTypeUseCase(
-                user,
-                ProfileUiModel(
-                    0,
-                    "",
-                    "",
-                    0,
-                    Date(),
-                    Date(),
-                    0,
-                ).toDomainModel(),
-            )
+            _setUserTypeResult.value = currentUser.value?.uid?.let {
+                setUserTypeUseCase(
+                    it,
+                    ProfileUiModel(
+                        0,
+                        "",
+                        "",
+                        0,
+                        Date(),
+                        Date(),
+                        0,
+                    ).toDomainModel(),
+                )
+            }
         }
     }
 

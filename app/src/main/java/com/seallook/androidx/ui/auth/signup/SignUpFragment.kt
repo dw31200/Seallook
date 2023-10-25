@@ -208,8 +208,8 @@ class SignUpFragment :
                 Date(),
                 0,
             )
-            viewModel.setProfile(viewModel.currentUser.value, profile)
-            viewModel.setUserType(viewModel.currentUser.value)
+            viewModel.setProfile(profile)
+            viewModel.setUserType()
             findNavController().navigate(
                 SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
                 extras,
@@ -231,8 +231,8 @@ class SignUpFragment :
             viewModel.signUpResult.observe(viewLifecycleOwner) {
                 if (it?.user != null) {
                     Timber.d("${it.user}")
-                    viewModel.setProfile(it.user, profile)
-                    viewModel.setUserType(it.user)
+                    viewModel.setProfile(profile)
+                    viewModel.setUserType()
                     viewModel.setUserTypeResult.observe(viewLifecycleOwner) { result ->
                         if (result == true) {
                             findNavController().navigate(

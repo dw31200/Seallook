@@ -18,5 +18,5 @@ interface FirebaseAuthApiService {
 
     suspend fun signOut()
 
-    suspend fun signUp(profile: ProfileResponse, password: String?): AuthResult?
+    suspend fun signUp(profile: ProfileResponse, password: String): AuthResult?
 }

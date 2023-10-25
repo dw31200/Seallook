@@ -29,8 +29,10 @@ class HomeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _currentUser.value = getCurrentUserUseCase()
-            _userType.value = getUserTypeUseCase(currentUser.value)?.let {
-                ProfileUiModel(it)
+            _userType.value = currentUser.value?.uid?.let {
+                getUserTypeUseCase(it)?.let {
+                    ProfileUiModel(it)
+                }
             }
         }
     }

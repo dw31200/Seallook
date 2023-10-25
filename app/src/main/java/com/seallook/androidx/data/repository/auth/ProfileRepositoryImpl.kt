@@ -1,6 +1,5 @@
 package com.seallook.androidx.data.repository.auth
 
-import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.data.model.Profile
 import com.seallook.androidx.data.remote.auth.ProfileApiService
 import javax.inject.Inject
@@ -8,13 +7,13 @@ import javax.inject.Inject
 class ProfileRepositoryImpl @Inject constructor(
     private val profileApiService: ProfileApiService,
 ) : ProfileRepository {
-    override suspend fun getItem(user: FirebaseUser?): Profile? {
-        return profileApiService.getItem(user)?.let { Profile(it) }
+    override suspend fun getItem(uid: String): Profile? {
+        return profileApiService.getItem(uid)?.let { Profile(it) }
     }
 
-    override suspend fun setItem(user: FirebaseUser?, profile: Profile): Boolean? {
+    override suspend fun setItem(uid: String, profile: Profile): Boolean {
         return runCatching {
-            profileApiService.setItem(user, profile.toRemoteModel())
+            profileApiService.setItem(uid, profile.toRemoteModel())
         }.fold(
             onSuccess = { true },
             onFailure = { false },

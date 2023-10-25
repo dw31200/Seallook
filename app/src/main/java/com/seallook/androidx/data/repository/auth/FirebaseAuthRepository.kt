@@ -18,5 +18,5 @@ interface FirebaseAuthRepository {
 
     suspend fun signOut()
 
-    suspend fun signUp(profile: Profile, password: String?): AuthResult?
+    suspend fun signUp(profile: Profile, password: String): AuthResult?
 }
