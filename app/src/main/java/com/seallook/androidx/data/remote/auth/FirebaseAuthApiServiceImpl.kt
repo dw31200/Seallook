@@ -28,7 +28,7 @@ class FirebaseAuthApiServiceImpl @Inject constructor(
         auth.signOut()
     }
 
-    override suspend fun signUp(profile: ProfileResponse, password: String?): AuthResult? {
-        return auth.createUserWithEmailAndPassword(profile.email, password!!).await()
+    override suspend fun signUp(profile: ProfileResponse, password: String): AuthResult? {
+        return auth.createUserWithEmailAndPassword(profile.email, password).await()
     }
 }

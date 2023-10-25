@@ -25,7 +25,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
         firebaseAuthApiService.signOut()
     }
 
-    override suspend fun signUp(profile: Profile, password: String?): AuthResult? {
+    override suspend fun signUp(profile: Profile, password: String): AuthResult? {
         return firebaseAuthApiService.signUp(profile.toRemoteModel(), password)
     }
 }

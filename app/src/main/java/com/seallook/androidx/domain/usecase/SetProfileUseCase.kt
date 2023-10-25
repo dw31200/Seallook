@@ -1,6 +1,5 @@
 package com.seallook.androidx.domain.usecase
 
-import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.data.repository.auth.ProfileRepository
 import com.seallook.androidx.domain.model.ProfileModel
 import javax.inject.Inject
@@ -8,7 +7,7 @@ import javax.inject.Inject
 class SetProfileUseCase @Inject constructor(
     private val profileRepository: ProfileRepository,
 ) {
-    suspend operator fun invoke(user: FirebaseUser?, profile: ProfileModel) {
-        profileRepository.setItem(user, profile.toDataModel())
+    suspend operator fun invoke(uid: String, profile: ProfileModel) {
+        profileRepository.setItem(uid, profile.toDataModel())
     }
 }

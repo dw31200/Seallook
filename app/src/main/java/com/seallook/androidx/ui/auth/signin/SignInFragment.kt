@@ -62,7 +62,7 @@ class SignInFragment :
                 viewModel.getCurrentUser()
                 viewModel.currentUser.observe(viewLifecycleOwner) {
                     if (it != null) {
-                        viewModel.getProfile(it)
+                        viewModel.getProfile()
                         navigation()
                         cancelSignIn()
                     }

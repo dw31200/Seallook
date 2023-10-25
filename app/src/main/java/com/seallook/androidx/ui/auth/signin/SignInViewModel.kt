@@ -45,9 +45,12 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    fun getProfile(user: FirebaseUser) {
+    fun getProfile() {
         viewModelScope.launch {
-            _profile.value = getProfileUseCase(user)?.let { ProfileUiModel(it) }
+            _profile.value =
+                getCurrentUserUseCase()?.uid?.let {
+                    getProfileUseCase(it)?.let { ProfileUiModel(it) }
+                }
         }
     }
 
