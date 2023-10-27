@@ -8,6 +8,6 @@ class SetOfficeInfoUseCase @Inject constructor(
     private val officeInfoRepository: OfficeInfoRepository,
 ) {
     suspend operator fun invoke(info: OfficeInfoModel) {
-        officeInfoRepository.setItem(info.toInfo())
+        officeInfoRepository.setItem(info.toDataModel())
     }
 }

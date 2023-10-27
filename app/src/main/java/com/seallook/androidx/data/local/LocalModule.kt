@@ -72,4 +72,12 @@ object LocalModule {
     ): ProfileDao {
         return database.profileDao()
     }
+
+    @Singleton
+    @Provides
+    fun provideUidDao(
+        database: SealLookDatabase,
+    ): UidDao {
+        return database.uidDao()
+    }
 }

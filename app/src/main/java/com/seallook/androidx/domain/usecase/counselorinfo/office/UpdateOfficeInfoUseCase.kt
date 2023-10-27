@@ -9,7 +9,7 @@ class UpdateOfficeInfoUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(uid: String, info: OfficeInfoModel): Boolean {
         return runCatching {
-            officeInfoRepository.updateItem(uid, info.toInfo())
+            officeInfoRepository.updateItem(uid, info.toDataModel())
         }.fold(
             onSuccess = { true },
             onFailure = { false },

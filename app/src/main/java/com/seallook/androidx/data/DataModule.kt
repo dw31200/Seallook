@@ -6,6 +6,8 @@ import com.seallook.androidx.data.repository.auth.FirebaseAuthRepository
 import com.seallook.androidx.data.repository.auth.FirebaseAuthRepositoryImpl
 import com.seallook.androidx.data.repository.auth.ProfileRepository
 import com.seallook.androidx.data.repository.auth.ProfileRepositoryImpl
+import com.seallook.androidx.data.repository.auth.UidRepository
+import com.seallook.androidx.data.repository.auth.UidRepositoryImpl
 import com.seallook.androidx.data.repository.counselor.basicinfo.CounselorInfoRepository
 import com.seallook.androidx.data.repository.counselor.basicinfo.CounselorInfoRepositoryImpl
 import com.seallook.androidx.data.repository.counselor.counselingtype.CounselingTypeRepository
@@ -37,4 +39,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindOfficeInfoRepository(officeInfoRepositoryImpl: OfficeInfoRepositoryImpl): OfficeInfoRepository
+
+    @Binds
+    abstract fun bindUidRepository(uidRepositoryImpl: UidRepositoryImpl): UidRepository
 }
