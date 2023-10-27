@@ -14,7 +14,7 @@ data class OfficeInfoModel(
     val mapx: Int,
     val mapy: Int,
 ) {
-    fun toInfo(): OfficeInfo {
+    fun toDataModel(): OfficeInfo {
         return OfficeInfo(
             id = id,
             title = title,

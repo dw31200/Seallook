@@ -8,7 +8,7 @@ data class CounselorInfoModel(
     val description: String,
     val imageUrl: String,
 ) {
-    fun toInfo(): CounselorInfo {
+    fun toDataModel(): CounselorInfo {
         return CounselorInfo(
             id = id,
             name = name,

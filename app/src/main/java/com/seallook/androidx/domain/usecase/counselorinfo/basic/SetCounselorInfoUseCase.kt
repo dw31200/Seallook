@@ -10,6 +10,6 @@ class SetCounselorInfoUseCase @Inject constructor(
     private val counselorInfoRepository: CounselorInfoRepository,
 ) {
     suspend operator fun invoke(uid: String, info: CounselorInfoModel): Boolean {
-        return counselorInfoRepository.setItem(uid, info.toInfo())
+        return counselorInfoRepository.setItem(uid, info.toDataModel())
     }
 }
