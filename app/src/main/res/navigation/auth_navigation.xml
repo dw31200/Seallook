@@ -25,8 +25,8 @@
         android:label="SignUpFragment" >
         <argument
             android:name="selectSignUpType"
-            app:argType="integer"
-            android:defaultValue="0" />
+            app:argType="com.seallook.androidx.share.UserType"
+            android:defaultValue="CLIENT" />
         <action
             android:id="@+id/action_signUpFragment_to_mainGraphActivity"
             app:destination="@id/mainGraphActivity"
@@ -44,8 +44,8 @@
             app:destination="@id/signUpFragment">
             <argument
                 android:name="selectSignUpType"
-                app:argType="integer"
-                android:defaultValue="0" />
+                app:argType="com.seallook.androidx.share.UserType"
+                android:defaultValue="CLIENT" />
         </action>
     </fragment>
     <activity
