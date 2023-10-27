@@ -125,9 +125,9 @@ class SignUpFragment :
 
     private fun isSignedIn(): Boolean {
         var result = true
-        viewModel.currentUser.observe(viewLifecycleOwner) {
-            result = it != null
-        }
+//        viewModel.currentUser.observe(viewLifecycleOwner) {
+//            result = it != null
+//        }
         return result
     }
 
@@ -209,7 +209,7 @@ class SignUpFragment :
                 0,
             )
             viewModel.setProfile(profile)
-            viewModel.setUserType()
+//            viewModel.setUserType()
             findNavController().navigate(
                 SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
                 extras,
@@ -228,24 +228,24 @@ class SignUpFragment :
                 0,
             )
             viewModel.signUp(profile, password)
-            viewModel.signUpResult.observe(viewLifecycleOwner) {
-                if (it?.user != null) {
-                    Timber.d("${it.user}")
-                    viewModel.setProfile(profile)
-                    viewModel.setUserType()
-                    viewModel.setUserTypeResult.observe(viewLifecycleOwner) { result ->
-                        if (result == true) {
-                            findNavController().navigate(
-                                SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
-                                extras,
-                            )
-                            dismissProgressDialog()
-                        }
-                    }
-                } else {
-                    dismissProgressDialog()
-                }
-            }
+//            viewModel.signUpResult.observe(viewLifecycleOwner) {
+//                if (it?.user != null) {
+//                    Timber.d("${it.user}")
+//                    viewModel.setProfile(profile)
+//                    viewModel.setUserType()
+//                    viewModel.setUserTypeResult.observe(viewLifecycleOwner) { result ->
+//                        if (result == true) {
+//                            findNavController().navigate(
+//                                SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
+//                                extras,
+//                            )
+//                            dismissProgressDialog()
+//                        }
+//                    }
+//                } else {
+//                    dismissProgressDialog()
+//                }
+//            }
         }
     }
 
