@@ -2,8 +2,6 @@ package com.seallook.androidx.ui.auth.signin
 
 import android.content.Intent
 import android.content.IntentSender
-import android.util.Patterns
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
@@ -56,8 +54,19 @@ class SignInFragment :
                     .build(),
             )
             .build()
+        viewModel.navigateToSignUp.observe(viewLifecycleOwner) {
+            if (it) {
+                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSelectSignUpTypeFragment())
+            }
+        }
+        viewModel.navigateToHome.observe(viewLifecycleOwner) {
+            if (it) {
+                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainGraphActivity(), extras)
+            }
+        }
     }
 
+    //    TODO startIntentSenderForResult 와 onActivityResult 를 bindingadapter에 어떻게 옮겨야 할까요?
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -66,20 +75,14 @@ class SignInFragment :
                 try {
                     val credential = oneTapClient.getSignInCredentialFromIntent(data)
                     val idToken = credential.googleIdToken
-                    val username = credential.id
-                    val password = credential.password
                     when {
                         idToken != null -> {
                             viewModel.signInWithGoogle(idToken)
                             Timber.d("Got ID token.")
                         }
 
-                        password != null -> {
-                            Timber.d("Got password.")
-                        }
-
                         else -> {
-                            Timber.d("No ID token or password!")
+                            Timber.d("No ID token")
                         }
                     }
                 } catch (e: ApiException) {
@@ -89,24 +92,7 @@ class SignInFragment :
         }
     }
 
-    override fun signInWithEmailAndPassword() {
-        if (isSigningIn()) return
-        val email = binding.emailTextField.editText!!.text.toString().trim()
-        val password = binding.passwordTextField.editText!!.text.toString().trim()
-
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.emailTextField.error = "이메일 주소를 올바르게 입력해 주세요."
-            return
-        }
-
-        startSignIn()
-        viewModel.signInWithEmailAndPassword(email, password)
-    }
-
     override fun signInWithGoogle() {
-        if (isSigningIn()) return
-
-        startSignIn()
         oneTapClient.beginSignIn(signInRequest)
             .addOnSuccessListener(requireActivity()) { result ->
                 try {
@@ -128,28 +114,8 @@ class SignInFragment :
             }
     }
 
-    private fun startSignIn() {
-        showProgressDialog("로그인 중... 잠시만 기다려 주세요.")
-    }
-
-    private fun cancelSignIn() {
-        dismissProgressDialog()
-    }
-
-    private fun failSignIn() {
-        dismissProgressDialog()
-
-        Toast.makeText(
-            requireContext(),
-            "오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.",
-            Toast.LENGTH_SHORT,
-        ).show()
-    }
-
-    private fun isSigningIn() = isProgressDialogShown()
-
     override fun navigateToSelectSignUpType() {
-        findNavController().navigate(R.id.action_signInFragment_to_selectSignUpTypeFragment)
+        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSelectSignUpTypeFragment())
     }
 
     companion object {

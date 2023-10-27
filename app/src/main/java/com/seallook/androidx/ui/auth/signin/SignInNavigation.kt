@@ -4,6 +4,4 @@ interface SignInNavigation {
     fun navigateToSelectSignUpType()
 
     fun signInWithGoogle()
-
-    fun signInWithEmailAndPassword()
 }

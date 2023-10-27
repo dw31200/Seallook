@@ -10,6 +10,9 @@
         <variable
             name="navigation"
             type="com.seallook.androidx.ui.auth.signin.SignInNavigation" />
+
+        <import
+            type="com.seallook.androidx.ui.auth.signin.NavigateType"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -32,6 +35,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@={vm.email}"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLines="1" />
@@ -54,6 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
+                android:text="@={vm.password}"
                 android:inputType="textPassword"
                 android:maxLines="1" />
 
@@ -69,7 +74,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/password_text_field"
-            bind:setOnClickListenerSignIn="@{navigation}" />
+            android:onClick="@{()-> vm.signInWithEmailAndPassword()}"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/google_sign_in_button"
@@ -81,7 +86,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/email_sign_in_button"
-            bind:setOnClickListenerSignIn="@{navigation}" />
+            bind:setOnClickListenerSignIn="@{navigation}"
+            bind:navigateType="@{NavigateType.SIGN_IN_WITH_GOOGLE}"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/kakao_sign_in_button"
@@ -113,7 +119,8 @@
             app:layout_constraintBottom_toTopOf="@id/reset_password_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            bind:setOnClickListenerSignIn="@{navigation}" />
+            bind:setOnClickListenerSignIn="@{navigation}"
+            bind:navigateType="@{NavigateType.SIGN_UP}"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/reset_password_button"
@@ -124,6 +131,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <com.seallook.androidx.ui.widget.ProgressWidget
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            bind:setMessage="@{vm.progressMessage}"
+            bind:visible="@{vm.isShowProgress}"
+            bind:showFailMessage="@{vm.isShowFailMessage}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
