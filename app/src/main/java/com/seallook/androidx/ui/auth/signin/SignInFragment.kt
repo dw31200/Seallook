@@ -56,19 +56,6 @@ class SignInFragment :
                     .build(),
             )
             .build()
-
-        viewModel.signInWithGoogleResult.observe(viewLifecycleOwner) {
-            if (it != null) {
-                viewModel.getCurrentUser()
-                viewModel.currentUser.observe(viewLifecycleOwner) {
-                    if (it != null) {
-                        viewModel.getProfile()
-                        navigation()
-                        cancelSignIn()
-                    }
-                }
-            }
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -114,15 +101,6 @@ class SignInFragment :
 
         startSignIn()
         viewModel.signInWithEmailAndPassword(email, password)
-        viewModel.signInWithEmailResult.observe(viewLifecycleOwner) {
-            Timber.d("$it")
-            if (it != null) {
-                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainGraphActivity(), extras)
-                cancelSignIn()
-            } else {
-                failSignIn()
-            }
-        }
     }
 
     override fun signInWithGoogle() {
@@ -152,16 +130,6 @@ class SignInFragment :
 
     private fun startSignIn() {
         showProgressDialog("로그인 중... 잠시만 기다려 주세요.")
-    }
-
-    private fun navigation() {
-        viewModel.profile.observe(viewLifecycleOwner) {
-            if (it != null) {
-                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainGraphActivity(), extras)
-            } else {
-                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSelectSignUpTypeFragment())
-            }
-        }
     }
 
     private fun cancelSignIn() {
