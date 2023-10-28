@@ -9,11 +9,16 @@ import javax.inject.Inject
 class GetOfficeInfoListUseCase @Inject constructor(
     private val officeInfoRepository: OfficeInfoRepository,
 ) {
-    suspend operator fun invoke(type: String, query: String): List<OfficeInfoModel> {
-        return officeInfoRepository.getList(type, query).let {
+    suspend operator fun invoke(params: Params): List<OfficeInfoModel> {
+        return officeInfoRepository.getList(params.type, params.query).let {
             it.map {
                 OfficeInfoModel(it)
             }
         }
     }
+
+    data class Params(
+        val type: String,
+        val query: String,
+    )
 }

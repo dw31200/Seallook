@@ -8,7 +8,5 @@ import dagger.hilt.android.AndroidEntryPoint
 class AuthActivity : BaseActivity<ActivityAuthBinding>(
     ActivityAuthBinding::inflate,
 ) {
-    override fun onCreateAfterBinding() {
-        Unit
-    }
+    override fun onCreateAfterBinding() = Unit
 }

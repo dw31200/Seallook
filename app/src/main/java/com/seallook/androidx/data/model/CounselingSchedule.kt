@@ -1,5 +1,7 @@
 package com.seallook.androidx.data.model
 
+import com.seallook.androidx.base.DataModel
+import com.seallook.androidx.base.DataModelMapper
 import com.seallook.androidx.data.local.model.CounselingScheduleEntity
 import com.seallook.androidx.data.remote.model.CounselingScheduleResponse
 import java.util.Date
@@ -8,8 +10,8 @@ data class CounselingSchedule(
     val id: Int,
     val date: Date,
     val typeId: Int,
-) {
-    fun toLocalModel(): CounselingScheduleEntity {
+) : DataModel<CounselingScheduleEntity, CounselingScheduleResponse> {
+    override fun toLocalModel(): CounselingScheduleEntity {
         return CounselingScheduleEntity(
             id = id,
             date = date,
@@ -17,7 +19,7 @@ data class CounselingSchedule(
         )
     }
 
-    fun toRemoteModel(): CounselingScheduleResponse {
+    override fun toRemoteModel(): CounselingScheduleResponse {
         return CounselingScheduleResponse(
             id = id,
             date = date,
@@ -25,20 +27,20 @@ data class CounselingSchedule(
         )
     }
 
-    companion object {
-        operator fun invoke(counselingScheduleEntity: CounselingScheduleEntity): CounselingSchedule {
+    companion object : DataModelMapper<CounselingScheduleEntity, CounselingScheduleResponse> {
+        override operator fun invoke(localModel: CounselingScheduleEntity): CounselingSchedule {
             return CounselingSchedule(
-                id = counselingScheduleEntity.id,
-                date = counselingScheduleEntity.date,
-                typeId = counselingScheduleEntity.typeId,
+                id = localModel.id,
+                date = localModel.date,
+                typeId = localModel.typeId,
             )
         }
 
-        operator fun invoke(counselingScheduleResponse: CounselingScheduleResponse): CounselingSchedule {
+        override operator fun invoke(remoteModel: CounselingScheduleResponse): CounselingSchedule {
             return CounselingSchedule(
-                id = counselingScheduleResponse.id,
-                date = counselingScheduleResponse.date,
-                typeId = counselingScheduleResponse.typeId,
+                id = remoteModel.id,
+                date = remoteModel.date,
+                typeId = remoteModel.typeId,
             )
         }
     }

@@ -1,14 +1,14 @@
 package com.seallook.androidx.data.remote.model
 
 import com.google.firebase.firestore.DocumentSnapshot
+import com.seallook.androidx.base.RemoteModel
 import java.util.Date
 
 data class CounselingScheduleResponse(
     val id: Int,
     val date: Date,
     val typeId: Int,
-) {
-    constructor() : this(0, Date(), 0)
+) : RemoteModel {
 
     companion object {
         operator fun invoke(snapshot: DocumentSnapshot): CounselingScheduleResponse? {

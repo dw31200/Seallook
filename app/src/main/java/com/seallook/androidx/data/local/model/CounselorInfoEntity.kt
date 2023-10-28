@@ -2,6 +2,7 @@ package com.seallook.androidx.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.seallook.androidx.base.LocalModel
 
 @Entity("CounselorInfo")
 data class CounselorInfoEntity(
@@ -10,4 +11,4 @@ data class CounselorInfoEntity(
     val name: String,
     val description: String,
     val imageUrl: String,
-)
+) : LocalModel

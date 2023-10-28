@@ -2,6 +2,7 @@ package com.seallook.androidx.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.seallook.androidx.base.LocalModel
 
 @Entity("Reservation")
 data class ReservationEntity(
@@ -9,4 +10,4 @@ data class ReservationEntity(
     val id: Int,
     val scheduleId: Int,
     val clientUid: String,
-)
+) : LocalModel

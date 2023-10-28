@@ -23,7 +23,8 @@ class UpdateOfficeViewModel @Inject constructor(
 
     fun searchOnClick(query: String) {
         viewModelScope.launch {
-            _officeInfoList.value = getOfficeInfoListUseCase(type, query).let {
+            val param = GetOfficeInfoListUseCase.Params(type, query)
+            _officeInfoList.value = getOfficeInfoListUseCase(param).let {
                 it.map {
                     OfficeInfoUiModel(it)
                 }

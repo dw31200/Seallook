@@ -15,11 +15,8 @@ class ProfileApiServiceImpl @Inject constructor(
             .document(uid)
             .get()
             .await()
-        return if (documentResponse.exists()) {
-            ProfileResponse(documentResponse)
-        } else {
-            null
-        }
+
+        return ProfileResponse(documentResponse)
     }
 
     override suspend fun setItem(uid: String, profile: ProfileResponse) {

@@ -1,6 +1,7 @@
 package com.seallook.androidx.data.remote.model
 
 import com.google.firebase.firestore.DocumentSnapshot
+import com.seallook.androidx.base.RemoteModel
 
 data class OfficeInfoResponse(
     val id: Int,
@@ -13,8 +14,7 @@ data class OfficeInfoResponse(
     val roadAddress: String,
     val mapx: Int,
     val mapy: Int,
-) {
-    constructor() : this(0, "", "", "", "", "", "", "", 0, 0)
+) : RemoteModel {
 
     companion object {
         operator fun invoke(snapshot: DocumentSnapshot): OfficeInfoResponse? {

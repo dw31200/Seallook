@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.api.ApiException
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
+import com.seallook.androidx.base.observeEvent
 import com.seallook.androidx.databinding.FragmentSignInBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,10 +38,6 @@ class SignInFragment :
 
     private lateinit var oneTapClient: SignInClient
     private lateinit var signInRequest: BeginSignInRequest
-    private val extras = ActivityNavigator.Extras.Builder()
-        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        .build()
 
     override fun onViewCreatedAfterBinding() {
         binding.navigation = this
@@ -54,14 +51,24 @@ class SignInFragment :
                     .build(),
             )
             .build()
-        viewModel.navigateToSignUp.observe(viewLifecycleOwner) {
-            if (it) {
-                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSelectSignUpTypeFragment())
-            }
-        }
-        viewModel.navigateToHome.observe(viewLifecycleOwner) {
-            if (it) {
-                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainGraphActivity(), extras)
+
+        viewModel.effect.observeEvent(viewLifecycleOwner) {
+            when (it) {
+                SignInEffect.NavigateToHome -> {
+                    findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSelectSignUpTypeFragment())
+                }
+
+                SignInEffect.NavigateToSignUp -> {
+                    val extras = ActivityNavigator.Extras.Builder()
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .build()
+
+                    findNavController().navigate(
+                        SignInFragmentDirections.actionSignInFragmentToMainGraphActivity(),
+                        extras,
+                    )
+                }
             }
         }
     }

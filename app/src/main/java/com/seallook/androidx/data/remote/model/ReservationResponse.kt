@@ -1,13 +1,13 @@
 package com.seallook.androidx.data.remote.model
 
 import com.google.firebase.firestore.DocumentSnapshot
+import com.seallook.androidx.base.RemoteModel
 
 data class ReservationResponse(
     val id: Int,
     val scheduleId: Int,
     val clientUid: String,
-) {
-    constructor() : this(0, 0, "")
+) : RemoteModel {
 
     companion object {
         operator fun invoke(snapshot: DocumentSnapshot): ReservationResponse? {
