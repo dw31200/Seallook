@@ -18,7 +18,7 @@ class SignInViewModel @Inject constructor(
     private val signInWithGoogleUseCase: SignInWithGoogleUseCase,
     private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPasswordUseCase,
     private val getProfileUseCase: GetProfileUseCase,
-) : BaseViewModel() {
+) : BaseViewModel<SignInEffect>() {
     private val _navigateToHome = MutableLiveData<Boolean>()
     val navigateToHome: LiveData<Boolean>
         get() = _navigateToHome

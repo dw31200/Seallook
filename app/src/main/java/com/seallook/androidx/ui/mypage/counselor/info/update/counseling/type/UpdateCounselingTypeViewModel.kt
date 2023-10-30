@@ -3,6 +3,7 @@ package com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.seallook.androidx.base.Effect
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.CombineCounselingTypeUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.DeleteCounselingTypeUseCase
@@ -24,7 +25,7 @@ class UpdateCounselingTypeViewModel @Inject constructor(
     private val deleteCounselingTypeUseCase: DeleteCounselingTypeUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val combineCounselingTypeUseCase: CombineCounselingTypeUseCase,
-) : BaseViewModel(), DeleteCounselingType {
+) : BaseViewModel<Effect>(), DeleteCounselingType {
     private val _counselingType = MutableLiveData<List<CounselingTypeUiModel>>()
     val counselingType: LiveData<List<CounselingTypeUiModel>>
         get() = _counselingType

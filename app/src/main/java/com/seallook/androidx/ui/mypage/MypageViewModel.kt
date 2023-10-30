@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
+import com.seallook.androidx.base.Effect
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.GetUserTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class MypageViewModel @Inject constructor(
     private val getUserTypeUseCase: GetUserTypeUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
-) : BaseViewModel() {
+) : BaseViewModel<Effect>() {
     private val _currentUser = MutableLiveData<FirebaseUser?>()
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser

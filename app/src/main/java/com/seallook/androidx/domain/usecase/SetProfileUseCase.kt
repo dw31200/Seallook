@@ -7,7 +7,9 @@ import javax.inject.Inject
 class SetProfileUseCase @Inject constructor(
     private val profileRepository: ProfileRepository,
 ) {
-    suspend operator fun invoke(uid: String, profile: ProfileModel) {
-        profileRepository.setItem(uid, profile.toDataModel())
+    suspend operator fun invoke(uid: String, profile: ProfileModel): Result<Unit> {
+        return runCatching {
+            profileRepository.setItem(uid, profile.toDataModel())
+        }
     }
 }

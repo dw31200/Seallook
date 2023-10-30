@@ -6,6 +6,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
+import com.seallook.androidx.base.Effect
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetCounselorInfoUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetDownloadUrlUseCase
@@ -35,7 +36,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     private val getOfficeInfoUseCase: GetOfficeInfoUseCase,
     private val getAllOfficeInfoUseCase: GetAllOfficeInfoUseCase,
     private val updateOfficeInfoUseCase: UpdateOfficeInfoUseCase,
-) : BaseViewModel() {
+) : BaseViewModel<Effect>() {
     private val _currentUser = MutableLiveData<FirebaseUser?>()
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser

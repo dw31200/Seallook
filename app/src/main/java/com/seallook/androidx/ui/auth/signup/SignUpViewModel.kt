@@ -24,14 +24,17 @@ class SignUpViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val setProfileUseCase: SetProfileUseCase,
     savedStateHandle: SavedStateHandle,
-) : BaseViewModel() {
+) : BaseViewModel<SignUpEffect>() {
     val signUpType = savedStateHandle.get<UserType>("selectSignUpType")
+
     private val _currentUser = MutableLiveData<FirebaseUser?>()
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
+
     private val _passwordError = MutableLiveData<String?>()
     val passwordError: LiveData<String?>
         get() = _passwordError
+
     private val _emailError = MutableLiveData<String?>()
     val emailError: LiveData<String?>
         get() = _emailError
@@ -44,35 +47,43 @@ class SignUpViewModel @Inject constructor(
 
     fun signUp(profile: ProfileUiModel, password: String) {
         viewModelScope.launch {
-            try {
-                signUpUseCase(profile.toDomainModel(), password)
-            } catch (e: Exception) {
-                when (e) {
-                    is FirebaseAuthWeakPasswordException -> {
-                        _passwordError.value =
-                            "안전한 비밀번호가 아닙니다. 길이가 8자 이상이고 영어와 숫자, 특수문자가 조합되어야 합니다."
-                    }
+            signUpUseCase(profile.toDomainModel(), password)
+                .onSuccess {
+                    setProfile(profile)
+                }
+                .onFailure {
+                    when (it) {
+                        is FirebaseAuthWeakPasswordException -> {
+                            _passwordError.value =
+                                "안전한 비밀번호가 아닙니다. 길이가 8자 이상이고 영어와 숫자, 특수문자가 조합되어야 합니다."
+                        }
 
-                    is FirebaseAuthInvalidCredentialsException -> {
-                        _emailError.value = "이메일 주소를 올바르게 입력해 주세요."
-                    }
+                        is FirebaseAuthInvalidCredentialsException -> {
+                            _emailError.value = "이메일 주소를 올바르게 입력해 주세요."
+                        }
 
-                    is FirebaseAuthUserCollisionException -> {
-                        _emailError.value = "이미 사용중인 이메일 주소 입니다."
-                    }
+                        is FirebaseAuthUserCollisionException -> {
+                            _emailError.value = "이미 사용중인 이메일 주소 입니다."
+                        }
 
-                    else -> {
-                        _passwordError.value = "오류가 발생하였습니다. 잠시 후 다시 시도해 주세요."
+                        else -> {
+                            _passwordError.value = "오류가 발생하였습니다. 잠시 후 다시 시도해 주세요."
+                        }
                     }
                 }
-            }
         }
     }
 
     fun setProfile(profile: ProfileUiModel) {
         viewModelScope.launch {
-            currentUser.value?.uid?.let {
+            getCurrentUserUseCase()?.uid?.let {
                 setProfileUseCase(it, profile.toDomainModel())
+                    .onSuccess {
+                        setEffect(SignUpEffect.NavigateToHome)
+                    }
+                    .onFailure {
+                        Unit
+                    }
             }
         }
     }
