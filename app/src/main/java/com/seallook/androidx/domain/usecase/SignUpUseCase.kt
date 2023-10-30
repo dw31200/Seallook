@@ -10,7 +10,12 @@ import javax.inject.Inject
 class SignUpUseCase @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository,
 ) {
-    suspend operator fun invoke(profile: ProfileModel, password: String): AuthResult? {
-        return firebaseAuthRepository.signUp(profile.toDataModel(), password)
+    suspend operator fun invoke(profile: ProfileModel, password: String): Result<AuthResult> {
+        return runCatching {
+            firebaseAuthRepository.signUp(profile.toDataModel(), password)
+        }.map {
+            if (it == null) throw Error("signup result is null")
+            it
+        }
     }
 }

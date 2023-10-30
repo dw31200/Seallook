@@ -4,7 +4,6 @@
     android:id="@+id/splash_navigation"
     app:startDestination="@id/splashFragment">
 
-<!--    TODO 이 방식이 멀티엑티비티 방식이 맞을까요?-->
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.seallook.androidx.ui.splash.SplashFragment"

@@ -3,6 +3,7 @@ package com.seallook.androidx.ui.mypage.counselor.info.update.office
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.seallook.androidx.base.Effect
 import com.seallook.androidx.domain.usecase.GetOfficeInfoListUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.office.SetOfficeInfoUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
@@ -15,7 +16,7 @@ import javax.inject.Inject
 class UpdateOfficeViewModel @Inject constructor(
     private val getOfficeInfoListUseCase: GetOfficeInfoListUseCase,
     private val setOfficeInfoUseCase: SetOfficeInfoUseCase,
-) : BaseViewModel() {
+) : BaseViewModel<Effect>() {
     private val type = "local.json"
     private val _officeInfoList = MutableLiveData<List<OfficeInfoUiModel>>()
     val officeInfoList: LiveData<List<OfficeInfoUiModel>>

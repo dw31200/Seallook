@@ -14,11 +14,11 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.seallook.androidx.BR
 import com.seallook.androidx.BuildConfig
 import com.seallook.androidx.R
+import com.seallook.androidx.base.observeEvent
 import com.seallook.androidx.databinding.FragmentSignUpBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import com.seallook.androidx.ui.model.ProfileUiModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
@@ -120,14 +120,26 @@ class SignUpFragment :
             }
 
             signUpButton.setOnClickListener { signUp() }
+
+            viewModel.effect.observeEvent(viewLifecycleOwner) {
+                when (it) {
+                    SignUpEffect.NavigateToHome -> {
+                        findNavController().navigate(
+                            SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
+                            extras,
+                        )
+                        dismissProgressDialog()
+                    }
+                }
+            }
         }
     }
 
     private fun isSignedIn(): Boolean {
         var result = true
-//        viewModel.currentUser.observe(viewLifecycleOwner) {
-//            result = it != null
-//        }
+        viewModel.currentUser.observe(viewLifecycleOwner) {
+            result = it != null
+        }
         return result
     }
 
@@ -209,7 +221,6 @@ class SignUpFragment :
                 0,
             )
             viewModel.setProfile(profile)
-//            viewModel.setUserType()
             findNavController().navigate(
                 SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
                 extras,
@@ -225,7 +236,7 @@ class SignUpFragment :
                 gender,
                 birth!!,
                 Date(),
-                0,
+                1,
             )
             viewModel.signUp(profile, password)
 //            viewModel.signUpResult.observe(viewLifecycleOwner) {

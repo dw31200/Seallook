@@ -66,7 +66,6 @@ class SignInFragment :
         }
     }
 
-    //    TODO startIntentSenderForResult 와 onActivityResult 를 bindingadapter에 어떻게 옮겨야 할까요?
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
