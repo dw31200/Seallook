@@ -19,6 +19,8 @@ import com.seallook.androidx.data.remote.counselor.basicinfo.CounselorInfoApiSer
 import com.seallook.androidx.data.remote.counselor.basicinfo.CounselorInfoApiServiceImpl
 import com.seallook.androidx.data.remote.counselor.counselingtype.CounselingTypeApiService
 import com.seallook.androidx.data.remote.counselor.counselingtype.CounselingTypeApiServiceImpl
+import com.seallook.androidx.data.remote.counselor.list.CounselorListApiService
+import com.seallook.androidx.data.remote.counselor.list.CounselorListApiServiceImpl
 import com.seallook.androidx.data.remote.counselor.office.OfficeInfoApiService
 import com.seallook.androidx.data.remote.counselor.office.OfficeInfoApiServiceImpl
 import com.squareup.moshi.Moshi
@@ -55,6 +57,9 @@ abstract class RemoteModule {
 
     @Binds
     abstract fun bindNaverSearchApiService(naverSearchApiServiceImpl: OfficeInfoApiServiceImpl): OfficeInfoApiService
+
+    @Binds
+    abstract fun bindCounselorListApiService(counselorListApiServiceImpl: CounselorListApiServiceImpl): CounselorListApiService
 
     companion object {
         @Singleton

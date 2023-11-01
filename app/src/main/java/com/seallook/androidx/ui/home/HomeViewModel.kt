@@ -8,14 +8,17 @@ import com.seallook.androidx.base.Effect
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.GetUserTypeUseCase
 import com.seallook.androidx.domain.usecase.SignOutUseCase
+import com.seallook.androidx.domain.usecase.counselorinfo.list.GetCounselorInfoListUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.model.ProfileUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val getCounselorInfoListUseCase: GetCounselorInfoListUseCase,
     private val signOutUseCase: SignOutUseCase,
     private val getUserTypeUseCase: GetUserTypeUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
@@ -29,6 +32,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            Timber.d("${getCounselorInfoListUseCase()}")
             _currentUser.value = getCurrentUserUseCase()
             _userType.value = currentUser.value?.uid?.let {
                 getUserTypeUseCase(it)?.let {
