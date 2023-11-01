@@ -7,9 +7,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
+import com.seallook.androidx.base.observeEvent
 import com.seallook.androidx.databinding.FragmentUpdateCounselorBasicInfoBinding
 import com.seallook.androidx.ui.base.BaseFragment
-import com.seallook.androidx.ui.model.CounselorInfoUiModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -75,23 +75,16 @@ class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBas
                         binding.nameTextField.editText?.text.toString(),
                         binding.prTextField.editText?.text.toString(),
                     )
-                } else {
-                    viewModel.setCounselorInfo(
-                        CounselorInfoUiModel(
-//                            sdw312 빌드 테스트 임의 id 값
-                            0,
-                            binding.nameTextField.editText?.text.toString(),
-                            binding.prTextField.editText?.text.toString(),
-                            viewModel.downloadUrl.value.toString(),
-                        ),
-                    )
                 }
-                viewModel.updateOfficeInfo()
-                viewModel.updateCounselingType()
-                viewModel.uploadResult.observe(viewLifecycleOwner) {
-                    if (it) {
+            }
+            viewModel.effect.observeEvent(viewLifecycleOwner) {
+                when (it) {
+                    UpdateCounselorBasicInfoEffect.SuccessUpdateCounselingType -> {
                         dismissProgressDialog()
                         findNavController().navigate(UpdateCounselorBasicInfoFragmentDirections.actionUpdateCounselorBasicInfoFragmentToMypageFragment())
+                    }
+                    else -> {
+                        Unit
                     }
                 }
             }

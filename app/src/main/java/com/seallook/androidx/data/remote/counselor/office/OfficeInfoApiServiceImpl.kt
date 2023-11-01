@@ -29,7 +29,8 @@ class OfficeInfoApiServiceImpl @Inject constructor(
             .document(uid)
             .collection(Constants.OFFICE_INFO)
             .document(uid)
-            .get().await()
+            .get()
+            .await()
         return if (documentResponse.exists()) {
             OfficeInfoResponse(documentResponse)
         } else {

@@ -9,7 +9,9 @@ import javax.inject.Inject
 class SetCounselorInfoUseCase @Inject constructor(
     private val counselorInfoRepository: CounselorInfoRepository,
 ) {
-    suspend operator fun invoke(uid: String, info: CounselorInfoModel): Boolean {
-        return counselorInfoRepository.setItem(uid, info.toDataModel())
+    suspend operator fun invoke(uid: String, info: CounselorInfoModel): Result<Unit> {
+        return runCatching {
+            counselorInfoRepository.setItem(uid, info.toDataModel())
+        }
     }
 }

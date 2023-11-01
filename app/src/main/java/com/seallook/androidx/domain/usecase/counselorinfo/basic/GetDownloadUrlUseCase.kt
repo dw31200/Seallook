@@ -9,7 +9,9 @@ import javax.inject.Inject
 class GetDownloadUrlUseCase @Inject constructor(
     private val firebaseStorageRepository: FirebaseStorageRepository,
 ) {
-    suspend operator fun invoke(path: String, fileName: String): Uri {
-        return firebaseStorageRepository.getDownloadUrl(path, fileName)
+    suspend operator fun invoke(path: String, fileName: String): Result<Uri> {
+        return runCatching {
+            firebaseStorageRepository.getDownloadUrl(path, fileName)
+        }
     }
 }

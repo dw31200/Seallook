@@ -23,17 +23,12 @@ class CounselorInfoApiServiceImpl @Inject constructor(
         }
     }
 
-    override suspend fun setItem(uid: String, info: CounselorInfoResponse): Boolean {
-        return runCatching {
-            db.collection(Constants.COUNSELORS)
-                .document(uid)
-                .collection(Constants.COUNSELOR_INFO)
-                .document(uid)
-                .set(info)
-                .await()
-        }.fold(
-            onSuccess = { true },
-            onFailure = { false },
-        )
+    override suspend fun setItem(uid: String, info: CounselorInfoResponse) {
+        db.collection(Constants.COUNSELORS)
+            .document(uid)
+            .collection(Constants.COUNSELOR_INFO)
+            .document(uid)
+            .set(info)
+            .await()
     }
 }
