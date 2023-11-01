@@ -11,7 +11,7 @@ class CounselorInfoRepositoryImpl @Inject constructor(
         return counselorInfoApiService.getItem(uid)?.let { CounselorInfo(it) }
     }
 
-    override suspend fun setItem(uid: String, info: CounselorInfo): Boolean {
-        return counselorInfoApiService.setItem(uid, info.toRemoteModel())
+    override suspend fun setItem(uid: String, info: CounselorInfo) {
+        counselorInfoApiService.setItem(uid, info.toRemoteModel())
     }
 }

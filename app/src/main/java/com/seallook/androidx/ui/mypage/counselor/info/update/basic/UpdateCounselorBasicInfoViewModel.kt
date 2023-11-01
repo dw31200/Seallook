@@ -2,11 +2,9 @@ package com.seallook.androidx.ui.mypage.counselor.info.update.basic
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
-import com.seallook.androidx.base.Effect
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetCounselorInfoUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetDownloadUrlUseCase
@@ -36,41 +34,18 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     private val getOfficeInfoUseCase: GetOfficeInfoUseCase,
     private val getAllOfficeInfoUseCase: GetAllOfficeInfoUseCase,
     private val updateOfficeInfoUseCase: UpdateOfficeInfoUseCase,
-) : BaseViewModel<Effect>() {
+) : BaseViewModel<UpdateCounselorBasicInfoEffect>() {
     private val _currentUser = MutableLiveData<FirebaseUser?>()
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
-    private val _downloadUrl = MutableLiveData<Uri?>()
-    val downloadUrl: LiveData<Uri?>
-        get() = _downloadUrl
+
     private val _counselorInfo = MutableLiveData<CounselorInfoUiModel?>()
     val counselorInfo: LiveData<CounselorInfoUiModel?>
         get() = _counselorInfo
+
     private val _officeInfo = MutableLiveData<OfficeInfoUiModel?>()
     val officeInfo: LiveData<OfficeInfoUiModel?>
         get() = _officeInfo
-    private val _uploadBasicInfoResult = MutableLiveData<Boolean?>()
-    private val _uploadOfficeInfoResult = MutableLiveData<Boolean?>()
-    private val _uploadCounselingTypeResult = MutableLiveData<Boolean?>()
-    val uploadResult: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
-        addSource(_uploadBasicInfoResult) { basicInfoResult ->
-            val officeInfoResult = _uploadOfficeInfoResult.value
-            val counselingTypeResult = _uploadCounselingTypeResult.value
-            value = basicInfoResult == true && officeInfoResult == true && counselingTypeResult == true
-        }
-
-        addSource(_uploadOfficeInfoResult) { officeInfoResult ->
-            val basicInfoResult = _uploadBasicInfoResult.value
-            val counselingTypeResult = _uploadCounselingTypeResult.value
-            value = basicInfoResult == true && officeInfoResult == true && counselingTypeResult == true
-        }
-
-        addSource(_uploadCounselingTypeResult) { counselingTypeResult ->
-            val basicInfoResult = _uploadBasicInfoResult.value
-            val officeInfoResult = _uploadOfficeInfoResult.value
-            value = basicInfoResult == true && officeInfoResult == true && counselingTypeResult == true
-        }
-    }
 
     init {
         viewModelScope.launch {
@@ -91,7 +66,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     fun uploadFile(path: String, fileName: String, uri: Uri, name: String?, pr: String?) {
         viewModelScope.launch {
             uploadFileUseCase(path, fileName, uri)
-                .addOnSuccessListener {
+                .onSuccess {
                     getDownloadUrl(path, fileName, name, pr)
                 }
         }
@@ -99,43 +74,62 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
 
     private fun getDownloadUrl(path: String, fileName: String, name: String?, pr: String?) {
         viewModelScope.launch {
-            _downloadUrl.value = getDownloadUrlUseCase(path, fileName)
-            setCounselorInfo(
-                CounselorInfoUiModel(
-                    //                            sdw312 빌드 테스트 임의 id 값
-                    0,
-                    name ?: "",
-                    pr ?: "",
-                    downloadUrl.value.toString(),
-                ),
-            )
-        }
-    }
-
-    fun updateCounselingType() {
-        viewModelScope.launch {
-            _uploadCounselingTypeResult.value =
-                getCurrentUserUseCase()?.uid?.let {
-                    updateCounselingTypeUseCase(it, getCounselingTypeLocalUseCase())
+            getDownloadUrlUseCase(path, fileName)
+                .onSuccess {
+                    setCounselorInfo(
+                        CounselorInfoUiModel(
+                            //                            sdw312 빌드 테스트 임의 id 값
+                            0,
+                            name ?: "",
+                            pr ?: "",
+                            it.toString(),
+                        ),
+                    )
                 }
         }
     }
 
-    fun setCounselorInfo(info: CounselorInfoUiModel) {
+    private fun updateCounselingType() {
         viewModelScope.launch {
-            _uploadBasicInfoResult.value =
-                currentUser.value?.uid?.let {
-                    setCounselorInfoUseCase(it, info.toDomainModel())
-                }
+            getCurrentUserUseCase()?.uid?.let {
+                updateCounselingTypeUseCase(it, getCounselingTypeLocalUseCase())
+                    .onSuccess {
+                        setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateCounselingType)
+                    }
+                    .onFailure {
+                        setEffect(UpdateCounselorBasicInfoEffect.FailureUpdateCounselingType)
+                    }
+            }
         }
     }
 
-    fun updateOfficeInfo() {
+    private fun setCounselorInfo(info: CounselorInfoUiModel) {
         viewModelScope.launch {
-            _uploadOfficeInfoResult.value =
-                currentUser.value?.uid?.let {
-                    updateOfficeInfoUseCase(it, getAllOfficeInfoUseCase()[0])
-                }
+            currentUser.value?.uid?.let {
+                setCounselorInfoUseCase(it, info.toDomainModel())
+                    .onSuccess {
+                        updateOfficeInfo()
+                        setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateCounselorInfo)
+                    }
+                    .onFailure {
+                        setEffect(UpdateCounselorBasicInfoEffect.FailureUpdateCounselorInfo)
+                    }
+            }
+        }
+    }
+
+    private fun updateOfficeInfo() {
+        viewModelScope.launch {
+            currentUser.value?.uid?.let {
+                updateOfficeInfoUseCase(it, getAllOfficeInfoUseCase()[0])
+                    .onSuccess {
+                        updateCounselingType()
+                        setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateOfficeInfo)
+                    }
+                    .onFailure {
+                        setEffect(UpdateCounselorBasicInfoEffect.FailureUpdateOfficeInfo)
+                    }
+            }
         }
     }
 }

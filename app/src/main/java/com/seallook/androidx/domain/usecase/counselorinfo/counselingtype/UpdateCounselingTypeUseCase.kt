@@ -9,12 +9,9 @@ import javax.inject.Inject
 class UpdateCounselingTypeUseCase @Inject constructor(
     private val counselingTypeRepository: CounselingTypeRepository,
 ) {
-    suspend operator fun invoke(uid: String, type: List<CounselingTypeModel>): Boolean {
+    suspend operator fun invoke(uid: String, type: List<CounselingTypeModel>): Result<Unit> {
         return runCatching {
             counselingTypeRepository.updateList(uid, type.map { it.toDataModel() })
-        }.fold(
-            onSuccess = { true },
-            onFailure = { false },
-        )
+        }
     }
 }
