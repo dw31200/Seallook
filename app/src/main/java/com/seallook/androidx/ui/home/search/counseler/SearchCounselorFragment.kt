@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentSearchCounselorBinding
 import com.seallook.androidx.ui.base.BaseFragment
+import com.seallook.androidx.ui.home.search.counseler.adapter.SearchCounselorAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 /* TODO
@@ -20,6 +21,8 @@ class SearchCounselorFragment : BaseFragment<FragmentSearchCounselorBinding, Sea
     override fun viewModelVariableId(): Int = BR.vm
 
     override fun onViewCreatedAfterBinding() {
-        Unit
+        with(binding) {
+            counselorList.adapter = SearchCounselorAdapter()
+        }
     }
 }

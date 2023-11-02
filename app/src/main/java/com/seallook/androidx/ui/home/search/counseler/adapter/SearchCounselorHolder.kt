@@ -1,4 +1,4 @@
-package com.seallook.androidx.ui.home.adapter
+package com.seallook.androidx.ui.home.search.counseler.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.seallook.androidx.databinding.CounselorListItemBinding
 import com.seallook.androidx.ui.model.CounselorInfoUiModel
 
-class HomeViewHolder(
+class SearchCounselorHolder(
     private val binding: CounselorListItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(counselorInfoItem: CounselorInfoUiModel) {
@@ -16,9 +16,9 @@ class HomeViewHolder(
     }
 
     companion object {
-        operator fun invoke(parent: ViewGroup): HomeViewHolder {
+        operator fun invoke(parent: ViewGroup): SearchCounselorHolder {
             val binding = CounselorListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return HomeViewHolder(binding)
+            return SearchCounselorHolder(binding)
         }
     }
 }
