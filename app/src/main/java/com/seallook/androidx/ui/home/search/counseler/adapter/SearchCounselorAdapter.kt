@@ -1,22 +1,22 @@
-package com.seallook.androidx.ui.home.adapter
+package com.seallook.androidx.ui.home.search.counseler.adapter
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.seallook.androidx.ui.model.CounselorInfoUiModel
 
-class HomeAdapter(
+class SearchCounselorAdapter(
     private val counselorInfoItems: MutableList<CounselorInfoUiModel> = mutableListOf(),
-) : RecyclerView.Adapter<HomeHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeHolder {
-        return HomeHolder(parent)
+) : RecyclerView.Adapter<SearchCounselorHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchCounselorHolder {
+        return SearchCounselorHolder(parent)
     }
 
     override fun getItemCount(): Int {
         return counselorInfoItems.size
     }
 
-    override fun onBindViewHolder(holder: HomeHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchCounselorHolder, position: Int) {
         holder.bind(counselorInfoItems[position])
     }
 
