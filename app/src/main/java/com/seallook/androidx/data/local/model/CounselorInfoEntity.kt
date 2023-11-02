@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 @Entity("CounselorInfo")
 data class CounselorInfoEntity(
     @PrimaryKey
-    val id: Int,
+    val email: String,
     val name: String,
     val description: String,
-    val imageUrl: String,
+    val thumbnail: String,
 )

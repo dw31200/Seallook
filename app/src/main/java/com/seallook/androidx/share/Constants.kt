@@ -8,4 +8,5 @@ object Constants {
     const val COUNSELING_TYPE = "counselingType"
     const val COUNSELING_LIST = "counselingList"
     const val OFFICE_INFO = "officeInfo"
+    const val TEST_ID = "1" // sdw312 mock 데이터 임시 문서 id
 }

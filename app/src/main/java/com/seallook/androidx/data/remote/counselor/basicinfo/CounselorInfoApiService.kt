@@ -5,5 +5,7 @@ import com.seallook.androidx.data.remote.model.CounselorInfoResponse
 interface CounselorInfoApiService {
     suspend fun getItem(uid: String): CounselorInfoResponse?
 
+    suspend fun getAll(): List<CounselorInfoResponse>
+
     suspend fun setItem(uid: String, info: CounselorInfoResponse)
 }

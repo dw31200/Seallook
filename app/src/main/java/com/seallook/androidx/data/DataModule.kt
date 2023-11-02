@@ -12,8 +12,6 @@ import com.seallook.androidx.data.repository.counselor.basicinfo.CounselorInfoRe
 import com.seallook.androidx.data.repository.counselor.basicinfo.CounselorInfoRepositoryImpl
 import com.seallook.androidx.data.repository.counselor.counselingtype.CounselingTypeRepository
 import com.seallook.androidx.data.repository.counselor.counselingtype.CounselingTypeRepositoryImpl
-import com.seallook.androidx.data.repository.counselor.list.CounselorListRepository
-import com.seallook.androidx.data.repository.counselor.list.CounselorListRepositoryImpl
 import com.seallook.androidx.data.repository.counselor.office.OfficeInfoRepository
 import com.seallook.androidx.data.repository.counselor.office.OfficeInfoRepositoryImpl
 import dagger.Binds
@@ -44,7 +42,4 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindUidRepository(uidRepositoryImpl: UidRepositoryImpl): UidRepository
-
-    @Binds
-    abstract fun bindCounselorListRepository(counselorListRepositoryImpl: CounselorListRepositoryImpl): CounselorListRepository
 }

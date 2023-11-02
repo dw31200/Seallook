@@ -1,0 +1,11 @@
+package com.seallook.androidx.ui.home
+
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.seallook.androidx.ui.home.adapter.HomeAdapter
+import com.seallook.androidx.ui.model.CounselorInfoUiModel
+
+@BindingAdapter("bind:galleryList")
+fun RecyclerView.setList(list: List<CounselorInfoUiModel>?) {
+    (adapter as? HomeAdapter)?.fetchData(list ?: emptyList())
+}
