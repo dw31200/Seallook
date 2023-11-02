@@ -6,6 +6,10 @@
         <variable
             name="vm"
             type="com.seallook.androidx.ui.home.search.counseler.SearchCounselorViewModel" />
+
+        <variable
+            name="navigation"
+            type="com.seallook.androidx.ui.home.search.counseler.SearchCounselorNavigation" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -45,6 +49,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             bind:setSearchList="@{vm.counselorInfoList}"
+            bind:onItemClickListener="@{navigation}"
             app:layout_constraintTop_toBottomOf="@id/counselor_name_text_field"
             app:spanCount="2"
             tools:listitem="@layout/search_counselor_list_item" />

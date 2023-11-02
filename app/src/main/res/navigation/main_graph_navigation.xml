@@ -24,7 +24,11 @@
         android:label="SearchCounselorFragment" >
         <action
             android:id="@+id/action_searchCounselorFragment_to_reserveCounselingFragment"
-            app:destination="@id/reserveCounselingFragment" />
+            app:destination="@id/reserveCounselingFragment" >
+            <argument
+                android:name="email"
+                app:argType="string" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/previewReserveCounselingFragment"
@@ -34,6 +38,9 @@
         android:id="@+id/reserveCounselingFragment"
         android:name="com.seallook.androidx.ui.reserve.counseling.ReserveCounselingFragment"
         android:label="ReserveCounselingFragment" >
+        <argument
+            android:name="email"
+            app:argType="string" />
         <action
             android:id="@+id/action_reserveCounselingFragment_to_reserveFormFragment"
             app:destination="@id/reserveFormFragment" />

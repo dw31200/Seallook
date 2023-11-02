@@ -1,6 +1,7 @@
 package com.seallook.androidx.ui.home.search.counseler
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentSearchCounselorBinding
 import com.seallook.androidx.ui.base.BaseFragment
@@ -13,9 +14,11 @@ import dagger.hilt.android.AndroidEntryPoint
     3.Navigation: 상담사 클릭시 해당 상담사 디테일 화면 이동
  */
 @AndroidEntryPoint
-class SearchCounselorFragment : BaseFragment<FragmentSearchCounselorBinding, SearchCounselorViewModel>(
-    FragmentSearchCounselorBinding::inflate,
-) {
+class SearchCounselorFragment :
+    BaseFragment<FragmentSearchCounselorBinding, SearchCounselorViewModel>(
+        FragmentSearchCounselorBinding::inflate,
+    ),
+    SearchCounselorNavigation {
     override val viewModel: SearchCounselorViewModel by viewModels()
 
     override fun viewModelVariableId(): Int = BR.vm
@@ -23,6 +26,12 @@ class SearchCounselorFragment : BaseFragment<FragmentSearchCounselorBinding, Sea
     override fun onViewCreatedAfterBinding() {
         with(binding) {
             counselorList.adapter = SearchCounselorAdapter()
+            navigation = this@SearchCounselorFragment
         }
+    }
+
+    override fun navigateToReserveCounseling(email: String) {
+        val action = SearchCounselorFragmentDirections.actionSearchCounselorFragmentToReserveCounselingFragment(email)
+        findNavController().navigate(action)
     }
 }

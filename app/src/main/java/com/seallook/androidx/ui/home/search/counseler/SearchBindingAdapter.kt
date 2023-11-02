@@ -9,3 +9,8 @@ import com.seallook.androidx.ui.model.CounselorInfoUiModel
 fun RecyclerView.setList(list: List<CounselorInfoUiModel>?) {
     (adapter as? SearchCounselorAdapter)?.fetchData(list ?: emptyList())
 }
+
+@BindingAdapter("bind:onItemClickListener")
+fun RecyclerView.setCounselorItemClickListener(searchCounselorNavigation: SearchCounselorNavigation) {
+    (adapter as? SearchCounselorAdapter)?.searchCounselorNavigation = searchCounselorNavigation
+}
