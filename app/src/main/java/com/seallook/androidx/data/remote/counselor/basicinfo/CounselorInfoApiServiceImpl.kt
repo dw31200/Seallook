@@ -23,6 +23,27 @@ class CounselorInfoApiServiceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getAll(): List<CounselorInfoResponse> {
+        val list = mutableListOf<CounselorInfoResponse>()
+        val documentListResponse = db.collection(Constants.COUNSELORS)
+            .get()
+            .await()
+        if (!documentListResponse.isEmpty) {
+            for (document in documentListResponse) {
+                val documentSnapshot = db.collection(Constants.COUNSELORS)
+                    .document(document.id)
+                    .collection(Constants.COUNSELOR_INFO)
+                    .document(Constants.TEST_ID)
+                    .get()
+                    .await()
+                if (documentSnapshot.exists()) {
+                    CounselorInfoResponse(documentSnapshot)?.let { list.add(it) }
+                }
+            }
+        }
+        return list
+    }
+
     override suspend fun setItem(uid: String, info: CounselorInfoResponse) {
         db.collection(Constants.COUNSELORS)
             .document(uid)

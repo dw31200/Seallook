@@ -6,6 +6,7 @@ import com.seallook.androidx.BR
 import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentHomeBinding
 import com.seallook.androidx.ui.base.BaseFragment
+import com.seallook.androidx.ui.home.adapter.HomeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 /* TODO
@@ -26,6 +27,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 
     override fun onViewCreatedAfterBinding() {
         with(binding) {
+            counselorList.adapter = HomeAdapter()
             counselorNameTextField.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_searchCounselorFragment)
             }

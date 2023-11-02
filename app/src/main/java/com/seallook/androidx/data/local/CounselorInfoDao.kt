@@ -15,11 +15,11 @@ interface CounselorInfoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(counselorInfoList: List<CounselorInfoEntity>)
 
-    @Query("SELECT * FROM CounselorInfo ORDER BY ID")
+    @Query("SELECT * FROM CounselorInfo ORDER BY email")
     suspend fun getAll(): List<CounselorInfoEntity>
 
-    @Query("SELECT * FROM CounselorInfo WHERE ID =:id")
-    suspend fun getItem(id: Int): CounselorInfoEntity
+    @Query("SELECT * FROM CounselorInfo WHERE email =:email")
+    suspend fun getItem(email: String): CounselorInfoEntity
 
     @Update
     suspend fun update(counselorInfo: CounselorInfoEntity)
@@ -30,6 +30,6 @@ interface CounselorInfoDao {
     @Query("DELETE FROM CounselorInfo")
     suspend fun deleteAll()
 
-    @Query("DELETE FROM CounselorInfo WHERE ID =:id")
-    suspend fun deleteItem(id: Int)
+    @Query("DELETE FROM CounselorInfo WHERE email =:email")
+    suspend fun deleteItem(email: String)
 }

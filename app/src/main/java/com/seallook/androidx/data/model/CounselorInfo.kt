@@ -4,45 +4,45 @@ import com.seallook.androidx.data.local.model.CounselorInfoEntity
 import com.seallook.androidx.data.remote.model.CounselorInfoResponse
 
 data class CounselorInfo(
-    val id: Int,
+    val email: String,
     val name: String,
     val description: String,
-    val imageUrl: String,
+    val thumbnail: String,
 ) {
     fun toLocalModel(): CounselorInfoEntity {
         return CounselorInfoEntity(
-            id = id,
+            email = email,
             name = name,
             description = description,
-            imageUrl = imageUrl,
+            thumbnail = thumbnail,
         )
     }
 
     fun toRemoteModel(): CounselorInfoResponse {
         return CounselorInfoResponse(
-            id = id,
+            email = email,
             name = name,
             description = description,
-            imageUrl = imageUrl,
+            thumbnail = thumbnail,
         )
     }
 
     companion object {
         operator fun invoke(counselorInfoEntity: CounselorInfoEntity): CounselorInfo {
             return CounselorInfo(
-                id = counselorInfoEntity.id,
+                email = counselorInfoEntity.email,
                 name = counselorInfoEntity.name,
                 description = counselorInfoEntity.description,
-                imageUrl = counselorInfoEntity.imageUrl,
+                thumbnail = counselorInfoEntity.thumbnail,
             )
         }
 
         operator fun invoke(counselorInfoResponse: CounselorInfoResponse): CounselorInfo {
             return CounselorInfo(
-                id = counselorInfoResponse.id,
+                email = counselorInfoResponse.email,
                 name = counselorInfoResponse.name,
                 description = counselorInfoResponse.description,
-                imageUrl = counselorInfoResponse.imageUrl,
+                thumbnail = counselorInfoResponse.thumbnail,
             )
         }
     }

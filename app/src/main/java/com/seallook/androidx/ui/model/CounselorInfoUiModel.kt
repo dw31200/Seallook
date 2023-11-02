@@ -3,27 +3,27 @@ package com.seallook.androidx.ui.model
 import com.seallook.androidx.domain.model.CounselorInfoModel
 
 data class CounselorInfoUiModel(
-    val id: Int,
+    val email: String,
     val name: String,
     val description: String,
-    val imageUrl: String,
+    val thumbnail: String,
 ) {
     fun toDomainModel(): CounselorInfoModel {
         return CounselorInfoModel(
-            id = id,
+            email = email,
             name = name,
             description = description,
-            imageUrl = imageUrl,
+            thumbnail = thumbnail,
         )
     }
 
     companion object {
         operator fun invoke(counselorInfoModel: CounselorInfoModel): CounselorInfoUiModel {
             return CounselorInfoUiModel(
-                id = counselorInfoModel.id,
+                email = counselorInfoModel.email,
                 name = counselorInfoModel.name,
                 description = counselorInfoModel.description,
-                imageUrl = counselorInfoModel.imageUrl,
+                thumbnail = counselorInfoModel.thumbnail,
             )
         }
     }

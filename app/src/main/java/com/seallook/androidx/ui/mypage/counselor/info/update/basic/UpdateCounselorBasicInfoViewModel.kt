@@ -79,7 +79,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
                     setCounselorInfo(
                         CounselorInfoUiModel(
                             //                            sdw312 빌드 테스트 임의 id 값
-                            0,
+                            currentUser.value?.email ?: "",
                             name ?: "",
                             pr ?: "",
                             it.toString(),

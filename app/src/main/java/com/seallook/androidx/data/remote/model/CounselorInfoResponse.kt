@@ -3,12 +3,12 @@ package com.seallook.androidx.data.remote.model
 import com.google.firebase.firestore.DocumentSnapshot
 
 data class CounselorInfoResponse(
-    val id: Int,
+    val email: String,
     val name: String,
     val description: String,
-    val imageUrl: String,
+    val thumbnail: String,
 ) {
-    constructor() : this(0, "", "", "")
+    constructor() : this("", "", "", "")
 
     companion object {
         operator fun invoke(snapshot: DocumentSnapshot): CounselorInfoResponse? {
