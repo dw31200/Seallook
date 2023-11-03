@@ -31,7 +31,8 @@
                         android:id="@+id/counselor_base_info_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/date_list_layout">
 
                         <TextView
                             android:id="@+id/counselor_name_text"
@@ -70,7 +71,8 @@
                         android:id="@+id/date_list_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/counselor_base_info_layout">
+                        app:layout_constraintTop_toBottomOf="@id/counselor_base_info_layout"
+                        app:layout_constraintBottom_toTopOf="@id/date_selector_layout">
 
                         <TextView
                             android:id="@+id/reserve_text"
@@ -91,15 +93,14 @@
                             app:layout_constraintTop_toBottomOf="@id/reserve_text"
                             tools:text="9월" />
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/counseling_date_list"
+                        <com.kizitonwose.calendar.view.WeekCalendarView
+                            android:id="@+id/week_calendar_view"
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:layout_margin="20dp"
-                            android:orientation="horizontal"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="10dp"
+                            app:cv_dayViewResource="@layout/reserve_counseling_calendar_day"
                             app:layout_constraintTop_toBottomOf="@id/counseling_date_month_text"
-                            tools:listitem="@layout/counseling_date_list_item" />
+                            app:layout_constraintBottom_toBottomOf="parent"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -107,7 +108,8 @@
                         android:id="@+id/date_selector_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/date_list_layout">
+                        app:layout_constraintTop_toBottomOf="@id/date_list_layout"
+                        app:layout_constraintBottom_toTopOf="@id/review_layout">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/date_selector_list"
@@ -124,7 +126,8 @@
                         android:id="@+id/review_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/date_selector_layout">
+                        app:layout_constraintTop_toBottomOf="@id/date_selector_layout"
+                        app:layout_constraintBottom_toTopOf="@id/pay_info_layout">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/counselor_review_list"
@@ -149,7 +152,8 @@
                         android:id="@+id/pay_info_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/review_layout">
+                        app:layout_constraintTop_toBottomOf="@id/review_layout"
+                        app:layout_constraintBottom_toBottomOf="parent">
 
                         <TextView
                             android:id="@+id/pay_text"
