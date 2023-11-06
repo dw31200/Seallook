@@ -4,12 +4,14 @@ import com.seallook.androidx.data.repository.counselor.schedule.CounselingSchedu
 import com.seallook.androidx.domain.model.CounselingScheduleModel
 import javax.inject.Inject
 
-class GetCounselingScheduleUseCase @Inject constructor(
+class InsertCounselingScheduleUseCase @Inject constructor(
     private val counselingScheduleRepository: CounselingScheduleRepository,
 ) {
-    suspend operator fun invoke(email: String): List<CounselingScheduleModel> {
-        return counselingScheduleRepository.getAll(email).map {
-            CounselingScheduleModel(it)
-        }
+    suspend operator fun invoke(counselingScheduleList: List<CounselingScheduleModel>) {
+        counselingScheduleRepository.insert(
+            counselingScheduleList.map {
+                it.toDataModel()
+            },
+        )
     }
 }

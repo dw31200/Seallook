@@ -18,6 +18,9 @@ interface CounselingScheduleDao {
     @Query("SELECT * FROM CounselingSchedule ORDER BY ID ASC")
     suspend fun getAll(): List<CounselingScheduleEntity>
 
+    @Query("SELECT * FROM CounselingSchedule WHERE EMAIL = :email")
+    suspend fun getAll(email: String): List<CounselingScheduleEntity>
+
     @Query("SELECT * FROM CounselingSchedule WHERE ID = :id")
     suspend fun getItem(id: Int): CounselingScheduleEntity?
 
