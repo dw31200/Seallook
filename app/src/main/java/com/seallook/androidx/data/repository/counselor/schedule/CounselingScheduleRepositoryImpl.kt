@@ -3,6 +3,7 @@ package com.seallook.androidx.data.repository.counselor.schedule
 import com.seallook.androidx.data.local.CounselingScheduleDao
 import com.seallook.androidx.data.model.CounselingSchedule
 import com.seallook.androidx.data.remote.counselor.schedule.CounselingScheduleApiService
+import java.time.LocalDate
 import javax.inject.Inject
 
 class CounselingScheduleRepositoryImpl @Inject constructor(
@@ -17,6 +18,12 @@ class CounselingScheduleRepositoryImpl @Inject constructor(
 
     override suspend fun getAllFromLocal(email: String): List<CounselingSchedule> {
         return counselingScheduleDao.getAll(email).map {
+            CounselingSchedule(it)
+        }
+    }
+
+    override suspend fun getCounselingSchedulesOnDate(selectedDate: LocalDate): List<CounselingSchedule> {
+        return counselingScheduleDao.getCounselingSchedulesOnDate(selectedDate, selectedDate.plusDays(1)).map {
             CounselingSchedule(it)
         }
     }
