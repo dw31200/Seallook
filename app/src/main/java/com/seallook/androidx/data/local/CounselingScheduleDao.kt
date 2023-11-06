@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.seallook.androidx.data.local.model.CounselingScheduleEntity
+import java.time.LocalDate
 
 @Dao
 interface CounselingScheduleDao {
@@ -23,6 +24,9 @@ interface CounselingScheduleDao {
 
     @Query("SELECT * FROM CounselingSchedule WHERE ID = :id")
     suspend fun getItem(id: Int): CounselingScheduleEntity?
+
+    @Query("SELECT * FROM CounselingSchedule WHERE DATE > :selectedDate AND DATE < :nextDate")
+    suspend fun getCounselingSchedulesOnDate(selectedDate: LocalDate, nextDate: LocalDate): List<CounselingScheduleEntity>
 
     @Update
     suspend fun update(counselingSchedule: CounselingScheduleEntity)

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.seallook.androidx.base.Effect
+import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetCounselingScheduleOnDateUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromFirebaseCounselingScheduleUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromLocalCounselingScheduleUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.InsertCounselingScheduleUseCase
@@ -22,8 +23,10 @@ class ReserveCounselingViewModel @Inject constructor(
     private val getFromFirebaseCounselingScheduleUseCase: GetFromFirebaseCounselingScheduleUseCase,
     private val insertCounselingScheduleUseCase: InsertCounselingScheduleUseCase,
     private val getFromLocalCounselingScheduleUseCase: GetFromLocalCounselingScheduleUseCase,
+    private val getCounselingScheduleOnDateUseCase: GetCounselingScheduleOnDateUseCase,
 ) : BaseViewModel<Effect>(), ReserveCounselingSelectDate {
     var email = savedStateHandle.get<String>("email")
+
     init {
         viewModelScope.launch {
 //            sdw312 가져오기 테스트
@@ -42,5 +45,10 @@ class ReserveCounselingViewModel @Inject constructor(
 
     override fun selectDate(date: LocalDate) {
         _selectedDate.value = date
+//        sdw312 db 가져오기 테스트
+        viewModelScope.launch {
+            val scheduleOnDate = getCounselingScheduleOnDateUseCase(date)
+            Timber.d("$scheduleOnDate")
+        }
     }
 }
