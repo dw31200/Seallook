@@ -21,6 +21,8 @@ import com.seallook.androidx.data.remote.counselor.counselingtype.CounselingType
 import com.seallook.androidx.data.remote.counselor.counselingtype.CounselingTypeApiServiceImpl
 import com.seallook.androidx.data.remote.counselor.office.OfficeInfoApiService
 import com.seallook.androidx.data.remote.counselor.office.OfficeInfoApiServiceImpl
+import com.seallook.androidx.data.remote.counselor.schedule.CounselingScheduleApiService
+import com.seallook.androidx.data.remote.counselor.schedule.CounselingScheduleApiServiceImpl
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Binds
@@ -55,6 +57,9 @@ abstract class RemoteModule {
 
     @Binds
     abstract fun bindNaverSearchApiService(naverSearchApiServiceImpl: OfficeInfoApiServiceImpl): OfficeInfoApiService
+
+    @Binds
+    abstract fun bindCounselingScheduleApiService(counselingScheduleApiServiceImpl: CounselingScheduleApiServiceImpl): CounselingScheduleApiService
 
     companion object {
         @Singleton
