@@ -6,6 +6,7 @@ import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentReserveCounselingBinding
 import com.seallook.androidx.ui.base.BaseFragment
+import com.seallook.androidx.ui.reserve.counseling.adapter.ReserveCounselingAdapter
 import com.seallook.androidx.ui.reserve.counseling.calendar.ReserveCounselingCalendarBinder
 import com.seallook.androidx.ui.utils.getWeekPageTitle
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,17 +30,20 @@ class ReserveCounselingFragment :
     override fun viewModelVariableId(): Int = BR.vm
 
     override fun onViewCreatedAfterBinding() {
-        binding.weekCalendarView.dayBinder = ReserveCounselingCalendarBinder()
+        with(binding) {
+            dateSelectorList.adapter = ReserveCounselingAdapter()
+            weekCalendarView.dayBinder = ReserveCounselingCalendarBinder()
 
-        binding.weekCalendarView.weekScrollListener = { weekDays ->
-            binding.counselingDateMonthText.text = getWeekPageTitle(weekDays)
+            weekCalendarView.weekScrollListener = { weekDays ->
+                counselingDateMonthText.text = getWeekPageTitle(weekDays)
+            }
+            val currentMonth = YearMonth.now()
+            weekCalendarView.setup(
+                currentMonth.minusMonths(5).atStartOfMonth(),
+                currentMonth.plusMonths(5).atEndOfMonth(),
+                firstDayOfWeekFromLocale(),
+            )
+            weekCalendarView.scrollToDate(LocalDate.now())
         }
-        val currentMonth = YearMonth.now()
-        binding.weekCalendarView.setup(
-            currentMonth.minusMonths(5).atStartOfMonth(),
-            currentMonth.plusMonths(5).atEndOfMonth(),
-            firstDayOfWeekFromLocale(),
-        )
-        binding.weekCalendarView.scrollToDate(LocalDate.now())
     }
 }

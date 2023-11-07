@@ -13,10 +13,11 @@ import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromFireba
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromLocalCounselingScheduleUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.InsertCounselingScheduleUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
+import com.seallook.androidx.ui.model.CounselingScheduleUiModel
+import com.seallook.androidx.ui.model.CounselingTypeUiModel
 import com.seallook.androidx.ui.reserve.counseling.calendar.ReserveCounselingSelectDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -32,6 +33,15 @@ class ReserveCounselingViewModel @Inject constructor(
     private val getCounselingTypeLocalUseCase: GetCounselingTypeLocalUseCase,
 ) : BaseViewModel<Effect>(), ReserveCounselingSelectDate {
     var email = savedStateHandle.get<String>("email")
+    private val _counselingScheduleList = MutableLiveData<List<CounselingScheduleUiModel>>()
+    val counselingScheduleList: LiveData<List<CounselingScheduleUiModel>>
+        get() = _counselingScheduleList
+    private val _counselingTypeList = MutableLiveData<List<CounselingTypeUiModel>>()
+    val counselingTypeList: LiveData<List<CounselingTypeUiModel>>
+        get() = _counselingTypeList
+    private val _selectedDate = MutableLiveData<LocalDate>(LocalDate.now())
+    val selectedDate: LiveData<LocalDate>
+        get() = _selectedDate
 
     init {
         viewModelScope.launch {
@@ -40,29 +50,25 @@ class ReserveCounselingViewModel @Inject constructor(
             if (schedule != null) {
                 insertCounselingScheduleUseCase(schedule)
             }
-            val local = email?.let { getFromLocalCounselingScheduleUseCase(it) }
-            Timber.d("$local")
+            selectedDate.value?.let { selectDate(it) }
             val type = email?.let { getCounselingTypeRemoteUseCase(it) }
-            Timber.d("$type")
             if (type != null) {
                 setCounselingTypeUseCase(type)
+            }
+            _counselingTypeList.value = email?.let {
+                getCounselingTypeLocalUseCase(it).map {
+                    CounselingTypeUiModel(it)
+                }
             }
         }
     }
 
-    private val _selectedDate = MutableLiveData<LocalDate>()
-    val selectedDate: LiveData<LocalDate>
-        get() = _selectedDate
-
     override fun selectDate(date: LocalDate) {
-        _selectedDate.value = date
-//        sdw312 db 가져오기 테스트
         viewModelScope.launch {
-            val scheduleOnDate = getCounselingScheduleOnDateUseCase(date)
-            Timber.d("$scheduleOnDate")
-//            sdw312 db 저장 테스트
-            val scheduleType = email?.let { getCounselingTypeLocalUseCase(it, scheduleOnDate[0].typeId) }
-            Timber.d("$scheduleType")
+            _selectedDate.value = date
+            _counselingScheduleList.value = getCounselingScheduleOnDateUseCase(date).map {
+                CounselingScheduleUiModel(it)
+            }
         }
     }
 }

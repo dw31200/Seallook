@@ -17,7 +17,6 @@ class Converters {
 
     @TypeConverter
     fun localDateToDate(localDate: LocalDate?): Date? {
-//        return java.sql.Timestamp.valueOf(localDate.toString()).time
         return java.sql.Date.valueOf(localDate.toString())
     }
 }
