@@ -1,7 +1,6 @@
 package com.seallook.androidx.data.remote.counselor.counselingtype
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.seallook.androidx.data.remote.model.CounselingTypeListResponse
 import com.seallook.androidx.data.remote.model.CounselingTypeResponse
 import com.seallook.androidx.share.Constants
 import com.squareup.moshi.Moshi
@@ -37,11 +36,11 @@ class CounselingTypeApiServiceImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateList(uid: String, type: CounselingTypeListResponse) {
+    override suspend fun updateList(email: String, type: List<CounselingTypeResponse>) {
         db.collection(Constants.COUNSELORS)
-            .document(uid)
+            .document(email)
             .collection(Constants.COUNSELING_TYPE)
-            .document(uid)
+            .document(Constants.TEST_ID)
             .set(type)
             .await()
     }

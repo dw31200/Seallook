@@ -21,6 +21,9 @@ interface CounselingTypeDao {
     @Query("SELECT * FROM CounselingType WHERE ID = :id")
     suspend fun getItem(id: Int): CounselingTypeEntity?
 
+    @Query("SELECT * FROM CounselingType WHERE ID = :id AND EMAIL = :email")
+    suspend fun getItem(email: String, id: Int): CounselingTypeEntity?
+
     @Update
     suspend fun update(counselingType: CounselingTypeEntity)
 

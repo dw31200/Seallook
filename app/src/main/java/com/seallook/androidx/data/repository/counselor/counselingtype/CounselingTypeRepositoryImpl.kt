@@ -3,7 +3,6 @@ package com.seallook.androidx.data.repository.counselor.counselingtype
 import com.seallook.androidx.data.local.CounselingTypeDao
 import com.seallook.androidx.data.model.CounselingType
 import com.seallook.androidx.data.remote.counselor.counselingtype.CounselingTypeApiService
-import com.seallook.androidx.data.remote.model.CounselingTypeListResponse
 import javax.inject.Inject
 
 class CounselingTypeRepositoryImpl @Inject constructor(
@@ -34,10 +33,18 @@ class CounselingTypeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateList(uid: String, type: List<CounselingType>) {
+    override suspend fun getItem(email: String, id: Int): CounselingType? {
+        return counselingTypeDao.getItem(email, id)?.let {
+            CounselingType(it)
+        }
+    }
+
+    override suspend fun updateList(email: String, type: List<CounselingType>) {
         counselingTypeApiService.updateList(
-            uid,
-            CounselingTypeListResponse(type.map { it.toRemoteModel() }),
+            email,
+            type.map {
+                it.toRemoteModel()
+            },
         )
     }
 }
