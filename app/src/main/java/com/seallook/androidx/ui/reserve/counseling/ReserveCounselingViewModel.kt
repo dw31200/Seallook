@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.seallook.androidx.base.Effect
+import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.GetCounselingTypeLocalUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.GetCounselingTypeRemoteUseCase
+import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.SetCounselingTypeUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetCounselingScheduleOnDateUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromFirebaseCounselingScheduleUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromLocalCounselingScheduleUseCase
@@ -26,6 +28,8 @@ class ReserveCounselingViewModel @Inject constructor(
     private val getFromLocalCounselingScheduleUseCase: GetFromLocalCounselingScheduleUseCase,
     private val getCounselingScheduleOnDateUseCase: GetCounselingScheduleOnDateUseCase,
     private val getCounselingTypeRemoteUseCase: GetCounselingTypeRemoteUseCase,
+    private val setCounselingTypeUseCase: SetCounselingTypeUseCase,
+    private val getCounselingTypeLocalUseCase: GetCounselingTypeLocalUseCase,
 ) : BaseViewModel<Effect>(), ReserveCounselingSelectDate {
     var email = savedStateHandle.get<String>("email")
 
@@ -40,6 +44,9 @@ class ReserveCounselingViewModel @Inject constructor(
             Timber.d("$local")
             val type = email?.let { getCounselingTypeRemoteUseCase(it) }
             Timber.d("$type")
+            if (type != null) {
+                setCounselingTypeUseCase(type)
+            }
         }
     }
 
@@ -53,6 +60,9 @@ class ReserveCounselingViewModel @Inject constructor(
         viewModelScope.launch {
             val scheduleOnDate = getCounselingScheduleOnDateUseCase(date)
             Timber.d("$scheduleOnDate")
+//            sdw312 db 저장 테스트
+            val scheduleType = email?.let { getCounselingTypeLocalUseCase(it, scheduleOnDate[0].typeId) }
+            Timber.d("$scheduleType")
         }
     }
 }

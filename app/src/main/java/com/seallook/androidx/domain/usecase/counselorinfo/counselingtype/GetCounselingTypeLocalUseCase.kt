@@ -14,4 +14,10 @@ class GetCounselingTypeLocalUseCase @Inject constructor(
             CounselingTypeModel(it)
         }
     }
+
+    suspend operator fun invoke(email: String, id: Int): CounselingTypeModel? {
+        return counselingTypeRepository.getItem(email, id)?.let {
+            CounselingTypeModel(it)
+        }
+    }
 }
