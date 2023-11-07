@@ -13,6 +13,8 @@ interface CounselingTypeRepository {
 
     suspend fun getAll(email: String): List<CounselingType>
 
+    suspend fun getList(email: String): List<CounselingType>
+
     suspend fun getItem(email: String, id: Int): CounselingType?
 
     suspend fun updateList(email: String, type: List<CounselingType>)

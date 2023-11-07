@@ -119,6 +119,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            bind:setCounselingSchedule="@{vm.counselingScheduleList}"
+                            bind:setCounselingType="@{vm.counselingTypeList}"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:listitem="@layout/counseling_date_selector_list_item" />

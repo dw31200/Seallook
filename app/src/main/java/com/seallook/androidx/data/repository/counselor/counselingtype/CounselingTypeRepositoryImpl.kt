@@ -33,6 +33,12 @@ class CounselingTypeRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getList(email: String): List<CounselingType> {
+        return counselingTypeDao.getList(email).map {
+            CounselingType(it)
+        }
+    }
+
     override suspend fun getItem(email: String, id: Int): CounselingType? {
         return counselingTypeDao.getItem(email, id)?.let {
             CounselingType(it)
