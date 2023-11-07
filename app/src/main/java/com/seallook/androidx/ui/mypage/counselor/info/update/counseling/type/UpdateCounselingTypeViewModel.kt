@@ -47,6 +47,8 @@ class UpdateCounselingTypeViewModel @Inject constructor(
                     setCounselingTypeUseCase(
                         CounselingTypeUiModel(
                             0,
+                            //   sdw312 임시 테스트
+                            "aaa@aaa.com",
                             title.value ?: return@launch,
                             clientCount.value?.toInt() ?: return@launch,
                             time.value?.toInt() ?: return@launch,
@@ -58,6 +60,8 @@ class UpdateCounselingTypeViewModel @Inject constructor(
                     setCounselingTypeUseCase(
                         CounselingTypeUiModel(
                             (counselingType.value?.last()?.id ?: return@launch) + 1,
+                            //   sdw312 임시 테스트
+                            "aaa@aaa.com",
                             title.value ?: return@launch,
                             clientCount.value?.toInt() ?: return@launch,
                             time.value?.toInt() ?: return@launch,

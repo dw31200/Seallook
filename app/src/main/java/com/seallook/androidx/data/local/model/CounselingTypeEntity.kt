@@ -1,12 +1,11 @@
 package com.seallook.androidx.data.local.model
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
-@Entity("CounselingType")
+@Entity("CounselingType", primaryKeys = ["id", "email"])
 data class CounselingTypeEntity(
-    @PrimaryKey
     val id: Int,
+    val email: String,
     val title: String,
     val clientCount: Int,
     val time: Int,

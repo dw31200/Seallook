@@ -28,8 +28,8 @@ class CounselingTypeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAll(uid: String): List<CounselingType> {
-        return counselingTypeApiService.getAll(uid).map {
+    override suspend fun getAll(email: String): List<CounselingType> {
+        return counselingTypeApiService.getAll(email).map {
             CounselingType(it)
         }
     }

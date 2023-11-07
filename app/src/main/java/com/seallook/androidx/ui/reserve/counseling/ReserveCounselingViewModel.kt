@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.seallook.androidx.base.Effect
+import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.GetCounselingTypeRemoteUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetCounselingScheduleOnDateUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromFirebaseCounselingScheduleUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromLocalCounselingScheduleUseCase
@@ -24,6 +25,7 @@ class ReserveCounselingViewModel @Inject constructor(
     private val insertCounselingScheduleUseCase: InsertCounselingScheduleUseCase,
     private val getFromLocalCounselingScheduleUseCase: GetFromLocalCounselingScheduleUseCase,
     private val getCounselingScheduleOnDateUseCase: GetCounselingScheduleOnDateUseCase,
+    private val getCounselingTypeRemoteUseCase: GetCounselingTypeRemoteUseCase,
 ) : BaseViewModel<Effect>(), ReserveCounselingSelectDate {
     var email = savedStateHandle.get<String>("email")
 
@@ -36,6 +38,8 @@ class ReserveCounselingViewModel @Inject constructor(
             }
             val local = email?.let { getFromLocalCounselingScheduleUseCase(it) }
             Timber.d("$local")
+            val type = email?.let { getCounselingTypeRemoteUseCase(it) }
+            Timber.d("$type")
         }
     }
 
