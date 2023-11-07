@@ -4,6 +4,7 @@ import com.seallook.androidx.data.model.CounselingType
 
 data class CounselingTypeModel(
     val id: Int,
+    val email: String,
     val title: String,
     val clientCount: Int,
     val time: Int,
@@ -12,6 +13,7 @@ data class CounselingTypeModel(
     fun toDataModel(): CounselingType {
         return CounselingType(
             id = id,
+            email = email,
             title = title,
             clientCount = clientCount,
             time = time,
@@ -22,6 +24,7 @@ data class CounselingTypeModel(
         operator fun invoke(counselingType: CounselingType): CounselingTypeModel {
             return CounselingTypeModel(
                 id = counselingType.id,
+                email = counselingType.email,
                 title = counselingType.title,
                 clientCount = counselingType.clientCount,
                 time = counselingType.time,

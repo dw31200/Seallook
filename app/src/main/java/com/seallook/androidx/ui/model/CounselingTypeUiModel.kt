@@ -4,6 +4,7 @@ import com.seallook.androidx.domain.model.CounselingTypeModel
 
 data class CounselingTypeUiModel(
     val id: Int,
+    val email: String,
     val title: String,
     val clientCount: Int,
     val time: Int,
@@ -12,6 +13,7 @@ data class CounselingTypeUiModel(
     fun toDomainModel(): CounselingTypeModel {
         return CounselingTypeModel(
             id = id,
+            email = email,
             title = title,
             clientCount = clientCount,
             time = time,
@@ -23,6 +25,7 @@ data class CounselingTypeUiModel(
         operator fun invoke(counselingTypeModel: CounselingTypeModel): CounselingTypeUiModel {
             return CounselingTypeUiModel(
                 id = counselingTypeModel.id,
+                email = counselingTypeModel.email,
                 title = counselingTypeModel.title,
                 clientCount = counselingTypeModel.clientCount,
                 time = counselingTypeModel.time,

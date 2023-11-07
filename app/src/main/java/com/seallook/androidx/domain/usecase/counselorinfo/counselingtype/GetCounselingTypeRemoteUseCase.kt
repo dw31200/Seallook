@@ -9,8 +9,8 @@ import javax.inject.Inject
 class GetCounselingTypeRemoteUseCase @Inject constructor(
     private val counselingTypeRepository: CounselingTypeRepository,
 ) {
-    suspend operator fun invoke(uid: String): List<CounselingTypeModel> {
-        return counselingTypeRepository.getAll(uid).map {
+    suspend operator fun invoke(email: String): List<CounselingTypeModel> {
+        return counselingTypeRepository.getAll(email).map {
             CounselingTypeModel(it)
         }
     }
