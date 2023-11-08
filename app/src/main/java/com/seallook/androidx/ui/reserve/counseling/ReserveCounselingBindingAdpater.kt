@@ -1,10 +1,12 @@
-package com.seallook.androidx.ui.reserve.counseling.adapter
+package com.seallook.androidx.ui.reserve.counseling
 
+import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
 import com.seallook.androidx.ui.model.CounselingTypeUiModel
+import com.seallook.androidx.ui.reserve.counseling.adapter.ReserveCounselingAdapter
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Date
@@ -27,7 +29,21 @@ fun TextView.setTime(date: Date, time: Int) {
         .atZone(ZoneId.systemDefault())
         .toLocalDateTime()
     val nextLocalDate = localDate.plusMinutes(time.toLong())
-    DateTimeFormatter.ofPattern("HH:mm").format(localDate)
     text =
         DateTimeFormatter.ofPattern("HH:mm").format(localDate) + " ~ " + DateTimeFormatter.ofPattern("HH:mm").format(nextLocalDate)
+}
+
+@BindingAdapter("bind:setScheduleItemClickListener")
+fun RecyclerView.setScheduleItemClickListener(counselingScheduleSelect: CounselingScheduleSelect) {
+    (adapter as? ReserveCounselingAdapter)?.counselingScheduleSelect = counselingScheduleSelect
+}
+
+@BindingAdapter("bind:setPrice")
+fun TextView.setPrice(price: Int?) {
+    text = price.toString() + "원"
+    if (price == 0 || price == null) {
+        visibility = View.INVISIBLE
+    } else {
+        visibility = View.VISIBLE
+    }
 }
