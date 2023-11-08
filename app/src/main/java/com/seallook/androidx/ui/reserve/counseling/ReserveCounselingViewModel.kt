@@ -31,17 +31,24 @@ class ReserveCounselingViewModel @Inject constructor(
     private val getCounselingTypeRemoteUseCase: GetCounselingTypeRemoteUseCase,
     private val setCounselingTypeUseCase: SetCounselingTypeUseCase,
     private val getCounselingTypeLocalUseCase: GetCounselingTypeLocalUseCase,
-) : BaseViewModel<Effect>(), ReserveCounselingSelectDate {
+) : BaseViewModel<Effect>(), ReserveCounselingSelectDate, CounselingScheduleSelect {
     var email = savedStateHandle.get<String>("email")
+
     private val _counselingScheduleList = MutableLiveData<List<CounselingScheduleUiModel>>()
     val counselingScheduleList: LiveData<List<CounselingScheduleUiModel>>
         get() = _counselingScheduleList
+
     private val _counselingTypeList = MutableLiveData<List<CounselingTypeUiModel>>()
     val counselingTypeList: LiveData<List<CounselingTypeUiModel>>
         get() = _counselingTypeList
+
     private val _selectedDate = MutableLiveData<LocalDate>(LocalDate.now())
     val selectedDate: LiveData<LocalDate>
         get() = _selectedDate
+
+    private val _selectedSchedulePrice = MutableLiveData<Int>()
+    val selectedSchedulePrice: LiveData<Int>
+        get() = _selectedSchedulePrice
 
     init {
         viewModelScope.launch {
@@ -69,6 +76,11 @@ class ReserveCounselingViewModel @Inject constructor(
             _counselingScheduleList.value = getCounselingScheduleOnDateUseCase(date).map {
                 CounselingScheduleUiModel(it)
             }
+            _selectedSchedulePrice.value = 0
         }
+    }
+
+    override fun selectSchedule(type: CounselingTypeUiModel) {
+        _selectedSchedulePrice.value = type.price
     }
 }

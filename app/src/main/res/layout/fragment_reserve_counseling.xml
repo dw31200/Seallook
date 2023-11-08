@@ -119,6 +119,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            bind:setScheduleItemClickListener="@{vm}"
                             bind:setCounselingSchedule="@{vm.counselingScheduleList}"
                             bind:setCounselingType="@{vm.counselingTypeList}"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -168,6 +169,7 @@
                             android:layout_margin="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            bind:setPrice="@{vm.selectedSchedulePrice}"
                             tools:text="100,000원"/>
 
                         <com.google.android.material.button.MaterialButton

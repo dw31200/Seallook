@@ -5,11 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
 import com.seallook.androidx.ui.model.CounselingTypeUiModel
+import com.seallook.androidx.ui.reserve.counseling.CounselingScheduleSelect
 
 class ReserveCounselingAdapter(
     private val counselingScheduleItems: MutableList<CounselingScheduleUiModel> = mutableListOf(),
     private val counselingTypeList: MutableList<CounselingTypeUiModel> = mutableListOf(),
 ) : RecyclerView.Adapter<ReserveCounselingHolder>() {
+    var counselingScheduleSelect: CounselingScheduleSelect? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReserveCounselingHolder {
         return ReserveCounselingHolder(parent)
     }
@@ -19,7 +22,7 @@ class ReserveCounselingAdapter(
     }
 
     override fun onBindViewHolder(holder: ReserveCounselingHolder, position: Int) {
-        holder.bind(counselingScheduleItems[position], counselingTypeList)
+        holder.bind(counselingScheduleItems[position], counselingTypeList, counselingScheduleSelect)
     }
 
     @SuppressLint("NotifyDataSetChanged")
