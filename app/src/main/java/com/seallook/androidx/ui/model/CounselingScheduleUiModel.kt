@@ -8,6 +8,7 @@ data class CounselingScheduleUiModel(
     val id: Int,
     val date: Date,
     val typeId: Int,
+    val reservation: Boolean,
 ) {
     fun toDomainModel(): CounselingScheduleModel {
         return CounselingScheduleModel(
@@ -15,6 +16,7 @@ data class CounselingScheduleUiModel(
             id = id,
             date = date,
             typeId = typeId,
+            reservation = reservation,
         )
     }
 
@@ -25,6 +27,7 @@ data class CounselingScheduleUiModel(
                 id = counselingScheduleModel.id,
                 date = counselingScheduleModel.date,
                 typeId = counselingScheduleModel.typeId,
+                reservation = counselingScheduleModel.reservation,
             )
         }
     }

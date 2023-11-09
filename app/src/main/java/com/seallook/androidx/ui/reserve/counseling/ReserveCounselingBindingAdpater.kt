@@ -47,3 +47,12 @@ fun TextView.setPrice(price: Int?) {
         visibility = View.VISIBLE
     }
 }
+
+@BindingAdapter("bind:setReservation")
+fun TextView.setReservation(reservation: Boolean?) {
+    if (reservation == true) {
+        text = "모집마감"
+    } else {
+        text = "모집중"
+    }
+}

@@ -8,6 +8,7 @@ data class CounselingScheduleModel(
     val id: Int,
     val date: Date,
     val typeId: Int,
+    val reservation: Boolean,
 ) {
     fun toDataModel(): CounselingSchedule {
         return CounselingSchedule(
@@ -15,6 +16,7 @@ data class CounselingScheduleModel(
             id = id,
             date = date,
             typeId = typeId,
+            reservation = reservation,
         )
     }
 
@@ -25,6 +27,7 @@ data class CounselingScheduleModel(
                 id = counselingSchedule.id,
                 date = counselingSchedule.date,
                 typeId = counselingSchedule.typeId,
+                reservation = counselingSchedule.reservation,
             )
         }
     }

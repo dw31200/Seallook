@@ -9,6 +9,7 @@ data class CounselingSchedule(
     val id: Int,
     val date: Date,
     val typeId: Int,
+    val reservation: Boolean,
 ) {
     fun toLocalModel(): CounselingScheduleEntity {
         return CounselingScheduleEntity(
@@ -16,6 +17,7 @@ data class CounselingSchedule(
             id = id,
             date = date,
             typeId = typeId,
+            reservation = reservation,
         )
     }
 
@@ -25,6 +27,7 @@ data class CounselingSchedule(
             id = id,
             date = date,
             typeId = typeId,
+            reservation = reservation,
         )
     }
 
@@ -35,6 +38,7 @@ data class CounselingSchedule(
                 id = counselingScheduleEntity.id,
                 date = counselingScheduleEntity.date,
                 typeId = counselingScheduleEntity.typeId,
+                reservation = counselingScheduleEntity.reservation,
             )
         }
 
@@ -44,6 +48,7 @@ data class CounselingSchedule(
                 id = counselingScheduleResponse.id,
                 date = counselingScheduleResponse.date,
                 typeId = counselingScheduleResponse.typeId,
+                reservation = counselingScheduleResponse.reservation,
             )
         }
     }
