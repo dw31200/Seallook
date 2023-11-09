@@ -30,6 +30,7 @@
             app:layout_constraintBottom_toTopOf="@id/counseling_time_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            bind:setReservation="@{schedule.reservation}"
             tools:text="모집중" />
 
         <TextView

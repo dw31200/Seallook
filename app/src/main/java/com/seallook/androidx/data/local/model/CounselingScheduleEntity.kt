@@ -9,4 +9,5 @@ data class CounselingScheduleEntity(
     val email: String,
     val date: Date,
     val typeId: Int,
+    val reservation: Boolean,
 )

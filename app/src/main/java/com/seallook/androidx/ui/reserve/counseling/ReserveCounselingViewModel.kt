@@ -80,7 +80,7 @@ class ReserveCounselingViewModel @Inject constructor(
         }
     }
 
-    override fun selectSchedule(type: CounselingTypeUiModel) {
-        _selectedSchedulePrice.value = type.price
+    override fun selectSchedule(price: Int) {
+        _selectedSchedulePrice.value = price
     }
 }

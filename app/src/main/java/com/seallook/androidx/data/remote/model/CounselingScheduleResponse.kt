@@ -8,8 +8,9 @@ data class CounselingScheduleResponse(
     val id: Int,
     val date: Date,
     val typeId: Int,
+    val reservation: Boolean,
 ) {
-    constructor() : this("", 0, Date(), 0)
+    constructor() : this("", 0, Date(), 0, false)
 
     companion object {
         operator fun invoke(snapshot: DocumentSnapshot): CounselingScheduleResponse? {

@@ -11,14 +11,22 @@ import com.seallook.androidx.ui.reserve.counseling.CounselingScheduleSelect
 class ReserveCounselingHolder(
     private val binding: CounselingDateSelectorListItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(counselingScheduleItem: CounselingScheduleUiModel, counselingTypeList: List<CounselingTypeUiModel>, counselingScheduleSelect: CounselingScheduleSelect?) {
+    fun bind(
+        counselingScheduleItem: CounselingScheduleUiModel,
+        counselingTypeList: List<CounselingTypeUiModel>,
+        counselingScheduleSelect: CounselingScheduleSelect?,
+    ) {
         with(binding) {
             schedule = counselingScheduleItem
             if (counselingTypeList.isNotEmpty()) {
                 type = counselingTypeList[counselingScheduleItem.typeId]
             }
             counselingSelectorLayout.setOnClickListener {
-                counselingScheduleSelect?.selectSchedule(counselingTypeList[counselingScheduleItem.typeId])
+                if (counselingScheduleItem.reservation) {
+                    counselingScheduleSelect?.selectSchedule(0)
+                } else {
+                    counselingScheduleSelect?.selectSchedule(counselingTypeList[counselingScheduleItem.typeId].price)
+                }
             }
         }
     }
