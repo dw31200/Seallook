@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.seallook.androidx.base.Effect
 import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.GetCounselingTypeLocalUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.GetCounselingTypeRemoteUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.SetCounselingTypeUseCase
+import com.seallook.androidx.domain.usecase.counselorinfo.reservation.SetReservationUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetCounselingScheduleOnDateUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromFirebaseCounselingScheduleUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromLocalCounselingScheduleUseCase
@@ -15,6 +15,7 @@ import com.seallook.androidx.domain.usecase.counselorinfo.schedule.InsertCounsel
 import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
 import com.seallook.androidx.ui.model.CounselingTypeUiModel
+import com.seallook.androidx.ui.model.ReservationUiModel
 import com.seallook.androidx.ui.reserve.counseling.calendar.ReserveCounselingSelectDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -31,21 +32,18 @@ class ReserveCounselingViewModel @Inject constructor(
     private val getCounselingTypeRemoteUseCase: GetCounselingTypeRemoteUseCase,
     private val setCounselingTypeUseCase: SetCounselingTypeUseCase,
     private val getCounselingTypeLocalUseCase: GetCounselingTypeLocalUseCase,
-) : BaseViewModel<Effect>(), ReserveCounselingSelectDate, CounselingScheduleSelect {
+    private val setReservationUseCase: SetReservationUseCase,
+) : BaseViewModel<ReserveCounselingEffect>(), ReserveCounselingSelectDate, CounselingScheduleSelect {
     var email = savedStateHandle.get<String>("email")
-
     private val _counselingScheduleList = MutableLiveData<List<CounselingScheduleUiModel>>()
     val counselingScheduleList: LiveData<List<CounselingScheduleUiModel>>
         get() = _counselingScheduleList
-
     private val _counselingTypeList = MutableLiveData<List<CounselingTypeUiModel>>()
     val counselingTypeList: LiveData<List<CounselingTypeUiModel>>
         get() = _counselingTypeList
-
     private val _selectedDate = MutableLiveData<LocalDate>(LocalDate.now())
     val selectedDate: LiveData<LocalDate>
         get() = _selectedDate
-
     private val _selectedSchedulePrice = MutableLiveData<Int>()
     val selectedSchedulePrice: LiveData<Int>
         get() = _selectedSchedulePrice
@@ -82,5 +80,26 @@ class ReserveCounselingViewModel @Inject constructor(
 
     override fun selectSchedule(price: Int) {
         _selectedSchedulePrice.value = price
+    }
+
+    fun setReservation() {
+        viewModelScope.launch {
+            setReservationUseCase(
+//                sdw312 테스트용 더미 데이터
+                ReservationUiModel(
+                    1,
+                    email ?: "",
+                    1,
+                    "dw31200@gmail.com",
+                    false,
+                ).toDomainModel(),
+            )
+                .onSuccess {
+                    setEffect(ReserveCounselingEffect.NavigateToHome)
+                }
+                .onFailure {
+                    Unit
+                }
+        }
     }
 }

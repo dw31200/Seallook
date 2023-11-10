@@ -14,6 +14,8 @@ import com.seallook.androidx.data.repository.counselor.counselingtype.Counseling
 import com.seallook.androidx.data.repository.counselor.counselingtype.CounselingTypeRepositoryImpl
 import com.seallook.androidx.data.repository.counselor.office.OfficeInfoRepository
 import com.seallook.androidx.data.repository.counselor.office.OfficeInfoRepositoryImpl
+import com.seallook.androidx.data.repository.counselor.reservation.ReservationRepository
+import com.seallook.androidx.data.repository.counselor.reservation.ReservationRepositoryImpl
 import com.seallook.androidx.data.repository.counselor.schedule.CounselingScheduleRepository
 import com.seallook.androidx.data.repository.counselor.schedule.CounselingScheduleRepositoryImpl
 import dagger.Binds
@@ -47,4 +49,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindCounselingScheduleRepository(counselingScheduleRepositoryImpl: CounselingScheduleRepositoryImpl): CounselingScheduleRepository
+
+    @Binds
+    abstract fun bindReservationRepository(reservationRepositoryImpl: ReservationRepositoryImpl): ReservationRepository
 }

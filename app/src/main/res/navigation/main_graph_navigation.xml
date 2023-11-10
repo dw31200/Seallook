@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_reserveCounselingFragment_to_reserveFormFragment"
             app:destination="@id/reserveFormFragment" />
+        <action
+            android:id="@+id/action_reserveCounselingFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/reserveCounselingPolicyFragment"

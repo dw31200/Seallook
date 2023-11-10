@@ -4,10 +4,12 @@ import com.google.firebase.firestore.DocumentSnapshot
 
 data class ReservationResponse(
     val id: Int,
+    val counselorEmail: String,
     val scheduleId: Int,
-    val clientUid: String,
+    val clientEmail: String,
+    val confirm: Boolean,
 ) {
-    constructor() : this(0, 0, "")
+    constructor() : this(-1, "", 0, "", false)
 
     companion object {
         operator fun invoke(snapshot: DocumentSnapshot): ReservationResponse? {

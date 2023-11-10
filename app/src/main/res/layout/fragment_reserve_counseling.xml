@@ -180,6 +180,8 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:layout_margin="20dp"
+                            bind:setEnabledBySelected="@{vm.selectedSchedulePrice}"
+                            android:onClick="@{() -> vm.setReservation()}"
                             android:text="신청하기"/>
 
 

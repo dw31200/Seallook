@@ -1,9 +1,11 @@
 package com.seallook.androidx.ui.reserve.counseling
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.kizitonwose.calendar.core.atStartOfMonth
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.seallook.androidx.BR
+import com.seallook.androidx.base.observeEvent
 import com.seallook.androidx.databinding.FragmentReserveCounselingBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import com.seallook.androidx.ui.reserve.counseling.adapter.ReserveCounselingAdapter
@@ -44,6 +46,13 @@ class ReserveCounselingFragment :
                 firstDayOfWeekFromLocale(),
             )
             weekCalendarView.scrollToDate(LocalDate.now())
+        }
+        viewModel.effect.observeEvent(viewLifecycleOwner) {
+            when (it) {
+                ReserveCounselingEffect.NavigateToHome -> {
+                    findNavController().navigate(ReserveCounselingFragmentDirections.actionReserveCounselingFragmentToHomeFragment())
+                }
+            }
         }
     }
 }
