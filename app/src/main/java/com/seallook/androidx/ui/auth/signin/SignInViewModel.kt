@@ -22,19 +22,25 @@ class SignInViewModel @Inject constructor(
     private val _navigateToHome = MutableLiveData<Boolean>()
     val navigateToHome: LiveData<Boolean>
         get() = _navigateToHome
+
     private val _navigateToSignUp = MutableLiveData<Boolean>()
     val navigateToSignUp: LiveData<Boolean>
         get() = _navigateToSignUp
+
     private val _progressMessage = MutableLiveData<String>()
     val progressMessage: LiveData<String>
         get() = _progressMessage
+
     private val _isShowProgress = MutableLiveData<Boolean>()
     val isShowProgress: LiveData<Boolean>
         get() = _isShowProgress
+
     private val _isShowFailMessage = MutableLiveData<Boolean>()
     val isShowFailMessage: LiveData<Boolean>
         get() = _isShowFailMessage
+
     val email = MutableLiveData<String>()
+
     val password = MutableLiveData<String>()
 
     private fun getProfile(user: FirebaseUser) {
