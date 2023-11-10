@@ -21,6 +21,8 @@ import com.seallook.androidx.data.remote.counselor.counselingtype.CounselingType
 import com.seallook.androidx.data.remote.counselor.counselingtype.CounselingTypeApiServiceImpl
 import com.seallook.androidx.data.remote.counselor.office.OfficeInfoApiService
 import com.seallook.androidx.data.remote.counselor.office.OfficeInfoApiServiceImpl
+import com.seallook.androidx.data.remote.counselor.reservation.ReservationApiService
+import com.seallook.androidx.data.remote.counselor.reservation.ReservationApiServiceImpl
 import com.seallook.androidx.data.remote.counselor.schedule.CounselingScheduleApiService
 import com.seallook.androidx.data.remote.counselor.schedule.CounselingScheduleApiServiceImpl
 import com.squareup.moshi.Moshi
@@ -60,6 +62,9 @@ abstract class RemoteModule {
 
     @Binds
     abstract fun bindCounselingScheduleApiService(counselingScheduleApiServiceImpl: CounselingScheduleApiServiceImpl): CounselingScheduleApiService
+
+    @Binds
+    abstract fun bindReservationApiService(reservationApiServiceImpl: ReservationApiServiceImpl): ReservationApiService
 
     companion object {
         @Singleton

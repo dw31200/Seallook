@@ -1,12 +1,12 @@
 package com.seallook.androidx.data.local.model
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
-@Entity("Reservation")
+@Entity("Reservation", primaryKeys = ["id", "counselorEmail"])
 data class ReservationEntity(
-    @PrimaryKey
     val id: Int,
+    val counselorEmail: String,
     val scheduleId: Int,
-    val clientUid: String,
+    val clientEmail: String,
+    val confirm: Boolean,
 )

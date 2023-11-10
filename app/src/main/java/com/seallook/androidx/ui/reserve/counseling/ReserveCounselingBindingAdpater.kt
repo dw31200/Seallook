@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
 import com.seallook.androidx.ui.model.CounselingTypeUiModel
 import com.seallook.androidx.ui.reserve.counseling.adapter.ReserveCounselingAdapter
@@ -54,5 +55,14 @@ fun TextView.setReservation(reservation: Boolean?) {
         text = "모집마감"
     } else {
         text = "모집중"
+    }
+}
+
+@BindingAdapter("bind:setEnabledBySelected")
+fun MaterialButton.setEnabledBySelected(price: Int?) {
+    if (price != null && price != 0) {
+        isEnabled = true
+    } else {
+        isEnabled = false
     }
 }
