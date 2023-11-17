@@ -10,7 +10,9 @@ import com.seallook.androidx.R
 import com.seallook.androidx.databinding.ActivityMainGraphBinding
 import com.seallook.androidx.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
-
+/* TODO
+    1.ViewModel 구현
+ */
 @AndroidEntryPoint
 class MainGraphActivity : BaseActivity<ActivityMainGraphBinding>(
     ActivityMainGraphBinding::inflate,

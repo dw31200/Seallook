@@ -1,4 +1,4 @@
-package com.seallook.androidx.ui.home.search.counseler
+package com.seallook.androidx.ui.home.search.counselor
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

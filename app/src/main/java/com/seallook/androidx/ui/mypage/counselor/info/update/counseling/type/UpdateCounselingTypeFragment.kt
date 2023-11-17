@@ -9,8 +9,7 @@ import com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.ada
 import dagger.hilt.android.AndroidEntryPoint
 
 /* TODO
-    1.SetView: 추가하기 클릭시 상담인원, 소요시간, 금액, 자장버튼(클릭시 '수정' 변경, '수정'클릭시 역방향 및 수정가능) 노출
-    2.Navigation: 다음 > Preview
+    1.바뀐 모델에 맞춰서 수정
  */
 @AndroidEntryPoint
 class UpdateCounselingTypeFragment :

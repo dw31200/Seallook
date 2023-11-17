@@ -24,12 +24,11 @@ import java.util.Date
 import java.util.TimeZone
 
 /* TODO
-    1.GetSelectType: 선택한 가입 유형 가져오기
-    2.InitView: 선택한 가입 유형에 따른 화면 보여주기
-    3.Navigation: SignUp 버튼 클릭시 개인 인증 화면으로 이동
-    4.GetAuth: 개인 인증 승인을 획득한다.
-    5.SignUp: 개인 인증 승인이 확인되었으면, SignUp 버튼 클릭시 계정 정보를 업로드한다.
-    6.Navigation: SignUp 클릭시 SignIn으로 이동
+    1. 모든 코드 viewmodel로 이동
+    2. 각 입력 필드 리스너 binding으로 뷰모델에서 직접 옵저빙
+    3. getCurrentUser 대신 데이터베이스에서 uid 가져오기로 변경
+    4. 프로그래스 관련 binding으로 변경
+    5. 백버튼 관련 제거
  */
 @AndroidEntryPoint
 class SignUpFragment :

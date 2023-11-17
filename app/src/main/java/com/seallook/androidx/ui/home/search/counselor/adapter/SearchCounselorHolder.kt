@@ -1,10 +1,10 @@
-package com.seallook.androidx.ui.home.search.counseler.adapter
+package com.seallook.androidx.ui.home.search.counselor.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.seallook.androidx.databinding.CounselorListItemBinding
-import com.seallook.androidx.ui.home.search.counseler.SearchCounselorNavigation
+import com.seallook.androidx.ui.home.search.counselor.SearchCounselorNavigation
 import com.seallook.androidx.ui.model.CounselorInfoUiModel
 
 class SearchCounselorHolder(

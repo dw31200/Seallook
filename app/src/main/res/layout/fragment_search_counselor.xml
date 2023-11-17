@@ -5,11 +5,11 @@
 
         <variable
             name="vm"
-            type="com.seallook.androidx.ui.home.search.counseler.SearchCounselorViewModel" />
+            type="com.seallook.androidx.ui.home.search.counselor.SearchCounselorViewModel" />
 
         <variable
             name="navigation"
-            type="com.seallook.androidx.ui.home.search.counseler.SearchCounselorNavigation" />
+            type="com.seallook.androidx.ui.home.search.counselor.SearchCounselorNavigation" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
