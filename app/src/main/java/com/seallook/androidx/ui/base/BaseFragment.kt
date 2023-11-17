@@ -5,12 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.DialogProgressBinding
+
+/* TODO
+    1. BaseFragment에서 Effect 쓸 수 있게 수정하기
+    2. ProgressBar 관련 삭제 및 관련 프레그먼트 수정
+ */
 
 abstract class BaseFragment<T : ViewDataBinding, VM : BaseViewModel<out Effect>>(
     private val inflate: (

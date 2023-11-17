@@ -16,6 +16,8 @@ import java.time.LocalDate
 import java.time.YearMonth
 
 /* TODO
+    1.상담사 스케쥴, 타입, 정보 자동생성ID로 변경
+    2.상담사 스케쥴 DB 저장 및 flow로 가져오기
     1.GetCounselingInfo: 예약하려는 상담 정보 가져오기
     2.ListView: 가져온 상담 정보 보여주기
     3.Navigation: 후기 더보기 > ReviewList, 신청하기 > 안내 팝업 > ReserveForm

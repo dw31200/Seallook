@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchCounselorFragment"
-        android:name="com.seallook.androidx.ui.home.search.counseler.SearchCounselorFragment"
+        android:name="com.seallook.androidx.ui.home.search.counselor.SearchCounselorFragment"
         android:label="SearchCounselorFragment" >
         <action
             android:id="@+id/action_searchCounselorFragment_to_reserveCounselingFragment"

@@ -17,13 +17,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 /* TODO
-    0.InitView: id,password EditText, 각 로그인 방식 버튼, 회원가입 버튼, 비밀번호 리겟 버튼 보여주기
-    1.GetAuth: 로그인 버튼 클릭시 해당 로그인 방식에 따른 Auth 인증 가져오기
-    2.GetAuthType: 획득한 Auth의 Type 가져오기
-    3.NavigateToSelect: 획득한 Auth의 Type이 Counseler 일 경우 SelectSignIn으로 이동
-    4.NavigateToHome: 획득한 Auth의 Type이 Counseler가 아닐 경우 Home으로 이동
-    5.NavigateToReset: 비밀번호 리셋 클릭시 ResetPassword로 이동
-    6.NavigateToSighUp: 회원가입 클릭시 SelectSignUpType으로 이동
+    1. 구글 로그인 로직 registerForActivityResult 빼고 뷰모델 혹은 도메인 아랫단으로 옮기기
+    2. 관련 UseCase 반환값 Result로 변환
+    3. Effect로 네비 처리
+    4. 이메일 및 비밀번호 공란일 때 버튼 비활성화
+    5. 로그인 성공시 유저 uid 데이터베이스에 저장
  */
 
 @AndroidEntryPoint
