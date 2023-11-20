@@ -26,9 +26,10 @@ import java.util.TimeZone
 /* TODO
     1. 모든 코드 viewmodel로 이동
     2. 각 입력 필드 리스너 binding으로 뷰모델에서 직접 옵저빙
-    3. getCurrentUser 대신 데이터베이스에서 uid 가져오기로 변경
+    3. signUpUseCase 파라미터 profile에서 email로 변경
     4. 프로그래스 관련 binding으로 변경
     5. 백버튼 관련 제거
+    필요한 모델: Uid(userEmail, uid), Profile(id > uid로 변경), UserType(userEmail, userType)
  */
 @AndroidEntryPoint
 class SignUpFragment :

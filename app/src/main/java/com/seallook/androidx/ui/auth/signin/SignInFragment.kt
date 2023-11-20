@@ -22,6 +22,7 @@ import timber.log.Timber
     3. Effect로 네비 처리
     4. 이메일 및 비밀번호 공란일 때 버튼 비활성화
     5. 로그인 성공시 유저 uid 데이터베이스에 저장
+    필요한 모델: Profile(id를 Int에서 uid string으로 변경),Uid(userEmail, uid)
  */
 
 @AndroidEntryPoint

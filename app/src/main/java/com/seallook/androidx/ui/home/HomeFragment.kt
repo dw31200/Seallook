@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 /* TODO
     1.서버에서 가져온 CounselorList DB에 저장 및 flow로 가져오기
     2.서버에서 가져온 계정 타입 DB에 저장 및 flow로 가져오기
+    필요한 모델: CounselorInfo(id 자동생성으로 변경, documentId 추가), OfficeInfo(id 자동생성으로 변경, documentId 추가)
  */
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
