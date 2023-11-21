@@ -18,14 +18,6 @@ class SignInViewModel @Inject constructor(
     private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPasswordUseCase,
     private val getProfileUseCase: GetProfileUseCase,
 ) : BaseViewModel<SignInEffect>() {
-    private val _navigateToHome = MutableLiveData<Boolean>()
-    val navigateToHome: LiveData<Boolean>
-        get() = _navigateToHome
-
-    private val _navigateToSignUp = MutableLiveData<Boolean>()
-    val navigateToSignUp: LiveData<Boolean>
-        get() = _navigateToSignUp
-
     private val _progressMessage = MutableLiveData<String>()
     val progressMessage: LiveData<String>
         get() = _progressMessage
@@ -45,10 +37,10 @@ class SignInViewModel @Inject constructor(
     private fun getProfile(uid: String) {
         viewModelScope.launch {
             getProfileUseCase(uid)?.let {
-                _navigateToHome.value = true
+                setEffect(SignInEffect.NavigateToHome)
                 _isShowProgress.value = false
             } ?: run {
-                _navigateToSignUp.value = true
+                setEffect(SignInEffect.NavigateToSignUp)
                 _isShowProgress.value = false
             }
         }
@@ -81,7 +73,7 @@ class SignInViewModel @Inject constructor(
                 ),
             )
                 .onSuccess {
-                    _navigateToHome.value = true
+                    setEffect(SignInEffect.NavigateToHome)
                 }
                 .onFailure {
                     Timber.d("$it")
