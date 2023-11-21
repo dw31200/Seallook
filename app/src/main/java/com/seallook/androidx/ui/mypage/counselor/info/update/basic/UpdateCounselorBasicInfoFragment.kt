@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
-import com.seallook.androidx.base.observeEvent
 import com.seallook.androidx.databinding.FragmentUpdateCounselorBasicInfoBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,9 +16,10 @@ import timber.log.Timber
     1.바뀐 모델에 맞춰서 수정
  */
 @AndroidEntryPoint
-class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBasicInfoBinding, UpdateCounselorBasicInfoViewModel>(
-    FragmentUpdateCounselorBasicInfoBinding::inflate,
-) {
+class UpdateCounselorBasicInfoFragment :
+    BaseFragment<FragmentUpdateCounselorBasicInfoBinding, UpdateCounselorBasicInfoViewModel, UpdateCounselorBasicInfoEffect>(
+        FragmentUpdateCounselorBasicInfoBinding::inflate,
+    ) {
     override val viewModel: UpdateCounselorBasicInfoViewModel by viewModels()
 
     override fun viewModelVariableId(): Int = BR.vm
@@ -72,16 +72,18 @@ class UpdateCounselorBasicInfoFragment : BaseFragment<FragmentUpdateCounselorBas
                     )
                 }
             }
-            viewModel.effect.observeEvent(viewLifecycleOwner) {
-                when (it) {
-                    UpdateCounselorBasicInfoEffect.SuccessUpdateCounselingType -> {
-                        dismissProgressDialog()
-                        findNavController().navigate(UpdateCounselorBasicInfoFragmentDirections.actionUpdateCounselorBasicInfoFragmentToMypageFragment())
-                    }
-                    else -> {
-                        Unit
-                    }
-                }
+        }
+    }
+
+    override fun onEffectCollect(effect: UpdateCounselorBasicInfoEffect) {
+        when (effect) {
+            UpdateCounselorBasicInfoEffect.SuccessUpdateCounselingType -> {
+                dismissProgressDialog()
+                findNavController().navigate(UpdateCounselorBasicInfoFragmentDirections.actionUpdateCounselorBasicInfoFragmentToMypageFragment())
+            }
+
+            else -> {
+                Unit
             }
         }
     }

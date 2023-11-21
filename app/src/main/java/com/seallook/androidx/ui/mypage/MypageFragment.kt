@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
+import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentMypageBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -12,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
     상담 예약 완료 후 작성
  */
 @AndroidEntryPoint
-class MypageFragment : BaseFragment<FragmentMypageBinding, MypageViewModel>(
+class MypageFragment : BaseFragment<FragmentMypageBinding, MypageViewModel, Effect>(
     FragmentMypageBinding::inflate,
 ) {
     override val viewModel: MypageViewModel by viewModels()
@@ -29,4 +30,6 @@ class MypageFragment : BaseFragment<FragmentMypageBinding, MypageViewModel>(
             }
         }
     }
+
+    override fun onEffectCollect(effect: Effect) = Unit
 }
