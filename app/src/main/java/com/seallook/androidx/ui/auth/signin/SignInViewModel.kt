@@ -3,7 +3,6 @@ package com.seallook.androidx.ui.auth.signin
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.usecase.GetProfileUseCase
 import com.seallook.androidx.domain.usecase.SignInWithEmailAndPasswordUseCase
 import com.seallook.androidx.domain.usecase.SignInWithGoogleUseCase
@@ -43,16 +42,14 @@ class SignInViewModel @Inject constructor(
 
     val password = MutableLiveData<String>()
 
-    private fun getProfile(user: FirebaseUser) {
+    private fun getProfile(uid: String) {
         viewModelScope.launch {
-            user.uid.let {
-                getProfileUseCase(it)?.let {
-                    _navigateToHome.value = true
-                    _isShowProgress.value = false
-                } ?: run {
-                    _navigateToSignUp.value = true
-                    _isShowProgress.value = false
-                }
+            getProfileUseCase(uid)?.let {
+                _navigateToHome.value = true
+                _isShowProgress.value = false
+            } ?: run {
+                _navigateToSignUp.value = true
+                _isShowProgress.value = false
             }
         }
     }
@@ -61,8 +58,15 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             _progressMessage.value = "로그인 중입니다."
             _isShowProgress.value = true
-            val result = signInWithGoogleUseCase(token)
-            result?.user?.let { getProfile(it) }
+            signInWithGoogleUseCase(token)
+                .onSuccess {
+                    it.user?.uid?.let { uid ->
+                        getProfile(uid)
+                    }
+                }
+                .onFailure {
+                    Unit
+                }
         }
     }
 
@@ -70,15 +74,20 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             _progressMessage.value = "로그인 중입니다."
             _isShowProgress.value = true
-            try {
-                if (signInWithEmailAndPasswordUseCase(email.value ?: "", password.value ?: "") != null) {
+            signInWithEmailAndPasswordUseCase(
+                SignInWithEmailAndPasswordUseCase.Params(
+                    email.value,
+                    password.value,
+                ),
+            )
+                .onSuccess {
                     _navigateToHome.value = true
                 }
-            } catch (e: Exception) {
-                Timber.d("$e")
-                _isShowFailMessage.value = true
-                _isShowProgress.value = false
-            }
+                .onFailure {
+                    Timber.d("$it")
+                    _isShowFailMessage.value = true
+                    _isShowProgress.value = false
+                }
         }
     }
 }
