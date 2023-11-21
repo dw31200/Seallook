@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
+import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentSettingBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
     상담 예약 완료 후 작성
  */
 @AndroidEntryPoint
-class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>(
+class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel, Effect>(
     FragmentSettingBinding::inflate,
 ) {
     override val viewModel: SettingViewModel by viewModels()
@@ -31,4 +32,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>(
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToSplashNavigation(), extras)
         }
     }
+
+    override fun onEffectCollect(effect: Effect) = Unit
 }

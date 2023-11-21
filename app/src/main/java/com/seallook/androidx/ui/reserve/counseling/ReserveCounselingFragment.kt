@@ -5,7 +5,6 @@ import androidx.navigation.fragment.findNavController
 import com.kizitonwose.calendar.core.atStartOfMonth
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.seallook.androidx.BR
-import com.seallook.androidx.base.observeEvent
 import com.seallook.androidx.databinding.FragmentReserveCounselingBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import com.seallook.androidx.ui.reserve.counseling.adapter.ReserveCounselingAdapter
@@ -24,7 +23,7 @@ import java.time.YearMonth
  */
 @AndroidEntryPoint
 class ReserveCounselingFragment :
-    BaseFragment<FragmentReserveCounselingBinding, ReserveCounselingViewModel>(
+    BaseFragment<FragmentReserveCounselingBinding, ReserveCounselingViewModel, ReserveCounselingEffect>(
         FragmentReserveCounselingBinding::inflate,
     ) {
     override val viewModel: ReserveCounselingViewModel by viewModels()
@@ -47,11 +46,12 @@ class ReserveCounselingFragment :
             )
             weekCalendarView.scrollToDate(LocalDate.now())
         }
-        viewModel.effect.observeEvent(viewLifecycleOwner) {
-            when (it) {
-                ReserveCounselingEffect.NavigateToHome -> {
-                    findNavController().navigate(ReserveCounselingFragmentDirections.actionReserveCounselingFragmentToHomeFragment())
-                }
+    }
+
+    override fun onEffectCollect(effect: ReserveCounselingEffect) {
+        when (effect) {
+            ReserveCounselingEffect.NavigateToHome -> {
+                findNavController().navigate(ReserveCounselingFragmentDirections.actionReserveCounselingFragmentToHomeFragment())
             }
         }
     }

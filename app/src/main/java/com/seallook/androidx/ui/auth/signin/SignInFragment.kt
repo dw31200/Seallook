@@ -27,7 +27,7 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class SignInFragment :
-    BaseFragment<FragmentSignInBinding, SignInViewModel>(
+    BaseFragment<FragmentSignInBinding, SignInViewModel, SignInEffect>(
         FragmentSignInBinding::inflate,
     ),
     SignInNavigation {
@@ -68,6 +68,8 @@ class SignInFragment :
             }
         }
     }
+
+    override fun onEffectCollect(effect: SignInEffect) = Unit
 
     private fun getGoogleClient(): GoogleSignInClient {
         val googleSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

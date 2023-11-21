@@ -5,12 +5,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
+import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentSplashBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
+class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel, Effect>(
     FragmentSplashBinding::inflate,
 ) {
     override val viewModel: SplashViewModel by viewModels()
@@ -37,4 +38,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
             }
         }
     }
+
+    override fun onEffectCollect(effect: Effect) = Unit
 }

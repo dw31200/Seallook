@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
+import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentHomeBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import com.seallook.androidx.ui.home.adapter.HomeAdapter
@@ -15,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
     필요한 모델: CounselorInfo(id 자동생성으로 변경, documentId 추가), OfficeInfo(id 자동생성으로 변경, documentId 추가)
  */
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
+class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel, Effect>(
     FragmentHomeBinding::inflate,
 ) {
     override val viewModel: HomeViewModel by viewModels()
@@ -33,4 +34,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
             }
         }
     }
+
+    override fun onEffectCollect(effect: Effect) = Unit
 }

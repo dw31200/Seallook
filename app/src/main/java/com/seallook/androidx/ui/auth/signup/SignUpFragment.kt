@@ -14,7 +14,6 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.seallook.androidx.BR
 import com.seallook.androidx.BuildConfig
 import com.seallook.androidx.R
-import com.seallook.androidx.base.observeEvent
 import com.seallook.androidx.databinding.FragmentSignUpBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import com.seallook.androidx.ui.model.ProfileUiModel
@@ -33,7 +32,7 @@ import java.util.TimeZone
  */
 @AndroidEntryPoint
 class SignUpFragment :
-    BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
+    BaseFragment<FragmentSignUpBinding, SignUpViewModel, SignUpEffect>(
         FragmentSignUpBinding::inflate,
     ) {
     override val viewModel: SignUpViewModel by viewModels()
@@ -120,17 +119,17 @@ class SignUpFragment :
             }
 
             signUpButton.setOnClickListener { signUp() }
+        }
+    }
 
-            viewModel.effect.observeEvent(viewLifecycleOwner) {
-                when (it) {
-                    SignUpEffect.NavigateToHome -> {
-                        findNavController().navigate(
-                            SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
-                            extras,
-                        )
-                        dismissProgressDialog()
-                    }
-                }
+    override fun onEffectCollect(effect: SignUpEffect) {
+        when (effect) {
+            SignUpEffect.NavigateToHome -> {
+                findNavController().navigate(
+                    SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
+                    extras,
+                )
+                dismissProgressDialog()
             }
         }
     }

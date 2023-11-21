@@ -3,6 +3,7 @@ package com.seallook.androidx.ui.auth.signup.select
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
+import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentSelectSignUpBinding
 import com.seallook.androidx.share.UserType
 import com.seallook.androidx.ui.base.BaseFragment
@@ -12,7 +13,7 @@ import com.seallook.androidx.ui.base.BaseFragment
     2.Navigation: 각 버튼 클릭시 SignUp으로 이동
  */
 class SelectSignUpTypeFragment :
-    BaseFragment<FragmentSelectSignUpBinding, SelectSignUpTypeViewModel>(
+    BaseFragment<FragmentSelectSignUpBinding, SelectSignUpTypeViewModel, Effect>(
         FragmentSelectSignUpBinding::inflate,
     ),
     SelectSignUpTypeNavigation {
@@ -23,6 +24,8 @@ class SelectSignUpTypeFragment :
     override fun onViewCreatedAfterBinding() {
         binding.navigation = this@SelectSignUpTypeFragment
     }
+
+    override fun onEffectCollect(effect: Effect) = Unit
 
     override fun navigateToSignUp(selectSignUpType: UserType) {
         val action = SelectSignUpTypeFragmentDirections.actionSelectSignUpTypeFragmentToSignUpFragment(selectSignUpType)

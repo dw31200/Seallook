@@ -24,6 +24,7 @@ import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import com.kizitonwose.calendar.view.ViewContainer
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
+import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.CalendarDayLayoutBinding
 import com.seallook.androidx.databinding.CalendarHeaderLayoutBinding
 import com.seallook.androidx.databinding.FragmentCalendarBinding
@@ -49,7 +50,7 @@ import java.util.UUID
  */
 
 @AndroidEntryPoint
-class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel>(
+class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel, Effect>(
     FragmentCalendarBinding::inflate,
 ) {
     override val viewModel: CalendarViewModel by viewModels()
@@ -88,6 +89,8 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
 //        }
         binding.exThreeAddButton.setOnClickListener { inputDialog.show() }
     }
+
+    override fun onEffectCollect(effect: Effect) = Unit
 
     private val scheduleAdapter = ScheduleAdapter {
         AlertDialog.Builder(requireContext())

@@ -3,6 +3,7 @@ package com.seallook.androidx.ui.mypage.counselor.info.update.office
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
+import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentUpdateOfficeBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import com.seallook.androidx.ui.model.OfficeInfoUiModel
@@ -14,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class UpdateOfficeFragment :
-    BaseFragment<FragmentUpdateOfficeBinding, UpdateOfficeViewModel>(
+    BaseFragment<FragmentUpdateOfficeBinding, UpdateOfficeViewModel, Effect>(
         FragmentUpdateOfficeBinding::inflate,
     ),
     OfficeNavigation {
@@ -31,6 +32,8 @@ class UpdateOfficeFragment :
             }
         }
     }
+
+    override fun onEffectCollect(effect: Effect) = Unit
 
     override fun navigateToMypage(info: OfficeInfoUiModel) {
         viewModel.setOfficeInfo(info)

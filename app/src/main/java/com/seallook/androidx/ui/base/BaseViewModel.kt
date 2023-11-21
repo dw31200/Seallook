@@ -1,18 +1,20 @@
 package com.seallook.androidx.ui.base
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.seallook.androidx.base.Effect
-import com.seallook.androidx.base.Event
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 abstract class BaseViewModel<E : Effect> : ViewModel() {
-
-    private val _effect = MutableLiveData<Event<E>>()
-    val effect: LiveData<Event<E>>
-        get() = _effect
+    private val _effect = MutableStateFlow<E?>(null)
+    val effect: StateFlow<E?> = _effect.asStateFlow()
 
     protected fun setEffect(effect: E) {
-        _effect.value = Event(effect)
+        _effect.value = effect
+    }
+
+    fun clearEffect() {
+        _effect.value = null
     }
 }
