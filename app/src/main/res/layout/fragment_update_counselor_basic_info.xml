@@ -159,6 +159,12 @@
             android:insetBottom="0dp"
             android:text="완료" />
 
+        <com.seallook.androidx.ui.widget.ProgressWidget
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            bind:setMessage="@{vm.progressMessage}"
+            bind:visible="@{vm.isShowProgress}"
+            bind:showFailMessage="@{vm.isShowFailMessage}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

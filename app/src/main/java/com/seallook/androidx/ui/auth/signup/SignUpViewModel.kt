@@ -39,14 +39,28 @@ class SignUpViewModel @Inject constructor(
     val emailError: LiveData<String?>
         get() = _emailError
 
+    private val _progressMessage = MutableLiveData<String>()
+    val progressMessage: LiveData<String>
+        get() = _progressMessage
+
+    private val _isShowProgress = MutableLiveData<Boolean>()
+    val isShowProgress: LiveData<Boolean>
+        get() = _isShowProgress
+
+    private val _isShowFailMessage = MutableLiveData<Boolean>()
+    val isShowFailMessage: LiveData<Boolean>
+        get() = _isShowFailMessage
+
     init {
         viewModelScope.launch {
             _currentUser.value = getCurrentUserUseCase()
+            _progressMessage.value = "회원가입 중... 잠시만 기다려 주세요."
         }
     }
 
     fun signUp(profile: ProfileUiModel, password: String) {
         viewModelScope.launch {
+            _isShowProgress.value = true
             signUpUseCase(profile.toDomainModel(), password)
                 .onSuccess {
                     setProfile(profile)
@@ -79,6 +93,7 @@ class SignUpViewModel @Inject constructor(
             getCurrentUserUseCase()?.uid?.let {
                 setProfileUseCase(it, profile.toDomainModel())
                     .onSuccess {
+                        _isShowProgress.value = false
                         setEffect(SignUpEffect.NavigateToHome)
                     }
                     .onFailure {
