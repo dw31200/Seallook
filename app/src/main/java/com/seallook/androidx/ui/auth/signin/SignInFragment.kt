@@ -56,20 +56,18 @@ class SignInFragment :
 
     override fun onViewCreatedAfterBinding() {
         binding.navigation = this
+    }
 
-        viewModel.navigateToSignUp.observe(viewLifecycleOwner) {
-            if (it) {
+    override fun onEffectCollect(effect: SignInEffect) {
+        when (effect) {
+            SignInEffect.NavigateToHome -> {
+                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainGraphActivity(), extras)
+            }
+            SignInEffect.NavigateToSignUp -> {
                 findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSelectSignUpTypeFragment())
             }
         }
-        viewModel.navigateToHome.observe(viewLifecycleOwner) {
-            if (it) {
-                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainGraphActivity(), extras)
-            }
-        }
     }
-
-    override fun onEffectCollect(effect: SignInEffect) = Unit
 
     private fun getGoogleClient(): GoogleSignInClient {
         val googleSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
