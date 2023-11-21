@@ -9,7 +9,12 @@ import javax.inject.Inject
 class SignInWithGoogleUseCase @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository,
 ) {
-    suspend operator fun invoke(token: String): AuthResult? {
-        return firebaseAuthRepository.signInWithGoogle(token)
+    suspend operator fun invoke(token: String): Result<AuthResult> {
+        return runCatching {
+            firebaseAuthRepository.signInWithGoogle(token)
+        }.map {
+            if (it == null) throw Error("auth result is null")
+            it
+        }
     }
 }
