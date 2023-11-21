@@ -47,8 +47,21 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     val officeInfo: LiveData<OfficeInfoUiModel?>
         get() = _officeInfo
 
+    private val _progressMessage = MutableLiveData<String>()
+    val progressMessage: LiveData<String>
+        get() = _progressMessage
+
+    private val _isShowProgress = MutableLiveData<Boolean>()
+    val isShowProgress: LiveData<Boolean>
+        get() = _isShowProgress
+
+    private val _isShowFailMessage = MutableLiveData<Boolean>()
+    val isShowFailMessage: LiveData<Boolean>
+        get() = _isShowFailMessage
+
     init {
         viewModelScope.launch {
+            _progressMessage.value = "상담사 정보를 업로드 중입니다."
             _currentUser.value = getCurrentUserUseCase()
             _counselorInfo.value =
                 currentUser.value?.uid?.let {
@@ -94,6 +107,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
             getCurrentUserUseCase()?.uid?.let {
                 updateCounselingTypeUseCase(it, getCounselingTypeLocalUseCase())
                     .onSuccess {
+                        _isShowProgress.value = false
                         setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateCounselingType)
                     }
                     .onFailure {
@@ -120,6 +134,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
 
     private fun updateOfficeInfo() {
         viewModelScope.launch {
+            _isShowProgress.value = true
             currentUser.value?.uid?.let {
                 updateOfficeInfoUseCase(it, getAllOfficeInfoUseCase()[0])
                     .onSuccess {

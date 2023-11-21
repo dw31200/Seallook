@@ -60,7 +60,6 @@ class UpdateCounselorBasicInfoFragment :
                 pickMediaFile.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
             finishButton.setOnClickListener {
-                showProgressDialog("상담사 정보를 업로드 중입니다.")
                 val user = viewModel.currentUser.value ?: return@setOnClickListener
                 if (photoUri != null) {
                     viewModel.uploadFile(
@@ -78,7 +77,6 @@ class UpdateCounselorBasicInfoFragment :
     override fun onEffectCollect(effect: UpdateCounselorBasicInfoEffect) {
         when (effect) {
             UpdateCounselorBasicInfoEffect.SuccessUpdateCounselingType -> {
-                dismissProgressDialog()
                 findNavController().navigate(UpdateCounselorBasicInfoFragmentDirections.actionUpdateCounselorBasicInfoFragmentToMypageFragment())
             }
 

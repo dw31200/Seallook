@@ -129,7 +129,6 @@ class SignUpFragment :
                     SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
                     extras,
                 )
-                dismissProgressDialog()
             }
         }
     }
@@ -174,7 +173,6 @@ class SignUpFragment :
     }
 
     private fun signUp() {
-        if (isProgressDialogShown()) return
         val name = binding.nameTextField.editText!!.text.toString().trim()
         val gender =
             if (binding.genderButtonGroup.checkedButtonId == R.id.male_button) 0 else 1
@@ -208,7 +206,6 @@ class SignUpFragment :
         }
 
         if (isSignedIn()) {
-            showProgressDialog("프로필 생성 중... 잠시만 기다려 주세요.")
             val profile = ProfileUiModel(
                 //                sdw312 빌드 테스트
                 0,
@@ -224,9 +221,8 @@ class SignUpFragment :
                 SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
                 extras,
             )
-            dismissProgressDialog()
+//            dismissProgressDialog()
         } else {
-            showProgressDialog("회원가입 중... 잠시만 기다려 주세요.")
             val profile = ProfileUiModel(
 //                sdw312 빌드 테스트
                 0,
@@ -238,24 +234,6 @@ class SignUpFragment :
                 1,
             )
             viewModel.signUp(profile, password)
-//            viewModel.signUpResult.observe(viewLifecycleOwner) {
-//                if (it?.user != null) {
-//                    Timber.d("${it.user}")
-//                    viewModel.setProfile(profile)
-//                    viewModel.setUserType()
-//                    viewModel.setUserTypeResult.observe(viewLifecycleOwner) { result ->
-//                        if (result == true) {
-//                            findNavController().navigate(
-//                                SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
-//                                extras,
-//                            )
-//                            dismissProgressDialog()
-//                        }
-//                    }
-//                } else {
-//                    dismissProgressDialog()
-//                }
-//            }
         }
     }
 
