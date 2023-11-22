@@ -31,6 +31,18 @@ class SignUpViewModel @Inject constructor(
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
 
+    val name = MutableLiveData<String>()
+
+    val gender = MutableLiveData<Int>(2131231085)
+
+    val birth = MutableLiveData<String>()
+
+    val email = MutableLiveData<String>()
+
+    val password = MutableLiveData<String>()
+
+    val passwordConfirmation = MutableLiveData<String>()
+
     private val _passwordError = MutableLiveData<String?>()
     val passwordError: LiveData<String?>
         get() = _passwordError
