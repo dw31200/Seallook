@@ -20,8 +20,13 @@ import com.seallook.androidx.databinding.DialogProgressBinding
         ),
         BindingMethod(
             type = ProgressWidget::class,
-            attribute = "bind:visible",
+            attribute = "bind:setProgressVisible",
             method = "setVisible",
+        ),
+        BindingMethod(
+            type = ProgressWidget::class,
+            attribute = "bind:setProgressEnforce",
+            method = "setProgressEnforce",
         ),
         BindingMethod(
             type = ProgressWidget::class,
@@ -38,37 +43,44 @@ class ProgressWidget @JvmOverloads constructor(
     private val binding = DialogProgressBinding.inflate(
         LayoutInflater.from(context),
         this,
-        true,
+        false,
     )
+
     private var progressDialog: AlertDialog? = null
+
+    private var enforce: Boolean = false
 
     fun setMessage(message: String?) {
         binding.messageTextView.text = message
     }
 
-    fun setVisible(visible: Boolean?, enforce: Boolean = false) {
+    fun setEnforce(enforce: Boolean) {
+        this.enforce = enforce
+    }
+
+    fun setVisible(visible: Boolean) {
         if (enforce) {
             dismissProgressDialog()
         } else {
             if (isProgressDialogShown()) return
         }
-        if (visible == true) {
+        if (visible) {
             progressDialog = MaterialAlertDialogBuilder(context)
                 .setView(binding.root)
                 .setCancelable(false)
                 .create()
             progressDialog?.show()
-        } else if (visible == false) {
+        } else {
             progressDialog?.dismiss()
             progressDialog = null
         }
     }
 
-    fun showFailMessage(visible: Boolean?) {
-        if (visible == true) {
+    fun showFailMessage(message: String?) {
+        if (message != null) {
             Toast.makeText(
                 context,
-                "로그인에 실패하였습니다.",
+                message,
                 Toast.LENGTH_SHORT,
             ).show()
         }

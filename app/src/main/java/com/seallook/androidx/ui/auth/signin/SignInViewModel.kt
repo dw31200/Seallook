@@ -26,8 +26,8 @@ class SignInViewModel @Inject constructor(
     val isShowProgress: LiveData<Boolean>
         get() = _isShowProgress
 
-    private val _isShowFailMessage = MutableLiveData<Boolean>()
-    val isShowFailMessage: LiveData<Boolean>
+    private val _isShowFailMessage = MutableLiveData<String>()
+    val isShowFailMessage: LiveData<String>
         get() = _isShowFailMessage
 
     val email = MutableLiveData<String>()
@@ -77,7 +77,8 @@ class SignInViewModel @Inject constructor(
                 }
                 .onFailure {
                     Timber.d("$it")
-                    _isShowFailMessage.value = true
+//                    _failMessage.value = "로그인에 실패했습니다."
+                    _isShowFailMessage.value = "로그인에 실패했습니다."
                     _isShowProgress.value = false
                 }
         }

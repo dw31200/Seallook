@@ -47,8 +47,8 @@ class SignUpViewModel @Inject constructor(
     val isShowProgress: LiveData<Boolean>
         get() = _isShowProgress
 
-    private val _isShowFailMessage = MutableLiveData<Boolean>()
-    val isShowFailMessage: LiveData<Boolean>
+    private val _isShowFailMessage = MutableLiveData<String>()
+    val isShowFailMessage: LiveData<String>
         get() = _isShowFailMessage
 
     init {

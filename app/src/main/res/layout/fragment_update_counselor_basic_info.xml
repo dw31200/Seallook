@@ -163,8 +163,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             bind:setMessage="@{vm.progressMessage}"
-            bind:visible="@{vm.isShowProgress}"
-            bind:showFailMessage="@{vm.isShowFailMessage}"/>
+            bind:setProgressVisible="@{vm.isShowProgress}"
+            bind:showFailMessage="@{vm.isShowFailMessage}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
