@@ -33,7 +33,7 @@ class SignUpViewModel @Inject constructor(
 
     val name = MutableLiveData<String>()
 
-    val gender = MutableLiveData<Int>(2131231085)
+    val gender = MutableLiveData<Int>()
 
     val birth = MutableLiveData<String>()
 

@@ -34,7 +34,10 @@ fun setListeners(
     group: MaterialButtonToggleGroup,
     attrChange: InverseBindingListener,
 ) {
-    group.addOnButtonCheckedListener { group, checkedId, isChecked ->
+    group.addOnButtonCheckedListener { _, checkedId, isChecked ->
+        if (isChecked) {
+            attrChange.onChange()
+        }
         if (group.checkedButtonId != checkedId) {
             attrChange.onChange()
         }
