@@ -66,6 +66,8 @@ class SignUpViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _currentUser.value = getCurrentUserUseCase()
+            name.value = currentUser.value?.displayName
+            email.value = currentUser.value?.email
             _progressMessage.value = "회원가입 중... 잠시만 기다려 주세요."
         }
     }

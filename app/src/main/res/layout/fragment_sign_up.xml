@@ -48,8 +48,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:imeOptions="actionDone"
-                            bind:setTextInProfileInfo="@{vm.currentUser.displayName}"
                             android:text="@={vm.name}"
+                            bind:enable="@{vm.currentUser == null}"
                             android:inputType="textPersonName"
                             android:maxLines="1"
                             tools:text="홍길동" />
@@ -129,9 +129,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
-                            bind:setTextInProfileInfo="@{vm.currentUser.email}"
-                            bind:setEnableProfileInfo="@{vm.currentUser.email}"
                             android:text="@={vm.email}"
+                            bind:enable="@{vm.currentUser == null}"
                             android:inputType="textEmailAddress"
                             android:maxLines="1"
                             tools:text="refind@refind.kr" />

@@ -38,10 +38,8 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             getProfileUseCase(uid)?.let {
                 setEffect(SignInEffect.NavigateToHome)
-                _isShowProgress.value = false
             } ?: run {
                 setEffect(SignInEffect.NavigateToSignUp)
-                _isShowProgress.value = false
             }
         }
     }
@@ -54,6 +52,7 @@ class SignInViewModel @Inject constructor(
                 .onSuccess {
                     it.user?.uid?.let { uid ->
                         getProfile(uid)
+                        _isShowProgress.value = false
                     }
                 }
                 .onFailure {
@@ -77,7 +76,6 @@ class SignInViewModel @Inject constructor(
                 }
                 .onFailure {
                     Timber.d("$it")
-//                    _failMessage.value = "로그인에 실패했습니다."
                     _isShowFailMessage.value = "로그인에 실패했습니다."
                     _isShowProgress.value = false
                 }

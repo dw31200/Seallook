@@ -9,7 +9,12 @@ import com.google.android.material.textfield.TextInputLayout
 
 @BindingAdapter("bind:setTextInProfileInfo")
 fun TextInputEditText.setTextInProfileInfo(profileInfo: String?) {
-    if (profileInfo == null) setText("") else setText(profileInfo)
+    if (profileInfo == null) {
+        setText("")
+    } else {
+        setText(profileInfo)
+        isEnabled = false
+    }
 }
 
 @BindingAdapter("bind:setErrorMessage")
