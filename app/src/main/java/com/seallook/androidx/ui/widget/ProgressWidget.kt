@@ -48,22 +48,11 @@ class ProgressWidget @JvmOverloads constructor(
 
     private var progressDialog: AlertDialog? = null
 
-    private var enforce: Boolean = false
-
     fun setMessage(message: String?) {
         binding.messageTextView.text = message
     }
 
-    fun setEnforce(enforce: Boolean) {
-        this.enforce = enforce
-    }
-
     fun setVisible(visible: Boolean) {
-        if (enforce) {
-            dismissProgressDialog()
-        } else {
-            if (isProgressDialogShown()) return
-        }
         if (visible) {
             progressDialog = MaterialAlertDialogBuilder(context)
                 .setView(binding.root)
@@ -85,11 +74,4 @@ class ProgressWidget @JvmOverloads constructor(
             ).show()
         }
     }
-
-    private fun dismissProgressDialog() {
-        progressDialog?.dismiss()
-        progressDialog = null
-    }
-
-    private fun isProgressDialogShown() = progressDialog != null
 }

@@ -1,26 +1,14 @@
 package com.seallook.androidx.ui.auth.signup
 
 import android.content.Intent
-import android.text.format.DateUtils
-import android.util.Patterns
-import android.view.View
-import android.view.inputmethod.EditorInfo
 import androidx.activity.OnBackPressedCallback
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.seallook.androidx.BR
-import com.seallook.androidx.BuildConfig
-import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentSignUpBinding
 import com.seallook.androidx.ui.base.BaseFragment
-import com.seallook.androidx.ui.model.ProfileUiModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Calendar
-import java.util.Date
-import java.util.TimeZone
 
 /* TODO
     1. 모든 코드 viewmodel로 이동
@@ -40,19 +28,7 @@ class SignUpFragment :
         override fun handleOnBackPressed() {
         }
     }
-    private var birth: Date? = null
-        set(value) {
-            field = value
-            if (value != null) {
-                binding.birthTextField.editText!!.setText(
-                    DateUtils.formatDateTime(
-                        requireContext(),
-                        value.time,
-                        DateUtils.FORMAT_SHOW_YEAR or DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_NUMERIC_DATE,
-                    ),
-                )
-            }
-        }
+
     private val extras = ActivityNavigator.Extras.Builder()
         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -60,67 +36,7 @@ class SignUpFragment :
 
     override fun viewModelVariableId(): Int = BR.vm
 
-    override fun onViewCreatedAfterBinding() {
-        with(binding) {
-            if (isSignedIn()) {
-                requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
-
-                with(emailTextField) {
-                    editText!!.imeOptions = EditorInfo.IME_ACTION_DONE
-                    editText!!.setOnEditorActionListener { _, actionId, _ ->
-                        if (actionId == EditorInfo.IME_ACTION_DONE) {
-                            if (validateFields()) signUp()
-                        }
-
-                        return@setOnEditorActionListener false
-                    }
-                }
-            } else {
-                passwordConfirmationTextField.editText!!.setOnEditorActionListener { _, actionId, _ ->
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        if (validateFields()) signUp()
-                    }
-
-                    return@setOnEditorActionListener false
-                }
-            }
-
-            listOf(
-                nameTextField,
-                birthTextField,
-                emailTextField,
-                passwordTextField,
-                passwordConfirmationTextField,
-            ).forEach { textField ->
-                textField.editText!!.addTextChangedListener {
-                    signUpButton.isEnabled = validateFields()
-
-                    textField.error = null
-                    textField.isErrorEnabled = false
-                }
-            }
-
-            genderButtonGroup.addOnButtonCheckedListener { _, _, _ ->
-                signUpButton.isEnabled = validateFields()
-            }
-
-            listOf(over14yoCheckbox, privacyPolicyCheckbox).forEach {
-                it.setOnCheckedChangeListener { _, _ ->
-                    signUpButton.isEnabled = validateFields()
-                }
-            }
-
-            birthTextField.editText!!.setOnClickListener {
-                showDatePicker()
-            }
-
-            birthTextField.setEndIconOnClickListener {
-                showDatePicker()
-            }
-
-            signUpButton.setOnClickListener { signUp() }
-        }
-    }
+    override fun onViewCreatedAfterBinding() = Unit
 
     override fun onEffectCollect(effect: SignUpEffect) {
         when (effect) {
@@ -133,145 +49,9 @@ class SignUpFragment :
         }
     }
 
-    private fun isSignedIn(): Boolean {
-        var result = true
-        viewModel.currentUser.observe(viewLifecycleOwner) {
-            result = it != null
-        }
-        return result
-    }
-
-    private fun validateFields(): Boolean = with(binding) {
-        val validation =
-            nameTextField.editText!!.text.toString().isNotBlank() &&
-                genderButtonGroup.checkedButtonId != View.NO_ID &&
-                birthTextField.editText!!.text.toString().isNotBlank() &&
-                emailTextField.editText!!.text.toString().isNotBlank() &&
-                over14yoCheckbox.isChecked &&
-                privacyPolicyCheckbox.isChecked
-
-        if (isSignedIn()) {
-            return validation
-        }
-
-        return validation &&
-            passwordTextField.editText!!.text.toString().isNotBlank() &&
-            passwordConfirmationTextField.editText!!.text.toString().isNotBlank()
-    }
-
-    private fun showDatePicker() {
-        val selection = if (birth == null) Date().toUtc() else birth!!.toUtc()
-        val picker = MaterialDatePicker.Builder.datePicker()
-            .setSelection(selection)
-            .build()
-            .apply {
-                addOnPositiveButtonClickListener {
-                    this@SignUpFragment.birth = it.toLocal()
-                }
-            }
-        picker.show(childFragmentManager, "date_picker")
-    }
-
-    private fun signUp() {
-        val name = binding.nameTextField.editText!!.text.toString().trim()
-        val gender =
-            if (binding.genderButtonGroup.checkedButtonId == R.id.male_button) 0 else 1
-        val email = binding.emailTextField.editText!!.text.toString().trim()
-        val password = binding.passwordTextField.editText!!.text.toString().trim()
-        val passwordConfirmation =
-            binding.passwordConfirmationTextField.editText!!.text.toString().trim()
-
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.emailTextField.error = "이메일 주소를 올바르게 입력해 주세요."
-            return
-        }
-
-        if (!isSignedIn()) {
-            if (password != passwordConfirmation) {
-                binding.passwordConfirmationTextField.error = "비밀번호가 일치하지 않습니다."
-                return
-            }
-
-            if (!BuildConfig.DEBUG) {
-                val letterCount = password.count { it.isLetter() }
-                val digitCount = password.count { it.isDigit() }
-                val specialCount = password.count { !it.isLetterOrDigit() }
-
-                if (password.length < 8 || letterCount == 0 || digitCount == 0 || specialCount == 0) {
-                    binding.passwordTextField.error =
-                        "안전한 비밀번호가 아닙니다. 길이가 8자 이상이고 영어와 숫자, 특수문자가 조합되어야 합니다."
-                    return
-                }
-            }
-        }
-
-        if (isSignedIn()) {
-            val profile = ProfileUiModel(
-                //                sdw312 빌드 테스트
-                0,
-                email,
-                name,
-                gender,
-                birth!!,
-                Date(),
-                0,
-            )
-            viewModel.setProfile(profile)
-            findNavController().navigate(
-                SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
-                extras,
-            )
-//            dismissProgressDialog()
-        } else {
-            val profile = ProfileUiModel(
-//                sdw312 빌드 테스트
-                0,
-                email,
-                name,
-                gender,
-                birth!!,
-                Date(),
-                1,
-            )
-            viewModel.signUp(profile, password)
-        }
-    }
-
     override fun onDestroy() {
         onBackPressedCallback.remove()
 
         super.onDestroy()
-    }
-
-    private fun Date.toUtc(): Long {
-        val local = Calendar.getInstance().apply { time = this@toUtc }
-        val utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-
-        utc.set(
-            local.get(Calendar.YEAR),
-            local.get(Calendar.MONTH),
-            local.get(Calendar.DAY_OF_MONTH),
-            0,
-            0,
-            0,
-        )
-        return utc.timeInMillis
-    }
-
-    private fun Long.toLocal(): Date {
-        val local = Calendar.getInstance()
-        val utc = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
-            timeInMillis = this@toLocal
-        }
-
-        local.set(
-            utc.get(Calendar.YEAR),
-            utc.get(Calendar.MONTH),
-            utc.get(Calendar.DAY_OF_MONTH),
-            0,
-            0,
-            0,
-        )
-        return local.time
     }
 }
