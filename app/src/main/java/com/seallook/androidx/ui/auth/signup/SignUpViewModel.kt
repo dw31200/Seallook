@@ -165,7 +165,7 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun setProfile(profile: ProfileUiModel) {
+    private fun setProfile(profile: ProfileUiModel) {
         viewModelScope.launch {
             getCurrentUserUseCase()?.uid?.let {
                 setProfileUseCase(it, profile.toDomainModel())
