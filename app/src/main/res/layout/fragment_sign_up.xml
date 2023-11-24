@@ -97,25 +97,11 @@
 
                     </com.google.android.material.button.MaterialButtonToggleGroup>
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <com.seallook.androidx.ui.widget.BirthDatePickerWidget
                         android:id="@+id/birth_text_field"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        bind:visible="@{vm.signUpType != UserType.OFFICE}"
-                        android:hint="생년월일">
-
-                        <AutoCompleteTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:cursorVisible="false"
-                            android:inputType="none"
-                            android:text="@={vm.birth}"
-                            android:maxLines="1"
-                            tools:text="1990년 3월 1일" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
+                        bind:birth="@={vm.birth}"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/email_text_field"
@@ -185,6 +171,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="-8dp"
+                        android:checked="@={vm.over14yoChecked}"
                         android:layout_marginTop="16dp"
                         android:text="만 14세 이상 입니다." />
 
@@ -193,6 +180,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="-8dp"
+                        android:checked="@={vm.privacyPolicyChecked}"
                         android:text="개인정보 수집 및 이용동의" />
 
                     <include layout="@layout/layout_privacy_policy_summery" />
@@ -208,7 +196,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginBottom="16dp"
-                android:enabled="false"
+                bind:enable="@{vm.validation}"
+                android:onClick="@{() -> vm.signUp()}"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:text="회원가입" />

@@ -74,11 +74,4 @@ class ProgressWidget @JvmOverloads constructor(
             ).show()
         }
     }
-
-    private fun dismissProgressDialog() {
-        progressDialog?.dismiss()
-        progressDialog = null
-    }
-
-    private fun isProgressDialogShown() = progressDialog != null
 }
