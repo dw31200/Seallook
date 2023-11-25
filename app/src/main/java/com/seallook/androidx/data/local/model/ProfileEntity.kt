@@ -9,9 +9,9 @@ data class ProfileEntity(
     @PrimaryKey
     val id: Int,
     val email: String,
-    val name: String,
-    val gender: Int,
-    val birth: Date,
-    val timestamp: Date,
-    val userType: Int,
+    val name: String?,
+    val gender: Int?,
+    val birth: Date?,
+    val timestamp: Date?,
+    val userType: Int?,
 )

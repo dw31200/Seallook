@@ -127,12 +127,12 @@ class SignUpViewModel @Inject constructor(
         val profile = ProfileUiModel(
 //            sdw312 임시 테스트
             0,
-            email.value ?: "",
-            name.value ?: "",
-            gender.value ?: 0,
-            birth.value ?: Date(),
+            email.value ?: return,
+            name.value,
+            gender.value,
+            birth.value,
             Date(),
-            signUpType?.ordinal ?: 0,
+            signUpType?.ordinal,
         )
         if (currentUser.value != null) {
             setProfile(profile)

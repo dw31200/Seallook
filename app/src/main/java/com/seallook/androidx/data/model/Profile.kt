@@ -7,11 +7,11 @@ import java.util.Date
 data class Profile(
     val id: Int,
     val email: String,
-    val name: String,
-    val gender: Int,
-    val birth: Date,
-    val timestamp: Date,
-    val userType: Int,
+    val name: String?,
+    val gender: Int?,
+    val birth: Date?,
+    val timestamp: Date?,
+    val userType: Int?,
 ) {
     fun toLocalModel(): ProfileEntity {
         return ProfileEntity(

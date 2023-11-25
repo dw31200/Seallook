@@ -9,12 +9,12 @@ import java.util.Date
 data class ProfileResponse(
     val id: Int,
     val email: String,
-    val name: String,
-    val gender: Int,
-    val birth: Date,
+    val name: String?,
+    val gender: Int?,
+    val birth: Date?,
     @ServerTimestamp
-    val timestamp: Date,
-    val userType: Int,
+    val timestamp: Date?,
+    val userType: Int?,
 ) {
     constructor() : this(0, "", "", 0, Date(), Date(), 0)
 
