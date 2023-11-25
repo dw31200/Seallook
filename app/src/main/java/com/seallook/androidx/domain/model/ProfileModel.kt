@@ -6,11 +6,11 @@ import java.util.Date
 data class ProfileModel(
     val id: Int,
     val email: String,
-    val name: String,
-    val gender: Int,
-    val birth: Date,
-    val timestamp: Date,
-    val userType: Int,
+    val name: String?,
+    val gender: Int?,
+    val birth: Date?,
+    val timestamp: Date?,
+    val userType: Int?,
 ) {
     fun toDataModel(): Profile {
         return Profile(

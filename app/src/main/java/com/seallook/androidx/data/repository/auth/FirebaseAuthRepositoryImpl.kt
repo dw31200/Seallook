@@ -2,7 +2,6 @@ package com.seallook.androidx.data.repository.auth
 
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
-import com.seallook.androidx.data.model.Profile
 import com.seallook.androidx.data.remote.auth.FirebaseAuthApiService
 import javax.inject.Inject
 
@@ -25,7 +24,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
         firebaseAuthApiService.signOut()
     }
 
-    override suspend fun signUp(profile: Profile, password: String): AuthResult? {
-        return firebaseAuthApiService.signUp(profile.toRemoteModel(), password)
+    override suspend fun signUp(email: String, password: String): AuthResult? {
+        return firebaseAuthApiService.signUp(email, password)
     }
 }

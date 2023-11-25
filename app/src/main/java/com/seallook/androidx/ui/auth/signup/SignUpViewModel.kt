@@ -123,25 +123,33 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun signUp() {
+        _isShowProgress.value = true
         val profile = ProfileUiModel(
+//            sdw312 임시 테스트
             0,
-            email.value ?: "",
-            name.value ?: "",
-            gender.value ?: 0,
-            birth.value ?: Date(),
+            email.value ?: return,
+            name.value,
+            gender.value,
+            birth.value,
             Date(),
-            signUpType?.ordinal ?: 0,
+            signUpType?.ordinal,
         )
         if (currentUser.value != null) {
             setProfile(profile)
         } else {
             viewModelScope.launch {
-                _isShowProgress.value = true
-                signUpUseCase(profile.toDomainModel(), password.value ?: "")
+                signUpUseCase(
+                    SignUpUseCase.Params(
+                        email.value,
+                        password.value,
+                    ),
+                )
                     .onSuccess {
                         setProfile(profile)
                     }
                     .onFailure {
+                        _isShowProgress.value = false
+                        _isShowFailMessage.value = "회원가입에 실패했습니다."
                         when (it) {
                             is FirebaseAuthWeakPasswordException -> {
                                 _passwordError.value =
@@ -174,7 +182,8 @@ class SignUpViewModel @Inject constructor(
                         setEffect(SignUpEffect.NavigateToHome)
                     }
                     .onFailure {
-                        Unit
+                        _isShowProgress.value = false
+                        _isShowFailMessage.value = "회원가입에 실패했습니다."
                     }
             }
         }

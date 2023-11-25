@@ -2,7 +2,6 @@ package com.seallook.androidx.domain.usecase
 
 import com.google.firebase.auth.AuthResult
 import com.seallook.androidx.data.repository.auth.FirebaseAuthRepository
-import com.seallook.androidx.domain.model.ProfileModel
 import dagger.Reusable
 import javax.inject.Inject
 
@@ -10,12 +9,18 @@ import javax.inject.Inject
 class SignUpUseCase @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository,
 ) {
-    suspend operator fun invoke(profile: ProfileModel, password: String): Result<AuthResult> {
+    suspend operator fun invoke(params: Params): Result<AuthResult> {
+        if (params.email == null || params.password == null) return Result.failure(Error("email or password is null"))
         return runCatching {
-            firebaseAuthRepository.signUp(profile.toDataModel(), password)
+            firebaseAuthRepository.signUp(params.email, params.password)
         }.map {
             if (it == null) throw Error("signup result is null")
             it
         }
     }
+
+    data class Params(
+        val email: String?,
+        val password: String?,
+    )
 }
