@@ -4,7 +4,6 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.seallook.androidx.data.remote.model.ProfileResponse
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -28,7 +27,7 @@ class FirebaseAuthApiServiceImpl @Inject constructor(
         auth.signOut()
     }
 
-    override suspend fun signUp(profile: ProfileResponse, password: String): AuthResult? {
-        return auth.createUserWithEmailAndPassword(profile.email, password).await()
+    override suspend fun signUp(email: String, password: String): AuthResult? {
+        return auth.createUserWithEmailAndPassword(email, password).await()
     }
 }
