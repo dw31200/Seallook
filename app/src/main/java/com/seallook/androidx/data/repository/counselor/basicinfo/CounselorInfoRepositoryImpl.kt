@@ -26,4 +26,15 @@ class CounselorInfoRepositoryImpl @Inject constructor(
     override suspend fun setItem(uid: String, info: CounselorInfo) {
         counselorInfoApiService.setItem(uid, info.toRemoteModel())
     }
+
+    override suspend fun refresh() {
+        val remote = counselorInfoApiService.getAll().map {
+            CounselorInfo(it)
+        }
+        counselorInfoDao.insert(
+            remote.map {
+                it.toLocalModel()
+            },
+        )
+    }
 }
