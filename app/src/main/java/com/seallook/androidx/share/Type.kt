@@ -11,5 +11,5 @@ enum class UserType {
 }
 
 enum class Gender {
-    MALE, FEMALE,
+    MALE, FEMALE, NONE,
 }

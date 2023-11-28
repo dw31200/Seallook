@@ -8,6 +8,7 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.seallook.androidx.R
+import com.seallook.androidx.share.Gender
 import com.seallook.androidx.ui.widget.BirthDatePickerWidget
 import java.util.Date
 
@@ -27,15 +28,21 @@ fun TextInputLayout.setErrorMessage(error: String?) {
 }
 
 @BindingAdapter("bind:checkedButtonId")
-fun setCheckedButtonId(group: MaterialButtonToggleGroup, id: Int?) {
-    if (group.checkedButtonId != id && id != null) {
-        group.check(id)
+fun setCheckedButtonId(group: MaterialButtonToggleGroup, gender: Gender?) {
+    when (gender) {
+        Gender.MALE -> group.check(R.id.male_button)
+        Gender.FEMALE -> group.check(R.id.female_button)
+        else -> Unit
     }
 }
 
 @InverseBindingAdapter(attribute = "bind:checkedButtonId", event = "checkedChanged")
-fun getGender(group: MaterialButtonToggleGroup): Int {
-    return group.checkedButtonId
+fun getGender(group: MaterialButtonToggleGroup): Gender {
+    return when (group.checkedButtonId) {
+        R.id.male_button -> Gender.MALE
+        R.id.female_button -> Gender.FEMALE
+        else -> Gender.NONE
+    }
 }
 
 @BindingAdapter("checkedChanged")
