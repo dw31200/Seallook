@@ -3,7 +3,6 @@ package com.seallook.androidx.ui.auth.signup
 import android.content.Intent
 import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
-import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentSignUpBinding
 import com.seallook.androidx.ui.base.BaseFragment
@@ -23,7 +22,6 @@ class SignUpFragment :
         FragmentSignUpBinding::inflate,
     ) {
     override val viewModel: SignUpViewModel by viewModels()
-
     private val extras = ActivityNavigator.Extras.Builder()
         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -36,8 +34,9 @@ class SignUpFragment :
     override fun onEffectCollect(effect: SignUpEffect) {
         when (effect) {
             SignUpEffect.NavigateToHome -> {
-                findNavController().navigate(
-                    SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity(),
+                val action = SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity()
+                navigate(
+                    action,
                     extras,
                 )
             }

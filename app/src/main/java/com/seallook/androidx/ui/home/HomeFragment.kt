@@ -1,9 +1,7 @@
 package com.seallook.androidx.ui.home
 
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
-import com.seallook.androidx.R
 import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentHomeBinding
 import com.seallook.androidx.ui.base.BaseFragment
@@ -30,10 +28,12 @@ class HomeFragment :
             counselorList.adapter = HomeAdapter()
             navigation = this@HomeFragment
             counselorNameTextField.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_searchCounselorFragment)
+                val action = HomeFragmentDirections.actionHomeFragmentToSearchCounselorFragment()
+                navigate(action)
             }
             reserveCounselingButton.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_searchCounselorFragment)
+                val action = HomeFragmentDirections.actionHomeFragmentToSearchCounselorFragment()
+                navigate(action)
             }
         }
     }
@@ -41,6 +41,6 @@ class HomeFragment :
     override fun onEffectCollect(effect: Effect) = Unit
     override fun navigateToReserveCounseling(email: String) {
         val action = HomeFragmentDirections.actionHomeFragmentToReserveCounselingFragment(email)
-        findNavController().navigate(action)
+        navigate(action)
     }
 }

@@ -1,7 +1,6 @@
 package com.seallook.androidx.ui.home.search.counselor
 
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentSearchCounselorBinding
@@ -35,6 +34,6 @@ class SearchCounselorFragment :
 
     override fun navigateToReserveCounseling(email: String) {
         val action = SearchCounselorFragmentDirections.actionSearchCounselorFragmentToReserveCounselingFragment(email)
-        findNavController().navigate(action)
+        navigate(action)
     }
 }

@@ -3,7 +3,6 @@ package com.seallook.androidx.ui.splash
 import android.content.Intent
 import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
-import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentSplashBinding
@@ -26,13 +25,15 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel, Effe
 
         viewModel.currentUser.observe(viewLifecycleOwner) {
             if (it != null) {
-                findNavController().navigate(
-                    SplashFragmentDirections.actionSplashFragmentToMainGraphActivity(),
+                val action = SplashFragmentDirections.actionSplashFragmentToMainGraphActivity()
+                navigate(
+                    action,
                     extras,
                 )
             } else {
-                findNavController().navigate(
-                    SplashFragmentDirections.actionSplashFragmentToAuthActivity(),
+                val action = SplashFragmentDirections.actionSplashFragmentToAuthActivity()
+                navigate(
+                    action,
                     extras,
                 )
             }

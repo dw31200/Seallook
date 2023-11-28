@@ -1,7 +1,6 @@
 package com.seallook.androidx.ui.auth.signup.select
 
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentSelectSignUpBinding
@@ -29,6 +28,6 @@ class SelectSignUpTypeFragment :
 
     override fun navigateToSignUp(selectSignUpType: UserType) {
         val action = SelectSignUpTypeFragmentDirections.actionSelectSignUpTypeFragmentToSignUpFragment(selectSignUpType)
-        findNavController().navigate(action)
+        navigate(action)
     }
 }
