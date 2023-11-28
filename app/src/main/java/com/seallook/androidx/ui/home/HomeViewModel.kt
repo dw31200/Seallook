@@ -12,6 +12,8 @@ import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.model.CounselorInfoUiModel
 import com.seallook.androidx.ui.model.ProfileUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,20 +26,24 @@ class HomeViewModel @Inject constructor(
     private val _currentUser = MutableLiveData<FirebaseUser?>()
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
-
     private val _userType = MutableLiveData<ProfileUiModel?>()
     val userType: LiveData<ProfileUiModel?>
         get() = _userType
-
     private val _counselorInfoList = MutableLiveData<List<CounselorInfoUiModel>>()
     val counselorInfoList: LiveData<List<CounselorInfoUiModel>>
         get() = _counselorInfoList
 
     init {
         viewModelScope.launch {
-            _counselorInfoList.value = getCounselorInfoListUseCase().map {
-                CounselorInfoUiModel(it)
-            }
+            getCounselorInfoListUseCase()
+                .map {
+                    it.map {
+                        CounselorInfoUiModel(it)
+                    }
+                }
+                .onEach {
+                    _counselorInfoList.value = it
+                }
             _currentUser.value = getCurrentUserUseCase()
             _userType.value = currentUser.value?.uid?.let {
                 getUserTypeUseCase(it)?.let {
