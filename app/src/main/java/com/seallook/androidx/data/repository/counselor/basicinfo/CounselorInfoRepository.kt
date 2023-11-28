@@ -9,4 +9,6 @@ interface CounselorInfoRepository {
     fun getAll(): Flow<List<CounselorInfo>>
 
     suspend fun setItem(uid: String, info: CounselorInfo)
+
+    suspend fun refresh()
 }
