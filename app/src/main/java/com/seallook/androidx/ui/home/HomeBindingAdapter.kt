@@ -9,3 +9,8 @@ import com.seallook.androidx.ui.model.CounselorInfoUiModel
 fun RecyclerView.setList(list: List<CounselorInfoUiModel>?) {
     (adapter as? HomeAdapter)?.fetchData(list ?: emptyList())
 }
+
+@BindingAdapter("bind:onItemClickListener")
+fun RecyclerView.setCounselorItemClickListener(homeNavigation: HomeNavigation) {
+    (adapter as? HomeAdapter)?.homeNavigation = homeNavigation
+}

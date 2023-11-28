@@ -16,9 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
     필요한 모델: CounselorInfo(id 자동생성으로 변경, documentId 추가), OfficeInfo(id 자동생성으로 변경, documentId 추가)
  */
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel, Effect>(
-    FragmentHomeBinding::inflate,
-) {
+class HomeFragment :
+    BaseFragment<FragmentHomeBinding, HomeViewModel, Effect>(
+        FragmentHomeBinding::inflate,
+    ),
+    HomeNavigation {
     override val viewModel: HomeViewModel by viewModels()
 
     override fun viewModelVariableId(): Int = BR.vm
@@ -26,6 +28,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel, Effect>(
     override fun onViewCreatedAfterBinding() {
         with(binding) {
             counselorList.adapter = HomeAdapter()
+            navigation = this@HomeFragment
             counselorNameTextField.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_searchCounselorFragment)
             }
@@ -36,4 +39,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel, Effect>(
     }
 
     override fun onEffectCollect(effect: Effect) = Unit
+    override fun navigateToReserveCounseling(email: String) {
+        val action = HomeFragmentDirections.actionHomeFragmentToReserveCounselingFragment(email)
+        findNavController().navigate(action)
+    }
 }

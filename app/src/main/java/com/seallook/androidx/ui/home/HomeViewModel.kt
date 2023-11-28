@@ -24,9 +24,11 @@ class HomeViewModel @Inject constructor(
     private val _currentUser = MutableLiveData<FirebaseUser?>()
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
+
     private val _userType = MutableLiveData<ProfileUiModel?>()
     val userType: LiveData<ProfileUiModel?>
         get() = _userType
+
     private val _counselorInfoList = MutableLiveData<List<CounselorInfoUiModel>>()
     val counselorInfoList: LiveData<List<CounselorInfoUiModel>>
         get() = _counselorInfoList
