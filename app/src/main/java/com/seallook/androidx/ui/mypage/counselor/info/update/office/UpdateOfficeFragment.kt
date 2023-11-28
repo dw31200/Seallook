@@ -1,7 +1,6 @@
 package com.seallook.androidx.ui.mypage.counselor.info.update.office
 
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentUpdateOfficeBinding
@@ -38,6 +37,6 @@ class UpdateOfficeFragment :
     override fun navigateToMypage(info: OfficeInfoUiModel) {
         viewModel.setOfficeInfo(info)
         val action = UpdateOfficeFragmentDirections.actionUpdateOfficeFragmentToUpdateCounselorBasicInfoFragment()
-        findNavController().navigate(action)
+        navigate(action)
     }
 }

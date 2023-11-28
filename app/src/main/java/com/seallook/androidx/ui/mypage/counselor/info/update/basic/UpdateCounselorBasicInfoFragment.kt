@@ -4,9 +4,7 @@ import android.net.Uri
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
-import com.seallook.androidx.R
 import com.seallook.androidx.databinding.FragmentUpdateCounselorBasicInfoBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,10 +49,13 @@ class UpdateCounselorBasicInfoFragment :
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
             updateCounselingTypeButton.setOnClickListener {
-                findNavController().navigate(R.id.action_updateCounselorBasicInfoFragment_to_updateCounselingTypeFragment)
+                val action =
+                    UpdateCounselorBasicInfoFragmentDirections.actionUpdateCounselorBasicInfoFragmentToUpdateCounselingTypeFragment()
+                navigate(action)
             }
             updateOfficeButton.setOnClickListener {
-                findNavController().navigate(R.id.action_updateCounselorBasicInfoFragment_to_updateOfficeFragment)
+                val action = UpdateCounselorBasicInfoFragmentDirections.actionUpdateCounselorBasicInfoFragmentToUpdateOfficeFragment()
+                navigate(action)
             }
             updateFileButton.setOnClickListener {
                 pickMediaFile.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
@@ -77,7 +78,8 @@ class UpdateCounselorBasicInfoFragment :
     override fun onEffectCollect(effect: UpdateCounselorBasicInfoEffect) {
         when (effect) {
             UpdateCounselorBasicInfoEffect.SuccessUpdateCounselingType -> {
-                findNavController().navigate(UpdateCounselorBasicInfoFragmentDirections.actionUpdateCounselorBasicInfoFragmentToMypageFragment())
+                val action = UpdateCounselorBasicInfoFragmentDirections.actionUpdateCounselorBasicInfoFragmentToMypageFragment()
+                navigate(action)
             }
 
             else -> {

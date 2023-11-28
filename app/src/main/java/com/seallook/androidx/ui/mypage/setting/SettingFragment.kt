@@ -3,7 +3,6 @@ package com.seallook.androidx.ui.mypage.setting
 import android.content.Intent
 import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
-import androidx.navigation.fragment.findNavController
 import com.seallook.androidx.BR
 import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentSettingBinding
@@ -29,7 +28,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel, E
     override fun onViewCreatedAfterBinding() {
         binding.signOutButton.setOnClickListener {
             viewModel.signOut()
-            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToSplashNavigation(), extras)
+            val action = SettingFragmentDirections.actionSettingFragmentToSplashNavigation()
+            navigate(action, extras)
         }
     }
 

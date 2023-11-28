@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
-import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -35,7 +34,6 @@ class SignInFragment :
     override fun viewModelVariableId(): Int = BR.vm
 
     private val googleSignInClient: GoogleSignInClient by lazy { getGoogleClient() }
-
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
         try {
@@ -48,7 +46,6 @@ class SignInFragment :
             Timber.e(e.stackTraceToString())
         }
     }
-
     private val extras = ActivityNavigator.Extras.Builder()
         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -61,10 +58,13 @@ class SignInFragment :
     override fun onEffectCollect(effect: SignInEffect) {
         when (effect) {
             SignInEffect.NavigateToHome -> {
-                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToMainGraphActivity(), extras)
+                val action = SignInFragmentDirections.actionSignInFragmentToMainGraphActivity()
+                navigate(action, extras)
             }
+
             SignInEffect.NavigateToSignUp -> {
-                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSelectSignUpTypeFragment())
+                val action = SignInFragmentDirections.actionSignInFragmentToSelectSignUpTypeFragment()
+                navigate(action)
             }
         }
     }
@@ -85,6 +85,7 @@ class SignInFragment :
     }
 
     override fun navigateToSelectSignUpType() {
-        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSelectSignUpTypeFragment())
+        val action = SignInFragmentDirections.actionSignInFragmentToSelectSignUpTypeFragment()
+        navigate(action)
     }
 }

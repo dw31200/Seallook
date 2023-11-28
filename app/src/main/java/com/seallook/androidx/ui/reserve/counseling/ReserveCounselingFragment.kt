@@ -1,7 +1,6 @@
 package com.seallook.androidx.ui.reserve.counseling
 
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.kizitonwose.calendar.core.atStartOfMonth
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.seallook.androidx.BR
@@ -51,7 +50,8 @@ class ReserveCounselingFragment :
     override fun onEffectCollect(effect: ReserveCounselingEffect) {
         when (effect) {
             ReserveCounselingEffect.NavigateToHome -> {
-                findNavController().navigate(ReserveCounselingFragmentDirections.actionReserveCounselingFragmentToHomeFragment())
+                val action = ReserveCounselingFragmentDirections.actionReserveCounselingFragmentToHomeFragment()
+                navigate(action)
             }
         }
     }
