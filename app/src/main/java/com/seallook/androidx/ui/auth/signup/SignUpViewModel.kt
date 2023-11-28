@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -12,6 +13,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.SetProfileUseCase
 import com.seallook.androidx.domain.usecase.SignUpUseCase
+import com.seallook.androidx.share.Gender
 import com.seallook.androidx.share.UserType
 import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.model.ProfileUiModel
@@ -34,16 +36,46 @@ class SignUpViewModel @Inject constructor(
         get() = _currentUser
 
     val name = MutableLiveData<String>()
+    private val _nameValidation = name.map {
+        it != null && it.isNotBlank() && it.isNotEmpty() && it.length >= 2
+    }
 
-    val gender = MutableLiveData<Int>()
+    val gender = MutableLiveData<Gender>()
+    private val _genderValidation = gender.map {
+        it != Gender.NONE && it != null
+    }
 
     val birth = MutableLiveData<Date?>()
+    private val _birthValidation = birth.map {
+        it != null && it.toString().isNotBlank() && it.toString().isNotEmpty()
+    }
 
     val email = MutableLiveData<String>()
+    private val _emailValidation = email.map {
+        it != null && it.isNotBlank() && it.isNotEmpty()
+    }
 
     val password = MutableLiveData<String>()
+    private val _passwordValidation: LiveData<Boolean> = currentUser.map {
+        if (it != null) {
+            true
+        } else {
+            password.value?.isNotBlank() == true &&
+                password.value?.isNotEmpty() == true &&
+                password.value != null
+        }
+    }
 
     val passwordConfirmation = MutableLiveData<String>()
+    private val _passwordConfirmationValidation = currentUser.map {
+        if (it != null) {
+            true
+        } else {
+            passwordConfirmation.value?.isNotBlank() == true &&
+                passwordConfirmation.value?.isNotEmpty() == true &&
+                passwordConfirmation.value != null
+        }
+    }
 
     val over14yoChecked = MutableLiveData<Boolean>()
 
@@ -57,7 +89,9 @@ class SignUpViewModel @Inject constructor(
     val emailError: LiveData<String?>
         get() = _emailError
 
-    val validation: MediatorLiveData<Boolean> = MediatorLiveData()
+    val validation = MediatorLiveData<Boolean>()
+
+    private val _validationList = mutableListOf<LiveData<Boolean>>()
 
     private val _progressMessage = MutableLiveData<String>()
     val progressMessage: LiveData<String>
@@ -72,30 +106,46 @@ class SignUpViewModel @Inject constructor(
         get() = _isShowFailMessage
 
     init {
-        validation.addSource(name) {
+        _validationList.add(_nameValidation)
+        validation.addSource(_nameValidation) {
             validation.value = validateFields()
         }
-        validation.addSource(email) {
+
+        _validationList.add(_emailValidation)
+        validation.addSource(_emailValidation) {
             validation.value = validateFields()
         }
-        validation.addSource(gender) {
+
+        _validationList.add(_genderValidation)
+        validation.addSource(_genderValidation) {
             validation.value = validateFields()
         }
-        validation.addSource(birth) {
+
+        _validationList.add(_birthValidation)
+        validation.addSource(_birthValidation) {
             validation.value = validateFields()
         }
-        validation.addSource(password) {
+
+        _validationList.add(_passwordValidation)
+        validation.addSource(_passwordValidation) {
             validation.value = validateFields()
         }
-        validation.addSource(passwordConfirmation) {
+
+        _validationList.add(_passwordConfirmationValidation)
+        validation.addSource(_passwordConfirmationValidation) {
             validation.value = validateFields()
         }
+
+        _validationList.add(over14yoChecked)
         validation.addSource(over14yoChecked) {
             validation.value = validateFields()
         }
+
+        _validationList.add(privacyPolicyChecked)
         validation.addSource(privacyPolicyChecked) {
             validation.value = validateFields()
         }
+
         viewModelScope.launch {
             _currentUser.value = getCurrentUserUseCase()
             name.value = currentUser.value?.displayName
@@ -105,21 +155,14 @@ class SignUpViewModel @Inject constructor(
     }
 
     private fun validateFields(): Boolean {
-        val validation =
-            name.value?.isNotBlank() == true &&
-                gender.value?.toString()?.isNotBlank() == true &&
-                birth.value?.toString()?.isNotBlank() == true &&
-                email.value?.isNotBlank() == true &&
-                over14yoChecked.value == true &&
-                privacyPolicyChecked.value == true
-
-        if (currentUser.value != null) {
-            return validation
+        var validation = true
+        for (_validation in _validationList) {
+            if (_validation.value != true) {
+                validation = false
+            }
         }
 
-        return validation &&
-            password.value?.isNotBlank() == true &&
-            passwordConfirmation.value?.isNotBlank() == true
+        return validation
     }
 
     fun signUp() {
@@ -129,7 +172,7 @@ class SignUpViewModel @Inject constructor(
             0,
             email.value ?: return,
             name.value,
-            gender.value,
+            gender.value?.ordinal,
             birth.value,
             Date(),
             signUpType?.ordinal,
