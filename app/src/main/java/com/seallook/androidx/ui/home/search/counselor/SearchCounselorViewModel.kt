@@ -8,6 +8,8 @@ import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetCounselorInfo
 import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.model.CounselorInfoUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,9 +23,15 @@ class SearchCounselorViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _counselorInfoList.value = getCounselorInfoListUseCase().map {
-                CounselorInfoUiModel(it)
-            }
+            getCounselorInfoListUseCase()
+                .map {
+                    it.map {
+                        CounselorInfoUiModel(it)
+                    }
+                }
+                .onEach {
+                    _counselorInfoList.value = it
+                }
         }
     }
 }

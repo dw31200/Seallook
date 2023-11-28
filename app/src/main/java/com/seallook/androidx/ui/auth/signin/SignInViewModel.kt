@@ -56,7 +56,7 @@ class SignInViewModel @Inject constructor(
                     }
                 }
                 .onFailure {
-                    Unit
+                    _isShowProgress.value = false
                 }
         }
     }
@@ -72,6 +72,7 @@ class SignInViewModel @Inject constructor(
                 ),
             )
                 .onSuccess {
+                    _isShowProgress.value = false
                     setEffect(SignInEffect.NavigateToHome)
                 }
                 .onFailure {

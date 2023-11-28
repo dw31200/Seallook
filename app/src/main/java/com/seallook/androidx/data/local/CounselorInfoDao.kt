@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.seallook.androidx.data.local.model.CounselorInfoEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CounselorInfoDao {
@@ -16,7 +17,7 @@ interface CounselorInfoDao {
     suspend fun insert(counselorInfoList: List<CounselorInfoEntity>)
 
     @Query("SELECT * FROM CounselorInfo ORDER BY email")
-    suspend fun getAll(): List<CounselorInfoEntity>
+    fun getAll(): Flow<List<CounselorInfoEntity>>
 
     @Query("SELECT * FROM CounselorInfo WHERE email =:email")
     suspend fun getItem(email: String): CounselorInfoEntity
