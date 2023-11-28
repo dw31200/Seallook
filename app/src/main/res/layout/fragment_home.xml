@@ -7,6 +7,10 @@
             name="vm"
             type="com.seallook.androidx.ui.home.HomeViewModel" />
 
+        <variable
+            name="navigation"
+            type="com.seallook.androidx.ui.home.HomeNavigation" />
+
         <import type="com.seallook.androidx.share.UserType" />
     </data>
 
@@ -162,6 +166,7 @@
                 app:layout_constraintTop_toBottomOf="@id/counselor_list_text"
                 app:spanCount="2"
                 bind:setList="@{vm.counselorInfoList}"
+                bind:onItemClickListener="@{navigation}"
                 tools:listitem="@layout/counselor_list_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
