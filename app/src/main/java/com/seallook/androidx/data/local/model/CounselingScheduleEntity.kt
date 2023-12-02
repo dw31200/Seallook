@@ -5,9 +5,9 @@ import java.util.Date
 
 @Entity("CounselingSchedule", primaryKeys = ["id", "email"])
 data class CounselingScheduleEntity(
-    val id: Int,
+    val id: String,
     val email: String,
     val date: Date,
-    val typeId: Int,
+    val typeId: String,
     val reservation: Boolean,
 )

@@ -3,7 +3,7 @@ package com.seallook.androidx.domain.model
 import com.seallook.androidx.data.model.CounselingType
 
 data class CounselingTypeModel(
-    val id: Int,
+    val id: String,
     val email: String,
     val title: String,
     val clientCount: Int,

@@ -23,7 +23,7 @@ interface CounselingScheduleDao {
     suspend fun getAll(email: String): List<CounselingScheduleEntity>
 
     @Query("SELECT * FROM CounselingSchedule WHERE ID = :id")
-    suspend fun getItem(id: Int): CounselingScheduleEntity?
+    suspend fun getItem(id: String): CounselingScheduleEntity?
 
     @Query("SELECT * FROM CounselingSchedule WHERE DATE > :selectedDate AND DATE < :nextDate")
     suspend fun getCounselingSchedulesOnDate(selectedDate: LocalDate, nextDate: LocalDate): List<CounselingScheduleEntity>
@@ -38,5 +38,5 @@ interface CounselingScheduleDao {
     suspend fun deleteAll()
 
     @Query("DELETE FROM CounselingSchedule WHERE ID = :id")
-    suspend fun deleteItem(id: Int)
+    suspend fun deleteItem(id: String)
 }

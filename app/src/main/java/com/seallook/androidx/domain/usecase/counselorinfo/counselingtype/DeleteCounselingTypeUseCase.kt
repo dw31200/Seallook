@@ -8,7 +8,7 @@ import javax.inject.Inject
 class DeleteCounselingTypeUseCase @Inject constructor(
     private val counselingTypeRepository: CounselingTypeRepository,
 ) {
-    suspend operator fun invoke(counselingTypeId: Int) {
+    suspend operator fun invoke(counselingTypeId: String) {
         counselingTypeRepository.deleteItem(counselingTypeId)
     }
 }

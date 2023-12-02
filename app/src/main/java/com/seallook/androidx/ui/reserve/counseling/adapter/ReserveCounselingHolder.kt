@@ -19,13 +19,19 @@ class ReserveCounselingHolder(
         with(binding) {
             schedule = counselingScheduleItem
             if (counselingTypeList.isNotEmpty()) {
-                type = counselingTypeList[counselingScheduleItem.typeId]
+                type = counselingTypeList.find {
+                    it.id == counselingScheduleItem.typeId
+                }
             }
             counselingSelectorLayout.setOnClickListener {
                 if (counselingScheduleItem.reservation) {
                     counselingScheduleSelect?.selectSchedule(0)
                 } else {
-                    counselingScheduleSelect?.selectSchedule(counselingTypeList[counselingScheduleItem.typeId].price)
+                    counselingScheduleSelect?.selectSchedule(
+                        counselingTypeList.find {
+                            it.id == counselingScheduleItem.typeId
+                        }?.price ?: return@setOnClickListener,
+                    )
                 }
             }
         }

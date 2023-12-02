@@ -5,12 +5,12 @@ import java.util.Date
 
 data class CounselingScheduleResponse(
     val email: String,
-    val id: Int,
+    val id: String,
     val date: Date,
-    val typeId: Int,
+    val typeId: String,
     val reservation: Boolean,
 ) {
-    constructor() : this("", 0, Date(), 0, false)
+    constructor() : this("", "", Date(), "", false)
 
     companion object {
         operator fun invoke(snapshot: DocumentSnapshot): CounselingScheduleResponse? {

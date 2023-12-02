@@ -6,9 +6,9 @@ import java.util.Date
 
 data class CounselingSchedule(
     val email: String,
-    val id: Int,
+    val id: String,
     val date: Date,
-    val typeId: Int,
+    val typeId: String,
     val reservation: Boolean,
 ) {
     fun toLocalModel(): CounselingScheduleEntity {

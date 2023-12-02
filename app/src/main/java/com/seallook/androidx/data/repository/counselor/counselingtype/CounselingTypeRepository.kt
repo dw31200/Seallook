@@ -7,7 +7,7 @@ interface CounselingTypeRepository {
 
     suspend fun insert(counselingTypeList: List<CounselingType>)
 
-    suspend fun deleteItem(counselingTypeId: Int)
+    suspend fun deleteItem(counselingTypeId: String)
 
     suspend fun getAll(): List<CounselingType>
 
@@ -15,7 +15,7 @@ interface CounselingTypeRepository {
 
     suspend fun getList(email: String): List<CounselingType>
 
-    suspend fun getItem(email: String, id: Int): CounselingType?
+    suspend fun getItem(email: String, id: String): CounselingType?
 
     suspend fun updateList(email: String, type: List<CounselingType>)
 }

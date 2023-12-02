@@ -4,7 +4,7 @@ import androidx.room.Entity
 
 @Entity("CounselingType", primaryKeys = ["id", "email"])
 data class CounselingTypeEntity(
-    val id: Int,
+    val id: String,
     val email: String,
     val title: String,
     val clientCount: Int,

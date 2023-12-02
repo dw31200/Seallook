@@ -17,7 +17,7 @@ class CounselingTypeRepositoryImpl @Inject constructor(
         counselingTypeDao.insert(counselingTypeList.map { it.toLocalModel() })
     }
 
-    override suspend fun deleteItem(counselingTypeId: Int) {
+    override suspend fun deleteItem(counselingTypeId: String) {
         counselingTypeDao.deleteItem(counselingTypeId)
     }
 
@@ -39,7 +39,7 @@ class CounselingTypeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getItem(email: String, id: Int): CounselingType? {
+    override suspend fun getItem(email: String, id: String): CounselingType? {
         return counselingTypeDao.getItem(email, id)?.let {
             CounselingType(it)
         }
