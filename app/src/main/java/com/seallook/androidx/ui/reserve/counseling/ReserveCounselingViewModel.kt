@@ -71,7 +71,7 @@ class ReserveCounselingViewModel @Inject constructor(
     override fun selectDate(date: LocalDate) {
         viewModelScope.launch {
             _selectedDate.value = date
-            _counselingScheduleList.value = getCounselingScheduleOnDateUseCase(date).map {
+            _counselingScheduleList.value = getCounselingScheduleOnDateUseCase(date.dayOfWeek).map {
                 CounselingScheduleUiModel(it)
             }
             _selectedSchedulePrice.value = 0

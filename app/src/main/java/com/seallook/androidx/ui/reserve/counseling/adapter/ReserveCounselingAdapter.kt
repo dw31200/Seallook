@@ -4,12 +4,10 @@ import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
-import com.seallook.androidx.ui.model.CounselingTypeUiModel
 import com.seallook.androidx.ui.reserve.counseling.CounselingScheduleSelect
 
 class ReserveCounselingAdapter(
     private val counselingScheduleItems: MutableList<CounselingScheduleUiModel> = mutableListOf(),
-    private val counselingTypeList: MutableList<CounselingTypeUiModel> = mutableListOf(),
 ) : RecyclerView.Adapter<ReserveCounselingHolder>() {
     var counselingScheduleSelect: CounselingScheduleSelect? = null
 
@@ -22,18 +20,15 @@ class ReserveCounselingAdapter(
     }
 
     override fun onBindViewHolder(holder: ReserveCounselingHolder, position: Int) {
-        holder.bind(counselingScheduleItems[position], counselingTypeList, counselingScheduleSelect)
+        holder.bind(counselingScheduleItems[position], counselingScheduleSelect)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun fetchData(
         counselingScheduleItems: List<CounselingScheduleUiModel>,
-        counselingTypeList: List<CounselingTypeUiModel>,
     ) {
         this.counselingScheduleItems.clear()
         this.counselingScheduleItems.addAll(counselingScheduleItems)
-        this.counselingTypeList.clear()
-        this.counselingTypeList.addAll(counselingTypeList)
         notifyDataSetChanged()
     }
 }

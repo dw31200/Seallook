@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.seallook.androidx.databinding.CounselingDateSelectorListItemBinding
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
-import com.seallook.androidx.ui.model.CounselingTypeUiModel
 import com.seallook.androidx.ui.reserve.counseling.CounselingScheduleSelect
 
 class ReserveCounselingHolder(
@@ -13,26 +12,12 @@ class ReserveCounselingHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(
         counselingScheduleItem: CounselingScheduleUiModel,
-        counselingTypeList: List<CounselingTypeUiModel>,
         counselingScheduleSelect: CounselingScheduleSelect?,
     ) {
         with(binding) {
             schedule = counselingScheduleItem
-            if (counselingTypeList.isNotEmpty()) {
-                type = counselingTypeList.find {
-                    it.id == counselingScheduleItem.typeId
-                }
-            }
             counselingSelectorLayout.setOnClickListener {
-                if (counselingScheduleItem.reservation) {
-                    counselingScheduleSelect?.selectSchedule(0)
-                } else {
-                    counselingScheduleSelect?.selectSchedule(
-                        counselingTypeList.find {
-                            it.id == counselingScheduleItem.typeId
-                        }?.price ?: return@setOnClickListener,
-                    )
-                }
+                counselingScheduleSelect?.selectSchedule(counselingScheduleItem.price)
             }
         }
     }

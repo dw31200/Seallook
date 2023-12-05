@@ -6,30 +6,29 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
-import com.seallook.androidx.ui.model.CounselingTypeUiModel
 import com.seallook.androidx.ui.reserve.counseling.adapter.ReserveCounselingAdapter
+import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.Date
 
-@BindingAdapter("bind:setCounselingSchedule", "bind:setCounselingType", requireAll = true)
+@BindingAdapter("bind:setCounselingSchedule")
 fun RecyclerView.setCounselingSchedule(
     scheduleList: List<CounselingScheduleUiModel>?,
-    typeList: List<CounselingTypeUiModel>?,
 ) {
     (adapter as? ReserveCounselingAdapter)
         ?.fetchData(
             scheduleList ?: emptyList(),
-            typeList ?: emptyList(),
         )
 }
 
 @BindingAdapter("bind:setDate", "bind:setTime", requireAll = true)
-fun TextView.setTime(date: Date, time: Int) {
-    val localDate = date.toInstant()
+fun TextView.setTime(time: String, currentTime: Int) {
+    val format = SimpleDateFormat("HH:mm")
+    val startTime = format.parse(time)
+    val localDate = startTime.toInstant()
         .atZone(ZoneId.systemDefault())
         .toLocalDateTime()
-    val nextLocalDate = localDate.plusMinutes(time.toLong())
+    val nextLocalDate = localDate.plusMinutes(currentTime.toLong())
     text =
         DateTimeFormatter.ofPattern("HH:mm").format(localDate) + " ~ " + DateTimeFormatter.ofPattern("HH:mm").format(nextLocalDate)
 }
