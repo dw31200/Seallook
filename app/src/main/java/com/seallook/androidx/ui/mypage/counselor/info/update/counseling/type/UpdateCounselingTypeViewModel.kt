@@ -46,8 +46,8 @@ class UpdateCounselingTypeViewModel @Inject constructor(
                 if (counselingType.value?.isEmpty() == true) {
                     setCounselingTypeUseCase(
                         CounselingTypeUiModel(
-                            0,
                             //   sdw312 임시 테스트
+                            "test_1",
                             "aaa@aaa.com",
                             title.value ?: return@launch,
                             clientCount.value?.toInt() ?: return@launch,
@@ -59,8 +59,8 @@ class UpdateCounselingTypeViewModel @Inject constructor(
                 } else {
                     setCounselingTypeUseCase(
                         CounselingTypeUiModel(
-                            (counselingType.value?.last()?.id ?: return@launch) + 1,
                             //   sdw312 임시 테스트
+                            "test_2",
                             "aaa@aaa.com",
                             title.value ?: return@launch,
                             clientCount.value?.toInt() ?: return@launch,
@@ -75,7 +75,7 @@ class UpdateCounselingTypeViewModel @Inject constructor(
         }
     }
 
-    override fun deleteItem(counselingTypeId: Int) {
+    override fun deleteItem(counselingTypeId: String) {
         viewModelScope.launch {
             deleteCounselingTypeUseCase(counselingTypeId)
             getList()

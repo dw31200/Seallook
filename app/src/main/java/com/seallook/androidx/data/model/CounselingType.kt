@@ -4,7 +4,7 @@ import com.seallook.androidx.data.local.model.CounselingTypeEntity
 import com.seallook.androidx.data.remote.model.CounselingTypeResponse
 
 data class CounselingType(
-    val id: Int,
+    val id: String,
     val email: String,
     val title: String,
     val clientCount: Int,

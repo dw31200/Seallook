@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.seallook.androidx.data.local.model.CounselingScheduleEntity
-import java.time.LocalDate
+import java.time.DayOfWeek
 
 @Dao
 interface CounselingScheduleDao {
@@ -23,10 +23,10 @@ interface CounselingScheduleDao {
     suspend fun getAll(email: String): List<CounselingScheduleEntity>
 
     @Query("SELECT * FROM CounselingSchedule WHERE ID = :id")
-    suspend fun getItem(id: Int): CounselingScheduleEntity?
+    suspend fun getItem(id: String): CounselingScheduleEntity?
 
-    @Query("SELECT * FROM CounselingSchedule WHERE DATE > :selectedDate AND DATE < :nextDate")
-    suspend fun getCounselingSchedulesOnDate(selectedDate: LocalDate, nextDate: LocalDate): List<CounselingScheduleEntity>
+    @Query("SELECT * FROM CounselingSchedule WHERE RepeatedDay = :day")
+    suspend fun getCounselingSchedulesOnDate(day: DayOfWeek): List<CounselingScheduleEntity>
 
     @Update
     suspend fun update(counselingSchedule: CounselingScheduleEntity)
@@ -38,5 +38,5 @@ interface CounselingScheduleDao {
     suspend fun deleteAll()
 
     @Query("DELETE FROM CounselingSchedule WHERE ID = :id")
-    suspend fun deleteItem(id: Int)
+    suspend fun deleteItem(id: String)
 }

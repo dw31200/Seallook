@@ -22,10 +22,10 @@ interface CounselingTypeDao {
     suspend fun getList(email: String): List<CounselingTypeEntity>
 
     @Query("SELECT * FROM CounselingType WHERE ID = :id")
-    suspend fun getItem(id: Int): CounselingTypeEntity?
+    suspend fun getItem(id: String): CounselingTypeEntity?
 
     @Query("SELECT * FROM CounselingType WHERE ID = :id AND EMAIL = :email")
-    suspend fun getItem(email: String, id: Int): CounselingTypeEntity?
+    suspend fun getItem(email: String, id: String): CounselingTypeEntity?
 
     @Update
     suspend fun update(counselingType: CounselingTypeEntity)
@@ -37,5 +37,5 @@ interface CounselingTypeDao {
     suspend fun deleteAll()
 
     @Query("DELETE FROM CounselingType WHERE ID = :id")
-    suspend fun deleteItem(id: Int)
+    suspend fun deleteItem(id: String)
 }
