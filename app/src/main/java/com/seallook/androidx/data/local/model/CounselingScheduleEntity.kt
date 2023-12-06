@@ -1,10 +1,12 @@
 package com.seallook.androidx.data.local.model
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.time.DayOfWeek
 
-@Entity("CounselingSchedule", primaryKeys = ["id", "email"])
+@Entity("CounselingSchedule")
 data class CounselingScheduleEntity(
+    @PrimaryKey
     val id: String,
     val email: String,
     val title: String,

@@ -27,11 +27,18 @@ class ReservationApiServiceImpl @Inject constructor(
     }
 
     override suspend fun set(reservation: ReservationResponse) {
-        db.collection(Constants.COUNSELORS)
-            .document(reservation.counselorEmail)
-            .collection(Constants.RESERVATION)
-            .document(reservation.id.toString())
-            .set(reservation)
+        val ref = db.collection(Constants.RESERVATION)
+            .document()
+        val setReservation = ReservationResponse(
+            id = ref.id,
+            counselorEmail = reservation.counselorEmail,
+            scheduleId = reservation.scheduleId,
+            clientEmail = reservation.clientEmail,
+            date = reservation.date,
+            confirm = reservation.confirm,
+        )
+        ref
+            .set(setReservation)
             .await()
     }
 }

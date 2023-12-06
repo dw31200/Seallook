@@ -2,10 +2,13 @@ package com.seallook.androidx.data.remote.model
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.squareup.moshi.FromJson
+import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.ToJson
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.time.DayOfWeek
 
+@JsonClass(generateAdapter = true)
 data class CounselingScheduleResponse(
     val id: String,
     val email: String,
@@ -20,6 +23,7 @@ data class CounselingScheduleResponse(
 
     companion object {
         private val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
             .add(DayOfWeekAdapter())
             .build()
 

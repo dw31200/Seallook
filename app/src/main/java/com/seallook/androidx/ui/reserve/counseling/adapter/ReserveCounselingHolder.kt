@@ -11,13 +11,13 @@ class ReserveCounselingHolder(
     private val binding: CounselingDateSelectorListItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(
-        counselingScheduleItem: CounselingScheduleUiModel,
+        counselingScheduleItem: CounselingScheduleUiModel?,
         counselingScheduleSelect: CounselingScheduleSelect?,
     ) {
         with(binding) {
             schedule = counselingScheduleItem
             counselingSelectorLayout.setOnClickListener {
-                counselingScheduleSelect?.selectSchedule(counselingScheduleItem.price)
+                counselingScheduleSelect?.selectSchedule(counselingScheduleItem)
             }
         }
     }
