@@ -2,12 +2,14 @@ package com.seallook.androidx.data.model
 
 import com.seallook.androidx.data.local.model.ReservationEntity
 import com.seallook.androidx.data.remote.model.ReservationResponse
+import java.util.Date
 
 data class Reservation(
-    val id: Int,
+    val id: String,
     val counselorEmail: String,
-    val scheduleId: Int,
+    val scheduleId: String,
     val clientEmail: String,
+    val date: Date,
     val confirm: Boolean,
 ) {
     fun toLocalModel(): ReservationEntity {
@@ -16,6 +18,7 @@ data class Reservation(
             counselorEmail = counselorEmail,
             scheduleId = scheduleId,
             clientEmail = clientEmail,
+            date = date,
             confirm = confirm,
         )
     }
@@ -26,6 +29,7 @@ data class Reservation(
             counselorEmail = counselorEmail,
             scheduleId = scheduleId,
             clientEmail = clientEmail,
+            date = date,
             confirm = confirm,
         )
     }
@@ -37,6 +41,7 @@ data class Reservation(
                 counselorEmail = reservationEntity.counselorEmail,
                 scheduleId = reservationEntity.scheduleId,
                 clientEmail = reservationEntity.clientEmail,
+                date = reservationEntity.date,
                 confirm = reservationEntity.confirm,
             )
         }
@@ -47,6 +52,7 @@ data class Reservation(
                 counselorEmail = reservationResponse.counselorEmail,
                 scheduleId = reservationResponse.scheduleId,
                 clientEmail = reservationResponse.clientEmail,
+                date = reservationResponse.date,
                 confirm = reservationResponse.confirm,
             )
         }

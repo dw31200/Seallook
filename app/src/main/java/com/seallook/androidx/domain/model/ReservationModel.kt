@@ -1,12 +1,14 @@
 package com.seallook.androidx.domain.model
 
 import com.seallook.androidx.data.model.Reservation
+import java.util.Date
 
 data class ReservationModel(
-    val id: Int,
+    val id: String,
     val counselorEmail: String,
-    val scheduleId: Int,
+    val scheduleId: String,
     val clientEmail: String,
+    val date: Date,
     val confirm: Boolean,
 ) {
     fun toDataModel(): Reservation {
@@ -15,6 +17,7 @@ data class ReservationModel(
             counselorEmail = counselorEmail,
             scheduleId = scheduleId,
             clientEmail = clientEmail,
+            date = date,
             confirm = confirm,
         )
     }
@@ -26,6 +29,7 @@ data class ReservationModel(
                 counselorEmail = reservation.counselorEmail,
                 scheduleId = reservation.scheduleId,
                 clientEmail = reservation.clientEmail,
+                date = reservation.date,
                 confirm = reservation.confirm,
             )
         }
