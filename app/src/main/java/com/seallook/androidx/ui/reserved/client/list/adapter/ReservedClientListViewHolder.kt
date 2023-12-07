@@ -12,6 +12,15 @@ class ReservedClientListViewHolder(
     fun bind(reservedClientItem: ReservationUiModel) {
         with(binding) {
             data = reservedClientItem
+            reservedClientEmailText.text = reservedClientItem.clientEmail
+            reservedClientDateText.text = reservedClientItem.date.toString()
+            if (reservedClientItem.confirm) {
+                reservedClientConfirmText.text = "예약 승인"
+                reservedClientConfirmButton.text = "취소하기"
+            } else {
+                reservedClientConfirmText.text = "예약 미승인"
+                reservedClientConfirmButton.text = "승인하기"
+            }
         }
     }
 
