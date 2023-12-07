@@ -8,4 +8,6 @@ interface ReservationApiService {
     suspend fun getCounselorList(email: String): List<ReservationResponse>
 
     suspend fun set(reservation: ReservationResponse)
+
+    suspend fun update(id: String, confirm: Boolean)
 }

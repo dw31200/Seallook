@@ -8,4 +8,6 @@ interface ReservationRepository {
     suspend fun getCounselorList(email: String): List<Reservation>
 
     suspend fun set(reservation: Reservation)
+
+    suspend fun update(id: String, confirm: Boolean)
 }

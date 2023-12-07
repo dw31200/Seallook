@@ -56,4 +56,11 @@ class ReservationApiServiceImpl @Inject constructor(
             .set(setReservation)
             .await()
     }
+
+    override suspend fun update(id: String, confirm: Boolean) {
+        db.collection(Constants.RESERVATION)
+            .document(id)
+            .update("confirm", confirm)
+            .await()
+    }
 }
