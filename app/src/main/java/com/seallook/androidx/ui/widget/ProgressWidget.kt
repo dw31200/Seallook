@@ -3,6 +3,7 @@ package com.seallook.androidx.ui.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -58,6 +59,11 @@ class ProgressWidget @JvmOverloads constructor(
                 .setView(binding.root)
                 .setCancelable(false)
                 .create()
+
+            if (binding.root.parent != null) {
+                (binding.root.parent as ViewGroup).removeView(binding.root)
+            }
+
             progressDialog?.show()
         } else {
             progressDialog?.dismiss()

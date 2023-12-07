@@ -23,5 +23,12 @@
             bind:setClientList="@{vm.reservedClientList}"
             tools:listitem="@layout/reserved_client_list_item" />
 
+        <com.seallook.androidx.ui.widget.ProgressWidget
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            bind:setMessage="@{vm.progressMessage}"
+            bind:setProgressVisible="@{vm.isShowProgress}"
+            bind:showFailMessage="@{vm.isShowFailMessage}" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
