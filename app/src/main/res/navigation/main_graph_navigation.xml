@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_homeFragment_to_reserveCounselingFragment"
             app:destination="@id/reserveCounselingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_reservedClientListFragment"
+            app:destination="@id/reservedClientListFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchCounselorFragment"
@@ -146,4 +149,8 @@
             android:defaultValue="true" />
     </fragment>
     <include app:graph="@navigation/splash_navigation" />
+    <fragment
+        android:id="@+id/reservedClientListFragment"
+        android:name="com.seallook.androidx.ui.reserved.client.list.ReservedClientListFragment"
+        android:label="ReservedClientListFragment" />
 </navigation>
