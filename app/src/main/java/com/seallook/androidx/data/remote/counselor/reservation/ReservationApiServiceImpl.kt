@@ -9,11 +9,26 @@ import javax.inject.Inject
 class ReservationApiServiceImpl @Inject constructor(
     private val db: FirebaseFirestore,
 ) : ReservationApiService {
-    override suspend fun getList(email: String): List<ReservationResponse> {
+    override suspend fun getClientList(email: String): List<ReservationResponse> {
         val list = mutableListOf<ReservationResponse>()
-        val documentListResponse = db.collection(Constants.COUNSELORS)
-            .document(email)
-            .collection(Constants.RESERVATION)
+        val documentListResponse = db.collection(Constants.RESERVATION)
+            .whereEqualTo("counselorEmail", email)
+            .get()
+            .await()
+        if (!documentListResponse.isEmpty) {
+            for (document in documentListResponse) {
+                if (document.exists()) {
+                    ReservationResponse(document)?.let { list.add(it) }
+                }
+            }
+        }
+        return list
+    }
+
+    override suspend fun getCounselorList(email: String): List<ReservationResponse> {
+        val list = mutableListOf<ReservationResponse>()
+        val documentListResponse = db.collection(Constants.RESERVATION)
+            .whereEqualTo("clientEmail", email)
             .get()
             .await()
         if (!documentListResponse.isEmpty) {

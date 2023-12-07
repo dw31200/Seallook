@@ -7,8 +7,14 @@ import javax.inject.Inject
 class ReservationRepositoryImpl @Inject constructor(
     private val reservationApiService: ReservationApiService,
 ) : ReservationRepository {
-    override suspend fun getList(email: String): List<Reservation> {
-        return reservationApiService.getList(email).map {
+    override suspend fun getClientList(email: String): List<Reservation> {
+        return reservationApiService.getClientList(email).map {
+            Reservation(it)
+        }
+    }
+
+    override suspend fun getCounselorList(email: String): List<Reservation> {
+        return reservationApiService.getCounselorList(email).map {
             Reservation(it)
         }
     }
