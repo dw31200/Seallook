@@ -25,7 +25,20 @@ class ReservedClientListViewModel @Inject constructor(
     val reservedClientList: LiveData<List<ReservationUiModel>>
         get() = _reservedClientList
 
+    private val _progressMessage = MutableLiveData<String>()
+    val progressMessage: LiveData<String>
+        get() = _progressMessage
+
+    private val _isShowProgress = MutableLiveData<Boolean>()
+    val isShowProgress: LiveData<Boolean>
+        get() = _isShowProgress
+
+    private val _isShowFailMessage = MutableLiveData<String>()
+    val isShowFailMessage: LiveData<String>
+        get() = _isShowFailMessage
+
     init {
+        _progressMessage.value = "업데이트 중입니다."
         fetchData()
     }
 
@@ -41,12 +54,15 @@ class ReservedClientListViewModel @Inject constructor(
 
     override fun updateConfirm(id: String, confirm: Boolean) {
         viewModelScope.launch {
+            _isShowProgress.value = true
             updateReservedClientConfirmUseCase(id, confirm)
                 .onSuccess {
+                    _isShowProgress.value = false
                     fetchData()
                 }
                 .onFailure {
-                    Unit
+                    _isShowProgress.value = false
+                    _isShowFailMessage.value = "업데이트 실패했습니다."
                 }
         }
     }
