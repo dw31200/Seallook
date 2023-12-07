@@ -35,6 +35,10 @@ class HomeFragment :
                 val action = HomeFragmentDirections.actionHomeFragmentToSearchCounselorFragment()
                 navigate(action)
             }
+            reservedClientListButton.setOnClickListener {
+                val action = HomeFragmentDirections.actionHomeFragmentToReservedClientListFragment()
+                navigate(action)
+            }
         }
     }
 
