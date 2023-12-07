@@ -9,3 +9,8 @@ import com.seallook.androidx.ui.reserved.client.list.adapter.ReservedClientListA
 fun RecyclerView.setList(list: List<ReservationUiModel>?) {
     (adapter as? ReservedClientListAdapter)?.fetchData(list ?: emptyList())
 }
+
+@BindingAdapter("bind:updateConfirm")
+fun RecyclerView.updateConfirm(reservedClientUpdateConfirm: ReservedClientUpdateConfirm) {
+    (adapter as? ReservedClientListAdapter)?.reservedClientUpdateConfirm = reservedClientUpdateConfirm
+}

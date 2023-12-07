@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            bind:updateConfirm="@{vm}"
             bind:setClientList="@{vm.reservedClientList}"
             tools:listitem="@layout/reserved_client_list_item" />
 
