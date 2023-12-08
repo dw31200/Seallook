@@ -13,8 +13,8 @@ class ReservationRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCounselorList(email: String): List<Reservation> {
-        return reservationApiService.getCounselorList(email).map {
+    override suspend fun getCounselingList(email: String): List<Reservation> {
+        return reservationApiService.getCounselingList(email).map {
             Reservation(it)
         }
     }
