@@ -35,14 +35,11 @@ class HomeFragment :
                 val action = HomeFragmentDirections.actionHomeFragmentToSearchCounselorFragment()
                 navigate(action)
             }
-//            reservedClientListButton.setOnClickListener {
-//                val action = HomeFragmentDirections.actionHomeFragmentToReservedClientListFragment()
-//                navigate(action)
-//            }
         }
     }
 
     override fun onEffectCollect(effect: Effect) = Unit
+
     override fun navigateToReserveCounseling(email: String) {
         val action = HomeFragmentDirections.actionHomeFragmentToReserveCounselingFragment(email)
         navigate(action)
@@ -50,6 +47,11 @@ class HomeFragment :
 
     override fun navigateToReservedClient(email: String) {
         val action = HomeFragmentDirections.actionHomeFragmentToReservedClientListFragment(email)
+        navigate(action)
+    }
+
+    override fun navigateToReservedCounseling(email: String) {
+        val action = HomeFragmentDirections.actionHomeFragmentToReservedCounselingListFragment(email)
         navigate(action)
     }
 }
