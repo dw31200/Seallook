@@ -19,11 +19,10 @@
             app:destination="@id/reserveCounselingFragment" />
         <action
             android:id="@+id/action_homeFragment_to_reservedClientListFragment"
-            app:destination="@id/reservedClientListFragment" >
-            <argument
-                android:name="email"
-                app:argType="string" />
-        </action>
+            app:destination="@id/reservedClientListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_reservedCounselingListFragment"
+            app:destination="@id/reservedCounselingListFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchCounselorFragment"
@@ -157,6 +156,14 @@
         android:id="@+id/reservedClientListFragment"
         android:name="com.seallook.androidx.ui.reserved.client.list.ReservedClientListFragment"
         android:label="ReservedClientListFragment" >
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/reservedCounselingListFragment"
+        android:name="com.seallook.androidx.ui.reserved.counseling.list.ReservedCounselingListFragment"
+        android:label="ReservedCounselingListFragment" >
         <argument
             android:name="email"
             app:argType="string" />

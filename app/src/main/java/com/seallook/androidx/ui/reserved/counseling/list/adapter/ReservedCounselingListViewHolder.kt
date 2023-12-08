@@ -1,0 +1,26 @@
+package com.seallook.androidx.ui.reserved.counseling.list.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.seallook.androidx.databinding.ReservedCounselingListItemBinding
+import com.seallook.androidx.ui.model.ReservationUiModel
+
+class ReservedCounselingListViewHolder(
+    private val binding: ReservedCounselingListItemBinding,
+) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(reservedCounselingItem: ReservationUiModel) {
+        with(binding) {
+            data = reservedCounselingItem
+            reservedCounselingEmailText.text = reservedCounselingItem.clientEmail
+            reservedCounselingDateText.text = reservedCounselingItem.date.toString()
+        }
+    }
+
+    companion object {
+        operator fun invoke(parent: ViewGroup): ReservedCounselingListViewHolder {
+            val binding = ReservedCounselingListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return ReservedCounselingListViewHolder(binding)
+        }
+    }
+}

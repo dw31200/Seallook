@@ -24,3 +24,12 @@ fun MaterialButton.setOnReservedClientListButtonClickListener(homeNavigation: Ho
         }
     }
 }
+
+@BindingAdapter("bind:onReservedCounselingListButtonClickListener", "bind:userEmail", requireAll = true)
+fun MaterialButton.setOnReservedCounselingListButtonClickListener(homeNavigation: HomeNavigation, userEmail: String?) {
+    setOnClickListener {
+        if (userEmail != null) {
+            homeNavigation.navigateToReservedCounseling(userEmail)
+        }
+    }
+}
