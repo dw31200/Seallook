@@ -1,9 +1,13 @@
 package com.seallook.androidx.ui.reserved.client.list
 
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.seallook.androidx.ui.model.ReservationUiModel
 import com.seallook.androidx.ui.reserved.client.list.adapter.ReservedClientListAdapter
+import java.text.SimpleDateFormat
+import java.util.Date
 
 @BindingAdapter("bind:setClientList")
 fun RecyclerView.setList(list: List<ReservationUiModel>?) {
@@ -13,4 +17,28 @@ fun RecyclerView.setList(list: List<ReservationUiModel>?) {
 @BindingAdapter("bind:updateConfirm")
 fun RecyclerView.updateConfirm(reservedClientUpdateConfirm: ReservedClientUpdateConfirm) {
     (adapter as? ReservedClientListAdapter)?.reservedClientUpdateConfirm = reservedClientUpdateConfirm
+}
+
+@BindingAdapter("bind:setReservedClintDate")
+fun TextView.setDate(date: Date) {
+    val formatter = SimpleDateFormat("yyyy.MM.dd HH:mm")
+    text = formatter.format(date)
+}
+
+@BindingAdapter("bind:setReservedClintConfirm")
+fun TextView.setConfirm(confirm: Boolean) {
+    if (confirm) {
+        text = "예약 확정"
+    } else {
+        text = "예약 미확정"
+    }
+}
+
+@BindingAdapter("bind:setReservedClintConfirmButton")
+fun MaterialButton.setReservedClintConfirmButton(confirm: Boolean) {
+    if (confirm) {
+        text = "취소하기"
+    } else {
+        text = "승인하기"
+    }
 }
