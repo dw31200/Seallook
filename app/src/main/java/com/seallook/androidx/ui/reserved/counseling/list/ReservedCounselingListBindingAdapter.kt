@@ -13,13 +13,13 @@ fun RecyclerView.setList(list: List<ReservationUiModel>?) {
     (adapter as? ReservedCounselingListAdapter)?.fetchData(list ?: emptyList())
 }
 
-@BindingAdapter("bind:setDate")
+@BindingAdapter("bind:setReservedCounselingDate")
 fun TextView.setDate(date: Date) {
     val formatter = SimpleDateFormat("yyyy.MM.dd HH:mm")
     text = formatter.format(date)
 }
 
-@BindingAdapter("bind:setConfirm")
+@BindingAdapter("bind:setReservedCounselingConfirm")
 fun TextView.setConfirm(confirm: Boolean) {
     if (confirm) {
         text = "예약 확정"

@@ -32,7 +32,8 @@
                 android:layout_margin="10dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="예약자 이메일"/>
+                android:text="@{data.clientEmail}"
+                tools:text="예약자 이메일"/>
 
             <TextView
                 android:id="@+id/reserved_client_date_text"
@@ -44,6 +45,7 @@
                 app:layout_constraintHorizontal_weight="2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                bind:setReservedClintDate="@{data.date}"
                 android:text="예약 날짜"/>
 
             <TextView
@@ -56,6 +58,7 @@
                 app:layout_constraintHorizontal_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                bind:setReservedClintConfirm="@{data.confirm}"
                 android:text="예약 미확정"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -67,7 +70,8 @@
             android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="예약 확정"/>
+            bind:setReservedClintConfirmButton="@{data.confirm}"
+            tools:text="승인하기"/>
 
         <View
             bind:layout_constraintStart_toStartOf="parent"
