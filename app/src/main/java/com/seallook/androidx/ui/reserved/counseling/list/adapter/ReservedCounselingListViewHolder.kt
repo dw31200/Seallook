@@ -12,8 +12,6 @@ class ReservedCounselingListViewHolder(
     fun bind(reservedCounselingItem: ReservationUiModel) {
         with(binding) {
             data = reservedCounselingItem
-            reservedCounselingEmailText.text = reservedCounselingItem.counselorEmail
-            reservedCounselingDateText.text = reservedCounselingItem.date.toString()
         }
     }
 
