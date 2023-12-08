@@ -44,7 +44,7 @@
                 app:layout_constraintHorizontal_weight="2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                bind:setReservedCounselingDate="@{data.date}"
+                android:text="@{data.date}"
                 tools:text="예약 날짜"/>
 
             <TextView

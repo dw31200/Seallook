@@ -2,14 +2,13 @@ package com.seallook.androidx.data.model
 
 import com.seallook.androidx.data.local.model.ReservationEntity
 import com.seallook.androidx.data.remote.model.ReservationResponse
-import java.util.Date
 
 data class Reservation(
     val id: String,
     val counselorEmail: String,
     val scheduleId: String,
     val clientEmail: String,
-    val date: Date,
+    val date: String,
     val confirm: Boolean,
 ) {
     fun toLocalModel(): ReservationEntity {

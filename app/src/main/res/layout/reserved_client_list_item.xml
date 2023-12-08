@@ -45,8 +45,8 @@
                 app:layout_constraintHorizontal_weight="2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                bind:setReservedClintDate="@{data.date}"
-                android:text="예약 날짜"/>
+                android:text="@{data.date}"
+                tools:text="예약 날짜"/>
 
             <TextView
                 android:id="@+id/reserved_client_confirm_text"

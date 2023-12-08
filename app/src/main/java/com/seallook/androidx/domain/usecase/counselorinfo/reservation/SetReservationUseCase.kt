@@ -2,7 +2,6 @@ package com.seallook.androidx.domain.usecase.counselorinfo.reservation
 
 import com.seallook.androidx.data.repository.counselor.reservation.ReservationRepository
 import com.seallook.androidx.domain.model.ReservationModel
-import java.util.Date
 import javax.inject.Inject
 
 class SetReservationUseCase @Inject constructor(
@@ -33,7 +32,7 @@ class SetReservationUseCase @Inject constructor(
         val counselorEmail: String?,
         val scheduleId: String?,
         val clientEmail: String?,
-        val date: Date?,
+        val date: String?,
         val confirm: Boolean?,
     )
 }

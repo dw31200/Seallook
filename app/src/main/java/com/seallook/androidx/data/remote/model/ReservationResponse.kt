@@ -1,17 +1,16 @@
 package com.seallook.androidx.data.remote.model
 
 import com.google.firebase.firestore.DocumentSnapshot
-import java.util.Date
 
 data class ReservationResponse(
     val id: String,
     val counselorEmail: String,
     val scheduleId: String,
     val clientEmail: String,
-    val date: Date,
+    val date: String,
     val confirm: Boolean,
 ) {
-    constructor() : this("", "", "", "", Date(), false)
+    constructor() : this("", "", "", "", "", false)
 
     companion object {
         operator fun invoke(snapshot: DocumentSnapshot): ReservationResponse? {

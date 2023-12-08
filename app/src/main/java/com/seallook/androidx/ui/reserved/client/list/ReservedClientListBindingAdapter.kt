@@ -6,8 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.seallook.androidx.ui.model.ReservationUiModel
 import com.seallook.androidx.ui.reserved.client.list.adapter.ReservedClientListAdapter
-import java.text.SimpleDateFormat
-import java.util.Date
 
 @BindingAdapter("bind:setClientList")
 fun RecyclerView.setList(list: List<ReservationUiModel>?) {
@@ -17,12 +15,6 @@ fun RecyclerView.setList(list: List<ReservationUiModel>?) {
 @BindingAdapter("bind:updateConfirm")
 fun RecyclerView.updateConfirm(reservedClientUpdateConfirm: ReservedClientUpdateConfirm) {
     (adapter as? ReservedClientListAdapter)?.reservedClientUpdateConfirm = reservedClientUpdateConfirm
-}
-
-@BindingAdapter("bind:setReservedClintDate")
-fun TextView.setDate(date: Date) {
-    val formatter = SimpleDateFormat("yyyy.MM.dd HH:mm")
-    text = formatter.format(date)
 }
 
 @BindingAdapter("bind:setReservedClintConfirm")
