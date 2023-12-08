@@ -14,6 +14,7 @@ import com.seallook.androidx.ui.model.CounselingScheduleUiModel
 import com.seallook.androidx.ui.reserve.counseling.calendar.ReserveCounselingSelectDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.Date
@@ -78,6 +79,7 @@ class ReserveCounselingViewModel @Inject constructor(
         viewModelScope.launch {
             val instant = selectedDate.value?.atStartOfDay(ZoneId.systemDefault())?.toInstant()
             val date = Date.from(instant)
+            val formatter = SimpleDateFormat("yyyy.MM.dd")
             setReservationUseCase(
                 SetReservationUseCase.Params(
 //                    sdw312 임시 id값
@@ -85,7 +87,7 @@ class ReserveCounselingViewModel @Inject constructor(
                     email,
                     selectedSchedule.value?.id,
                     clientEmail.value,
-                    date,
+                    formatter.format(date) + " " + selectedSchedule.value?.time,
                     false,
                 ),
             )

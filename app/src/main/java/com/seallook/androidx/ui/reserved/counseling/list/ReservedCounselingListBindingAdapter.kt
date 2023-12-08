@@ -5,18 +5,10 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.seallook.androidx.ui.model.ReservationUiModel
 import com.seallook.androidx.ui.reserved.counseling.list.adapter.ReservedCounselingListAdapter
-import java.text.SimpleDateFormat
-import java.util.Date
 
 @BindingAdapter("bind:setCounselingList")
 fun RecyclerView.setList(list: List<ReservationUiModel>?) {
     (adapter as? ReservedCounselingListAdapter)?.fetchData(list ?: emptyList())
-}
-
-@BindingAdapter("bind:setReservedCounselingDate")
-fun TextView.setDate(date: Date) {
-    val formatter = SimpleDateFormat("yyyy.MM.dd HH:mm")
-    text = formatter.format(date)
 }
 
 @BindingAdapter("bind:setReservedCounselingConfirm")

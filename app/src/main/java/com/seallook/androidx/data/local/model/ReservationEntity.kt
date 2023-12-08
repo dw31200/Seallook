@@ -2,7 +2,6 @@ package com.seallook.androidx.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.Date
 
 @Entity("Reservation")
 data class ReservationEntity(
@@ -11,6 +10,6 @@ data class ReservationEntity(
     val counselorEmail: String,
     val scheduleId: String,
     val clientEmail: String,
-    val date: Date,
+    val date: String,
     val confirm: Boolean,
 )
