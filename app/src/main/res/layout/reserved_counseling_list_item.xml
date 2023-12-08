@@ -31,7 +31,8 @@
                 android:layout_margin="10dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="예약자 이메일"/>
+                android:text="@{data.counselorEmail}"
+                tools:text="예약자 이메일"/>
 
             <TextView
                 android:id="@+id/reserved_counseling_date_text"
@@ -43,7 +44,8 @@
                 app:layout_constraintHorizontal_weight="2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="예약 날짜"/>
+                bind:setDate="@{data.date}"
+                tools:text="예약 날짜"/>
 
             <TextView
                 android:id="@+id/reserved_counseling_confirm_text"
@@ -55,7 +57,8 @@
                 app:layout_constraintHorizontal_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="예약 미확정"/>
+                bind:setConfirm="@{data.confirm}"
+                tools:text="예약 미확정"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
