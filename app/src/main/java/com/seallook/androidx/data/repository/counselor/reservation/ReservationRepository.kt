@@ -10,6 +10,8 @@ interface ReservationRepository {
 
     fun onCounselingListSnapshot(email: String): Flow<List<Reservation>>
 
+    fun onClientListSnapshot(email: String): Flow<List<Reservation>>
+
     suspend fun set(reservation: Reservation)
 
     suspend fun update(id: String, confirm: Boolean)

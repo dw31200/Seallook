@@ -29,6 +29,14 @@ class ReservationRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun onClientListSnapshot(email: String): Flow<List<Reservation>> {
+        return reservationApiService.onClientListSnapshot(email).map {
+            it.map {
+                Reservation(it)
+            }
+        }
+    }
+
     override suspend fun set(reservation: Reservation) {
         reservationApiService.set(reservation.toRemoteModel())
     }
