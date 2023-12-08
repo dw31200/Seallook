@@ -25,7 +25,7 @@ class ReservationApiServiceImpl @Inject constructor(
         return list
     }
 
-    override suspend fun getCounselorList(email: String): List<ReservationResponse> {
+    override suspend fun getCounselingList(email: String): List<ReservationResponse> {
         val list = mutableListOf<ReservationResponse>()
         val documentListResponse = db.collection(Constants.RESERVATION)
             .whereEqualTo("clientEmail", email)

@@ -6,11 +6,11 @@ import dagger.Reusable
 import javax.inject.Inject
 
 @Reusable
-class GetReservedCounselorListUseCase @Inject constructor(
+class GetReservedCounselingListUseCase @Inject constructor(
     private val reservationRepository: ReservationRepository,
 ) {
     suspend operator fun invoke(email: String): List<ReservationModel> {
-        return reservationRepository.getCounselorList(email).map {
+        return reservationRepository.getCounselingList(email).map {
             ReservationModel(it)
         }
     }

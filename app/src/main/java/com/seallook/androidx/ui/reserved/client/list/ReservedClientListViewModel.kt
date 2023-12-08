@@ -21,6 +21,7 @@ class ReservedClientListViewModel @Inject constructor(
 ) : BaseViewModel<Effect>(),
     ReservedClientUpdateConfirm {
     var email = savedStateHandle.get<String>("email")
+
     private val _reservedClientList = MutableLiveData<List<ReservationUiModel>>()
     val reservedClientList: LiveData<List<ReservationUiModel>>
         get() = _reservedClientList
