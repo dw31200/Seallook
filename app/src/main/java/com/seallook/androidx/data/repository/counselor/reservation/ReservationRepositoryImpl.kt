@@ -1,5 +1,6 @@
 package com.seallook.androidx.data.repository.counselor.reservation
 
+import com.seallook.androidx.data.local.ReservationDao
 import com.seallook.androidx.data.model.Reservation
 import com.seallook.androidx.data.remote.counselor.reservation.ReservationApiService
 import kotlinx.coroutines.flow.Flow
@@ -8,16 +9,21 @@ import javax.inject.Inject
 
 class ReservationRepositoryImpl @Inject constructor(
     private val reservationApiService: ReservationApiService,
+    private val reservationDao: ReservationDao,
 ) : ReservationRepository {
-    override suspend fun getClientList(email: String): List<Reservation> {
-        return reservationApiService.getClientList(email).map {
-            Reservation(it)
+    override fun getClientList(email: String): Flow<List<Reservation>> {
+        return reservationDao.getClientList(email).map {
+            it.map {
+                Reservation(it)
+            }
         }
     }
 
-    override suspend fun getCounselingList(email: String): List<Reservation> {
-        return reservationApiService.getCounselingList(email).map {
-            Reservation(it)
+    override fun getCounselingList(email: String): Flow<List<Reservation>> {
+        return reservationDao.getCounselingList(email).map {
+            it.map {
+                Reservation(it)
+            }
         }
     }
 
@@ -35,6 +41,18 @@ class ReservationRepositoryImpl @Inject constructor(
                 Reservation(it)
             }
         }
+    }
+
+    override suspend fun insert(reservation: Reservation) {
+        reservationDao.insert(reservation.toLocalModel())
+    }
+
+    override suspend fun insert(reservationList: List<Reservation>) {
+        reservationDao.insert(
+            reservationList.map {
+                it.toLocalModel()
+            },
+        )
     }
 
     override suspend fun set(reservation: Reservation) {

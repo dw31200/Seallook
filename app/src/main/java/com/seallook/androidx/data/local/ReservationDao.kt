@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.seallook.androidx.data.local.model.ReservationEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ReservationDao {
@@ -16,10 +17,16 @@ interface ReservationDao {
     suspend fun insert(reservationList: List<ReservationEntity>)
 
     @Query("SELECT * FROM Reservation ORDER BY ID ASC")
-    suspend fun getAll(): List<ReservationEntity>
+    fun getAll(): Flow<List<ReservationEntity>>
+
+    @Query("SELECT * FROM Reservation WHERE counselorEmail = :email")
+    fun getClientList(email: String): Flow<List<ReservationEntity>>
+
+    @Query("SELECT * FROM Reservation WHERE clientEmail = :email")
+    fun getCounselingList(email: String): Flow<List<ReservationEntity>>
 
     @Query("SELECT * FROM Reservation WHERE ID = :id")
-    suspend fun getItem(id: Int): ReservationEntity?
+    fun getItem(id: Int): Flow<ReservationEntity?>
 
     @Update
     suspend fun update(reservation: ReservationEntity)

@@ -4,13 +4,17 @@ import com.seallook.androidx.data.model.Reservation
 import kotlinx.coroutines.flow.Flow
 
 interface ReservationRepository {
-    suspend fun getClientList(email: String): List<Reservation>
+    fun getClientList(email: String): Flow<List<Reservation>>
 
-    suspend fun getCounselingList(email: String): List<Reservation>
+    fun getCounselingList(email: String): Flow<List<Reservation>>
 
     fun onCounselingListSnapshot(email: String): Flow<List<Reservation>>
 
     fun onClientListSnapshot(email: String): Flow<List<Reservation>>
+
+    suspend fun insert(reservation: Reservation)
+
+    suspend fun insert(reservationList: List<Reservation>)
 
     suspend fun set(reservation: Reservation)
 

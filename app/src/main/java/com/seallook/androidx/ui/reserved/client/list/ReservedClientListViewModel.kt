@@ -6,7 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.seallook.androidx.base.Effect
-import com.seallook.androidx.domain.usecase.reserved.GetReservedClientListSnapshotUseCase
+import com.seallook.androidx.domain.usecase.reserved.GetReservedClientListUseCase
 import com.seallook.androidx.domain.usecase.reserved.UpdateReservedClientConfirmUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.model.ReservationUiModel
@@ -18,14 +18,14 @@ import javax.inject.Inject
 @HiltViewModel
 class ReservedClientListViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getReservedClientListSnapshotUseCase: GetReservedClientListSnapshotUseCase,
+    private val getReservedClientListUseCase: GetReservedClientListUseCase,
     private val updateReservedClientConfirmUseCase: UpdateReservedClientConfirmUseCase,
 ) : BaseViewModel<Effect>(),
     ReservedClientUpdateConfirm {
     var email = savedStateHandle.get<String>("email")
     val reservedClientList: LiveData<List<ReservationUiModel>>? =
         email?.let {
-            getReservedClientListSnapshotUseCase(it).map {
+            getReservedClientListUseCase(it).map {
                 it.map {
                     ReservationUiModel(it)
                 }
