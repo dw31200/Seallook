@@ -69,7 +69,7 @@
                 android:layout_marginHorizontal="15dp"
                 android:text="상담 신청 내역"
                 bind:onReservedCounselingListButtonClickListener="@{navigation}"
-                bind:userEmail="@{vm.currentUser.email}"
+                bind:userEmail="@{vm.userType.email}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/reserve_counseling_button"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -103,7 +103,7 @@
                 android:layout_marginHorizontal="15dp"
                 android:text="상담 신청 내역"
                 bind:onReservedClientListButtonClickListener="@{navigation}"
-                bind:userEmail="@{vm.currentUser.email}"
+                bind:userEmail="@{vm.userType.email}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/edit_diary_button"
                 app:layout_constraintTop_toTopOf="parent" />
