@@ -80,4 +80,12 @@ object LocalModule {
     ): UidDao {
         return database.uidDao()
     }
+
+    @Singleton
+    @Provides
+    fun provideUserDao(
+        database: SealLookDatabase,
+    ): UserTypeDao {
+        return database.userDao()
+    }
 }

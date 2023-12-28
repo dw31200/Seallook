@@ -13,8 +13,9 @@ import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.SetProfileUseCase
 import com.seallook.androidx.domain.usecase.SignUpUseCase
+import com.seallook.androidx.domain.usecase.usertype.UpdateUserTypeUseCase
 import com.seallook.androidx.share.Gender
-import com.seallook.androidx.share.UserType
+import com.seallook.androidx.share.UserTypeOption
 import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.model.ProfileUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,9 +28,10 @@ class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val setProfileUseCase: SetProfileUseCase,
+    private val updateUserTypeUseCase: UpdateUserTypeUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<SignUpEffect>() {
-    val signUpType = savedStateHandle.get<UserType>("selectSignUpType")
+    val signUpType = savedStateHandle.get<UserTypeOption>("selectSignUpType")
 
     private val _currentUser = MutableLiveData<FirebaseUser?>()
     val currentUser: LiveData<FirebaseUser?>
@@ -222,7 +224,19 @@ class SignUpViewModel @Inject constructor(
                 setProfileUseCase(it, profile.toDomainModel())
                     .onSuccess {
                         _isShowProgress.value = false
-                        setEffect(SignUpEffect.NavigateToHome)
+                        updateUserTypeUseCase(
+                            UpdateUserTypeUseCase.Params(
+                                profile.email,
+                                profile.userType,
+                            ),
+                        )
+                            .onSuccess {
+                                setEffect(SignUpEffect.NavigateToHome)
+                            }
+                            .onFailure {
+                                _isShowProgress.value = false
+                                _isShowFailMessage.value = "회원가입에 실패했습니다."
+                            }
                     }
                     .onFailure {
                         _isShowProgress.value = false

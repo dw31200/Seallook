@@ -1,6 +1,7 @@
 package com.seallook.androidx.data.local.model
 
 import androidx.room.TypeConverter
+import com.seallook.androidx.share.UserTypeOption
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.util.Date
@@ -29,5 +30,15 @@ class Converters {
     @TypeConverter
     fun intToRepeatedDay(int: Int): DayOfWeek {
         return DayOfWeek.values()[int]
+    }
+
+    @TypeConverter
+    fun userTypeToInt(userTypeOption: UserTypeOption): Int {
+        return userTypeOption.ordinal
+    }
+
+    @TypeConverter
+    fun intToUserType(int: Int): UserTypeOption {
+        return UserTypeOption.values()[int]
     }
 }

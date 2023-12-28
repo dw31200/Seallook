@@ -7,12 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.base.Effect
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
-import com.seallook.androidx.domain.usecase.GetUserTypeUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetCounselorInfoListUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.RefreshCounselorInfoListUseCase
+import com.seallook.androidx.domain.usecase.usertype.GetUserTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.model.CounselorInfoUiModel
-import com.seallook.androidx.ui.model.ProfileUiModel
+import com.seallook.androidx.ui.model.UserTypeUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -22,16 +22,18 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val refreshCounselorInfoListUseCase: RefreshCounselorInfoListUseCase,
     getCounselorInfoListUseCase: GetCounselorInfoListUseCase,
-    private val getUserTypeUseCase: GetUserTypeUseCase,
+    getUserTypeUseCase: GetUserTypeUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
 ) : BaseViewModel<Effect>() {
     private val _currentUser = MutableLiveData<FirebaseUser?>()
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
 
-    private val _userType = MutableLiveData<ProfileUiModel?>()
-    val userType: LiveData<ProfileUiModel?>
-        get() = _userType
+    val userType: LiveData<UserTypeUiModel?> = getUserTypeUseCase().map {
+        it?.let {
+            UserTypeUiModel(it)
+        }
+    }.asLiveData()
 
     val counselorInfoList: LiveData<List<CounselorInfoUiModel>> =
         getCounselorInfoListUseCase()
@@ -45,11 +47,6 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             refreshCounselorInfoListUseCase()
             _currentUser.value = getCurrentUserUseCase()
-            _userType.value = currentUser.value?.uid?.let {
-                getUserTypeUseCase(it)?.let {
-                    ProfileUiModel(it)
-                }
-            }
         }
     }
 }

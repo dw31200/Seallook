@@ -7,7 +7,7 @@
             name="vm"
             type="com.seallook.androidx.ui.mypage.MypageViewModel" />
 
-        <import type="com.seallook.androidx.share.UserType" />
+        <import type="com.seallook.androidx.share.UserTypeOption" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -44,7 +44,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/setting_button"
-            bind:visible="@{vm.userType.userType == UserType.CLIENT.ordinal}">
+            bind:visible="@{vm.userType.userType == UserTypeOption.CLIENT}">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/reserved_counseling_list_button"
@@ -74,7 +74,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mypage_client_type_layout"
-            bind:visible="@{vm.userType.userType == UserType.COUNSELOR.ordinal}">
+            bind:visible="@{vm.userType.userType == UserTypeOption.COUNSELOR}">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/edit_counselor_info"
@@ -95,7 +95,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mypage_counselor_type_layout"
-            bind:visible="@{vm.userType.userType == UserType.OFFICE.ordinal}">
+            bind:visible="@{vm.userType.userType == UserTypeOption.OFFICE}">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/sales_list_button"
@@ -134,7 +134,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mypage_office_type_layout"
-            bind:visible="@{vm.userType.userType == UserType.COUNSELOR.ordinal}">
+            bind:visible="@{vm.userType.userType == UserTypeOption.COUNSELOR}">
 
             <TextView
                 android:id="@+id/counseling_list_text"

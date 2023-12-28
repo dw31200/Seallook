@@ -4,33 +4,36 @@ import android.content.Intent
 import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
 import com.seallook.androidx.BR
-import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentSplashBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel, Effect>(
+class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel, SplashEffect>(
     FragmentSplashBinding::inflate,
 ) {
     override val viewModel: SplashViewModel by viewModels()
 
     override fun viewModelVariableId(): Int = BR.vm
 
-    override fun onViewCreatedAfterBinding() {
+    override fun onViewCreatedAfterBinding() = Unit
+
+    override fun onEffectCollect(effect: SplashEffect) {
         val extras = ActivityNavigator.Extras.Builder()
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .build()
 
-        viewModel.currentUser.observe(viewLifecycleOwner) {
-            if (it != null) {
+        when (effect) {
+            SplashEffect.NavigateToMain -> {
                 val action = SplashFragmentDirections.actionSplashFragmentToMainGraphActivity()
                 navigate(
                     action,
                     extras,
                 )
-            } else {
+            }
+
+            SplashEffect.NavigateToAuth -> {
                 val action = SplashFragmentDirections.actionSplashFragmentToAuthActivity()
                 navigate(
                     action,
@@ -39,6 +42,4 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel, Effe
             }
         }
     }
-
-    override fun onEffectCollect(effect: Effect) = Unit
 }
