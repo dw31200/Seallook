@@ -20,7 +20,11 @@ annotation class BeginSignInResultQualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class BaseUrl
+annotation class NaverBaseUrl
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class KakaoBaseUrl
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
