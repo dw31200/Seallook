@@ -4,7 +4,7 @@ import androidx.fragment.app.viewModels
 import com.seallook.androidx.BR
 import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentSelectSignUpBinding
-import com.seallook.androidx.share.UserType
+import com.seallook.androidx.share.UserTypeOption
 import com.seallook.androidx.ui.base.BaseFragment
 
 /* TODO
@@ -26,7 +26,7 @@ class SelectSignUpTypeFragment :
 
     override fun onEffectCollect(effect: Effect) = Unit
 
-    override fun navigateToSignUp(selectSignUpType: UserType) {
+    override fun navigateToSignUp(selectSignUpType: UserTypeOption) {
         val action = SelectSignUpTypeFragmentDirections.actionSelectSignUpTypeFragmentToSignUpFragment(selectSignUpType)
         navigate(action)
     }

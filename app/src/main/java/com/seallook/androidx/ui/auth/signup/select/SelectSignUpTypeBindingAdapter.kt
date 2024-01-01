@@ -2,23 +2,23 @@ package com.seallook.androidx.ui.auth.signup.select
 
 import androidx.databinding.BindingAdapter
 import com.google.android.material.button.MaterialButton
-import com.seallook.androidx.share.UserType
+import com.seallook.androidx.share.UserTypeOption
 
 @BindingAdapter("bind:setOnClickUserType", "bind:userType", requireAll = true)
 fun MaterialButton.setOnClickUserType(
     navigation: SelectSignUpTypeNavigation,
-    userType: UserType,
+    userTypeOption: UserTypeOption,
 ) {
     setOnClickListener {
-        when (userType) {
-            UserType.CLIENT -> {
-                navigation.navigateToSignUp(UserType.CLIENT)
+        when (userTypeOption) {
+            UserTypeOption.CLIENT -> {
+                navigation.navigateToSignUp(UserTypeOption.CLIENT)
             }
-            UserType.COUNSELOR -> {
-                navigation.navigateToSignUp(UserType.COUNSELOR)
+            UserTypeOption.COUNSELOR -> {
+                navigation.navigateToSignUp(UserTypeOption.COUNSELOR)
             }
-            UserType.OFFICE -> {
-                navigation.navigateToSignUp(UserType.OFFICE)
+            UserTypeOption.OFFICE -> {
+                navigation.navigateToSignUp(UserTypeOption.OFFICE)
             }
         }
     }

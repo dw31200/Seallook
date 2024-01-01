@@ -11,6 +11,7 @@ import com.seallook.androidx.data.local.model.OfficeInfoEntity
 import com.seallook.androidx.data.local.model.ProfileEntity
 import com.seallook.androidx.data.local.model.ReservationEntity
 import com.seallook.androidx.data.local.model.UidEntity
+import com.seallook.androidx.data.local.model.UserTypeEntity
 
 @Database(
     entities = [
@@ -21,8 +22,9 @@ import com.seallook.androidx.data.local.model.UidEntity
         CounselorInfoEntity::class,
         ProfileEntity::class,
         UidEntity::class,
+        UserTypeEntity::class,
     ],
-    version = 3,
+    version = 4,
 )
 @TypeConverters(Converters::class)
 abstract class SealLookDatabase : RoomDatabase() {
@@ -39,4 +41,6 @@ abstract class SealLookDatabase : RoomDatabase() {
     abstract fun profileDao(): ProfileDao
 
     abstract fun uidDao(): UidDao
+
+    abstract fun userDao(): UserTypeDao
 }

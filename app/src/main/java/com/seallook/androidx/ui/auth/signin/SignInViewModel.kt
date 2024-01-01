@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.seallook.androidx.domain.usecase.GetProfileUseCase
 import com.seallook.androidx.domain.usecase.SignInWithEmailAndPasswordUseCase
 import com.seallook.androidx.domain.usecase.SignInWithGoogleUseCase
+import com.seallook.androidx.domain.usecase.usertype.UpdateUserTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,28 +18,39 @@ class SignInViewModel @Inject constructor(
     private val signInWithGoogleUseCase: SignInWithGoogleUseCase,
     private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPasswordUseCase,
     private val getProfileUseCase: GetProfileUseCase,
+    private val updateUserTypeUseCase: UpdateUserTypeUseCase,
 ) : BaseViewModel<SignInEffect>() {
     private val _progressMessage = MutableLiveData<String>()
     val progressMessage: LiveData<String>
         get() = _progressMessage
-
     private val _isShowProgress = MutableLiveData<Boolean>()
     val isShowProgress: LiveData<Boolean>
         get() = _isShowProgress
-
     private val _isShowFailMessage = MutableLiveData<String>()
     val isShowFailMessage: LiveData<String>
         get() = _isShowFailMessage
-
     val email = MutableLiveData<String>()
-
     val password = MutableLiveData<String>()
 
     private fun getProfile(uid: String) {
         viewModelScope.launch {
             getProfileUseCase(uid)?.let {
-                setEffect(SignInEffect.NavigateToHome)
+                updateUserTypeUseCase(
+                    UpdateUserTypeUseCase.Params(
+                        it.email,
+                        it.userType,
+                    ),
+                )
+                    .onSuccess {
+                        _isShowProgress.value = false
+                        setEffect(SignInEffect.NavigateToHome)
+                    }
+                    .onFailure {
+                        _isShowProgress.value = false
+                        _isShowFailMessage.value = "로그인에 실패했습니다."
+                    }
             } ?: run {
+                _isShowProgress.value = false
                 setEffect(SignInEffect.NavigateToSignUp)
             }
         }
@@ -52,10 +64,10 @@ class SignInViewModel @Inject constructor(
                 .onSuccess {
                     it.user?.uid?.let { uid ->
                         getProfile(uid)
-                        _isShowProgress.value = false
                     }
                 }
                 .onFailure {
+                    _isShowFailMessage.value = "로그인에 실패했습니다."
                     _isShowProgress.value = false
                 }
         }
@@ -72,8 +84,9 @@ class SignInViewModel @Inject constructor(
                 ),
             )
                 .onSuccess {
-                    _isShowProgress.value = false
-                    setEffect(SignInEffect.NavigateToHome)
+                    it.user?.uid?.let { uid ->
+                        getProfile(uid)
+                    }
                 }
                 .onFailure {
                     Timber.d("$it")

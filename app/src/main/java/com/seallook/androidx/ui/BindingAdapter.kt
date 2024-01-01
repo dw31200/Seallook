@@ -3,6 +3,7 @@ package com.seallook.androidx.ui
 import android.view.View
 import androidx.databinding.BindingAdapter
 import com.google.android.material.textfield.TextInputLayout
+import com.seallook.androidx.share.UserTypeOption
 
 @BindingAdapter("bind:visible")
 fun View.setVisible(visible: Boolean) {
@@ -15,8 +16,8 @@ fun View.setVisibleOr(visible: Boolean) {
 }
 
 @BindingAdapter("bind:userTypeToHint")
-fun TextInputLayout.setHint(userType: Int) {
-    hint = if (userType == 2) "기관명" else "이름"
+fun TextInputLayout.setHint(userType: UserTypeOption) {
+    hint = if (userType == UserTypeOption.OFFICE) "기관명" else "이름"
 }
 
 @BindingAdapter("bind:enable")

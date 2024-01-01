@@ -18,6 +18,8 @@ import com.seallook.androidx.data.repository.counselor.reservation.ReservationRe
 import com.seallook.androidx.data.repository.counselor.reservation.ReservationRepositoryImpl
 import com.seallook.androidx.data.repository.counselor.schedule.CounselingScheduleRepository
 import com.seallook.androidx.data.repository.counselor.schedule.CounselingScheduleRepositoryImpl
+import com.seallook.androidx.data.repository.usertype.UserTypeRepository
+import com.seallook.androidx.data.repository.usertype.UserTypeRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -52,4 +54,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindReservationRepository(reservationRepositoryImpl: ReservationRepositoryImpl): ReservationRepository
+
+    @Binds
+    abstract fun bindUserTypeRepository(userTypeRepositoryImpl: UserTypeRepositoryImpl): UserTypeRepository
 }

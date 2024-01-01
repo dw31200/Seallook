@@ -1,12 +1,12 @@
 package com.seallook.androidx.share
 
 @JvmInline
-value class TypeOption(val value: UserType)
+value class TypeOption(val value: UserTypeOption)
 
 @JvmInline
 value class GenderOption(val value: Gender)
 
-enum class UserType {
+enum class UserTypeOption {
     CLIENT, COUNSELOR, OFFICE,
 }
 

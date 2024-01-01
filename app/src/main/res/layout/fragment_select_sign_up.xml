@@ -12,7 +12,7 @@
             type="com.seallook.androidx.ui.auth.signup.select.SelectSignUpTypeNavigation" />
 
         <import
-            type="com.seallook.androidx.share.UserType"/>
+            type="com.seallook.androidx.share.UserTypeOption"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -28,7 +28,7 @@
             android:textSize="30sp"
             android:text="내담자로 가입하기"
             bind:setOnClickUserType="@{navigation}"
-            bind:userType="@{UserType.CLIENT}"
+            bind:userType="@{UserTypeOption.CLIENT}"
             app:layout_constraintBottom_toTopOf="@id/select_counselor_type_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -42,7 +42,7 @@
             android:textSize="30sp"
             android:text="상담사로 가입하기"
             bind:setOnClickUserType="@{navigation}"
-            bind:userType="@{UserType.COUNSELOR}"
+            bind:userType="@{UserTypeOption.COUNSELOR}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -55,7 +55,7 @@
             android:textSize="30sp"
             android:text="기관으로 가입하기"
             bind:setOnClickUserType="@{navigation}"
-            bind:userType="@{UserType.OFFICE}"
+            bind:userType="@{UserTypeOption.OFFICE}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
