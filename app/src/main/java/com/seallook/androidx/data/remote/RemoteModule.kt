@@ -10,6 +10,9 @@ import com.google.firebase.storage.ktx.storage
 import com.seallook.androidx.BuildConfig
 import com.seallook.androidx.data.remote.api.firebase.storage.FirebaseStorageApiService
 import com.seallook.androidx.data.remote.api.firebase.storage.FirebaseStorageApiServiceImpl
+import com.seallook.androidx.data.remote.api.kakao.KakaoSearchApi
+import com.seallook.androidx.data.remote.api.kakao.KakaoSearchApiService
+import com.seallook.androidx.data.remote.api.kakao.KakaoSearchApiServiceImpl
 import com.seallook.androidx.data.remote.api.naver.NaverSearchApi
 import com.seallook.androidx.data.remote.auth.FirebaseAuthApiService
 import com.seallook.androidx.data.remote.auth.FirebaseAuthApiServiceImpl
@@ -66,6 +69,9 @@ abstract class RemoteModule {
     @Binds
     abstract fun bindReservationApiService(reservationApiServiceImpl: ReservationApiServiceImpl): ReservationApiService
 
+    @Binds
+    abstract fun bindKakaoSearchApiService(kakaoSearchApiServiceImpl: KakaoSearchApiServiceImpl): KakaoSearchApiService
+
     companion object {
         @Singleton
         @Provides
@@ -88,9 +94,13 @@ abstract class RemoteModule {
         @Provides
         fun provideConnectTimeoutPolicy(): Long = 20L
 
-        @BaseUrl
+        @NaverBaseUrl
         @Provides
         fun provideBaseUrl(): String = "https://openapi.naver.com/v1/"
+
+        @KakaoBaseUrl
+        @Provides
+        fun provideKakaoBaseUrl(): String = "https://dapi.kakao.com/"
 
         @Singleton
         @Provides
@@ -128,25 +138,34 @@ abstract class RemoteModule {
 
         @Singleton
         @Provides
-        fun provideRetrofit(
+        fun provideNaverSearchApi(
             okHttpClient: OkHttpClient,
             moshi: Moshi,
-            @BaseUrl baseUrl: String,
-        ): Retrofit {
+            @NaverBaseUrl naverBaseUrl: String,
+        ): NaverSearchApi {
             return Retrofit
                 .Builder()
                 .client(okHttpClient)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .baseUrl(baseUrl)
+                .baseUrl(naverBaseUrl)
                 .build()
+                .create(NaverSearchApi::class.java)
         }
 
         @Singleton
         @Provides
-        fun provideNaverSearchApi(
-            retrofit: Retrofit,
-        ): NaverSearchApi {
-            return retrofit.create(NaverSearchApi::class.java)
+        fun provideKakaoSearchApi(
+            okHttpClient: OkHttpClient,
+            moshi: Moshi,
+            @KakaoBaseUrl kakaoBaseUrl: String,
+        ): KakaoSearchApi {
+            return Retrofit
+                .Builder()
+                .client(okHttpClient)
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .baseUrl(kakaoBaseUrl)
+                .build()
+                .create(KakaoSearchApi::class.java)
         }
     }
 }
