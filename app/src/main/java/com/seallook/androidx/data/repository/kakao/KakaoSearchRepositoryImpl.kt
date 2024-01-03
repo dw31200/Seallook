@@ -7,8 +7,12 @@ import javax.inject.Inject
 class KakaoSearchRepositoryImpl @Inject constructor(
     private val kakaoSearchApiService: KakaoSearchApiService,
 ) : KakaoSearchRepository {
-    override suspend fun getList(query: String): List<KakaoSearch> {
-        return kakaoSearchApiService.getList(query = query)
+    override suspend fun getList(query: String, x: String, y: String): List<KakaoSearch> {
+        return kakaoSearchApiService.getList(
+            query = query,
+            x = x,
+            y = y,
+        )
             .documents
             .map {
                 KakaoSearch(it)

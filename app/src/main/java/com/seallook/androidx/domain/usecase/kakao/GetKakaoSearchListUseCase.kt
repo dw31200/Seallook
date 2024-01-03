@@ -9,9 +9,14 @@ import javax.inject.Inject
 class GetKakaoSearchListUseCase @Inject constructor(
     private val kakaoSearchRepository: KakaoSearchRepository,
 ) {
-    suspend operator fun invoke(query: String): List<KakaoSearchModel> {
-        return kakaoSearchRepository.getList(query = query).map {
-            KakaoSearchModel(it)
-        }
+    suspend operator fun invoke(query: String, x: String, y: String): List<KakaoSearchModel> {
+        return kakaoSearchRepository.getList(
+            query = query,
+            x = x,
+            y = y,
+        )
+            .map {
+                KakaoSearchModel(it)
+            }
     }
 }

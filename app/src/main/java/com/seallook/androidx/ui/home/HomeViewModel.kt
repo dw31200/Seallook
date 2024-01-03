@@ -42,12 +42,17 @@ class HomeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             refreshCounselorInfoListUseCase()
-            val list = getKakaoSearchListUseCase("상담센터")
-            Timber.d("$list")
         }
     }
 
     fun getLocation(location: Location?) {
-        Timber.d("${location?.latitude}, ${location?.longitude}")
+        viewModelScope.launch {
+            val list = getKakaoSearchListUseCase(
+                "상담센터",
+                location?.longitude.toString(),
+                location?.latitude.toString(),
+            )
+            Timber.d("$list")
+        }
     }
 }
