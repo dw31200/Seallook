@@ -1,5 +1,10 @@
 package com.seallook.androidx.ui.home
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.seallook.androidx.BR
 import com.seallook.androidx.base.Effect
@@ -23,7 +28,24 @@ class HomeFragment :
 
     override fun viewModelVariableId(): Int = BR.vm
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions(),
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                    // Precise location access granted.
+                }
+                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                    getLocation()
+                } else -> {
+                    getLocation()
+                }
+            }
+        }
+
     override fun onViewCreatedAfterBinding() {
+        getLocation()
         with(binding) {
             counselorList.adapter = HomeAdapter()
             navigation = this@HomeFragment
@@ -53,5 +75,34 @@ class HomeFragment :
     override fun navigateToReservedCounseling(email: String) {
         val action = HomeFragmentDirections.actionHomeFragmentToReservedCounselingListFragment(email)
         navigate(action)
+    }
+
+    private fun getLocation() {
+        if (checkedPermissions()) {
+            Toast.makeText(
+                context,
+                "권한이 승인되었습니다.",
+                Toast.LENGTH_SHORT,
+            ).show()
+        } else {
+            requestPermissionLauncher.launch(
+                REQUIRED_PERMISSIONS,
+            )
+        }
+    }
+
+    private fun checkedPermissions(): Boolean {
+        return REQUIRED_PERMISSIONS.all { permission ->
+            ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+    companion object {
+        val REQUIRED_PERMISSIONS =
+            mutableListOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+            )
+                .toTypedArray()
     }
 }
