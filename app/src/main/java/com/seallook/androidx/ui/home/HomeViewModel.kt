@@ -1,5 +1,6 @@
 package com.seallook.androidx.ui.home
 
+import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -44,5 +45,9 @@ class HomeViewModel @Inject constructor(
             val list = getKakaoSearchListUseCase("상담센터")
             Timber.d("$list")
         }
+    }
+
+    fun getLocation(location: Location?) {
+        Timber.d("${location?.latitude}, ${location?.longitude}")
     }
 }
