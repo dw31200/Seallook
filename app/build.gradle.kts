@@ -96,6 +96,9 @@ dependencies {
 
     // calendar-kizitonwose
     implementation(libs.calendar.kizitonwose)
+
+    // google location
+    implementation(libs.play.services.location)
 }
 
 kapt {
