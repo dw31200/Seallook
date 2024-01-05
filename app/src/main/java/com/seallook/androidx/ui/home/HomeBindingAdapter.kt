@@ -24,6 +24,11 @@ fun TextView.setDistance(distance: String) {
     text = "${distance}m"
 }
 
+@BindingAdapter("bind:onOfficeItemClickListener")
+fun RecyclerView.setOnOfficeItemClickListener(homeShowWebSite: HomeShowWebSite) {
+    (adapter as? OfficeListAdapter)?.homeShowWebSite = homeShowWebSite
+}
+
 @BindingAdapter("bind:onItemClickListener")
 fun RecyclerView.setCounselorItemClickListener(homeNavigation: HomeNavigation) {
     (adapter as? HomeAdapter)?.homeNavigation = homeNavigation

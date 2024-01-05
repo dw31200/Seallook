@@ -1,5 +1,7 @@
 package com.seallook.androidx.ui.home
 
+import android.content.Intent
+import android.net.Uri
 import androidx.fragment.app.viewModels
 import com.seallook.androidx.BR
 import com.seallook.androidx.base.Effect
@@ -20,7 +22,8 @@ class HomeFragment :
     BaseFragment<FragmentHomeBinding, HomeViewModel, Effect>(
         FragmentHomeBinding::inflate,
     ),
-    HomeNavigation {
+    HomeNavigation,
+    HomeShowWebSite {
     override val viewModel: HomeViewModel by viewModels()
 
     override fun viewModelVariableId(): Int = BR.vm
@@ -35,6 +38,7 @@ class HomeFragment :
             officeList.adapter = OfficeListAdapter()
             counselorList.adapter = HomeAdapter()
             navigation = this@HomeFragment
+            showWebSite = this@HomeFragment
             counselorNameTextField.setOnClickListener {
                 val action = HomeFragmentDirections.actionHomeFragmentToSearchCounselorFragment()
                 navigate(action)
@@ -61,5 +65,13 @@ class HomeFragment :
     override fun navigateToReservedCounseling(email: String) {
         val action = HomeFragmentDirections.actionHomeFragmentToReservedCounselingListFragment(email)
         navigate(action)
+    }
+
+    override fun show(webSiteUrl: String) {
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(webSiteUrl),
+        )
+        startActivity(intent)
     }
 }

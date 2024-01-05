@@ -11,6 +11,10 @@
             name="navigation"
             type="com.seallook.androidx.ui.home.HomeNavigation" />
 
+        <variable
+            name="showWebSite"
+            type="com.seallook.androidx.ui.home.HomeShowWebSite" />
+
         <import type="com.seallook.androidx.share.UserTypeOption" />
     </data>
 
@@ -173,6 +177,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/office_list_text"
                         bind:setOfficeList="@{vm.officeList}"
+                        bind:onOfficeItemClickListener="@{showWebSite}"
                         tools:listitem="@layout/office_list_item" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
