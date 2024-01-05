@@ -2,6 +2,7 @@ package com.seallook.androidx.ui.home
 
 import android.location.Location
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.seallook.androidx.base.Effect
@@ -11,11 +12,11 @@ import com.seallook.androidx.domain.usecase.kakao.GetKakaoSearchListUseCase
 import com.seallook.androidx.domain.usecase.usertype.GetUserTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.model.CounselorInfoUiModel
+import com.seallook.androidx.ui.model.KakaoSearchUiModel
 import com.seallook.androidx.ui.model.UserTypeUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,7 +31,6 @@ class HomeViewModel @Inject constructor(
             UserTypeUiModel(it)
         }
     }.asLiveData()
-
     val counselorInfoList: LiveData<List<CounselorInfoUiModel>> =
         getCounselorInfoListUseCase()
             .map {
@@ -38,6 +38,9 @@ class HomeViewModel @Inject constructor(
                     CounselorInfoUiModel(it)
                 }
             }.asLiveData()
+    private val _officeList = MutableLiveData<List<KakaoSearchUiModel>>()
+    val officeList: LiveData<List<KakaoSearchUiModel>>
+        get() = _officeList
 
     init {
         viewModelScope.launch {
@@ -47,12 +50,13 @@ class HomeViewModel @Inject constructor(
 
     fun getLocation(location: Location?) {
         viewModelScope.launch {
-            val list = getKakaoSearchListUseCase(
+            _officeList.value = getKakaoSearchListUseCase(
                 "상담센터",
                 location?.longitude.toString(),
                 location?.latitude.toString(),
-            )
-            Timber.d("$list")
+            ).map {
+                KakaoSearchUiModel(it)
+            }
         }
     }
 }
