@@ -6,6 +6,7 @@ import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentHomeBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import com.seallook.androidx.ui.home.adapter.HomeAdapter
+import com.seallook.androidx.ui.home.adapter.OfficeListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ref.WeakReference
 
@@ -31,6 +32,7 @@ class HomeFragment :
     override fun onViewCreatedAfterBinding() {
         googleLocation.getLocation()
         with(binding) {
+            officeList.adapter = OfficeListAdapter()
             counselorList.adapter = HomeAdapter()
             navigation = this@HomeFragment
             counselorNameTextField.setOnClickListener {

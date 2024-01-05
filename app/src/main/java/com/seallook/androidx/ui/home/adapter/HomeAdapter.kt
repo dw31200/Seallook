@@ -11,9 +11,7 @@ class HomeAdapter(
 ) : RecyclerView.Adapter<HomeHolder>() {
     var homeNavigation: HomeNavigation? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeHolder {
-        return HomeHolder(parent)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = HomeHolder(parent)
 
     override fun getItemCount(): Int {
         return counselorInfoItems.size
