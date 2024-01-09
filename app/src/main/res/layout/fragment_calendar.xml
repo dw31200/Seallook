@@ -6,11 +6,16 @@
         <variable
             name="vm"
             type="com.seallook.androidx.ui.calendar.CalendarViewModel" />
+
+        <variable
+            name="scrollListener"
+            type="com.seallook.androidx.ui.calendar.CalendarScrollListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -29,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/calendar" />
+                app:title="@{vm.title}" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -45,9 +50,19 @@
                 android:orientation="vertical">
 
                 <com.kizitonwose.calendar.view.CalendarView
-                    android:id="@+id/exThreeCalendar"
+                    android:id="@+id/calendar_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    bind:currentMonth="@{vm.currentMonth}"
+                    bind:startMonth="@{vm.startMonth}"
+                    bind:endMonth="@{vm.endMonth}"
+                    bind:daysOfWeek="@{vm.daysOfWeek}"
+                    bind:scrollListener="@{scrollListener}"
+                    bind:today="@{vm.today}"
+                    bind:selectedDate="@{vm.selectedDate}"
+                    bind:calendarScheduleList="@{vm.scheduleList}"
+                    bind:oldDate="@{vm.oldDate}"
+                    bind:temSelectedDate="@{vm.selectedDate}"
                     app:cv_dayViewResource="@layout/calendar_day_layout"
                     app:cv_monthHeaderResource="@layout/calendar_header_layout" />
 
@@ -65,10 +80,14 @@
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textSize="14sp"
+                    bind:selectedDateText="@{vm.selectedDate}"
                     tools:text="7 Jan, 2019" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/exThreeRv"
+                    android:id="@+id/schedule_list"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="vertical"
+                    bind:scheduleList="@{vm.scheduleList}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false" />
