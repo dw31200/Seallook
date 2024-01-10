@@ -21,6 +21,7 @@ fun RecyclerView.setScheduleList(list: List<ReservationUiModel>?) {
 @BindingAdapter("bind:today", "bind:selectedDate", "bind:calendarScheduleList", requireAll = true)
 fun CalendarView.fetch(today: LocalDate, selectedDate: LocalDate?, list: List<ReservationUiModel>?) {
     (dayBinder as? CalendarDayBinder)?.fetchData(today, selectedDate ?: today, list ?: emptyList())
+    notifyCalendarChanged()
 }
 
 @BindingAdapter("bind:selectedDateText")
