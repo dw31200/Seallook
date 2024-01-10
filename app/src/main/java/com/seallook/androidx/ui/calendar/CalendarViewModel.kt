@@ -51,12 +51,16 @@ class CalendarViewModel @Inject constructor(
 
     val scheduleList: LiveData<List<ReservationUiModel>> =
         getUserTypeUseCase().flatMapConcat { userType ->
-            if (userType?.userType == UserTypeOption.CLIENT) {
-                getReservedCounselingListUseCase(userType.email)
-            } else if (userType?.userType == UserTypeOption.COUNSELOR) {
-                getReservedClientListUseCase(userType?.email ?: "")
-            } else {
-                flow { emit(emptyList()) }
+            when (userType?.userType) {
+                UserTypeOption.CLIENT -> {
+                    getReservedCounselingListUseCase(userType.email)
+                }
+                UserTypeOption.COUNSELOR -> {
+                    getReservedClientListUseCase(userType.email)
+                }
+                else -> {
+                    flow { emit(emptyList()) }
+                }
             }
         }.map {
             it.map {
