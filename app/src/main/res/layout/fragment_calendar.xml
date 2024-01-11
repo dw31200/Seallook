@@ -59,7 +59,7 @@
                     bind:daysOfWeek="@{vm.daysOfWeek}"
                     bind:scrollListener="@{scrollListener}"
                     bind:today="@{vm.today}"
-                    bind:selectedDate="@{vm.selectedDate}"
+                    bind:calendarSelectedDate="@{vm.selectedDate}"
                     bind:calendarScheduleList="@{vm.scheduleList}"
                     bind:oldDate="@{vm.oldDate}"
                     bind:temSelectedDate="@{vm.selectedDate}"
@@ -88,6 +88,7 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="vertical"
                     bind:scheduleList="@{vm.scheduleList}"
+                    bind:calendarSelectedDate="@{vm.selectedDate}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false" />

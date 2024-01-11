@@ -4,7 +4,7 @@ import androidx.databinding.BindingAdapter
 import com.kizitonwose.calendar.view.WeekCalendarView
 import java.time.LocalDate
 
-@BindingAdapter("bind:selectedDate")
+@BindingAdapter("bind:reserveSelectedDate")
 fun WeekCalendarView.setSelectedDate(selectedDate: LocalDate?) {
     (dayBinder as? ReserveCounselingCalendarBinder)?.selectDay(selectedDate ?: LocalDate.now())
     notifyCalendarChanged()

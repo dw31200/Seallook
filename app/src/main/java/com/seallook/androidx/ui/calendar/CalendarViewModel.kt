@@ -66,7 +66,8 @@ class CalendarViewModel @Inject constructor(
             it.map {
                 ReservationUiModel(it)
             }
-        }.asLiveData()
+        }
+            .asLiveData()
 
     fun selectDate(date: LocalDate) {
         if (_selectedDate.value != date) {
