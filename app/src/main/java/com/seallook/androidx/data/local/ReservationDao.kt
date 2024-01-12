@@ -26,7 +26,7 @@ interface ReservationDao {
     fun getCounselingList(email: String): Flow<List<ReservationEntity>>
 
     @Query("SELECT * FROM Reservation WHERE ID = :id")
-    fun getItem(id: Int): Flow<ReservationEntity?>
+    fun getItem(id: String): Flow<ReservationEntity?>
 
     @Update
     suspend fun update(reservation: ReservationEntity)
