@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.seallook.androidx.data.local.model.CounselingScheduleEntity
+import kotlinx.coroutines.flow.Flow
 import java.time.DayOfWeek
 
 @Dao
@@ -23,7 +24,7 @@ interface CounselingScheduleDao {
     suspend fun getAll(email: String): List<CounselingScheduleEntity>
 
     @Query("SELECT * FROM CounselingSchedule WHERE ID = :id")
-    suspend fun getItem(id: String): CounselingScheduleEntity?
+    fun getItem(id: String): Flow<CounselingScheduleEntity?>
 
     @Query("SELECT * FROM CounselingSchedule WHERE RepeatedDay = :day")
     suspend fun getCounselingSchedulesOnDate(day: DayOfWeek): List<CounselingScheduleEntity>

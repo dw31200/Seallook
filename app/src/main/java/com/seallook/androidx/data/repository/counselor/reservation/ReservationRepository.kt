@@ -4,6 +4,8 @@ import com.seallook.androidx.data.model.Reservation
 import kotlinx.coroutines.flow.Flow
 
 interface ReservationRepository {
+    fun getItem(id: String): Flow<Reservation?>
+
     fun getClientList(email: String): Flow<List<Reservation>>
 
     fun getCounselingList(email: String): Flow<List<Reservation>>

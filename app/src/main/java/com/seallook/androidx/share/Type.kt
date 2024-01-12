@@ -13,3 +13,7 @@ enum class UserTypeOption {
 enum class Gender {
     MALE, FEMALE, NONE,
 }
+
+enum class DetailTextType {
+    DATE, TIME, OFFICE, PRICE,
+}

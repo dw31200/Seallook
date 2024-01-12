@@ -11,6 +11,14 @@ class ReservationRepositoryImpl @Inject constructor(
     private val reservationApiService: ReservationApiService,
     private val reservationDao: ReservationDao,
 ) : ReservationRepository {
+    override fun getItem(id: String): Flow<Reservation?> {
+        return reservationDao.getItem(id).map {
+            it?.let {
+                Reservation(it)
+            }
+        }
+    }
+
     override fun getClientList(email: String): Flow<List<Reservation>> {
         return reservationDao.getClientList(email).map {
             it.map {
