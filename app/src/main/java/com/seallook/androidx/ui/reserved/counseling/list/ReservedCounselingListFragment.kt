@@ -24,9 +24,17 @@ class ReservedCounselingListFragment :
 
     override fun onViewCreatedAfterBinding() {
         with(binding) {
-            reservedCounselingList.adapter = ReservedCounselingListAdapter()
+            reservedCounselingList.adapter = ReservedCounselingListAdapter {
+                navigateToDetail(it)
+            }
         }
     }
 
     override fun onEffectCollect(effect: Effect) = Unit
+
+    private fun navigateToDetail(reservationId: String) {
+        val action = ReservedCounselingListFragmentDirections
+            .actionReservedCounselingListFragmentToReservedCounselingDetailFragment(reservationId)
+        navigate(action)
+    }
 }
