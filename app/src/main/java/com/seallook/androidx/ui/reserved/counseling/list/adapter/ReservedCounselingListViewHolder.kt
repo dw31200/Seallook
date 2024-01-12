@@ -9,9 +9,12 @@ import com.seallook.androidx.ui.model.ReservationUiModel
 class ReservedCounselingListViewHolder(
     private val binding: ReservedCounselingListItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(reservedCounselingItem: ReservationUiModel) {
+    fun bind(reservedCounselingItem: ReservationUiModel, onClick: (String) -> Unit) {
         with(binding) {
             data = reservedCounselingItem
+            binding.root.setOnClickListener {
+                onClick(reservedCounselingItem.id)
+            }
         }
     }
 

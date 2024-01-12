@@ -7,6 +7,7 @@ import com.seallook.androidx.ui.model.ReservationUiModel
 
 class ReservedCounselingListAdapter(
     private val reservedCounselingItems: MutableList<ReservationUiModel> = mutableListOf(),
+    private val onClick: (String) -> Unit,
 ) : RecyclerView.Adapter<ReservedCounselingListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservedCounselingListViewHolder {
         return ReservedCounselingListViewHolder(parent)
@@ -17,7 +18,7 @@ class ReservedCounselingListAdapter(
     }
 
     override fun onBindViewHolder(holder: ReservedCounselingListViewHolder, position: Int) {
-        holder.bind(reservedCounselingItems[position])
+        holder.bind(reservedCounselingItems[position], onClick)
     }
 
     @SuppressLint("NotifyDataSetChanged")
