@@ -39,14 +39,6 @@ class HomeFragment :
             counselorList.adapter = HomeAdapter()
             navigation = this@HomeFragment
             showWebSite = this@HomeFragment
-            counselorNameTextField.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToSearchCounselorFragment()
-                navigate(action)
-            }
-            reserveCounselingButton.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToSearchCounselorFragment()
-                navigate(action)
-            }
         }
     }
 
@@ -64,6 +56,11 @@ class HomeFragment :
 
     override fun navigateToReservedCounseling(email: String) {
         val action = HomeFragmentDirections.actionHomeFragmentToReservedCounselingListFragment(email)
+        navigate(action)
+    }
+
+    override fun navigateToSearchCounselor() {
+        val action = HomeFragmentDirections.actionHomeFragmentToSearchCounselorFragment()
         navigate(action)
     }
 

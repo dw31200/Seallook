@@ -6,4 +6,6 @@ interface HomeNavigation {
     fun navigateToReservedClient(email: String)
 
     fun navigateToReservedCounseling(email: String)
+
+    fun navigateToSearchCounselor()
 }
