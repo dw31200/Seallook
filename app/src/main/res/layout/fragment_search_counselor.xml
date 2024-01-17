@@ -36,6 +36,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="textPersonName"
                 android:maxLines="1"
+                bind:searchQuery="@={vm.searchQuery}"
                 tools:text="홍길동" />
 
         </com.google.android.material.textfield.TextInputLayout>
