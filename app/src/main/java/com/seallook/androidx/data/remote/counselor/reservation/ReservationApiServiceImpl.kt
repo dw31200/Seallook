@@ -4,43 +4,31 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.dataObjects
 import com.seallook.androidx.data.remote.model.ReservationResponse
 import com.seallook.androidx.share.Constants
+import com.seallook.androidx.share.UserTypeOption
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class ReservationApiServiceImpl @Inject constructor(
     private val db: FirebaseFirestore,
 ) : ReservationApiService {
-    override suspend fun getClientList(email: String): List<ReservationResponse> {
-        val list = mutableListOf<ReservationResponse>()
-        val documentListResponse = db.collection(Constants.RESERVATION)
-            .whereEqualTo("counselorEmail", email)
-            .get()
-            .await()
-        if (!documentListResponse.isEmpty) {
-            for (document in documentListResponse) {
-                if (document.exists()) {
-                    ReservationResponse(document)?.let { list.add(it) }
-                }
+    override fun onListSnapshot(email: String, userType: UserTypeOption): Flow<List<ReservationResponse>> {
+        return when (userType) {
+            UserTypeOption.CLIENT -> {
+                db.collection(Constants.RESERVATION)
+                    .whereEqualTo("clientEmail", email)
+                    .dataObjects()
+            }
+            UserTypeOption.COUNSELOR -> {
+                db.collection(Constants.RESERVATION)
+                    .whereEqualTo("counselorEmail", email)
+                    .dataObjects()
+            }
+            else -> {
+                flow { emit(emptyList()) }
             }
         }
-        return list
-    }
-
-    override suspend fun getCounselingList(email: String): List<ReservationResponse> {
-        val list = mutableListOf<ReservationResponse>()
-        val documentListResponse = db.collection(Constants.RESERVATION)
-            .whereEqualTo("clientEmail", email)
-            .get()
-            .await()
-        if (!documentListResponse.isEmpty) {
-            for (document in documentListResponse) {
-                if (document.exists()) {
-                    ReservationResponse(document)?.let { list.add(it) }
-                }
-            }
-        }
-        return list
     }
 
     override fun onCounselingListSnapshot(email: String): Flow<List<ReservationResponse>> {

@@ -3,6 +3,7 @@ package com.seallook.androidx.data.repository.counselor.reservation
 import com.seallook.androidx.data.local.ReservationDao
 import com.seallook.androidx.data.model.Reservation
 import com.seallook.androidx.data.remote.counselor.reservation.ReservationApiService
+import com.seallook.androidx.share.UserTypeOption
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -19,6 +20,14 @@ class ReservationRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getList(email: String, userType: UserTypeOption): Flow<List<Reservation>> {
+        return reservationDao.getList(email, userType).map {
+            it.map {
+                Reservation(it)
+            }
+        }
+    }
+
     override fun getClientList(email: String): Flow<List<Reservation>> {
         return reservationDao.getClientList(email).map {
             it.map {
@@ -29,6 +38,14 @@ class ReservationRepositoryImpl @Inject constructor(
 
     override fun getCounselingList(email: String): Flow<List<Reservation>> {
         return reservationDao.getCounselingList(email).map {
+            it.map {
+                Reservation(it)
+            }
+        }
+    }
+
+    override fun onListSnapshot(email: String, userType: UserTypeOption): Flow<List<Reservation>> {
+        return reservationApiService.onListSnapshot(email, userType).map {
             it.map {
                 Reservation(it)
             }

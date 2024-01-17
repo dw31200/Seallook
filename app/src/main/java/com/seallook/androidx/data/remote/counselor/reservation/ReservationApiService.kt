@@ -1,12 +1,11 @@
 package com.seallook.androidx.data.remote.counselor.reservation
 
 import com.seallook.androidx.data.remote.model.ReservationResponse
+import com.seallook.androidx.share.UserTypeOption
 import kotlinx.coroutines.flow.Flow
 
 interface ReservationApiService {
-    suspend fun getClientList(email: String): List<ReservationResponse>
-
-    suspend fun getCounselingList(email: String): List<ReservationResponse>
+    fun onListSnapshot(email: String, userType: UserTypeOption): Flow<List<ReservationResponse>>
 
     fun onCounselingListSnapshot(email: String): Flow<List<ReservationResponse>>
 
