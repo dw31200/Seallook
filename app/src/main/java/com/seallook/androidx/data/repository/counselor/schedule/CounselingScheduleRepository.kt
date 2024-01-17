@@ -14,4 +14,6 @@ interface CounselingScheduleRepository {
     suspend fun getCounselingSchedulesOnDate(day: DayOfWeek): List<CounselingSchedule>
 
     suspend fun insert(counselingScheduleList: List<CounselingSchedule>)
+
+    suspend fun deleteAll()
 }
