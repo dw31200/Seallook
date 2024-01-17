@@ -23,6 +23,14 @@ class CounselorInfoRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getList(query: String): Flow<List<CounselorInfo>> {
+        return counselorInfoDao.getList(query).map {
+            it.map {
+                CounselorInfo(it)
+            }
+        }
+    }
+
     override suspend fun setItem(uid: String, info: CounselorInfo) {
         counselorInfoApiService.setItem(uid, info.toRemoteModel())
     }

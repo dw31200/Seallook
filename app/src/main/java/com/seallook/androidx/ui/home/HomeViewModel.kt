@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor(
         }
     }.asLiveData()
     val counselorInfoList: LiveData<List<CounselorInfoUiModel>> =
-        getCounselorInfoListUseCase()
+        getCounselorInfoListUseCase(null)
             .map {
                 it.map {
                     CounselorInfoUiModel(it)

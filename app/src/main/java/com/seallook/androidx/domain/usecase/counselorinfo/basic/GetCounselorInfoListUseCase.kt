@@ -11,8 +11,8 @@ import javax.inject.Inject
 class GetCounselorInfoListUseCase @Inject constructor(
     private val counselorInfoRepository: CounselorInfoRepository,
 ) {
-    operator fun invoke(): Flow<List<CounselorInfoModel>> {
-        return counselorInfoRepository.getAll().map {
+    operator fun invoke(query: String?): Flow<List<CounselorInfoModel>> {
+        return counselorInfoRepository.getList(query ?: "").map {
             it.map {
                 CounselorInfoModel(it)
             }

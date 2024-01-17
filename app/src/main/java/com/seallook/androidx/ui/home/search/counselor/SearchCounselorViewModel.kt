@@ -19,7 +19,7 @@ class SearchCounselorViewModel @Inject constructor(
     getCounselorInfoListUseCase: GetCounselorInfoListUseCase,
 ) : BaseViewModel<Effect>() {
     val counselorInfoList: LiveData<List<CounselorInfoUiModel>> =
-        getCounselorInfoListUseCase()
+        getCounselorInfoListUseCase(null)
             .map {
                 it.map {
                     CounselorInfoUiModel(it)
