@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.reservation.SetReservationUseCase
+import com.seallook.androidx.domain.usecase.counselorinfo.schedule.DeleteAllCounselingScheduleUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetCounselingScheduleOnDateUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromFirebaseCounselingScheduleUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.InsertCounselingScheduleUseCase
@@ -28,6 +29,7 @@ class ReserveCounselingViewModel @Inject constructor(
     private val insertCounselingScheduleUseCase: InsertCounselingScheduleUseCase,
     private val getCounselingScheduleOnDateUseCase: GetCounselingScheduleOnDateUseCase,
     private val setReservationUseCase: SetReservationUseCase,
+    private val deleteAllCounselingScheduleUseCase: DeleteAllCounselingScheduleUseCase,
 ) : BaseViewModel<ReserveCounselingEffect>(), ReserveCounselingSelectDate, CounselingScheduleSelect {
     var email = savedStateHandle.get<String>("email")
 
@@ -49,6 +51,7 @@ class ReserveCounselingViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            deleteAllCounselingScheduleUseCase()
             _clientEmail.value = getCurrentUserUseCase()?.email
             val schedule = email?.let { getFromFirebaseCounselingScheduleUseCase(it) }
             if (schedule != null) {

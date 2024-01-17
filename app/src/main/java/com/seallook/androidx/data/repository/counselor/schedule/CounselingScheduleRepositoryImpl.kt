@@ -45,4 +45,8 @@ class CounselingScheduleRepositoryImpl @Inject constructor(
             },
         )
     }
+
+    override suspend fun deleteAll() {
+        counselingScheduleDao.deleteAll()
+    }
 }
