@@ -19,6 +19,9 @@ interface CounselorInfoDao {
     @Query("SELECT * FROM CounselorInfo ORDER BY email")
     fun getAll(): Flow<List<CounselorInfoEntity>>
 
+    @Query("SELECT * FROM CounselorInfo WHERE name LIKE '%' || :query || '%' ORDER BY email")
+    fun getList(query: String): Flow<List<CounselorInfoEntity>>
+
     @Query("SELECT * FROM CounselorInfo WHERE email =:email")
     suspend fun getItem(email: String): CounselorInfoEntity
 
