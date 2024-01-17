@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.seallook.androidx.data.local.model.ReservationEntity
+import com.seallook.androidx.share.UserTypeOption
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,6 +19,9 @@ interface ReservationDao {
 
     @Query("SELECT * FROM Reservation ORDER BY ID ASC")
     fun getAll(): Flow<List<ReservationEntity>>
+
+    @Query("SELECT * FROM Reservation WHERE (:userType = 1 AND counselorEmail = :email) OR (:userType = 0 AND clientEmail = :email)")
+    fun getList(email: String, userType: UserTypeOption): Flow<List<ReservationEntity>>
 
     @Query("SELECT * FROM Reservation WHERE counselorEmail = :email")
     fun getClientList(email: String): Flow<List<ReservationEntity>>
