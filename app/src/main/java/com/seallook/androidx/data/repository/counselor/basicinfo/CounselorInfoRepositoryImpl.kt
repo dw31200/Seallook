@@ -11,8 +11,8 @@ class CounselorInfoRepositoryImpl @Inject constructor(
     private val counselorInfoApiService: CounselorInfoApiService,
     private val counselorInfoDao: CounselorInfoDao,
 ) : CounselorInfoRepository {
-    override suspend fun getItem(uid: String): CounselorInfo? {
-        return counselorInfoApiService.getItem(uid)?.let { CounselorInfo(it) }
+    override suspend fun getItem(email: String): CounselorInfo? {
+        return counselorInfoApiService.getItem(email)?.let { CounselorInfo(it) }
     }
 
     override fun getAll(): Flow<List<CounselorInfo>> {
@@ -31,8 +31,8 @@ class CounselorInfoRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun setItem(uid: String, info: CounselorInfo) {
-        counselorInfoApiService.setItem(uid, info.toRemoteModel())
+    override suspend fun setItem(info: CounselorInfo) {
+        counselorInfoApiService.setItem(info.toRemoteModel())
     }
 
     override suspend fun refresh() {

@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
                 android:inputType="textPersonName"
-                bind:setTextFromCounselorInfo="@{vm.counselorInfo.name}"
+                android:text="@{vm.counselorInfo.name}"
                 android:maxLines="1"
                 tools:text="홍길동" />
 
