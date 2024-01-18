@@ -7,9 +7,14 @@ import javax.inject.Inject
 class GetFromFirebaseCounselingScheduleUseCase @Inject constructor(
     private val counselingScheduleRepository: CounselingScheduleRepository,
 ) {
-    suspend operator fun invoke(email: String): List<CounselingScheduleModel> {
-        return counselingScheduleRepository.getAllFromFirebase(email).map {
+    suspend operator fun invoke(params: Params): List<CounselingScheduleModel> {
+        if (params.email == null) return emptyList()
+        return counselingScheduleRepository.getAllFromFirebase(params.email).map {
             CounselingScheduleModel(it)
         }
     }
+
+    data class Params(
+        val email: String?,
+    )
 }
