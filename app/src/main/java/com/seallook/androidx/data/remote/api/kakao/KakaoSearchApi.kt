@@ -14,4 +14,10 @@ interface KakaoSearchApi {
         @Query("y") y: String,
         @Query("sort") sort: String = KakaoApiKey.SORT_DISTANCE,
     ): KakaoSearchListResponse
+
+    @GET("v2/local/search/keyword.json")
+    suspend fun getList(
+        @Header("Authorization") id: String = KakaoApiKey.REST_API_KEY,
+        @Query("query") query: String,
+    ): KakaoSearchListResponse
 }

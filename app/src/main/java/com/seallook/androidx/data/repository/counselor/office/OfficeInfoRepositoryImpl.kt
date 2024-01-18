@@ -9,12 +9,6 @@ class OfficeInfoRepositoryImpl @Inject constructor(
     private val officeInfoApiService: OfficeInfoApiService,
     private val officeInfoDao: OfficeInfoDao,
 ) : OfficeInfoRepository {
-    override suspend fun getList(type: String, query: String): List<OfficeInfo> {
-        return officeInfoApiService.getList(type, query).map {
-            OfficeInfo(it)
-        }
-    }
-
     override suspend fun setItem(info: OfficeInfo) {
         officeInfoDao.insert(info.toLocalModel())
     }
@@ -23,11 +17,11 @@ class OfficeInfoRepositoryImpl @Inject constructor(
         return officeInfoDao.getAll().map { OfficeInfo(it) }
     }
 
-    override suspend fun getItem(id: Int): OfficeInfo? {
+    override suspend fun getItem(id: String): OfficeInfo? {
         return officeInfoDao.getItem(id)?.let { OfficeInfo(it) }
     }
 
-    override suspend fun updateItem(uid: String, info: OfficeInfo) {
-        officeInfoApiService.updateItem(uid, info.toRemoteModel())
+    override suspend fun updateItem(info: OfficeInfo) {
+        officeInfoApiService.updateItem(info.toRemoteModel())
     }
 }

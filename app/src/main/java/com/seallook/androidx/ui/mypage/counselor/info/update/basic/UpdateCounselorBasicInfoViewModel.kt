@@ -70,7 +70,8 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
                     }
                 }
             _officeInfo.value =
-                getOfficeInfoUseCase(0)?.let {
+//                TODO sdw312 임시 id
+                getOfficeInfoUseCase("0")?.let {
                     OfficeInfoUiModel(it)
                 }
         }
@@ -136,7 +137,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
         viewModelScope.launch {
             _isShowProgress.value = true
             currentUser.value?.uid?.let {
-                updateOfficeInfoUseCase(it, getAllOfficeInfoUseCase()[0])
+                updateOfficeInfoUseCase(getAllOfficeInfoUseCase()[0])
                     .onSuccess {
                         updateCounselingType()
                         setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateOfficeInfo)

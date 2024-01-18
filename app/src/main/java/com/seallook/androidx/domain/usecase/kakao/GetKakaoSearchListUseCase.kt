@@ -19,4 +19,13 @@ class GetKakaoSearchListUseCase @Inject constructor(
                 KakaoSearchModel(it)
             }
     }
+
+    suspend operator fun invoke(query: String): List<KakaoSearchModel> {
+        return kakaoSearchRepository.getList(
+            query = query,
+        )
+            .map {
+                KakaoSearchModel(it)
+            }
+    }
 }

@@ -13,7 +13,6 @@ import com.seallook.androidx.data.remote.api.firebase.storage.FirebaseStorageApi
 import com.seallook.androidx.data.remote.api.kakao.KakaoSearchApi
 import com.seallook.androidx.data.remote.api.kakao.KakaoSearchApiService
 import com.seallook.androidx.data.remote.api.kakao.KakaoSearchApiServiceImpl
-import com.seallook.androidx.data.remote.api.naver.NaverSearchApi
 import com.seallook.androidx.data.remote.auth.FirebaseAuthApiService
 import com.seallook.androidx.data.remote.auth.FirebaseAuthApiServiceImpl
 import com.seallook.androidx.data.remote.auth.ProfileApiService
@@ -61,7 +60,7 @@ abstract class RemoteModule {
     abstract fun bindFirebaseStorageApiService(firebaseStorageApiServiceImpl: FirebaseStorageApiServiceImpl): FirebaseStorageApiService
 
     @Binds
-    abstract fun bindNaverSearchApiService(naverSearchApiServiceImpl: OfficeInfoApiServiceImpl): OfficeInfoApiService
+    abstract fun bindOfficeInfoApiService(officeInfoApiServiceImpl: OfficeInfoApiServiceImpl): OfficeInfoApiService
 
     @Binds
     abstract fun bindCounselingScheduleApiService(counselingScheduleApiServiceImpl: CounselingScheduleApiServiceImpl): CounselingScheduleApiService
@@ -93,10 +92,6 @@ abstract class RemoteModule {
         @ConnectTimeoutPolicy
         @Provides
         fun provideConnectTimeoutPolicy(): Long = 20L
-
-        @NaverBaseUrl
-        @Provides
-        fun provideBaseUrl(): String = "https://openapi.naver.com/v1/"
 
         @KakaoBaseUrl
         @Provides
@@ -134,22 +129,6 @@ abstract class RemoteModule {
                 .Builder()
                 .add(KotlinJsonAdapterFactory())
                 .build()
-        }
-
-        @Singleton
-        @Provides
-        fun provideNaverSearchApi(
-            okHttpClient: OkHttpClient,
-            moshi: Moshi,
-            @NaverBaseUrl naverBaseUrl: String,
-        ): NaverSearchApi {
-            return Retrofit
-                .Builder()
-                .client(okHttpClient)
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .baseUrl(naverBaseUrl)
-                .build()
-                .create(NaverSearchApi::class.java)
         }
 
         @Singleton
