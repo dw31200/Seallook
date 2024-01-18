@@ -9,11 +9,11 @@ import javax.inject.Inject
 class CounselorInfoApiServiceImpl @Inject constructor(
     private val db: FirebaseFirestore,
 ) : CounselorInfoApiService {
-    override suspend fun getItem(uid: String): CounselorInfoResponse? {
+    override suspend fun getItem(email: String): CounselorInfoResponse? {
         val documentResponse = db.collection(Constants.COUNSELORS)
-            .document(uid)
+            .document(email)
             .collection(Constants.COUNSELOR_INFO)
-            .document(uid)
+            .document(email)
             .get()
             .await()
         return if (documentResponse.exists()) {
@@ -33,7 +33,7 @@ class CounselorInfoApiServiceImpl @Inject constructor(
                 val documentSnapshot = db.collection(Constants.COUNSELORS)
                     .document(document.id)
                     .collection(Constants.COUNSELOR_INFO)
-                    .document(Constants.TEST_ID)
+                    .document(document.id)
                     .get()
                     .await()
                 if (documentSnapshot.exists()) {
@@ -44,11 +44,11 @@ class CounselorInfoApiServiceImpl @Inject constructor(
         return list
     }
 
-    override suspend fun setItem(uid: String, info: CounselorInfoResponse) {
+    override suspend fun setItem(info: CounselorInfoResponse) {
         db.collection(Constants.COUNSELORS)
-            .document(uid)
+            .document(info.email)
             .collection(Constants.COUNSELOR_INFO)
-            .document(uid)
+            .document(info.email)
             .set(info)
             .await()
     }

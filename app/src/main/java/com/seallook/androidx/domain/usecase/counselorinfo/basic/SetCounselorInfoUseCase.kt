@@ -9,9 +9,25 @@ import javax.inject.Inject
 class SetCounselorInfoUseCase @Inject constructor(
     private val counselorInfoRepository: CounselorInfoRepository,
 ) {
-    suspend operator fun invoke(uid: String, info: CounselorInfoModel): Result<Unit> {
+    suspend operator fun invoke(params: Params): Result<Unit> {
+        if (params.email == null || params.name == null || params.description == null || params.thumbnail == null) return Result.failure(Error("params is null"))
         return runCatching {
-            counselorInfoRepository.setItem(uid, info.toDataModel())
+            counselorInfoRepository.setItem(
+                CounselorInfoModel(
+                    params.email,
+                    params.name,
+                    params.description,
+                    params.thumbnail,
+                )
+                    .toDataModel(),
+            )
         }
     }
+
+    data class Params(
+        val email: String?,
+        val name: String?,
+        val description: String?,
+        val thumbnail: String?,
+    )
 }
