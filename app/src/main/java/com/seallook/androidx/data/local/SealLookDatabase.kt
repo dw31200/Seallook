@@ -24,7 +24,7 @@ import com.seallook.androidx.data.local.model.UserTypeEntity
         UidEntity::class,
         UserTypeEntity::class,
     ],
-    version = 4,
+    version = 5,
 )
 @TypeConverters(Converters::class)
 abstract class SealLookDatabase : RoomDatabase() {

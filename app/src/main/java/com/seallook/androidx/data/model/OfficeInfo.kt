@@ -4,44 +4,41 @@ import com.seallook.androidx.data.local.model.OfficeInfoEntity
 import com.seallook.androidx.data.remote.model.OfficeInfoResponse
 
 data class OfficeInfo(
-    val id: Int,
-    val title: String,
-    val link: String,
-    val category: String,
-    val description: String,
-    val telephone: String,
-    val address: String,
-    val roadAddress: String,
-    val mapx: Int,
-    val mapy: Int,
+    val id: String,
+    val place_name: String,
+    val phone: String,
+    val address_name: String,
+    val road_address_name: String,
+    val x: String,
+    val y: String,
+    val place_url: String,
+    val distance: String,
 ) {
     fun toLocalModel(): OfficeInfoEntity {
         return OfficeInfoEntity(
             id = id,
-            title = title,
-            link = link,
-            category = category,
-            description = description,
-            telephone = telephone,
-            address = address,
-            roadAddress = roadAddress,
-            mapx = mapx,
-            mapy = mapy,
+            place_name = place_name,
+            phone = phone,
+            address_name = address_name,
+            road_address_name = road_address_name,
+            x = x,
+            y = y,
+            place_url = place_url,
+            distance = distance,
         )
     }
 
     fun toRemoteModel(): OfficeInfoResponse {
         return OfficeInfoResponse(
             id = id,
-            title = title,
-            link = link,
-            category = category,
-            description = description,
-            telephone = telephone,
-            address = address,
-            roadAddress = roadAddress,
-            mapx = mapx,
-            mapy = mapy,
+            place_name = place_name,
+            phone = phone,
+            address_name = address_name,
+            road_address_name = road_address_name,
+            x = x,
+            y = y,
+            place_url = place_url,
+            distance = distance,
         )
     }
 
@@ -49,30 +46,28 @@ data class OfficeInfo(
         operator fun invoke(officeInfoResponse: OfficeInfoResponse): OfficeInfo {
             return OfficeInfo(
                 id = officeInfoResponse.id,
-                title = officeInfoResponse.title,
-                link = officeInfoResponse.link,
-                category = officeInfoResponse.category,
-                description = officeInfoResponse.description,
-                telephone = officeInfoResponse.telephone,
-                address = officeInfoResponse.address,
-                roadAddress = officeInfoResponse.roadAddress,
-                mapx = officeInfoResponse.mapx,
-                mapy = officeInfoResponse.mapy,
+                place_name = officeInfoResponse.place_name,
+                phone = officeInfoResponse.phone,
+                address_name = officeInfoResponse.address_name,
+                road_address_name = officeInfoResponse.road_address_name,
+                x = officeInfoResponse.x,
+                y = officeInfoResponse.y,
+                place_url = officeInfoResponse.place_url,
+                distance = officeInfoResponse.distance,
             )
         }
 
         operator fun invoke(officeInfoEntity: OfficeInfoEntity): OfficeInfo {
             return OfficeInfo(
                 id = officeInfoEntity.id,
-                title = officeInfoEntity.title,
-                link = officeInfoEntity.link,
-                category = officeInfoEntity.category,
-                description = officeInfoEntity.description,
-                telephone = officeInfoEntity.telephone,
-                address = officeInfoEntity.address,
-                roadAddress = officeInfoEntity.roadAddress,
-                mapx = officeInfoEntity.mapx,
-                mapy = officeInfoEntity.mapy,
+                place_name = officeInfoEntity.place_name,
+                phone = officeInfoEntity.phone,
+                address_name = officeInfoEntity.address_name,
+                road_address_name = officeInfoEntity.road_address_name,
+                x = officeInfoEntity.x,
+                y = officeInfoEntity.y,
+                place_url = officeInfoEntity.place_url,
+                distance = officeInfoEntity.distance,
             )
         }
     }

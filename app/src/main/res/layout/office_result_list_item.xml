@@ -19,7 +19,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{data.title}"
+            android:text="@{data.place_name}"
             tools:text="상담센터"/>
 
         <TextView
@@ -27,7 +27,7 @@
             app:layout_constraintTop_toBottomOf="@id/office_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{data.address}"
+            android:text="@{data.address_name}"
             tools:text="상담센터 주소 서울시 성동구"/>
 
         <com.google.android.material.button.MaterialButton

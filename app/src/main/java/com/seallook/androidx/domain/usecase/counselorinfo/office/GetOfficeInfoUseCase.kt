@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetOfficeInfoUseCase @Inject constructor(
     private val officeInfoRepository: OfficeInfoRepository,
 ) {
-    suspend operator fun invoke(id: Int): OfficeInfoModel? {
+    suspend operator fun invoke(id: String): OfficeInfoModel? {
         return officeInfoRepository.getItem(id)?.let { OfficeInfoModel(it) }
     }
 }

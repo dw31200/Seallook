@@ -19,7 +19,7 @@ interface OfficeInfoDao {
     suspend fun getAll(): List<OfficeInfoEntity>
 
     @Query("SELECT * FROM OfficeInfo WHERE ID = :id")
-    suspend fun getItem(id: Int): OfficeInfoEntity?
+    suspend fun getItem(id: String): OfficeInfoEntity?
 
     @Update
     suspend fun update(officeInfo: OfficeInfoEntity)
@@ -31,5 +31,5 @@ interface OfficeInfoDao {
     suspend fun deleteAll()
 
     @Query("DELETE FROM OfficeInfo WHERE ID = :id")
-    suspend fun deleteItem(id: Int)
+    suspend fun deleteItem(id: String)
 }
