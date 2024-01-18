@@ -53,7 +53,13 @@ class ReserveCounselingViewModel @Inject constructor(
         viewModelScope.launch {
             deleteAllCounselingScheduleUseCase()
             _clientEmail.value = getCurrentUserUseCase()?.email
-            val schedule = email?.let { getFromFirebaseCounselingScheduleUseCase(it) }
+            val schedule = email?.let {
+                getFromFirebaseCounselingScheduleUseCase(
+                    GetFromFirebaseCounselingScheduleUseCase.Params(
+                        it,
+                    ),
+                )
+            }
             if (schedule != null) {
                 insertCounselingScheduleUseCase(schedule)
                 _counselingScheduleList.value = schedule.map {
