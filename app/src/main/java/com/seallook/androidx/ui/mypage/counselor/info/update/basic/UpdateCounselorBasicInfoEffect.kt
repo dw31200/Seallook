@@ -1,6 +1,6 @@
 package com.seallook.androidx.ui.mypage.counselor.info.update.basic
 
-import com.seallook.androidx.base.Effect
+import com.seallook.androidx.ui.base.Effect
 
 sealed interface UpdateCounselorBasicInfoEffect : Effect {
     object SuccessUpdateCounselingType : UpdateCounselorBasicInfoEffect

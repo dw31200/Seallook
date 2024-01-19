@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
-import com.seallook.androidx.base.Effect
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.usertype.GetUserTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
+import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.model.UserTypeUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map

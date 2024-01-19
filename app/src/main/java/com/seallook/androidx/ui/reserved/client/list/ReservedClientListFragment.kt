@@ -2,9 +2,9 @@ package com.seallook.androidx.ui.reserved.client.list
 
 import androidx.fragment.app.viewModels
 import com.seallook.androidx.BR
-import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentReservedClientListBinding
 import com.seallook.androidx.ui.base.BaseFragment
+import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.reserved.client.list.adapter.ReservedClientListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 

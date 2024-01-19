@@ -3,16 +3,15 @@ package com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.seallook.androidx.base.Effect
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.CombineCounselingTypeUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.DeleteCounselingTypeUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.GetCounselingTypeLocalUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.SetCounselingTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
+import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.model.CounselingTypeUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.grpc.internal.JsonUtil.getList
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch

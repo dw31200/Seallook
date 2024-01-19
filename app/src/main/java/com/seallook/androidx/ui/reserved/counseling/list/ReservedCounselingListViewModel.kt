@@ -5,12 +5,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.seallook.androidx.base.Effect
 import com.seallook.androidx.domain.usecase.reserved.GetReservationListUseCase
 import com.seallook.androidx.domain.usecase.reserved.GetReservedListSnapshotUseCase
 import com.seallook.androidx.domain.usecase.reserved.UpdateReservationUseCase
 import com.seallook.androidx.domain.usecase.usertype.GetUserTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
+import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.model.ReservationUiModel
 import com.seallook.androidx.ui.model.UserTypeUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel

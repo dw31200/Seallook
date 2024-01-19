@@ -1,7 +1,6 @@
 package com.seallook.androidx.ui.base
 
 import androidx.lifecycle.ViewModel
-import com.seallook.androidx.base.Effect
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

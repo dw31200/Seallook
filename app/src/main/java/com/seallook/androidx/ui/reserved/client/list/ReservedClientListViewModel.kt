@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.seallook.androidx.base.Effect
 import com.seallook.androidx.domain.usecase.reserved.GetReservedClientListSnapshotUseCase
 import com.seallook.androidx.domain.usecase.reserved.GetReservedClientListUseCase
 import com.seallook.androidx.domain.usecase.reserved.UpdateReservationUseCase
 import com.seallook.androidx.domain.usecase.reserved.UpdateReservedClientConfirmUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
+import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.model.ReservationUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn

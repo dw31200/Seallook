@@ -5,9 +5,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.seallook.androidx.BR
 import com.seallook.androidx.R
-import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentCalendarBinding
 import com.seallook.androidx.ui.base.BaseFragment
+import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.calendar.adapter.ScheduleAdapter
 import com.seallook.androidx.ui.calendar.binder.CalendarDayBinder
 import com.seallook.androidx.ui.calendar.binder.CalendarHeaderBinder

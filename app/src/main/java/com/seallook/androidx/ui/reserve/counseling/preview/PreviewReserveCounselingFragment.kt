@@ -2,9 +2,9 @@ package com.seallook.androidx.ui.reserve.counseling.preview
 
 import androidx.fragment.app.viewModels
 import com.seallook.androidx.BR
-import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentPreviewReserveCounselingBinding
 import com.seallook.androidx.ui.base.BaseFragment
+import com.seallook.androidx.ui.base.Effect
 import dagger.hilt.android.AndroidEntryPoint
 
 /* TODO
