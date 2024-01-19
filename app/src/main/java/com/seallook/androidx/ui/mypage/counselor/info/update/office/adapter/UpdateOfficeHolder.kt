@@ -5,16 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.seallook.androidx.databinding.OfficeResultListItemBinding
 import com.seallook.androidx.ui.model.OfficeInfoUiModel
-import com.seallook.androidx.ui.mypage.counselor.info.update.office.OfficeNavigation
 
 class UpdateOfficeHolder(
     private val binding: OfficeResultListItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(officeItem: OfficeInfoUiModel, officeNavigation: OfficeNavigation?) {
+    fun bind(officeItem: OfficeInfoUiModel, onClick: (OfficeInfoUiModel) -> Unit) {
         with(binding) {
             data = officeItem
             officeSelectButton.setOnClickListener {
-                officeNavigation?.navigateToMypage(officeItem)
+                onClick(officeItem)
             }
         }
     }

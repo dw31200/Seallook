@@ -12,6 +12,8 @@ import com.seallook.androidx.data.repository.counselor.basicinfo.CounselorInfoRe
 import com.seallook.androidx.data.repository.counselor.basicinfo.CounselorInfoRepositoryImpl
 import com.seallook.androidx.data.repository.counselor.counselingtype.CounselingTypeRepository
 import com.seallook.androidx.data.repository.counselor.counselingtype.CounselingTypeRepositoryImpl
+import com.seallook.androidx.data.repository.counselor.office.CounselorOfficeIdRepository
+import com.seallook.androidx.data.repository.counselor.office.CounselorOfficeIdRepositoryImpl
 import com.seallook.androidx.data.repository.counselor.office.OfficeInfoRepository
 import com.seallook.androidx.data.repository.counselor.office.OfficeInfoRepositoryImpl
 import com.seallook.androidx.data.repository.counselor.reservation.ReservationRepository
@@ -62,4 +64,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindKakaoSearchRepository(kakaoSearchRepositoryImpl: KakaoSearchRepositoryImpl): KakaoSearchRepository
+
+    @Binds
+    abstract fun bindCounselorOfficeIdRepository(counselorOfficeIdRepositoryImpl: CounselorOfficeIdRepositoryImpl): CounselorOfficeIdRepository
 }

@@ -88,4 +88,12 @@ object LocalModule {
     ): UserTypeDao {
         return database.userDao()
     }
+
+    @Singleton
+    @Provides
+    fun provideCounselorOfficeIdDao(
+        database: SealLookDatabase,
+    ): CounselorOfficeIdDao {
+        return database.counselorOfficeIdDao()
+    }
 }

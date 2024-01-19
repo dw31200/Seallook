@@ -7,7 +7,8 @@ import javax.inject.Inject
 class UpdateOfficeInfoUseCase @Inject constructor(
     private val officeInfoRepository: OfficeInfoRepository,
 ) {
-    suspend operator fun invoke(info: OfficeInfoModel): Result<Unit> {
+    suspend operator fun invoke(info: OfficeInfoModel?): Result<Unit> {
+        if (info == null) return Result.failure(Error("info is null"))
         return runCatching {
             officeInfoRepository.updateItem(info.toDataModel())
         }
