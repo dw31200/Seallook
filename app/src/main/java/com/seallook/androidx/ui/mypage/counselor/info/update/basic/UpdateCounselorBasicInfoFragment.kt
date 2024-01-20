@@ -75,7 +75,7 @@ class UpdateCounselorBasicInfoFragment :
 
     override fun onEffectCollect(effect: UpdateCounselorBasicInfoEffect) {
         when (effect) {
-            UpdateCounselorBasicInfoEffect.SuccessUpdateOfficeInfo -> {
+            UpdateCounselorBasicInfoEffect.SuccessUpdateCounselorOfficeId -> {
                 val action = UpdateCounselorBasicInfoFragmentDirections.actionUpdateCounselorBasicInfoFragmentToMypageFragment()
                 navigate(action)
             }

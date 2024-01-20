@@ -21,6 +21,8 @@ import com.seallook.androidx.data.remote.counselor.basicinfo.CounselorInfoApiSer
 import com.seallook.androidx.data.remote.counselor.basicinfo.CounselorInfoApiServiceImpl
 import com.seallook.androidx.data.remote.counselor.counselingtype.CounselingTypeApiService
 import com.seallook.androidx.data.remote.counselor.counselingtype.CounselingTypeApiServiceImpl
+import com.seallook.androidx.data.remote.counselor.office.CounselorOfficeIdApiService
+import com.seallook.androidx.data.remote.counselor.office.CounselorOfficeIdApiServiceImpl
 import com.seallook.androidx.data.remote.counselor.office.OfficeInfoApiService
 import com.seallook.androidx.data.remote.counselor.office.OfficeInfoApiServiceImpl
 import com.seallook.androidx.data.remote.counselor.reservation.ReservationApiService
@@ -70,6 +72,9 @@ abstract class RemoteModule {
 
     @Binds
     abstract fun bindKakaoSearchApiService(kakaoSearchApiServiceImpl: KakaoSearchApiServiceImpl): KakaoSearchApiService
+
+    @Binds
+    abstract fun bindCounselorOfficeIdApiService(counselorOfficeIdApiServiceImpl: CounselorOfficeIdApiServiceImpl): CounselorOfficeIdApiService
 
     companion object {
         @Singleton

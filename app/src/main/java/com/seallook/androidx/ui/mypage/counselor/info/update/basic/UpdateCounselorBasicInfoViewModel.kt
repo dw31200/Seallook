@@ -16,6 +16,7 @@ import com.seallook.androidx.domain.usecase.counselorinfo.basic.SetCounselorInfo
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.UploadFileUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.office.GetCounselorOfficeIdUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.office.GetOfficeInfoUseCase
+import com.seallook.androidx.domain.usecase.counselorinfo.office.UpdateCounselorOfficeIdUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.office.UpdateOfficeInfoUseCase
 import com.seallook.androidx.domain.usecase.usertype.GetUserTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
@@ -40,6 +41,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     private val updateOfficeInfoUseCase: UpdateOfficeInfoUseCase,
     getUserTypeUseCase: GetUserTypeUseCase,
     private val getCounselorOfficeIdUseCase: GetCounselorOfficeIdUseCase,
+    private val updateCounselorOfficeIdUseCase: UpdateCounselorOfficeIdUseCase,
 ) : BaseViewModel<UpdateCounselorBasicInfoEffect>() {
     val userType: LiveData<UserTypeUiModel?> = getUserTypeUseCase().map {
         it?.let {
@@ -141,7 +143,6 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
                 ),
             )
                 .onSuccess {
-                    _isShowProgress.value = false
                     updateOfficeInfo()
                     setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateCounselorInfo)
                 }
@@ -156,11 +157,30 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
         viewModelScope.launch {
             updateOfficeInfoUseCase(officeInfo.value?.toDomainModel())
                 .onSuccess {
+                    _isShowProgress.value = false
+                    updateCounselorOfficeId(userType.value?.email, officeId.value)
                     setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateOfficeInfo)
                 }
                 .onFailure {
                     _isShowProgress.value = false
                     setEffect(UpdateCounselorBasicInfoEffect.FailureUpdateOfficeInfo)
+                }
+        }
+    }
+
+    private fun updateCounselorOfficeId(email: String?, officeId: String?) {
+        viewModelScope.launch {
+            updateCounselorOfficeIdUseCase(
+                UpdateCounselorOfficeIdUseCase.Params(
+                    email,
+                    officeId,
+                ),
+            )
+                .onSuccess {
+                    setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateCounselorOfficeId)
+                }
+                .onFailure {
+                    setEffect(UpdateCounselorBasicInfoEffect.FailureUpdateCounselorOfficeId)
                 }
         }
     }

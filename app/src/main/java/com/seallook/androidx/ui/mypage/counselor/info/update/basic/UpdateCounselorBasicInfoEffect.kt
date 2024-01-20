@@ -7,7 +7,11 @@ sealed interface UpdateCounselorBasicInfoEffect : Effect {
 
     object SuccessUpdateOfficeInfo : UpdateCounselorBasicInfoEffect
 
+    object SuccessUpdateCounselorOfficeId : UpdateCounselorBasicInfoEffect
+
     object FailureUpdateCounselorInfo : UpdateCounselorBasicInfoEffect
 
     object FailureUpdateOfficeInfo : UpdateCounselorBasicInfoEffect
+
+    object FailureUpdateCounselorOfficeId : UpdateCounselorBasicInfoEffect
 }
