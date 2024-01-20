@@ -76,10 +76,6 @@ class CalendarViewModel @Inject constructor(
         }
     }
 
-    fun onClick(schedule: ReservationUiModel) {
-//        TODO 화면 이동
-    }
-
     override fun onScrolled(calendarMonth: CalendarMonth) {
         if (calendarMonth.yearMonth.year == today.year) {
             _title.value = DateTimeFormatter.ofPattern("MMMM").format(calendarMonth.yearMonth)
