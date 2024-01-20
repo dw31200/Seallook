@@ -61,11 +61,9 @@ class UpdateCounselorBasicInfoFragment :
                 pickMediaFile.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
             finishButton.setOnClickListener {
-                val user = viewModel.currentUser.value ?: return@setOnClickListener
                 if (photoUri != null) {
                     viewModel.uploadFile(
                         "counselor/thumbnail",
-                        "$user.png",
                         photoUri ?: return@setOnClickListener,
                         binding.nameTextField.editText?.text.toString(),
                         binding.prTextField.editText?.text.toString(),
@@ -77,14 +75,12 @@ class UpdateCounselorBasicInfoFragment :
 
     override fun onEffectCollect(effect: UpdateCounselorBasicInfoEffect) {
         when (effect) {
-            UpdateCounselorBasicInfoEffect.SuccessUpdateCounselingType -> {
+            UpdateCounselorBasicInfoEffect.SuccessSetOfficeCounselorEmail -> {
                 val action = UpdateCounselorBasicInfoFragmentDirections.actionUpdateCounselorBasicInfoFragmentToMypageFragment()
                 navigate(action)
             }
 
-            else -> {
-                Unit
-            }
+            else -> Unit
         }
     }
 }

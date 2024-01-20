@@ -7,6 +7,8 @@ import com.seallook.androidx.data.local.model.Converters
 import com.seallook.androidx.data.local.model.CounselingScheduleEntity
 import com.seallook.androidx.data.local.model.CounselingTypeEntity
 import com.seallook.androidx.data.local.model.CounselorInfoEntity
+import com.seallook.androidx.data.local.model.CounselorOfficeIdEntity
+import com.seallook.androidx.data.local.model.OfficeCounselorEmailEntity
 import com.seallook.androidx.data.local.model.OfficeInfoEntity
 import com.seallook.androidx.data.local.model.ProfileEntity
 import com.seallook.androidx.data.local.model.ReservationEntity
@@ -23,8 +25,10 @@ import com.seallook.androidx.data.local.model.UserTypeEntity
         ProfileEntity::class,
         UidEntity::class,
         UserTypeEntity::class,
+        CounselorOfficeIdEntity::class,
+        OfficeCounselorEmailEntity::class,
     ],
-    version = 5,
+    version = 7,
 )
 @TypeConverters(Converters::class)
 abstract class SealLookDatabase : RoomDatabase() {
@@ -43,4 +47,8 @@ abstract class SealLookDatabase : RoomDatabase() {
     abstract fun uidDao(): UidDao
 
     abstract fun userDao(): UserTypeDao
+
+    abstract fun counselorOfficeIdDao(): CounselorOfficeIdDao
+
+    abstract fun officeCounselorEmailDao(): OfficeCounselorEmailDao
 }

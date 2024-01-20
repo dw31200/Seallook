@@ -19,7 +19,6 @@ import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.Navigator
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
-import com.seallook.androidx.base.Effect
 import kotlinx.coroutines.launch
 
 /* TODO

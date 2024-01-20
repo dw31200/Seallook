@@ -4,9 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.fragment.app.viewModels
 import com.seallook.androidx.BR
-import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentHomeBinding
 import com.seallook.androidx.ui.base.BaseFragment
+import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.home.adapter.HomeAdapter
 import com.seallook.androidx.ui.home.adapter.OfficeListAdapter
 import dagger.hilt.android.AndroidEntryPoint

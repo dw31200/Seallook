@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
@@ -12,10 +14,10 @@ import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetCounselorInfo
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetDownloadUrlUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.SetCounselorInfoUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.UploadFileUseCase
-import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.GetCounselingTypeLocalUseCase
-import com.seallook.androidx.domain.usecase.counselorinfo.counselingtype.UpdateCounselingTypeUseCase
-import com.seallook.androidx.domain.usecase.counselorinfo.office.GetAllOfficeInfoUseCase
+import com.seallook.androidx.domain.usecase.counselorinfo.office.GetCounselorOfficeIdUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.office.GetOfficeInfoUseCase
+import com.seallook.androidx.domain.usecase.counselorinfo.office.SetOfficeCounselorEmailUseCase
+import com.seallook.androidx.domain.usecase.counselorinfo.office.UpdateCounselorOfficeIdUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.office.UpdateOfficeInfoUseCase
 import com.seallook.androidx.domain.usecase.usertype.GetUserTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
@@ -34,14 +36,14 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     private val getDownloadUrlUseCase: GetDownloadUrlUseCase,
     private val uploadFileUseCase: UploadFileUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
-    private val updateCounselingTypeUseCase: UpdateCounselingTypeUseCase,
-    private val getCounselingTypeLocalUseCase: GetCounselingTypeLocalUseCase,
     private val getCounselorInfoUseCase: GetCounselorInfoUseCase,
     private val setCounselorInfoUseCase: SetCounselorInfoUseCase,
     private val getOfficeInfoUseCase: GetOfficeInfoUseCase,
-    private val getAllOfficeInfoUseCase: GetAllOfficeInfoUseCase,
     private val updateOfficeInfoUseCase: UpdateOfficeInfoUseCase,
-    private val getUserTypeUseCase: GetUserTypeUseCase,
+    getUserTypeUseCase: GetUserTypeUseCase,
+    private val getCounselorOfficeIdUseCase: GetCounselorOfficeIdUseCase,
+    private val updateCounselorOfficeIdUseCase: UpdateCounselorOfficeIdUseCase,
+    private val setOfficeCounselorEmailUseCase: SetOfficeCounselorEmailUseCase,
 ) : BaseViewModel<UpdateCounselorBasicInfoEffect>() {
     val userType: LiveData<UserTypeUiModel?> = getUserTypeUseCase().map {
         it?.let {
@@ -50,8 +52,18 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     }.asLiveData()
 
     private val _currentUser = MutableLiveData<FirebaseUser?>()
-    val currentUser: LiveData<FirebaseUser?>
+    private val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
+
+    private val officeId: LiveData<String?> =
+        userType.switchMap {
+            liveData {
+                getCounselorOfficeIdUseCase(it?.email)
+                    .onSuccess {
+                        emit(it?.officeId)
+                    }
+            }
+        }
 
     val counselorInfo: LiveData<CounselorInfoUiModel?> =
         userType.asFlow().flatMapLatest {
@@ -68,9 +80,16 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
             }
         }.asLiveData()
 
-    private val _officeInfo = MutableLiveData<OfficeInfoUiModel?>()
-    val officeInfo: LiveData<OfficeInfoUiModel?>
-        get() = _officeInfo
+    val officeInfo: LiveData<OfficeInfoUiModel?> =
+        officeId.switchMap {
+            it?.let {
+                liveData {
+                    getOfficeInfoUseCase(it)?.let {
+                        emit(OfficeInfoUiModel(it))
+                    }
+                }
+            }
+        }
 
     private val _progressMessage = MutableLiveData<String>()
     val progressMessage: LiveData<String>
@@ -88,16 +107,12 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
         viewModelScope.launch {
             _progressMessage.value = "상담사 정보를 업로드 중입니다."
             _currentUser.value = getCurrentUserUseCase()
-            _officeInfo.value =
-//                TODO sdw312 임시 id
-                getOfficeInfoUseCase("0")?.let {
-                    OfficeInfoUiModel(it)
-                }
         }
     }
 
-    fun uploadFile(path: String, fileName: String, uri: Uri, name: String?, pr: String?) {
+    fun uploadFile(path: String, uri: Uri, name: String?, pr: String?) {
         viewModelScope.launch {
+            val fileName = "${currentUser.value}.png"
             _isShowProgress.value = true
             uploadFileUseCase(path, fileName, uri)
                 .onSuccess {
@@ -116,22 +131,6 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
                         it.toString(),
                     )
                 }
-        }
-    }
-
-    private fun updateCounselingType() {
-        viewModelScope.launch {
-            getCurrentUserUseCase()?.uid?.let {
-                updateCounselingTypeUseCase(it, getCounselingTypeLocalUseCase())
-                    .onSuccess {
-                        _isShowProgress.value = false
-                        setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateCounselingType)
-                    }
-                    .onFailure {
-                        _isShowProgress.value = false
-                        setEffect(UpdateCounselorBasicInfoEffect.FailureUpdateCounselingType)
-                    }
-            }
         }
     }
 
@@ -158,17 +157,52 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
 
     private fun updateOfficeInfo() {
         viewModelScope.launch {
-            currentUser.value?.uid?.let {
-                updateOfficeInfoUseCase(getAllOfficeInfoUseCase()[0])
-                    .onSuccess {
-                        updateCounselingType()
-                        setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateOfficeInfo)
-                    }
-                    .onFailure {
-                        _isShowProgress.value = false
-                        setEffect(UpdateCounselorBasicInfoEffect.FailureUpdateOfficeInfo)
-                    }
-            }
+            updateOfficeInfoUseCase(officeInfo.value?.toDomainModel())
+                .onSuccess {
+                    updateCounselorOfficeId()
+                    setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateOfficeInfo)
+                }
+                .onFailure {
+                    _isShowProgress.value = false
+                    setEffect(UpdateCounselorBasicInfoEffect.FailureUpdateOfficeInfo)
+                }
+        }
+    }
+
+    private fun updateCounselorOfficeId() {
+        viewModelScope.launch {
+            updateCounselorOfficeIdUseCase(
+                UpdateCounselorOfficeIdUseCase.Params(
+                    userType.value?.email,
+                    officeId.value,
+                ),
+            )
+                .onSuccess {
+                    _isShowProgress.value = false
+                    setOfficeCounselorEmail()
+                    setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateCounselorOfficeId)
+                }
+                .onFailure {
+                    setEffect(UpdateCounselorBasicInfoEffect.FailureUpdateCounselorOfficeId)
+                }
+        }
+    }
+
+    private fun setOfficeCounselorEmail() {
+        viewModelScope.launch {
+            setOfficeCounselorEmailUseCase(
+                SetOfficeCounselorEmailUseCase.Params(
+                    "",
+                    officeId.value,
+                    userType.value?.email,
+                ),
+            )
+                .onSuccess {
+                    setEffect(UpdateCounselorBasicInfoEffect.SuccessSetOfficeCounselorEmail)
+                }
+                .onFailure {
+                    setEffect(UpdateCounselorBasicInfoEffect.FailureSetOfficeCounselorEmail)
+                }
         }
     }
 }

@@ -4,9 +4,9 @@ import android.content.Intent
 import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
 import com.seallook.androidx.BR
-import com.seallook.androidx.base.Effect
 import com.seallook.androidx.databinding.FragmentSettingBinding
 import com.seallook.androidx.ui.base.BaseFragment
+import com.seallook.androidx.ui.base.Effect
 import dagger.hilt.android.AndroidEntryPoint
 
 /* TODO

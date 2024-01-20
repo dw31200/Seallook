@@ -5,12 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.seallook.androidx.base.Effect
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetCounselorInfoListUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.RefreshCounselorInfoListUseCase
 import com.seallook.androidx.domain.usecase.kakao.GetKakaoSearchListUseCase
 import com.seallook.androidx.domain.usecase.usertype.GetUserTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
+import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.model.CounselorInfoUiModel
 import com.seallook.androidx.ui.model.KakaoSearchUiModel
 import com.seallook.androidx.ui.model.UserTypeUiModel
