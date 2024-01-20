@@ -32,7 +32,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
         with(binding) {
             scheduleList.apply {
                 adapter = ScheduleAdapter {
-                    viewModel.onClick(it)
+                    navigateToDetail(it.id)
                 }
                 addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
             }
@@ -58,5 +58,11 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
         binding.toolbar.setBackgroundColor(
             requireContext().getColorCompat(R.color.colorPrimary),
         )
+    }
+
+    private fun navigateToDetail(reservationId: String) {
+        val action = CalendarFragmentDirections
+            .actionCalendarFragmentToReservedCounselingDetailFragment(reservationId)
+        navigate(action)
     }
 }

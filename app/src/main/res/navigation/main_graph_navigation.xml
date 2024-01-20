@@ -77,6 +77,9 @@
         <argument
             android:name="ShowAppBar"
             android:defaultValue="true" />
+        <action
+            android:id="@+id/action_calendarFragment_to_reservedCounselingDetailFragment"
+            app:destination="@id/reservedCounselingDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatListFragment"
