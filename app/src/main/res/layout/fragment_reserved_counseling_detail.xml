@@ -5,6 +5,10 @@
             name="vm"
             type="com.seallook.androidx.ui.reserved.counseling.detail.ReservedCounselingDetailViewModel" />
 
+        <variable
+            name="showWebSite"
+            type="com.seallook.androidx.ui.reserved.counseling.detail.ReservedCounselingDetailShowWebSite" />
+
         <import
             type="com.seallook.androidx.share.DetailTextType"/>
     </data>
@@ -17,7 +21,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/reserved_detail_user_info_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -28,6 +32,7 @@
                 android:layout_marginVertical="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:text="@{vm.counselorInfo.name}"
                 tools:text="사용자 이름"/>
 
             <TextView
@@ -38,17 +43,19 @@
                 android:layout_marginVertical="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/user_name_text"
+                android:text="@{vm.counselorInfo.description}"
                 tools:text="사용자 설명"/>
 
             <ImageView
                 android:id="@+id/user_thumbnail_image"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_launcher_foreground" />
+                tools:src="@drawable/ic_launcher_foreground"
+                bind:setImageFromUrl="@{vm.counselorInfo.thumbnail}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -90,12 +97,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="20dp"
-                bind:reservation="@{vm.reservationItem}"
-                bind:schedule="@{vm.counselingScheduleItem}"
-                bind:textType="@{DetailTextType.OFFICE}"
                 bind:layout_constraintStart_toStartOf="parent"
                 bind:layout_constraintTop_toBottomOf="@id/schedule_time_text"
+                android:text="@{vm.officeInfo.place_name}"
                 tools:text="장소 00상담센터"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/show_web_site_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                bind:layout_constraintStart_toEndOf="@id/schedule_office_text"
+                bind:layout_constraintBaseline_toBaselineOf="@id/schedule_office_text"
+                bind:officeWebSite="@{vm.officeInfo.place_url}"
+                bind:showWebSite="@{showWebSite}"
+                android:text="장소 보기"/>
 
             <TextView
                 android:id="@+id/schedule_price_text"
