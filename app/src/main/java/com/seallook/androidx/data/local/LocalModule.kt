@@ -96,4 +96,12 @@ object LocalModule {
     ): CounselorOfficeIdDao {
         return database.counselorOfficeIdDao()
     }
+
+    @Singleton
+    @Provides
+    fun provideOfficeCounselorEmailDao(
+        database: SealLookDatabase,
+    ): OfficeCounselorEmailDao {
+        return database.officeCounselorEmailDao()
+    }
 }

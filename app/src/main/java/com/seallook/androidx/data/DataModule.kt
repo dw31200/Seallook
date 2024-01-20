@@ -14,6 +14,8 @@ import com.seallook.androidx.data.repository.counselor.counselingtype.Counseling
 import com.seallook.androidx.data.repository.counselor.counselingtype.CounselingTypeRepositoryImpl
 import com.seallook.androidx.data.repository.counselor.office.CounselorOfficeIdRepository
 import com.seallook.androidx.data.repository.counselor.office.CounselorOfficeIdRepositoryImpl
+import com.seallook.androidx.data.repository.counselor.office.OfficeCounselorEmailRepository
+import com.seallook.androidx.data.repository.counselor.office.OfficeCounselorEmailRepositoryImpl
 import com.seallook.androidx.data.repository.counselor.office.OfficeInfoRepository
 import com.seallook.androidx.data.repository.counselor.office.OfficeInfoRepositoryImpl
 import com.seallook.androidx.data.repository.counselor.reservation.ReservationRepository
@@ -67,4 +69,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindCounselorOfficeIdRepository(counselorOfficeIdRepositoryImpl: CounselorOfficeIdRepositoryImpl): CounselorOfficeIdRepository
+
+    @Binds
+    abstract fun bindOfficeCounselorEmailRepository(officeCounselorEmailRepositoryImpl: OfficeCounselorEmailRepositoryImpl): OfficeCounselorEmailRepository
 }
