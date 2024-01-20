@@ -5,6 +5,10 @@
             name="vm"
             type="com.seallook.androidx.ui.reserved.counseling.detail.ReservedCounselingDetailViewModel" />
 
+        <variable
+            name="showWebSite"
+            type="com.seallook.androidx.ui.reserved.counseling.detail.ReservedCounselingDetailShowWebSite" />
+
         <import
             type="com.seallook.androidx.share.DetailTextType"/>
     </data>
@@ -97,6 +101,17 @@
                 bind:layout_constraintTop_toBottomOf="@id/schedule_time_text"
                 android:text="@{vm.officeInfo.place_name}"
                 tools:text="장소 00상담센터"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/show_web_site_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                bind:layout_constraintStart_toEndOf="@id/schedule_office_text"
+                bind:layout_constraintBaseline_toBaselineOf="@id/schedule_office_text"
+                bind:officeWebSite="@{vm.officeInfo.place_url}"
+                bind:showWebSite="@{showWebSite}"
+                android:text="장소 보기"/>
 
             <TextView
                 android:id="@+id/schedule_price_text"

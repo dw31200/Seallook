@@ -4,6 +4,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.google.android.material.button.MaterialButton
 import com.seallook.androidx.share.DetailTextType
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
 import com.seallook.androidx.ui.model.ReservationUiModel
@@ -39,4 +40,13 @@ fun ImageView.setImage(url: String?) {
         .with(this)
         .load(url)
         .into(this)
+}
+
+@BindingAdapter("bind:officeWebSite", "bind:showWebSite", requireAll = true)
+fun MaterialButton.setOnClick(officeWebSite: String?, showWebSite: ReservedCounselingDetailShowWebSite) {
+    setOnClickListener {
+        officeWebSite?.let {
+            showWebSite.show(it)
+        }
+    }
 }
