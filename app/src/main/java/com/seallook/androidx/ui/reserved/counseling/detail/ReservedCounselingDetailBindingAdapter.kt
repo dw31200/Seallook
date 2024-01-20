@@ -1,7 +1,9 @@
 package com.seallook.androidx.ui.reserved.counseling.detail
 
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import com.seallook.androidx.share.DetailTextType
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
 import com.seallook.androidx.ui.model.ReservationUiModel
@@ -29,4 +31,12 @@ fun TextView.setText(reservation: ReservationUiModel?, schedule: CounselingSched
             else -> Unit
         }
     }
+}
+
+@BindingAdapter("bind:setImageFromUrl")
+fun ImageView.setImage(url: String?) {
+    Glide
+        .with(this)
+        .load(url)
+        .into(this)
 }
