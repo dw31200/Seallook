@@ -46,6 +46,8 @@ class ReserveCounselingFragment :
                 val action = ReserveCounselingFragmentDirections.actionReserveCounselingFragmentToHomeFragment()
                 navigate(action)
             }
+
+            else -> Unit
         }
     }
 }

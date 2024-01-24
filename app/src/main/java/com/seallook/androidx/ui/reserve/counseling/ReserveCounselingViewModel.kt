@@ -11,6 +11,7 @@ import com.seallook.androidx.domain.usecase.counselorinfo.reservation.SetReserva
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.DeleteAllCounselingScheduleUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetCounselingScheduleOnDateUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromFirebaseCounselingScheduleUseCase
+import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromLocalCounselingScheduleUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.InsertCounselingScheduleUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
@@ -34,6 +35,7 @@ class ReserveCounselingViewModel @Inject constructor(
     private val setReservationUseCase: SetReservationUseCase,
     private val deleteAllCounselingScheduleUseCase: DeleteAllCounselingScheduleUseCase,
     private val getCounselorInfoUseCase: GetCounselorInfoUseCase,
+    private val getFromLocalCounselingScheduleUseCase: GetFromLocalCounselingScheduleUseCase,
 ) : BaseViewModel<ReserveCounselingEffect>(), ReserveCounselingSelectDate, CounselingScheduleSelect {
     var email = savedStateHandle.get<String>("email")
 
@@ -52,11 +54,25 @@ class ReserveCounselingViewModel @Inject constructor(
             }
         }
 
+    val scheduleList = MutableLiveData<List<CounselingScheduleUiModel>>()
+//    val scheduleList: LiveData<List<CounselingScheduleUiModel>> =
+//        liveData {
+//            emit(
+//                getFromLocalCounselingScheduleUseCase(
+//                    GetFromLocalCounselingScheduleUseCase.Params(
+//                        email,
+//                    ),
+//                ).map {
+//                    CounselingScheduleUiModel(it)
+//                },
+//            )
+//        }
+
     private val _counselingScheduleList = MutableLiveData<List<CounselingScheduleUiModel>>()
     val counselingScheduleList: LiveData<List<CounselingScheduleUiModel>>
         get() = _counselingScheduleList
 
-    private val _selectedDate = MutableLiveData<LocalDate>(LocalDate.now())
+    private val _selectedDate = MutableLiveData(LocalDate.now())
     val selectedDate: LiveData<LocalDate>
         get() = _selectedDate
 
@@ -77,6 +93,9 @@ class ReserveCounselingViewModel @Inject constructor(
             }
             if (schedule != null) {
                 insertCounselingScheduleUseCase(schedule)
+                scheduleList.value = schedule.map {
+                    CounselingScheduleUiModel(it)
+                }
                 _counselingScheduleList.value = schedule.map {
                     CounselingScheduleUiModel(it)
                 }
