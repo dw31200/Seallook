@@ -9,9 +9,6 @@ import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.mypage.counselor.info.update.counseling.type.adapter.CounselingTypeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
-/* TODO
-    1.바뀐 모델에 맞춰서 수정
- */
 @AndroidEntryPoint
 class UpdateCounselingTypeFragment :
     BaseFragment<FragmentUpdateCounselingTypeBinding, UpdateCounselingTypeViewModel, Effect>(

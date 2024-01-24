@@ -7,9 +7,6 @@ import com.seallook.androidx.ui.base.BaseFragment
 import com.seallook.androidx.ui.base.Effect
 import dagger.hilt.android.AndroidEntryPoint
 
-/* TODO
-    상담 예약 완료 후 작성
- */
 @AndroidEntryPoint
 class DiarySettingFragment : BaseFragment<FragmentDiarySettingBinding, DiarySettingViewModel, Effect>(
     FragmentDiarySettingBinding::inflate,

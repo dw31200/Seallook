@@ -7,9 +7,6 @@ import com.seallook.androidx.ui.base.BaseFragment
 import com.seallook.androidx.ui.mypage.counselor.info.update.office.adapter.UpdateOfficeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
-/* TODO
-    1.바뀐 모델에 맞춰 수정
- */
 @AndroidEntryPoint
 class UpdateOfficeFragment :
     BaseFragment<FragmentUpdateOfficeBinding, UpdateOfficeViewModel, UpdateOfficeEffect>(

@@ -10,9 +10,6 @@ import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
-/* TODO
-    1.바뀐 모델에 맞춰서 수정
- */
 @AndroidEntryPoint
 class UpdateCounselorBasicInfoFragment :
     BaseFragment<FragmentUpdateCounselorBasicInfoBinding, UpdateCounselorBasicInfoViewModel, UpdateCounselorBasicInfoEffect>(
@@ -75,11 +72,31 @@ class UpdateCounselorBasicInfoFragment :
 
     override fun onEffectCollect(effect: UpdateCounselorBasicInfoEffect) {
         when (effect) {
+            UpdateCounselorBasicInfoEffect.UploadFile -> {
+                showProgressDialog("상담사 정보를 업로드 중입니다.")
+            }
             UpdateCounselorBasicInfoEffect.SuccessSetOfficeCounselorEmail -> {
+                dismissProgressDialog()
                 val action = UpdateCounselorBasicInfoFragmentDirections.actionUpdateCounselorBasicInfoFragmentToMypageFragment()
                 navigate(action)
             }
 
+            UpdateCounselorBasicInfoEffect.FailureSetOfficeCounselorEmail -> {
+                showFailMessage("업로드에 실패했습니다.")
+                dismissProgressDialog()
+            }
+            UpdateCounselorBasicInfoEffect.FailureUpdateCounselorInfo -> {
+                showFailMessage("업로드에 실패했습니다.")
+                dismissProgressDialog()
+            }
+            UpdateCounselorBasicInfoEffect.FailureUpdateCounselorOfficeId -> {
+                showFailMessage("업로드에 실패했습니다.")
+                dismissProgressDialog()
+            }
+            UpdateCounselorBasicInfoEffect.FailureUpdateOfficeInfo -> {
+                showFailMessage("업로드에 실패했습니다.")
+                dismissProgressDialog()
+            }
             else -> Unit
         }
     }

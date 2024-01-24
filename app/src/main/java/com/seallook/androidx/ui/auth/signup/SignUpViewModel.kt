@@ -58,25 +58,13 @@ class SignUpViewModel @Inject constructor(
     }
 
     val password = MutableLiveData<String>()
-    private val _passwordValidation: LiveData<Boolean> = currentUser.map {
-        if (it != null) {
-            true
-        } else {
-            password.value?.isNotBlank() == true &&
-                password.value?.isNotEmpty() == true &&
-                password.value != null
-        }
+    private val _passwordValidation = password.map {
+        it?.isNotBlank() == true && it?.isNotEmpty() == true && it != null
     }
 
     val passwordConfirmation = MutableLiveData<String>()
-    private val _passwordConfirmationValidation = currentUser.map {
-        if (it != null) {
-            true
-        } else {
-            passwordConfirmation.value?.isNotBlank() == true &&
-                passwordConfirmation.value?.isNotEmpty() == true &&
-                passwordConfirmation.value != null
-        }
+    private val _passwordConfirmationValidation = passwordConfirmation.map {
+        it?.isNotBlank() == true && it?.isNotEmpty() == true && it != null
     }
 
     val over14yoChecked = MutableLiveData<Boolean>()
@@ -95,80 +83,66 @@ class SignUpViewModel @Inject constructor(
 
     private val _validationList = mutableListOf<LiveData<Boolean>>()
 
-    private val _progressMessage = MutableLiveData<String>()
-    val progressMessage: LiveData<String>
-        get() = _progressMessage
-
-    private val _isShowProgress = MutableLiveData<Boolean>()
-    val isShowProgress: LiveData<Boolean>
-        get() = _isShowProgress
-
-    private val _isShowFailMessage = MutableLiveData<String>()
-    val isShowFailMessage: LiveData<String>
-        get() = _isShowFailMessage
-
     init {
-        _validationList.add(_nameValidation)
-        validation.addSource(_nameValidation) {
-            validation.value = validateFields()
-        }
-
-        _validationList.add(_emailValidation)
-        validation.addSource(_emailValidation) {
-            validation.value = validateFields()
-        }
-
-        _validationList.add(_genderValidation)
-        validation.addSource(_genderValidation) {
-            validation.value = validateFields()
-        }
-
-        _validationList.add(_birthValidation)
-        validation.addSource(_birthValidation) {
-            validation.value = validateFields()
-        }
-
-        _validationList.add(_passwordValidation)
-        validation.addSource(_passwordValidation) {
-            validation.value = validateFields()
-        }
-
-        _validationList.add(_passwordConfirmationValidation)
-        validation.addSource(_passwordConfirmationValidation) {
-            validation.value = validateFields()
-        }
-
-        _validationList.add(over14yoChecked)
-        validation.addSource(over14yoChecked) {
-            validation.value = validateFields()
-        }
-
-        _validationList.add(privacyPolicyChecked)
-        validation.addSource(privacyPolicyChecked) {
-            validation.value = validateFields()
-        }
-
         viewModelScope.launch {
             _currentUser.value = getCurrentUserUseCase()
             name.value = currentUser.value?.displayName
             email.value = currentUser.value?.email
-            _progressMessage.value = "회원가입 중... 잠시만 기다려 주세요."
         }
-    }
 
-    private fun validateFields(): Boolean {
-        var validation = true
-        for (_validation in _validationList) {
-            if (_validation.value != true) {
-                validation = false
+        _validationList.add(_nameValidation)
+        validation.addSource(_nameValidation) {
+            validateFields()
+        }
+
+        _validationList.add(_emailValidation)
+        validation.addSource(_emailValidation) {
+            validateFields()
+        }
+
+        _validationList.add(_genderValidation)
+        validation.addSource(_genderValidation) {
+            validateFields()
+        }
+
+        _validationList.add(_birthValidation)
+        validation.addSource(_birthValidation) {
+            validateFields()
+        }
+
+        if (currentUser.value == null) {
+            _validationList.add(_passwordValidation)
+            validation.addSource(_passwordValidation) {
+                validateFields()
+            }
+
+            _validationList.add(_passwordConfirmationValidation)
+            validation.addSource(_passwordConfirmationValidation) {
+                validateFields()
             }
         }
 
-        return validation
+        _validationList.add(over14yoChecked)
+        validation.addSource(over14yoChecked) {
+            validateFields()
+        }
+
+        _validationList.add(privacyPolicyChecked)
+        validation.addSource(privacyPolicyChecked) {
+            validateFields()
+        }
+    }
+
+    private fun validateFields() {
+        validation.value = _validationList.all {
+            it.value == true
+        }
     }
 
     fun signUp() {
-        _isShowProgress.value = true
+        setEffect(SignUpEffect.SignUp)
+        _passwordError.value = null
+        _emailError.value = null
         val profile = ProfileUiModel(
 //            sdw312 임시 테스트
             0,
@@ -193,12 +167,11 @@ class SignUpViewModel @Inject constructor(
                         setProfile(profile)
                     }
                     .onFailure {
-                        _isShowProgress.value = false
-                        _isShowFailMessage.value = "회원가입에 실패했습니다."
+                        setEffect(SignUpEffect.FailureSignUp)
                         when (it) {
                             is FirebaseAuthWeakPasswordException -> {
                                 _passwordError.value =
-                                    "안전한 비밀번호가 아닙니다. 길이가 8자 이상이고 영어와 숫자, 특수문자가 조합되어야 합니다."
+                                    "안전한 비밀번호가 아닙니다. 길이가 6자 이상이어야 합니다."
                             }
 
                             is FirebaseAuthInvalidCredentialsException -> {
@@ -223,7 +196,6 @@ class SignUpViewModel @Inject constructor(
             getCurrentUserUseCase()?.uid?.let {
                 setProfileUseCase(it, profile.toDomainModel())
                     .onSuccess {
-                        _isShowProgress.value = false
                         updateUserTypeUseCase(
                             UpdateUserTypeUseCase.Params(
                                 profile.email,
@@ -234,13 +206,11 @@ class SignUpViewModel @Inject constructor(
                                 setEffect(SignUpEffect.NavigateToHome)
                             }
                             .onFailure {
-                                _isShowProgress.value = false
-                                _isShowFailMessage.value = "회원가입에 실패했습니다."
+                                setEffect(SignUpEffect.FailureSignUp)
                             }
                     }
                     .onFailure {
-                        _isShowProgress.value = false
-                        _isShowFailMessage.value = "회원가입에 실패했습니다."
+                        setEffect(SignUpEffect.FailureSetProfile)
                     }
             }
         }

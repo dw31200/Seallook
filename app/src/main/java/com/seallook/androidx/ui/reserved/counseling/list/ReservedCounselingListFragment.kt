@@ -8,11 +8,6 @@ import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.reserved.counseling.list.adapter.ReservedCounselingListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
-/* TODO
-    1.로그인된 사용자 email로 reservation 데이터 가져오기
-    2.가져온 reservation 보여주기
-    3.Navigation: 상담 아이템 > ReservedCounselingDetail, 뒤로가기 > 이전화면
- */
 @AndroidEntryPoint
 class ReservedCounselingListFragment :
     BaseFragment<FragmentReservedCounselingListBinding, ReservedCounselingListViewModel, Effect>(
