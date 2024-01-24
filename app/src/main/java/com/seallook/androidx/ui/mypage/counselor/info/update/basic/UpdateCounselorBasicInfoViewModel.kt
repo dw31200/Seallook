@@ -91,21 +91,8 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
             }
         }
 
-    private val _progressMessage = MutableLiveData<String>()
-    val progressMessage: LiveData<String>
-        get() = _progressMessage
-
-    private val _isShowProgress = MutableLiveData<Boolean>()
-    val isShowProgress: LiveData<Boolean>
-        get() = _isShowProgress
-
-    private val _isShowFailMessage = MutableLiveData<String>()
-    val isShowFailMessage: LiveData<String>
-        get() = _isShowFailMessage
-
     init {
         viewModelScope.launch {
-            _progressMessage.value = "상담사 정보를 업로드 중입니다."
             _currentUser.value = getCurrentUserUseCase()
         }
     }
@@ -113,7 +100,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     fun uploadFile(path: String, uri: Uri, name: String?, pr: String?) {
         viewModelScope.launch {
             val fileName = "${currentUser.value}.png"
-            _isShowProgress.value = true
+            setEffect(UpdateCounselorBasicInfoEffect.UploadFile)
             uploadFileUseCase(path, fileName, uri)
                 .onSuccess {
                     getDownloadUrl(path, fileName, name, pr)
@@ -149,7 +136,6 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
                     setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateCounselorInfo)
                 }
                 .onFailure {
-                    _isShowProgress.value = false
                     setEffect(UpdateCounselorBasicInfoEffect.FailureUpdateCounselorInfo)
                 }
         }
@@ -163,7 +149,6 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
                     setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateOfficeInfo)
                 }
                 .onFailure {
-                    _isShowProgress.value = false
                     setEffect(UpdateCounselorBasicInfoEffect.FailureUpdateOfficeInfo)
                 }
         }
@@ -178,7 +163,6 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
                 ),
             )
                 .onSuccess {
-                    _isShowProgress.value = false
                     setOfficeCounselorEmail()
                     setEffect(UpdateCounselorBasicInfoEffect.SuccessUpdateCounselorOfficeId)
                 }

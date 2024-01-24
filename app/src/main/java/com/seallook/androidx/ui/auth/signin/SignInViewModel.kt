@@ -1,6 +1,5 @@
 package com.seallook.androidx.ui.auth.signin
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.seallook.androidx.domain.usecase.GetProfileUseCase
@@ -20,16 +19,8 @@ class SignInViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase,
     private val updateUserTypeUseCase: UpdateUserTypeUseCase,
 ) : BaseViewModel<SignInEffect>() {
-    private val _progressMessage = MutableLiveData<String>()
-    val progressMessage: LiveData<String>
-        get() = _progressMessage
-    private val _isShowProgress = MutableLiveData<Boolean>()
-    val isShowProgress: LiveData<Boolean>
-        get() = _isShowProgress
-    private val _isShowFailMessage = MutableLiveData<String>()
-    val isShowFailMessage: LiveData<String>
-        get() = _isShowFailMessage
     val email = MutableLiveData<String>()
+
     val password = MutableLiveData<String>()
 
     private fun getProfile(uid: String) {
@@ -42,41 +33,36 @@ class SignInViewModel @Inject constructor(
                     ),
                 )
                     .onSuccess {
-                        _isShowProgress.value = false
-                        setEffect(SignInEffect.NavigateToHome)
+                        setEffect(SignInEffect.SuccessSignIn)
                     }
                     .onFailure {
-                        _isShowProgress.value = false
-                        _isShowFailMessage.value = "로그인에 실패했습니다."
+                        setEffect(SignInEffect.FailureSignIn)
                     }
             } ?: run {
-                _isShowProgress.value = false
                 setEffect(SignInEffect.NavigateToSignUp)
             }
         }
     }
 
     fun signInWithGoogle(token: String) {
+        setEffect(SignInEffect.SignInWithGoogle)
         viewModelScope.launch {
-            _progressMessage.value = "로그인 중입니다."
-            _isShowProgress.value = true
             signInWithGoogleUseCase(token)
                 .onSuccess {
+                    setEffect(SignInEffect.SuccessSignInWithGoogle)
                     it.user?.uid?.let { uid ->
                         getProfile(uid)
                     }
                 }
                 .onFailure {
-                    _isShowFailMessage.value = "로그인에 실패했습니다."
-                    _isShowProgress.value = false
+                    setEffect(SignInEffect.FailureSignInWithGoogle)
                 }
         }
     }
 
     fun signInWithEmailAndPassword() {
+        setEffect(SignInEffect.SignInWithEmailAndPassword)
         viewModelScope.launch {
-            _progressMessage.value = "로그인 중입니다."
-            _isShowProgress.value = true
             signInWithEmailAndPasswordUseCase(
                 SignInWithEmailAndPasswordUseCase.Params(
                     email.value,
@@ -84,14 +70,14 @@ class SignInViewModel @Inject constructor(
                 ),
             )
                 .onSuccess {
+                    setEffect(SignInEffect.SuccessSignInWithEmailAndPassword)
                     it.user?.uid?.let { uid ->
                         getProfile(uid)
                     }
                 }
                 .onFailure {
+                    setEffect(SignInEffect.FailureSignInWithEmailAndPassword)
                     Timber.d("$it")
-                    _isShowFailMessage.value = "로그인에 실패했습니다."
-                    _isShowProgress.value = false
                 }
         }
     }

@@ -15,10 +15,6 @@ import com.seallook.androidx.ui.calendar.widget.addStatusBarColorUpdate
 import com.seallook.androidx.ui.calendar.widget.getColorCompat
 import dagger.hilt.android.AndroidEntryPoint
 
-/* TODO
-    상담 예약 완료 후 작성
- */
-
 @AndroidEntryPoint
 class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel, Effect>(
     FragmentCalendarBinding::inflate,

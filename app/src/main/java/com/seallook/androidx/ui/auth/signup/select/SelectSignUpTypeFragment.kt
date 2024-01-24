@@ -7,10 +7,6 @@ import com.seallook.androidx.share.UserTypeOption
 import com.seallook.androidx.ui.base.BaseFragment
 import com.seallook.androidx.ui.base.Effect
 
-/* TODO
-    1.InitView: 내담자, 상담사, 기관 별 가입 버튼 보여주기
-    2.Navigation: 각 버튼 클릭시 SignUp으로 이동
- */
 class SelectSignUpTypeFragment :
     BaseFragment<FragmentSelectSignUpBinding, SelectSignUpTypeViewModel, Effect>(
         FragmentSelectSignUpBinding::inflate,

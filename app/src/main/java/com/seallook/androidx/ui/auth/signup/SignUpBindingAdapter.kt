@@ -24,7 +24,7 @@ fun TextInputEditText.setTextInProfileInfo(profileInfo: String?) {
 
 @BindingAdapter("bind:setErrorMessage")
 fun TextInputLayout.setErrorMessage(error: String?) {
-    if (error != null) setError(error)
+    if (error != null) setError(error) else setError(null)
 }
 
 @BindingAdapter("bind:checkedButtonId")

@@ -13,18 +13,6 @@
         />
 
     <item
-        android:id="@+id/chatListFragment"
-        android:title="Chat"
-        android:icon="@drawable/ic_chat"
-        />
-
-    <item
-        android:id="@+id/diaryListFragment"
-        android:title="Diary"
-        android:icon="@drawable/ic_diary"
-        />
-
-    <item
         android:id="@+id/mypageFragment"
         android:title="Mypage"
         android:icon="@drawable/ic_mypage"

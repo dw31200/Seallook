@@ -13,13 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.YearMonth
 
-/* TODO
-    1.상담사 스케쥴, 타입, 정보 자동생성ID로 변경
-    2.상담사 스케쥴 DB 저장 및 flow로 가져오기
-    3.상담 예약 신청시 transaction으로 해당 일정 예약 여부 확인 후 reservation 필드 true로 업데이트
-    4.reservation 필드 업데이트 성공시 Reservation 컬렉션에 예약 정보 업로드
-    필요한 모델: CounselingSchedule, CounselingType, Reservation(documentId, clientEmail, counselorEmail, scheduleId, approve, 개별 컬렉션으로 변경),
- */
 @AndroidEntryPoint
 class ReserveCounselingFragment :
     BaseFragment<FragmentReserveCounselingBinding, ReserveCounselingViewModel, ReserveCounselingEffect>(

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import androidx.databinding.ViewDataBinding
@@ -19,12 +20,9 @@ import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.Navigator
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.seallook.androidx.databinding.DialogProgressBinding
 import kotlinx.coroutines.launch
-
-/* TODO
-    1. BaseFragment에서 Effect 쓸 수 있게 수정하기
-    2. ProgressBar 관련 삭제 및 관련 프레그먼트 수정
- */
 
 abstract class BaseFragment<T : ViewDataBinding, VM : BaseViewModel<E>, E : Effect>(
     private val inflate: (
@@ -41,7 +39,8 @@ abstract class BaseFragment<T : ViewDataBinding, VM : BaseViewModel<E>, E : Effe
 
     protected abstract fun viewModelVariableId(): Int
 
-    protected var progressDialog: AlertDialog? = null
+    private var progressDialog: AlertDialog? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -109,5 +108,41 @@ abstract class BaseFragment<T : ViewDataBinding, VM : BaseViewModel<E>, E : Effe
             navOptions,
             navigatorExtras,
         )
+    }
+
+    protected fun showProgressDialog(message: String, enforce: Boolean = false) {
+        if (enforce) {
+            dismissProgressDialog()
+        } else {
+            if (isProgressDialogShown()) return
+        }
+        val binding = LayoutInflater.from(requireContext()).let {
+            DialogProgressBinding.inflate(it)
+        }
+
+        binding.messageTextView.text = message
+
+        progressDialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(binding.root)
+            .setCancelable(false)
+            .create()
+        progressDialog!!.show()
+    }
+
+    protected fun dismissProgressDialog() {
+        progressDialog?.dismiss()
+        progressDialog = null
+    }
+
+    private fun isProgressDialogShown() = progressDialog != null
+
+    protected fun showFailMessage(message: String?) {
+        if (message != null) {
+            Toast.makeText(
+                context,
+                message,
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
     }
 }

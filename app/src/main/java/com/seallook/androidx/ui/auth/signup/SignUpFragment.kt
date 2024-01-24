@@ -8,14 +8,6 @@ import com.seallook.androidx.databinding.FragmentSignUpBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
-/* TODO
-    1. 모든 코드 viewmodel로 이동
-    2. 각 입력 필드 리스너 binding으로 뷰모델에서 직접 옵저빙
-    3. signUpUseCase 파라미터 profile에서 email로 변경
-    4. 프로그래스 관련 binding으로 변경
-    5. 백버튼 관련 제거
-    필요한 모델: Uid(userEmail, uid), Profile(id > uid로 변경), UserType(userEmail, userType)
- */
 @AndroidEntryPoint
 class SignUpFragment :
     BaseFragment<FragmentSignUpBinding, SignUpViewModel, SignUpEffect>(
@@ -34,11 +26,24 @@ class SignUpFragment :
     override fun onEffectCollect(effect: SignUpEffect) {
         when (effect) {
             SignUpEffect.NavigateToHome -> {
+                dismissProgressDialog()
                 val action = SignUpFragmentDirections.actionSignUpFragmentToMainGraphActivity()
                 navigate(
                     action,
                     extras,
                 )
+            }
+
+            SignUpEffect.FailureSetProfile -> {
+                dismissProgressDialog()
+                showFailMessage("회원가입에 실패했습니다.")
+            }
+            SignUpEffect.FailureSignUp -> {
+                dismissProgressDialog()
+                showFailMessage("회원가입에 실패했습니다.")
+            }
+            SignUpEffect.SignUp -> {
+                showProgressDialog("회원가입 중입니다.")
             }
         }
     }
