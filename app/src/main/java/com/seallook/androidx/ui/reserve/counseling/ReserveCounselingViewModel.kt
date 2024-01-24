@@ -3,8 +3,10 @@ package com.seallook.androidx.ui.reserve.counseling
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
+import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetCounselorInfoUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.reservation.SetReservationUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.DeleteAllCounselingScheduleUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetCounselingScheduleOnDateUseCase
@@ -12,6 +14,7 @@ import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromFireba
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.InsertCounselingScheduleUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
+import com.seallook.androidx.ui.model.CounselorInfoUiModel
 import com.seallook.androidx.ui.reserve.counseling.calendar.ReserveCounselingSelectDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,12 +33,24 @@ class ReserveCounselingViewModel @Inject constructor(
     private val getCounselingScheduleOnDateUseCase: GetCounselingScheduleOnDateUseCase,
     private val setReservationUseCase: SetReservationUseCase,
     private val deleteAllCounselingScheduleUseCase: DeleteAllCounselingScheduleUseCase,
+    private val getCounselorInfoUseCase: GetCounselorInfoUseCase,
 ) : BaseViewModel<ReserveCounselingEffect>(), ReserveCounselingSelectDate, CounselingScheduleSelect {
     var email = savedStateHandle.get<String>("email")
 
     private val _clientEmail = MutableLiveData<String>()
     val clientEmail: LiveData<String>
         get() = _clientEmail
+
+    val counselorInfo: LiveData<CounselorInfoUiModel> =
+        liveData {
+            getCounselorInfoUseCase(
+                GetCounselorInfoUseCase.Params(
+                    email,
+                ),
+            )?.let {
+                emit(CounselorInfoUiModel(it))
+            }
+        }
 
     private val _counselingScheduleList = MutableLiveData<List<CounselingScheduleUiModel>>()
     val counselingScheduleList: LiveData<List<CounselingScheduleUiModel>>
