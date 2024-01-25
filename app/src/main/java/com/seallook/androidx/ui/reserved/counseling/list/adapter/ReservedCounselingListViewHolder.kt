@@ -17,7 +17,9 @@ class ReservedCounselingListViewHolder(
         with(binding) {
             data = reservationItem
             binding.root.setOnClickListener {
-                onClick(reservationItem.id)
+                if (reservationItem.confirm) {
+                    onClick(reservationItem.id)
+                }
             }
         }
     }
