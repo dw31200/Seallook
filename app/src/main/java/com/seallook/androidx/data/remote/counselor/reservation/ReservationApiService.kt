@@ -11,7 +11,7 @@ interface ReservationApiService {
 
     fun onClientListSnapshot(email: String): Flow<List<ReservationResponse>>
 
-    suspend fun set(reservation: ReservationResponse)
+    suspend fun set(reservation: ReservationResponse): Result<ReservationResponse>
 
     suspend fun update(id: String, confirm: Boolean)
 }

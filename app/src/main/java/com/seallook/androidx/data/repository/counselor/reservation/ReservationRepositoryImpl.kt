@@ -80,8 +80,12 @@ class ReservationRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun set(reservation: Reservation) {
-        reservationApiService.set(reservation.toRemoteModel())
+    override suspend fun set(reservation: Reservation): Result<Reservation> {
+        return reservationApiService
+            .set(reservation.toRemoteModel())
+            .map {
+                Reservation(it)
+            }
     }
 
     override suspend fun update(id: String, confirm: Boolean) {

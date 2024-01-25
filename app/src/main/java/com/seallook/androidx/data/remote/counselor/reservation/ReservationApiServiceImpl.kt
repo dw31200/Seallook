@@ -43,7 +43,7 @@ class ReservationApiServiceImpl @Inject constructor(
             .dataObjects()
     }
 
-    override suspend fun set(reservation: ReservationResponse) {
+    override suspend fun set(reservation: ReservationResponse): Result<ReservationResponse> {
         val ref = db.collection(Constants.RESERVATION)
             .document()
         val setReservation = ReservationResponse(
@@ -54,9 +54,14 @@ class ReservationApiServiceImpl @Inject constructor(
             date = reservation.date,
             confirm = reservation.confirm,
         )
-        ref
-            .set(setReservation)
-            .await()
+        return runCatching {
+            ref
+                .set(setReservation)
+                .await()
+        }
+            .mapCatching {
+                setReservation
+            }
     }
 
     override suspend fun update(id: String, confirm: Boolean) {
