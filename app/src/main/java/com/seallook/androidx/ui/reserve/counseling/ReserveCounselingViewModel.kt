@@ -3,21 +3,30 @@ package com.seallook.androidx.ui.reserve.counseling
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.seallook.androidx.domain.model.ReservationModel
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.basic.GetCounselorInfoUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.reservation.SetReservationUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.DeleteAllCounselingScheduleUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetCounselingScheduleOnDateUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromFirebaseCounselingScheduleUseCase
-import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromLocalCounselingScheduleUseCase
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.InsertCounselingScheduleUseCase
+import com.seallook.androidx.domain.usecase.reserved.GetReservationListUseCase
+import com.seallook.androidx.domain.usecase.reserved.GetReservedListSnapshotUseCase
+import com.seallook.androidx.domain.usecase.reserved.UpdateReservationUseCase
+import com.seallook.androidx.share.UserTypeOption
 import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
 import com.seallook.androidx.ui.model.CounselorInfoUiModel
+import com.seallook.androidx.ui.model.ReservationUiModel
 import com.seallook.androidx.ui.reserve.counseling.calendar.ReserveCounselingSelectDate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -27,7 +36,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReserveCounselingViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val getFromFirebaseCounselingScheduleUseCase: GetFromFirebaseCounselingScheduleUseCase,
     private val insertCounselingScheduleUseCase: InsertCounselingScheduleUseCase,
@@ -35,7 +44,9 @@ class ReserveCounselingViewModel @Inject constructor(
     private val setReservationUseCase: SetReservationUseCase,
     private val deleteAllCounselingScheduleUseCase: DeleteAllCounselingScheduleUseCase,
     private val getCounselorInfoUseCase: GetCounselorInfoUseCase,
-    private val getFromLocalCounselingScheduleUseCase: GetFromLocalCounselingScheduleUseCase,
+    getReservationListUseCase: GetReservationListUseCase,
+    getReservedListSnapshotUseCase: GetReservedListSnapshotUseCase,
+    private val updateReservationUseCase: UpdateReservationUseCase,
 ) : BaseViewModel<ReserveCounselingEffect>(), ReserveCounselingSelectDate, CounselingScheduleSelect {
     var email = savedStateHandle.get<String>("email")
 
@@ -55,22 +66,22 @@ class ReserveCounselingViewModel @Inject constructor(
         }
 
     val scheduleList = MutableLiveData<List<CounselingScheduleUiModel>>()
-//    val scheduleList: LiveData<List<CounselingScheduleUiModel>> =
-//        liveData {
-//            emit(
-//                getFromLocalCounselingScheduleUseCase(
-//                    GetFromLocalCounselingScheduleUseCase.Params(
-//                        email,
-//                    ),
-//                ).map {
-//                    CounselingScheduleUiModel(it)
-//                },
-//            )
-//        }
 
-    private val _counselingScheduleList = MutableLiveData<List<CounselingScheduleUiModel>>()
-    val counselingScheduleList: LiveData<List<CounselingScheduleUiModel>>
-        get() = _counselingScheduleList
+    val reservationList: LiveData<List<ReservationUiModel>> =
+        getReservationListUseCase(
+            GetReservationListUseCase.Params(
+                email,
+                UserTypeOption.COUNSELOR,
+            ),
+        ).map {
+            it.map {
+                ReservationUiModel(it)
+            }
+        }.asLiveData()
+
+    private val _scheduleOnDateList = MutableLiveData<List<CounselingScheduleUiModel>>()
+    val scheduleOnDateList: LiveData<List<CounselingScheduleUiModel>>
+        get() = _scheduleOnDateList
 
     private val _selectedDate = MutableLiveData(LocalDate.now())
     val selectedDate: LiveData<LocalDate>
@@ -81,6 +92,16 @@ class ReserveCounselingViewModel @Inject constructor(
         get() = _selectedSchedule
 
     init {
+        getReservedListSnapshotUseCase(
+            GetReservedListSnapshotUseCase.Params(
+                email,
+                UserTypeOption.COUNSELOR,
+            ),
+        )
+            .onEach {
+                updateReservationUseCase(it)
+            }
+            .launchIn(viewModelScope)
         viewModelScope.launch {
             deleteAllCounselingScheduleUseCase()
             _clientEmail.value = getCurrentUserUseCase()?.email
@@ -96,9 +117,6 @@ class ReserveCounselingViewModel @Inject constructor(
                 scheduleList.value = schedule.map {
                     CounselingScheduleUiModel(it)
                 }
-                _counselingScheduleList.value = schedule.map {
-                    CounselingScheduleUiModel(it)
-                }
             }
             selectedDate.value?.let { selectDate(it) }
         }
@@ -107,7 +125,7 @@ class ReserveCounselingViewModel @Inject constructor(
     override fun selectDate(date: LocalDate) {
         viewModelScope.launch {
             _selectedDate.value = date
-            _counselingScheduleList.value = getCounselingScheduleOnDateUseCase(date.dayOfWeek).map {
+            _scheduleOnDateList.value = getCounselingScheduleOnDateUseCase(date.dayOfWeek).map {
                 CounselingScheduleUiModel(it)
             }
             _selectedSchedule.value = null
@@ -123,23 +141,39 @@ class ReserveCounselingViewModel @Inject constructor(
             val instant = selectedDate.value?.atStartOfDay(ZoneId.systemDefault())?.toInstant()
             val date = Date.from(instant)
             val formatter = SimpleDateFormat("yyyy.MM.dd")
-            setReservationUseCase(
-                SetReservationUseCase.Params(
+            val formatDate = formatter.format(date) + " " + selectedSchedule.value?.time
+            if (
+                reservationList.value?.any {
+                    it.date == formatDate && it.clientEmail == clientEmail.value
+                } == true
+            ) {
+                setEffect(ReserveCounselingEffect.AlreadyReserve)
+            } else {
+                setReservationUseCase(
+                    SetReservationUseCase.Params(
 //                    sdw312 임시 id값
-                    "",
-                    email,
-                    selectedSchedule.value?.id,
-                    clientEmail.value,
-                    formatter.format(date) + " " + selectedSchedule.value?.time,
-                    false,
-                ),
-            )
-                .onSuccess {
-                    setEffect(ReserveCounselingEffect.NavigateToHome)
-                }
-                .onFailure {
-                    Unit
-                }
+                        "",
+                        email,
+                        selectedSchedule.value?.id,
+                        clientEmail.value,
+                        formatDate,
+                        false,
+                    ),
+                )
+                    .onSuccess {
+                        updateReservation(it)
+                        setEffect(ReserveCounselingEffect.NavigateToHome)
+                    }
+                    .onFailure {
+                        Unit
+                    }
+            }
+        }
+    }
+
+    private fun updateReservation(reservation: ReservationModel) {
+        viewModelScope.launch {
+            updateReservationUseCase(reservation)
         }
     }
 }

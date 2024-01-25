@@ -125,7 +125,9 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             bind:setScheduleItemClickListener="@{vm}"
-                            bind:setCounselingSchedule="@{vm.counselingScheduleList}"
+                            bind:setCounselingSchedule="@{vm.scheduleOnDateList}"
+                            bind:reservationList="@{vm.reservationList}"
+                            bind:selectedDate="@{vm.selectedDate}"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:listitem="@layout/counseling_date_selector_list_item" />

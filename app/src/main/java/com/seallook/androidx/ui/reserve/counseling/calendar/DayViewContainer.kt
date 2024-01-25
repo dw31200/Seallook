@@ -17,7 +17,12 @@ class DayViewContainer(view: View) : ViewContainer(view) {
 
     private val dateFormatter = DateTimeFormatter.ofPattern("dd")
 
-    fun bind(selectedDate: LocalDate, day: WeekDay, reserveCounselingSelectDate: ReserveCounselingSelectDate?, scheduleItems: List<CounselingScheduleUiModel>) {
+    fun bind(
+        selectedDate: LocalDate,
+        day: WeekDay,
+        reserveCounselingSelectDate: ReserveCounselingSelectDate?,
+        scheduleItems: List<CounselingScheduleUiModel>,
+    ) {
         with(binding) {
             dayViewDot.isVisible = scheduleItems.any {
                 day.date.dayOfWeek == it.repeatedDay

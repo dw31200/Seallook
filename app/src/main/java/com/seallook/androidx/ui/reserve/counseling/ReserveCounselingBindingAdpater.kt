@@ -6,18 +6,24 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
+import com.seallook.androidx.ui.model.ReservationUiModel
 import com.seallook.androidx.ui.reserve.counseling.adapter.ReserveCounselingAdapter
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-@BindingAdapter("bind:setCounselingSchedule")
+@BindingAdapter("bind:setCounselingSchedule", "bind:reservationList", "bind:selectedDate", requireAll = true)
 fun RecyclerView.setCounselingSchedule(
     scheduleList: List<CounselingScheduleUiModel>?,
+    reservationList: List<ReservationUiModel>?,
+    selectedDate: LocalDate?,
 ) {
     (adapter as? ReserveCounselingAdapter)
         ?.fetchData(
             scheduleList ?: emptyList(),
+            reservationList ?: emptyList(),
+            selectedDate ?: LocalDate.now(),
         )
 }
 

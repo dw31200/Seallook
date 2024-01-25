@@ -47,7 +47,9 @@ class ReserveCounselingFragment :
                 navigate(action)
             }
 
-            else -> Unit
+            ReserveCounselingEffect.AlreadyReserve -> {
+                showFailMessage("이미 예약하신 일정입니다.")
+            }
         }
     }
 }

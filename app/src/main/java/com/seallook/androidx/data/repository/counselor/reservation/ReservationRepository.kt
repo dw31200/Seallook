@@ -23,7 +23,7 @@ interface ReservationRepository {
 
     suspend fun insert(reservationList: List<Reservation>)
 
-    suspend fun set(reservation: Reservation)
+    suspend fun set(reservation: Reservation): Result<Reservation>
 
     suspend fun update(id: String, confirm: Boolean)
 }

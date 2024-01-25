@@ -7,14 +7,9 @@ import javax.inject.Inject
 class SetReservationUseCase @Inject constructor(
     private val reservationRepository: ReservationRepository,
 ) {
-    suspend operator fun invoke(params: Params): Result<Unit> {
-        if (params.id == null || params.counselorEmail == null || params.scheduleId == null || params.clientEmail == null || params.date == null || params.confirm == null) {
-            return Result.failure(
-                Error("param is null"),
-            )
-        }
-        return runCatching {
-            reservationRepository.set(
+    suspend operator fun invoke(params: Params): Result<ReservationModel> {
+        return reservationRepository
+            .set(
                 ReservationModel(
                     params.id,
                     params.counselorEmail,
@@ -24,15 +19,35 @@ class SetReservationUseCase @Inject constructor(
                     params.confirm,
                 ).toDataModel(),
             )
-        }
+            .map {
+                ReservationModel(it)
+            }
     }
 
     data class Params(
-        val id: String?,
-        val counselorEmail: String?,
-        val scheduleId: String?,
-        val clientEmail: String?,
-        val date: String?,
-        val confirm: Boolean?,
-    )
+        val _id: String?,
+        val _counselorEmail: String?,
+        val _scheduleId: String?,
+        val _clientEmail: String?,
+        val _date: String?,
+        val _confirm: Boolean?,
+    ) {
+        val id: String
+            get() = _id ?: throw IllegalStateException("id is null")
+
+        val counselorEmail: String
+            get() = _counselorEmail ?: throw IllegalStateException("counselorEmail is null")
+
+        val scheduleId: String
+            get() = _scheduleId ?: throw IllegalStateException("scheduleId is null")
+
+        val clientEmail: String
+            get() = _clientEmail ?: throw IllegalStateException("clientEmail is null")
+
+        val date: String
+            get() = _date ?: throw IllegalStateException("date is null")
+
+        val confirm: Boolean
+            get() = _confirm ?: throw IllegalStateException("confirm is null")
+    }
 }
