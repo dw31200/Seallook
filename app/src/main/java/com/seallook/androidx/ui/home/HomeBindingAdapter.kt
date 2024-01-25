@@ -38,7 +38,7 @@ fun RecyclerView.setCounselorItemClickListener(homeNavigation: HomeNavigation) {
 fun MaterialButton.setOnReservedClientListButtonClickListener(homeNavigation: HomeNavigation, userEmail: String?) {
     setOnClickListener {
         if (userEmail != null) {
-            homeNavigation.navigateToReservedClient(userEmail)
+            homeNavigation.navigateToReservedCounseling(userEmail)
         }
     }
 }

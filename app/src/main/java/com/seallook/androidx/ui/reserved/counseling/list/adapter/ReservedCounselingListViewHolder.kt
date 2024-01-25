@@ -2,18 +2,22 @@ package com.seallook.androidx.ui.reserved.counseling.list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.seallook.androidx.databinding.ReservedCounselingListItemBinding
 import com.seallook.androidx.ui.model.ReservationUiModel
+import com.seallook.androidx.ui.reserved.counseling.list.ReservedClientUpdateConfirm
 
 class ReservedCounselingListViewHolder(
     private val binding: ReservedCounselingListItemBinding,
-) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(reservedCounselingItem: ReservationUiModel, onClick: (String) -> Unit) {
+) : ReservationListViewHolder(binding.root) {
+    override fun bind(
+        reservationItem: ReservationUiModel,
+        reservedClientUpdateConfirm: ReservedClientUpdateConfirm?,
+        onClick: (String) -> Unit,
+    ) {
         with(binding) {
-            data = reservedCounselingItem
+            data = reservationItem
             binding.root.setOnClickListener {
-                onClick(reservedCounselingItem.id)
+                onClick(reservationItem.id)
             }
         }
     }

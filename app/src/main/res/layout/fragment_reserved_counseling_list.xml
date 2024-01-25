@@ -6,6 +6,10 @@
         <variable
             name="vm"
             type="com.seallook.androidx.ui.reserved.counseling.list.ReservedCounselingListViewModel" />
+
+        <variable
+            name="updateConfirm"
+            type="com.seallook.androidx.ui.reserved.counseling.list.ReservedClientUpdateConfirm" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -14,11 +18,59 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/email_title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/date_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_weight="3"
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                bind:userType="@{vm.userType}"
+                tools:text="예약자 이메일"/>
+
+            <TextView
+                android:id="@+id/date_title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/email_title"
+                app:layout_constraintEnd_toStartOf="@id/confirm_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="10dp"
+                app:layout_constraintHorizontal_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="예약 날짜"/>
+
+            <TextView
+                android:id="@+id/confirm_title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/date_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="10dp"
+                app:layout_constraintHorizontal_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="확정 여부"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reserved_counseling_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title_layout"
             bind:setCounselingList="@{vm.reservedCounselingList}"
+            bind:updateConfirm="@{updateConfirm}"
+            bind:userType="@{vm.userType}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/reserved_counseling_list_item" />
 

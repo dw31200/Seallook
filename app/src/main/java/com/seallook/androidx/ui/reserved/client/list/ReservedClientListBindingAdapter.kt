@@ -29,8 +29,8 @@ fun TextView.setConfirm(confirm: Boolean) {
 @BindingAdapter("bind:setReservedClintConfirmButton")
 fun MaterialButton.setReservedClintConfirmButton(confirm: Boolean) {
     if (confirm) {
-        text = "취소하기"
+        text = "취소"
     } else {
-        text = "승인하기"
+        text = "승인"
     }
 }
