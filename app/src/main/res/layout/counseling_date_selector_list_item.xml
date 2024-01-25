@@ -6,6 +6,10 @@
         <variable
             name="schedule"
             type="com.seallook.androidx.ui.model.CounselingScheduleUiModel" />
+
+        <variable
+            name="reservation"
+            type="com.seallook.androidx.ui.model.ReservationUiModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,7 +30,7 @@
             app:layout_constraintBottom_toTopOf="@id/counseling_time_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="모집중"
+            bind:setReservation="@{reservation.confirm}"
             tools:text="모집중" />
 
         <TextView
