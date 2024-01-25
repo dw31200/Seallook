@@ -2,12 +2,12 @@ package com.seallook.androidx.ui.reserved.counseling.list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.seallook.androidx.databinding.ReservedCounselingListItemBinding
+import com.seallook.androidx.databinding.ReservedClientListItemBinding
 import com.seallook.androidx.ui.model.ReservationUiModel
 import com.seallook.androidx.ui.reserved.counseling.list.ReservedClientUpdateConfirm
 
-class ReservedCounselingListViewHolder(
-    private val binding: ReservedCounselingListItemBinding,
+class ReservedClientListViewHolder(
+    private val binding: ReservedClientListItemBinding,
 ) : ReservationListViewHolder(binding.root) {
     override fun bind(
         reservationItem: ReservationUiModel,
@@ -16,18 +16,20 @@ class ReservedCounselingListViewHolder(
     ) {
         with(binding) {
             data = reservationItem
-            binding.root.setOnClickListener {
+            reservedClientConfirmButton.setOnClickListener {
                 if (reservationItem.confirm) {
-                    onClick(reservationItem.id)
+                    reservedClientUpdateConfirm?.updateConfirm(reservationItem.id, false)
+                } else {
+                    reservedClientUpdateConfirm?.updateConfirm(reservationItem.id, true)
                 }
             }
         }
     }
 
     companion object {
-        operator fun invoke(parent: ViewGroup): ReservedCounselingListViewHolder {
-            val binding = ReservedCounselingListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return ReservedCounselingListViewHolder(binding)
+        operator fun invoke(parent: ViewGroup): ReservedClientListViewHolder {
+            val binding = ReservedClientListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return ReservedClientListViewHolder(binding)
         }
     }
 }

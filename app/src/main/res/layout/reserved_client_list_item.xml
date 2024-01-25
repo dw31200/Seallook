@@ -68,10 +68,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="10dp"
-            android:layout_width="wrap_content"
+            android:padding="0dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             bind:setReservedClintConfirmButton="@{data.confirm}"
-            tools:text="승인하기"/>
+            android:textSize="15sp"
+            tools:text="승인"/>
 
         <View
             bind:layout_constraintStart_toStartOf="parent"

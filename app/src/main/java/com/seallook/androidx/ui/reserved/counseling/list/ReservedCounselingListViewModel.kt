@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.seallook.androidx.domain.usecase.reserved.GetReservationListUseCase
 import com.seallook.androidx.domain.usecase.reserved.GetReservedListSnapshotUseCase
 import com.seallook.androidx.domain.usecase.reserved.UpdateReservationUseCase
+import com.seallook.androidx.domain.usecase.reserved.UpdateReservedClientConfirmUseCase
 import com.seallook.androidx.domain.usecase.usertype.GetUserTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
-import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.model.ReservationUiModel
 import com.seallook.androidx.ui.model.UserTypeUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,7 +28,9 @@ class ReservedCounselingListViewModel @Inject constructor(
     private val updateReservationUseCase: UpdateReservationUseCase,
     getUserTypeUseCase: GetUserTypeUseCase,
     private val getReservedListSnapshotUseCase: GetReservedListSnapshotUseCase,
-) : BaseViewModel<Effect>() {
+    private val updateReservedClientConfirmUseCase: UpdateReservedClientConfirmUseCase,
+) : BaseViewModel<ReservedClientListEffect>(),
+    ReservedClientUpdateConfirm {
     var email = savedStateHandle.get<String>("email")
 
     val userType: LiveData<UserTypeUiModel?> = getUserTypeUseCase().map {
@@ -38,7 +41,7 @@ class ReservedCounselingListViewModel @Inject constructor(
         userType.asFlow().flatMapLatest {
             getReservationListUseCase(
                 GetReservationListUseCase.Params(
-                    email,
+                    it?.email,
                     it?.userType,
                 ),
             )
@@ -53,7 +56,7 @@ class ReservedCounselingListViewModel @Inject constructor(
         userType.asFlow().flatMapLatest {
             getReservedListSnapshotUseCase(
                 GetReservedListSnapshotUseCase.Params(
-                    email,
+                    it?.email,
                     it?.userType,
                 ),
             )
@@ -62,5 +65,18 @@ class ReservedCounselingListViewModel @Inject constructor(
                 updateReservationUseCase(it)
             }
             .launchIn(viewModelScope)
+    }
+
+    override fun updateConfirm(id: String, confirm: Boolean) {
+        viewModelScope.launch {
+            setEffect(ReservedClientListEffect.UpdateConfirm)
+            updateReservedClientConfirmUseCase(id, confirm)
+                .onSuccess {
+                    setEffect(ReservedClientListEffect.SuccessUpdateConfirm)
+                }
+                .onFailure {
+                    setEffect(ReservedClientListEffect.FailureUpdateConfirm)
+                }
+        }
     }
 }
