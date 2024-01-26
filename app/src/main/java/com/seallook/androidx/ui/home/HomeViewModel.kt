@@ -31,6 +31,7 @@ class HomeViewModel @Inject constructor(
             UserTypeUiModel(it)
         }
     }.asLiveData()
+
     val counselorInfoList: LiveData<List<CounselorInfoUiModel>> =
         getCounselorInfoListUseCase(null)
             .map {
@@ -38,6 +39,7 @@ class HomeViewModel @Inject constructor(
                     CounselorInfoUiModel(it)
                 }
             }.asLiveData()
+
     private val _officeList = MutableLiveData<List<KakaoSearchUiModel>>()
     val officeList: LiveData<List<KakaoSearchUiModel>>
         get() = _officeList

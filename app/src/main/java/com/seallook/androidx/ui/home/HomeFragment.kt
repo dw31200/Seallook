@@ -44,16 +44,6 @@ class HomeFragment :
         navigate(action)
     }
 
-    override fun navigateToReservedClient(email: String) {
-        val action = HomeFragmentDirections.actionHomeFragmentToReservedClientListFragment(email)
-        navigate(action)
-    }
-
-    override fun navigateToReservedCounseling(email: String) {
-        val action = HomeFragmentDirections.actionHomeFragmentToReservedCounselingListFragment(email)
-        navigate(action)
-    }
-
     override fun navigateToSearchCounselor() {
         val action = HomeFragmentDirections.actionHomeFragmentToSearchCounselorFragment()
         navigate(action)
