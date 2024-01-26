@@ -102,6 +102,12 @@
         <action
             android:id="@+id/action_mypageFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_mypageFragment_to_splash_navigation"
+            app:destination="@id/splash_navigation" />
+        <action
+            android:id="@+id/action_mypageFragment_to_reservedCounselingListFragment"
+            app:destination="@id/reservedCounselingListFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateCounselorBasicInfoFragment"
@@ -167,9 +173,6 @@
         android:id="@+id/reservedCounselingListFragment"
         android:name="com.seallook.androidx.ui.reserved.counseling.list.ReservedCounselingListFragment"
         android:label="ReservedCounselingListFragment" >
-        <argument
-            android:name="email"
-            app:argType="string" />
         <action
             android:id="@+id/action_reservedCounselingListFragment_to_reservedCounselingDetailFragment"
             app:destination="@id/reservedCounselingDetailFragment" />

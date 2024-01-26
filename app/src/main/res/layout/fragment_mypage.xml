@@ -7,161 +7,110 @@
             name="vm"
             type="com.seallook.androidx.ui.mypage.MypageViewModel" />
 
+        <variable
+            name="navigation"
+            type="com.seallook.androidx.ui.mypage.MypageNavigation" />
+
         <import type="com.seallook.androidx.share.UserTypeOption" />
+
+        <import type="com.seallook.androidx.ui.mypage.MypageTextType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         xmlns:bind="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/edit_profile_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="프로필 관리"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/setting_button"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/setting_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="환경 설정"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_profile_button"
-            app:layout_constraintBottom_toTopOf="@id/mypage_client_type_layout"/>
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/mypage_client_type_layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/mypage_counselor_type_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/setting_button"
-            bind:visible="@{vm.userType.userType == UserTypeOption.CLIENT}">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/reserved_counseling_list_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="상담 신청 내역"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/my_review_list_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="내 리뷰 관리"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/reserved_counseling_list_button" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/mypage_counselor_type_layout"
+            android:id="@+id/user_info_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/mypage_office_type_layout"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mypage_client_type_layout"
-            bind:visible="@{vm.userType.userType == UserTypeOption.COUNSELOR}">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/edit_counselor_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="상담사 설정"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/mypage_office_type_layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/counseling_list_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mypage_counselor_type_layout"
-            bind:visible="@{vm.userType.userType == UserTypeOption.OFFICE}">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/sales_list_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="매출 현황"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/request_pay_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="정산 신청"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sales_list_button" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/requested_pay_list_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="정산 내역"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/request_pay_button" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/counseling_list_layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mypage_office_type_layout"
-            bind:visible="@{vm.userType.userType == UserTypeOption.COUNSELOR}">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/counseling_list_text"
+                android:id="@+id/user_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="상담 관리"
-                app:layout_constraintBottom_toTopOf="@id/counseling_list_button"
+                android:layout_margin="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                bind:profile="@{vm.profile}"
+                bind:textType="@{MypageTextType.NAME}"
+                tools:text="사용자 이름"/>
+
+            <TextView
+                android:id="@+id/user_email_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/user_name_text"
+                bind:profile="@{vm.profile}"
+                bind:textType="@{MypageTextType.EMAIL}"
+                tools:text="사용자 이메일"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/home_counselor_type_button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_info_layout">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/counseling_list_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="더보기"
-                app:layout_constraintBottom_toTopOf="@id/counseling_list"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/counseling_list_text" />
+                android:id="@+id/edit_diary_button"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginHorizontal="15dp"
+                android:text="로그아웃"
+                app:layout_constraintEnd_toStartOf="@id/reserved_client_list_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="@{() -> vm.signOut()}"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/counseling_list"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/reserved_client_list_button"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginHorizontal="15dp"
+                android:text="상담 신청 내역"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/edit_diary_button"
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="@{() -> navigation.navigateToReservedCounselingList()}"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/update_counseling_button"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="20dp"
+                android:text="상담사 설정"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/office_counselor_list_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_diary_button"
+                android:onClick="@{() -> navigation.navigateToUpdateCounselorBasicInfo()}"
+                bind:visible="@{vm.userType.userType == UserTypeOption.COUNSELOR}" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/office_counselor_list_button"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="20dp"
+                android:text="상담사 관리"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/counseling_list_button" />
+                app:layout_constraintStart_toEndOf="@id/update_counseling_button"
+                app:layout_constraintTop_toBottomOf="@id/edit_diary_button"
+                android:visibility="invisible"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

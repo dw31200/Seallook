@@ -1,7 +1,6 @@
 package com.seallook.androidx.ui.reserved.counseling.list
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -23,7 +22,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReservedCounselingListViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val getReservationListUseCase: GetReservationListUseCase,
     private val updateReservationUseCase: UpdateReservationUseCase,
     getUserTypeUseCase: GetUserTypeUseCase,
@@ -31,8 +29,6 @@ class ReservedCounselingListViewModel @Inject constructor(
     private val updateReservedClientConfirmUseCase: UpdateReservedClientConfirmUseCase,
 ) : BaseViewModel<ReservedClientListEffect>(),
     ReservedClientUpdateConfirm {
-    var email = savedStateHandle.get<String>("email")
-
     val userType: LiveData<UserTypeUiModel?> = getUserTypeUseCase().map {
         it?.let { UserTypeUiModel(it) }
     }.asLiveData()
