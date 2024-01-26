@@ -6,8 +6,12 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
 import com.seallook.androidx.share.DetailTextType
+import com.seallook.androidx.share.UserTypeOption
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
+import com.seallook.androidx.ui.model.CounselorInfoUiModel
+import com.seallook.androidx.ui.model.ProfileUiModel
 import com.seallook.androidx.ui.model.ReservationUiModel
+import com.seallook.androidx.ui.model.UserTypeUiModel
 import java.text.DecimalFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -34,12 +38,14 @@ fun TextView.setText(reservation: ReservationUiModel?, schedule: CounselingSched
     }
 }
 
-@BindingAdapter("bind:setImageFromUrl")
-fun ImageView.setImage(url: String?) {
-    Glide
-        .with(this)
-        .load(url)
-        .into(this)
+@BindingAdapter("bind:setImageFromUrl", "bind:userType", requireAll = true)
+fun ImageView.setImage(url: String?, userType: UserTypeUiModel?) {
+    if (userType?.userType == UserTypeOption.CLIENT) {
+        Glide
+            .with(this)
+            .load(url)
+            .into(this)
+    }
 }
 
 @BindingAdapter("bind:officeWebSite", "bind:showWebSite", requireAll = true)
@@ -47,6 +53,26 @@ fun MaterialButton.setOnClick(officeWebSite: String?, showWebSite: ReservedCouns
     setOnClickListener {
         officeWebSite?.let {
             showWebSite.show(it)
+        }
+    }
+}
+
+@BindingAdapter("bind:counselorInfo", "bind:clientInfo", "bind:userType", "bind:textType", requireAll = true)
+fun TextView.setInfoText(counselorInfo: CounselorInfoUiModel?, clientInfo: ProfileUiModel?, userType: UserTypeUiModel?, textType: ReservedCounselingDetailTextType) {
+    when (textType) {
+        ReservedCounselingDetailTextType.NAME -> {
+            when (userType?.userType) {
+                UserTypeOption.CLIENT -> text = counselorInfo?.name ?: ""
+                UserTypeOption.COUNSELOR -> text = clientInfo?.name ?: ""
+                else -> Unit
+            }
+        }
+        ReservedCounselingDetailTextType.EMAIL -> {
+            when (userType?.userType) {
+                UserTypeOption.CLIENT -> text = counselorInfo?.email ?: ""
+                UserTypeOption.COUNSELOR -> text = clientInfo?.email ?: ""
+                else -> Unit
+            }
         }
     }
 }

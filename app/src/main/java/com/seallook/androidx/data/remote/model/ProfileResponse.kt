@@ -2,6 +2,7 @@ package com.seallook.androidx.data.remote.model
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.IgnoreExtraProperties
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ServerTimestamp
 import java.util.Date
 
@@ -21,6 +22,10 @@ data class ProfileResponse(
     companion object {
         operator fun invoke(snapshot: DocumentSnapshot): ProfileResponse? {
             return snapshot.toObject(ProfileResponse::class.java)
+        }
+
+        operator fun invoke(snapshot: QuerySnapshot): List<ProfileResponse> {
+            return snapshot.toObjects(ProfileResponse::class.java)
         }
     }
 }

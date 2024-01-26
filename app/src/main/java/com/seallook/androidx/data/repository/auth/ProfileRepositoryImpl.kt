@@ -11,6 +11,12 @@ class ProfileRepositoryImpl @Inject constructor(
         return profileApiService.getItem(uid)?.let { Profile(it) }
     }
 
+    override suspend fun getWithEmail(email: String): List<Profile> {
+        return profileApiService.getWithEmail(email).map {
+            Profile(it)
+        }
+    }
+
     override suspend fun setItem(uid: String, profile: Profile) {
         return profileApiService.setItem(uid, profile.toRemoteModel())
     }
