@@ -20,6 +20,7 @@ import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
 import com.seallook.androidx.ui.model.CounselorInfoUiModel
+import com.seallook.androidx.ui.model.CounselorOfficeIdUiModel
 import com.seallook.androidx.ui.model.OfficeInfoUiModel
 import com.seallook.androidx.ui.model.ProfileUiModel
 import com.seallook.androidx.ui.model.ReservationUiModel
@@ -42,7 +43,7 @@ class ReservedCounselingDetailViewModel @Inject constructor(
     private val getCounselorOfficeIdUseCase: GetCounselorOfficeIdUseCase,
     private val getOfficeInfoUseCase: GetOfficeInfoUseCase,
     private val getProfileWithEmailUseCase: GetProfileWithEmailUseCase,
-    private val getUserTypeUseCase: GetUserTypeUseCase,
+    getUserTypeUseCase: GetUserTypeUseCase,
 ) : BaseViewModel<Effect>() {
     private val reservationId = savedStateHandle.get<String>("reservationId")
 
@@ -87,28 +88,31 @@ class ReservedCounselingDetailViewModel @Inject constructor(
             }
         }
 
-    val officeId: LiveData<String?> =
-        reservationItem.switchMap {
-            liveData {
-                getCounselorOfficeIdUseCase(
+    val officeId: LiveData<CounselorOfficeIdUiModel?> =
+        reservationItem.asFlow().flatMapLatest {
+            getCounselorOfficeIdUseCase(
+                GetCounselorOfficeIdUseCase.Params(
                     it?.counselorEmail,
-                )
-                    .onSuccess {
-                        emit(it?.officeId)
-                    }
-            }
-        }
-
-    val officeInfo: LiveData<OfficeInfoUiModel?> =
-        officeId.switchMap {
-            liveData {
+                ),
+            ).map {
                 it?.let {
-                    getOfficeInfoUseCase(it)?.let {
-                        emit(OfficeInfoUiModel(it))
-                    }
+                    CounselorOfficeIdUiModel(it)
                 }
             }
-        }
+        }.asLiveData()
+
+    val officeInfo: LiveData<OfficeInfoUiModel?> =
+        officeId.asFlow().flatMapLatest {
+            getOfficeInfoUseCase(
+                GetOfficeInfoUseCase.Params(
+                    it?.officeId,
+                ),
+            ).map {
+                it?.let {
+                    OfficeInfoUiModel(it)
+                }
+            }
+        }.asLiveData()
 
     val counselingScheduleItem: LiveData<CounselingScheduleUiModel?> =
         getScheduleItemUseCase(reservationId).map {
