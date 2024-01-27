@@ -5,8 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import com.seallook.androidx.domain.usecase.GetCurrentUserUseCase
@@ -22,6 +20,7 @@ import com.seallook.androidx.domain.usecase.counselorinfo.office.UpdateOfficeInf
 import com.seallook.androidx.domain.usecase.usertype.GetUserTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.model.CounselorInfoUiModel
+import com.seallook.androidx.ui.model.CounselorOfficeIdUiModel
 import com.seallook.androidx.ui.model.OfficeInfoUiModel
 import com.seallook.androidx.ui.model.UserTypeUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -55,15 +54,18 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
     private val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
 
-    private val officeId: LiveData<String?> =
-        userType.switchMap {
-            liveData {
-                getCounselorOfficeIdUseCase(it?.email)
-                    .onSuccess {
-                        emit(it?.officeId)
-                    }
+    private val officeId: LiveData<CounselorOfficeIdUiModel?> =
+        userType.asFlow().flatMapLatest {
+            getCounselorOfficeIdUseCase(
+                GetCounselorOfficeIdUseCase.Params(
+                    it?.email,
+                ),
+            ).map {
+                it?.let {
+                    CounselorOfficeIdUiModel(it)
+                }
             }
-        }
+        }.asLiveData()
 
     val counselorInfo: LiveData<CounselorInfoUiModel?> =
         userType.asFlow().flatMapLatest {
@@ -81,15 +83,17 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
         }.asLiveData()
 
     val officeInfo: LiveData<OfficeInfoUiModel?> =
-        officeId.switchMap {
-            it?.let {
-                liveData {
-                    getOfficeInfoUseCase(it)?.let {
-                        emit(OfficeInfoUiModel(it))
-                    }
+        officeId.asFlow().flatMapLatest {
+            getOfficeInfoUseCase(
+                GetOfficeInfoUseCase.Params(
+                    it?.officeId,
+                ),
+            ).map {
+                it?.let {
+                    OfficeInfoUiModel(it)
                 }
             }
-        }
+        }.asLiveData()
 
     init {
         viewModelScope.launch {
@@ -159,7 +163,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
             updateCounselorOfficeIdUseCase(
                 UpdateCounselorOfficeIdUseCase.Params(
                     userType.value?.email,
-                    officeId.value,
+                    officeId.value?.officeId,
                 ),
             )
                 .onSuccess {
@@ -177,7 +181,7 @@ class UpdateCounselorBasicInfoViewModel @Inject constructor(
             setOfficeCounselorEmailUseCase(
                 SetOfficeCounselorEmailUseCase.Params(
                     "",
-                    officeId.value,
+                    officeId.value?.officeId,
                     userType.value?.email,
                 ),
             )

@@ -16,6 +16,9 @@ class ReservedClientListViewHolder(
     ) {
         with(binding) {
             data = reservationItem
+            binding.root.setOnClickListener {
+                onClick(reservationItem.id)
+            }
             reservedClientConfirmButton.setOnClickListener {
                 if (reservationItem.confirm) {
                     reservedClientUpdateConfirm?.updateConfirm(reservationItem.id, false)

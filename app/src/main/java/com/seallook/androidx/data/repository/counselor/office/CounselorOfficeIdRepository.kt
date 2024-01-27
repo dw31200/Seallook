@@ -1,11 +1,12 @@
 package com.seallook.androidx.data.repository.counselor.office
 
 import com.seallook.androidx.data.model.CounselorOfficeId
+import kotlinx.coroutines.flow.Flow
 
 interface CounselorOfficeIdRepository {
     suspend fun setItem(counselorOfficeId: CounselorOfficeId)
 
-    suspend fun getItem(email: String): CounselorOfficeId?
+    fun getItem(email: String): Flow<CounselorOfficeId?>
 
     suspend fun get(email: String): CounselorOfficeId?
 

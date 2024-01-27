@@ -58,7 +58,7 @@
                 app:layout_constraintHorizontal_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                bind:setReservedClintConfirm="@{data.confirm}"
+                bind:setReservedCounselingConfirm="@{data.confirm}"
                 android:text="예약 미확정"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -71,7 +71,7 @@
             android:padding="0dp"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            bind:setReservedClintConfirmButton="@{data.confirm}"
+            bind:setReservedCounselingConfirmButton="@{data.confirm}"
             android:textSize="15sp"
             tools:text="승인"/>
 

@@ -9,8 +9,14 @@
             name="showWebSite"
             type="com.seallook.androidx.ui.reserved.counseling.detail.ReservedCounselingDetailShowWebSite" />
 
+        <variable
+            name="updateConfirm"
+            type="com.seallook.androidx.ui.reserved.counseling.detail.ReservedCounselingDetailUpdateConfirm" />
+
         <import
             type="com.seallook.androidx.share.DetailTextType"/>
+
+        <import type="com.seallook.androidx.ui.reserved.counseling.detail.ReservedCounselingDetailTextType" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -32,19 +38,25 @@
                 android:layout_marginVertical="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@{vm.counselorInfo.name}"
+                bind:counselorInfo="@{vm.counselorInfo}"
+                bind:clientInfo="@{vm.clientInfo}"
+                bind:userType="@{vm.userType}"
+                bind:textType="@{ReservedCounselingDetailTextType.NAME}"
                 tools:text="사용자 이름"/>
 
             <TextView
-                android:id="@+id/user_description_text"
+                android:id="@+id/user_email_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/user_name_text"
-                android:text="@{vm.counselorInfo.description}"
-                tools:text="사용자 설명"/>
+                bind:counselorInfo="@{vm.counselorInfo}"
+                bind:clientInfo="@{vm.clientInfo}"
+                bind:userType="@{vm.userType}"
+                bind:textType="@{ReservedCounselingDetailTextType.EMAIL}"
+                tools:text="사용자 이메일"/>
 
             <ImageView
                 android:id="@+id/user_thumbnail_image"
@@ -55,7 +67,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_launcher_foreground"
-                bind:setImageFromUrl="@{vm.counselorInfo.thumbnail}" />
+                bind:setImageFromUrl="@{vm.counselorInfo.thumbnail}"
+                bind:userType="@{vm.userType}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -99,7 +112,7 @@
                 android:layout_marginVertical="20dp"
                 bind:layout_constraintStart_toStartOf="parent"
                 bind:layout_constraintTop_toBottomOf="@id/schedule_time_text"
-                android:text="@{vm.officeInfo.place_name}"
+                bind:officeInfo="@{vm.officeInfo}"
                 tools:text="장소 00상담센터"/>
 
             <com.google.android.material.button.MaterialButton
@@ -125,6 +138,18 @@
                 bind:layout_constraintStart_toStartOf="parent"
                 bind:layout_constraintTop_toBottomOf="@id/schedule_office_text"
                 tools:text="금액 100,000 원"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/confirm_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                bind:layout_constraintStart_toStartOf="parent"
+                bind:layout_constraintTop_toBottomOf="@id/schedule_price_text"
+                bind:reservationItem="@{vm.reservationItem}"
+                bind:userType="@{vm.userType}"
+                bind:updateConfirm="@{vm}"
+                tools:text="승인"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
