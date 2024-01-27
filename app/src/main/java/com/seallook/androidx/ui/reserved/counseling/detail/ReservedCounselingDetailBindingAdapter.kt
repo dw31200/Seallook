@@ -1,5 +1,6 @@
 package com.seallook.androidx.ui.reserved.counseling.detail
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -9,6 +10,7 @@ import com.seallook.androidx.share.DetailTextType
 import com.seallook.androidx.share.UserTypeOption
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
 import com.seallook.androidx.ui.model.CounselorInfoUiModel
+import com.seallook.androidx.ui.model.OfficeInfoUiModel
 import com.seallook.androidx.ui.model.ProfileUiModel
 import com.seallook.androidx.ui.model.ReservationUiModel
 import com.seallook.androidx.ui.model.UserTypeUiModel
@@ -25,13 +27,13 @@ fun TextView.setText(reservation: ReservationUiModel?, schedule: CounselingSched
         )
         when (textType) {
             DetailTextType.DATE -> {
-                text = "일정 ${localDateTime.toLocalDate()}"
+                text = "일정 : ${localDateTime.toLocalDate()}"
             }
             DetailTextType.TIME -> {
-                text = "시간 ${localDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))}"
+                text = "시간 : ${localDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))}"
             }
             DetailTextType.PRICE -> {
-                text = "금액 ${DecimalFormat("#,###").format(schedule.price)} 원"
+                text = "금액 : ${DecimalFormat("#,###").format(schedule.price)} 원"
             }
             else -> Unit
         }
@@ -72,6 +74,34 @@ fun TextView.setInfoText(counselorInfo: CounselorInfoUiModel?, clientInfo: Profi
                 UserTypeOption.CLIENT -> text = counselorInfo?.email ?: ""
                 UserTypeOption.COUNSELOR -> text = clientInfo?.email ?: ""
                 else -> Unit
+            }
+        }
+    }
+}
+
+@BindingAdapter("bind:officeInfo")
+fun TextView.setOfficeInfo(officeInfo: OfficeInfoUiModel?) {
+    text = "장소 : ${officeInfo?.place_name ?: ""}"
+}
+
+@BindingAdapter("bind:reservationItem", "bind:userType", "bind:updateConfirm", requireAll = true)
+fun MaterialButton.setConfirmButton(reservationItem: ReservationUiModel?, userType: UserTypeUiModel?, updateConfirm: ReservedCounselingDetailUpdateConfirm?) {
+    visibility = if (userType?.userType == UserTypeOption.COUNSELOR) {
+        View.VISIBLE
+    } else {
+        View.INVISIBLE
+    }
+    if (reservationItem?.confirm == true) {
+        text = "취소"
+    } else {
+        text = "승인"
+    }
+    setOnClickListener {
+        reservationItem?.let {
+            if (it.confirm) {
+                updateConfirm?.updateConfirm(it.id, false)
+            } else {
+                updateConfirm?.updateConfirm(it.id, true)
             }
         }
     }

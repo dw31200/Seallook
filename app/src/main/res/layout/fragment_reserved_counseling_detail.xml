@@ -9,6 +9,10 @@
             name="showWebSite"
             type="com.seallook.androidx.ui.reserved.counseling.detail.ReservedCounselingDetailShowWebSite" />
 
+        <variable
+            name="updateConfirm"
+            type="com.seallook.androidx.ui.reserved.counseling.detail.ReservedCounselingDetailUpdateConfirm" />
+
         <import
             type="com.seallook.androidx.share.DetailTextType"/>
 
@@ -108,7 +112,7 @@
                 android:layout_marginVertical="20dp"
                 bind:layout_constraintStart_toStartOf="parent"
                 bind:layout_constraintTop_toBottomOf="@id/schedule_time_text"
-                android:text="@{vm.officeInfo.place_name}"
+                bind:officeInfo="@{vm.officeInfo}"
                 tools:text="장소 00상담센터"/>
 
             <com.google.android.material.button.MaterialButton
@@ -134,6 +138,18 @@
                 bind:layout_constraintStart_toStartOf="parent"
                 bind:layout_constraintTop_toBottomOf="@id/schedule_office_text"
                 tools:text="금액 100,000 원"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/confirm_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                bind:layout_constraintStart_toStartOf="parent"
+                bind:layout_constraintTop_toBottomOf="@id/schedule_price_text"
+                bind:reservationItem="@{vm.reservationItem}"
+                bind:userType="@{vm.userType}"
+                bind:updateConfirm="@{vm}"
+                tools:text="승인"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

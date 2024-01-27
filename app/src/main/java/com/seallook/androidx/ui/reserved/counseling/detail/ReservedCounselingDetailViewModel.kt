@@ -15,9 +15,9 @@ import com.seallook.androidx.domain.usecase.counselorinfo.schedule.GetFromFireba
 import com.seallook.androidx.domain.usecase.counselorinfo.schedule.InsertCounselingScheduleUseCase
 import com.seallook.androidx.domain.usecase.reserved.GetReservationUseCase
 import com.seallook.androidx.domain.usecase.reserved.GetScheduleItemUseCase
+import com.seallook.androidx.domain.usecase.reserved.UpdateReservedClientConfirmUseCase
 import com.seallook.androidx.domain.usecase.usertype.GetUserTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
-import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.model.CounselingScheduleUiModel
 import com.seallook.androidx.ui.model.CounselorInfoUiModel
 import com.seallook.androidx.ui.model.CounselorOfficeIdUiModel
@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,7 +45,9 @@ class ReservedCounselingDetailViewModel @Inject constructor(
     private val getOfficeInfoUseCase: GetOfficeInfoUseCase,
     private val getProfileWithEmailUseCase: GetProfileWithEmailUseCase,
     getUserTypeUseCase: GetUserTypeUseCase,
-) : BaseViewModel<Effect>() {
+    private val updateReservedClientConfirmUseCase: UpdateReservedClientConfirmUseCase,
+) : BaseViewModel<ReservedCounselingDetailEffect>(),
+    ReservedCounselingDetailUpdateConfirm {
     private val reservationId = savedStateHandle.get<String>("reservationId")
 
     val userType: LiveData<UserTypeUiModel?> = getUserTypeUseCase().map {
@@ -136,5 +139,18 @@ class ReservedCounselingDetailViewModel @Inject constructor(
             }
         }
             .launchIn(viewModelScope)
+    }
+
+    override fun updateConfirm(id: String, confirm: Boolean) {
+        viewModelScope.launch {
+            setEffect(ReservedCounselingDetailEffect.UpdateConfirm)
+            updateReservedClientConfirmUseCase(id, confirm)
+                .onSuccess {
+                    setEffect(ReservedCounselingDetailEffect.SuccessUpdateConfirm)
+                }
+                .onFailure {
+                    setEffect(ReservedCounselingDetailEffect.FailureUpdateConfirm)
+                }
+        }
     }
 }

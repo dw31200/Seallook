@@ -6,12 +6,11 @@ import androidx.fragment.app.viewModels
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentReservedCounselingDetailBinding
 import com.seallook.androidx.ui.base.BaseFragment
-import com.seallook.androidx.ui.base.Effect
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ReservedCounselingDetailFragment :
-    BaseFragment<FragmentReservedCounselingDetailBinding, ReservedCounselingDetailViewModel, Effect>(
+    BaseFragment<FragmentReservedCounselingDetailBinding, ReservedCounselingDetailViewModel, ReservedCounselingDetailEffect>(
         FragmentReservedCounselingDetailBinding::inflate,
     ),
     ReservedCounselingDetailShowWebSite {
@@ -23,7 +22,20 @@ class ReservedCounselingDetailFragment :
         binding.showWebSite = this@ReservedCounselingDetailFragment
     }
 
-    override fun onEffectCollect(effect: Effect) = Unit
+    override fun onEffectCollect(effect: ReservedCounselingDetailEffect) {
+        when (effect) {
+            ReservedCounselingDetailEffect.UpdateConfirm -> {
+                showProgressDialog("업로드 중입니다.")
+            }
+            ReservedCounselingDetailEffect.SuccessUpdateConfirm -> {
+                dismissProgressDialog()
+            }
+            ReservedCounselingDetailEffect.FailureUpdateConfirm -> {
+                dismissProgressDialog()
+                showFailMessage("업로드에 실패했습니다.")
+            }
+        }
+    }
 
     override fun show(webSiteUrl: String) {
         val intent = Intent(
