@@ -5,16 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.core.daysOfWeek
-import com.seallook.androidx.domain.usecase.reserved.GetReservedClientListUseCase
-import com.seallook.androidx.domain.usecase.reserved.GetReservedCounselingListUseCase
+import com.seallook.androidx.domain.usecase.reserved.GetReservationListUseCase
 import com.seallook.androidx.domain.usecase.usertype.GetUserTypeUseCase
-import com.seallook.androidx.share.UserTypeOption
 import com.seallook.androidx.ui.base.BaseViewModel
 import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.model.ReservationUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 import java.time.YearMonth
@@ -24,8 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CalendarViewModel @Inject constructor(
     private val getUserTypeUseCase: GetUserTypeUseCase,
-    private val getReservedClientListUseCase: GetReservedClientListUseCase,
-    private val getReservedCounselingListUseCase: GetReservedCounselingListUseCase,
+    private val getReservationListUseCase: GetReservationListUseCase,
 ) : BaseViewModel<Effect>(), CalendarScrollListener {
     val today: LocalDate = LocalDate.now()
 
@@ -50,20 +46,17 @@ class CalendarViewModel @Inject constructor(
         get() = _title
 
     val scheduleList: LiveData<List<ReservationUiModel>> =
-        getUserTypeUseCase().flatMapConcat { userType ->
-            when (userType?.userType) {
-                UserTypeOption.CLIENT -> {
-                    getReservedCounselingListUseCase(userType.email)
-                }
-                UserTypeOption.COUNSELOR -> {
-                    getReservedClientListUseCase(userType.email)
-                }
-                else -> {
-                    flow { emit(emptyList()) }
-                }
-            }
+        getUserTypeUseCase().flatMapLatest {
+            getReservationListUseCase(
+                GetReservationListUseCase.Params(
+                    it?.email,
+                    it?.userType,
+                ),
+            )
         }.map {
-            it.map {
+            it.filter {
+                it.confirm
+            }.map {
                 ReservationUiModel(it)
             }
         }
