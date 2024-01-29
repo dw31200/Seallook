@@ -59,37 +59,6 @@
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/office_list_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/office_list_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="우리동네 상담센터"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        bind:layout_constraintBottom_toTopOf="@id/office_list"/>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/office_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/office_list_text"
-                        bind:setOfficeList="@{vm.officeList}"
-                        bind:onOfficeItemClickListener="@{showWebSite}"
-                        tools:listitem="@layout/office_list_item" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/counselor_list_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
