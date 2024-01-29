@@ -8,9 +8,7 @@ import com.seallook.androidx.databinding.FragmentHomeBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.home.adapter.HomeAdapter
-import com.seallook.androidx.ui.home.adapter.OfficeListAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.ref.WeakReference
 
 @AndroidEntryPoint
 class HomeFragment :
@@ -23,14 +21,8 @@ class HomeFragment :
 
     override fun viewModelVariableId(): Int = BR.vm
 
-    private val googleLocation = GoogleLocation(WeakReference(this)) {
-        viewModel.getLocation(it)
-    }
-
     override fun onViewCreatedAfterBinding() {
-        googleLocation.getLocation()
         with(binding) {
-            officeList.adapter = OfficeListAdapter()
             counselorList.adapter = HomeAdapter()
             navigation = this@HomeFragment
             showWebSite = this@HomeFragment
