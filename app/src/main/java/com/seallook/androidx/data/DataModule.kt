@@ -24,6 +24,8 @@ import com.seallook.androidx.data.repository.counselor.schedule.CounselingSchedu
 import com.seallook.androidx.data.repository.counselor.schedule.CounselingScheduleRepositoryImpl
 import com.seallook.androidx.data.repository.kakao.KakaoSearchRepository
 import com.seallook.androidx.data.repository.kakao.KakaoSearchRepositoryImpl
+import com.seallook.androidx.data.repository.location.FusedLocationRepository
+import com.seallook.androidx.data.repository.location.FusedLocationRepositoryImpl
 import com.seallook.androidx.data.repository.usertype.UserTypeRepository
 import com.seallook.androidx.data.repository.usertype.UserTypeRepositoryImpl
 import dagger.Binds
@@ -72,4 +74,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindOfficeCounselorEmailRepository(officeCounselorEmailRepositoryImpl: OfficeCounselorEmailRepositoryImpl): OfficeCounselorEmailRepository
+
+    @Binds
+    abstract fun bindFusedLocationRepository(fusedLocationRepositoryImpl: FusedLocationRepositoryImpl): FusedLocationRepository
 }
