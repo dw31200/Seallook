@@ -26,7 +26,7 @@ class FusedLocationApiServiceImpl @Inject constructor(
         return try {
             FusedLocationResponse(
                 fusedLocationProviderClient.getCurrentLocation(
-                    Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+                    Priority.PRIORITY_HIGH_ACCURACY,
                     CancellationTokenSource().token,
                 ).await(),
             )
