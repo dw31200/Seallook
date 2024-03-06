@@ -13,27 +13,25 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_margin="5dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/office_thumbnail"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            bind:officeUrl="@{data.place_url}"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/office_url_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/office_name"/>
+            app:layout_constraintBottom_toTopOf="@id/office_name"
+            android:text="카카오맵으로 보기"/>
 
         <TextView
             android:id="@+id/office_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/office_thumbnail"
-            app:layout_constraintEnd_toEndOf="@id/office_thumbnail"
-            app:layout_constraintTop_toBottomOf="@id/office_thumbnail"
-            app:layout_constraintBottom_toTopOf="@id/office_distance"
+            app:layout_constraintStart_toStartOf="@id/office_url_button"
+            app:layout_constraintEnd_toEndOf="@id/office_url_button"
+            app:layout_constraintTop_toBottomOf="@id/office_url_button"
             android:text="@{data.place_name}"
             tools:text="상담센터명" />
 
@@ -41,9 +39,8 @@
             android:id="@+id/office_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/office_thumbnail"
+            app:layout_constraintEnd_toEndOf="@id/office_url_button"
             app:layout_constraintTop_toBottomOf="@id/office_name"
-            app:layout_constraintBottom_toBottomOf="parent"
             bind:setDistance="@{data.distance}"
             tools:text="300m"/>
 

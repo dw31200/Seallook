@@ -13,7 +13,7 @@ class OfficeViewHolder(
     fun bind(officeItem: KakaoSearchUiModel?, homeShowWebSite: HomeShowWebSite?) {
         with(binding) {
             data = officeItem
-            officeThumbnail.setOnClickListener {
+            officeUrlButton.setOnClickListener {
                 if (officeItem != null) {
                     homeShowWebSite?.show(officeItem.place_url)
                 }

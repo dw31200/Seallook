@@ -12,6 +12,7 @@ import com.seallook.androidx.databinding.FragmentHomeBinding
 import com.seallook.androidx.ui.base.BaseFragment
 import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.home.adapter.HomeAdapter
+import com.seallook.androidx.ui.home.adapter.OfficeListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,6 +35,7 @@ class HomeFragment :
 
     override fun onViewCreatedAfterBinding() {
         with(binding) {
+            officeList.adapter = OfficeListAdapter()
             counselorList.adapter = HomeAdapter()
             navigation = this@HomeFragment
             showWebSite = this@HomeFragment
@@ -43,7 +45,7 @@ class HomeFragment :
 
     private fun getCurrentLocation() {
         if (checkPermissions()) {
-            viewModel.testGetLocation()
+            viewModel.getLocation()
         } else {
             requestPermissionLauncher.launch(
                 REQUEST_PERMISSIONS,

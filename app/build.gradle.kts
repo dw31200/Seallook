@@ -99,9 +99,6 @@ dependencies {
 
     // google location
     implementation(libs.play.services.location)
-
-    // Jsoup
-    implementation(libs.jsoup)
 }
 
 kapt {
