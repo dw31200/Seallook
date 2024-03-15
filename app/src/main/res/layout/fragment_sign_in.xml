@@ -116,21 +116,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이메일로 회원가입"
-            app:layout_constraintBottom_toTopOf="@id/reset_password_button"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             bind:setOnClickListenerSignIn="@{navigation}"
             bind:navigateType="@{NavigateType.SIGN_UP}"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/reset_password_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Forgot Password"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

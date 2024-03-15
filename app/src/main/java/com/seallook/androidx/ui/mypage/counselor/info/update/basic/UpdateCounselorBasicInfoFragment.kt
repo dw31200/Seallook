@@ -45,11 +45,6 @@ class UpdateCounselorBasicInfoFragment :
             updateThumbnailImageButton.setOnClickListener {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
-            updateCounselingTypeButton.setOnClickListener {
-                val action =
-                    UpdateCounselorBasicInfoFragmentDirections.actionUpdateCounselorBasicInfoFragmentToUpdateCounselingTypeFragment()
-                navigate(action)
-            }
             updateOfficeButton.setOnClickListener {
                 val action = UpdateCounselorBasicInfoFragmentDirections.actionUpdateCounselorBasicInfoFragmentToUpdateOfficeFragment()
                 navigate(action)

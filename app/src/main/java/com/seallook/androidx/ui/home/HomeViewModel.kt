@@ -10,7 +10,6 @@ import com.seallook.androidx.domain.usecase.kakao.GetKakaoSearchListUseCase
 import com.seallook.androidx.domain.usecase.location.GetCurrentLocationUseCase
 import com.seallook.androidx.domain.usecase.usertype.GetUserTypeUseCase
 import com.seallook.androidx.ui.base.BaseViewModel
-import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.model.CounselorInfoUiModel
 import com.seallook.androidx.ui.model.KakaoSearchUiModel
 import com.seallook.androidx.ui.model.UserTypeUiModel
@@ -27,7 +26,7 @@ class HomeViewModel @Inject constructor(
     getUserTypeUseCase: GetUserTypeUseCase,
     private val getCurrentLocationUseCase: GetCurrentLocationUseCase,
     private val getKakaoSearchListUseCase: GetKakaoSearchListUseCase,
-) : BaseViewModel<Effect>() {
+) : BaseViewModel<HomeEffect>() {
     val userType: LiveData<UserTypeUiModel?> = getUserTypeUseCase().map {
         it?.let {
             UserTypeUiModel(it)
@@ -54,17 +53,27 @@ class HomeViewModel @Inject constructor(
 
     fun getLocation() {
         viewModelScope.launch {
-            val result = getCurrentLocationUseCase()
-            if (result.location != null) {
-                _officeList.value = getKakaoSearchListUseCase(
-                    "상담센터",
-                    result.location.longitude.toString(),
-                    result.location.latitude.toString(),
-                ).map {
-                    KakaoSearchUiModel(it)
+            getCurrentLocationUseCase()
+                .onSuccess {
+                    setEffect(HomeEffect.SuccessGetCurrentLocation)
+                    if (it.location != null) {
+                        _officeList.value = getKakaoSearchListUseCase(
+                            "상담센터",
+                            it.location.longitude.toString(),
+                            it.location.latitude.toString(),
+                        ).map {
+                            KakaoSearchUiModel(it)
+                        }
+                    }
+                    Timber.d("latitude: ${it.location?.latitude}, longitude: ${it.location?.longitude}")
                 }
-            }
-            Timber.d("latitude: ${result.location?.latitude}, longitude: ${result.location?.longitude}")
+                .onFailure {
+                    if (it is SecurityException) {
+                        setEffect(HomeEffect.SecurityError)
+                    } else {
+                        setEffect(HomeEffect.FailureGetCurrentLocation)
+                    }
+                }
         }
     }
 }

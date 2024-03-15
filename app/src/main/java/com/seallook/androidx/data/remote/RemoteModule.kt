@@ -1,8 +1,5 @@
 package com.seallook.androidx.data.remote
 
-import android.content.Context
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,8 +13,6 @@ import com.seallook.androidx.data.remote.api.firebase.storage.FirebaseStorageApi
 import com.seallook.androidx.data.remote.api.kakao.KakaoSearchApi
 import com.seallook.androidx.data.remote.api.kakao.KakaoSearchApiService
 import com.seallook.androidx.data.remote.api.kakao.KakaoSearchApiServiceImpl
-import com.seallook.androidx.data.remote.api.location.FusedLocationApiService
-import com.seallook.androidx.data.remote.api.location.FusedLocationApiServiceImpl
 import com.seallook.androidx.data.remote.auth.FirebaseAuthApiService
 import com.seallook.androidx.data.remote.auth.FirebaseAuthApiServiceImpl
 import com.seallook.androidx.data.remote.auth.ProfileApiService
@@ -42,7 +37,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -86,9 +80,6 @@ abstract class RemoteModule {
 
     @Binds
     abstract fun bindOfficeCounselorEmailApiService(officeCounselorEmailApiServiceImpl: OfficeCounselorEmailApiServiceImpl): OfficeCounselorEmailApiService
-
-    @Binds
-    abstract fun bindFusedLocationApiService(fusedLocationApiServiceImpl: FusedLocationApiServiceImpl): FusedLocationApiService
 
     companion object {
         @Singleton
@@ -164,14 +155,6 @@ abstract class RemoteModule {
                 .baseUrl(kakaoBaseUrl)
                 .build()
                 .create(KakaoSearchApi::class.java)
-        }
-
-        @Singleton
-        @Provides
-        fun provideFusedLocationProviderClient(
-            @ApplicationContext context: Context,
-        ): FusedLocationProviderClient {
-            return LocationServices.getFusedLocationProviderClient(context)
         }
     }
 }

@@ -8,14 +8,13 @@ import androidx.fragment.app.viewModels
 import com.seallook.androidx.BR
 import com.seallook.androidx.databinding.FragmentHomeBinding
 import com.seallook.androidx.ui.base.BaseFragment
-import com.seallook.androidx.ui.base.Effect
 import com.seallook.androidx.ui.home.adapter.HomeAdapter
 import com.seallook.androidx.ui.home.adapter.OfficeListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment :
-    BaseFragment<FragmentHomeBinding, HomeViewModel, Effect>(
+    BaseFragment<FragmentHomeBinding, HomeViewModel, HomeEffect>(
         FragmentHomeBinding::inflate,
     ),
     HomeNavigation,
@@ -45,12 +44,25 @@ class HomeFragment :
             navigation = this@HomeFragment
             showWebSite = this@HomeFragment
         }
+        showProgressDialog("사용자 위치를 가져오는 중입니다.")
         requestPermissionLauncher.launch(
             REQUEST_PERMISSIONS,
         )
     }
 
-    override fun onEffectCollect(effect: Effect) = Unit
+    override fun onEffectCollect(effect: HomeEffect) {
+        when (effect) {
+            HomeEffect.FailureGetCurrentLocation -> {
+                dismissProgressDialog()
+                showFailMessage("사용자 위치 정보를 가져오지 못했습니다.")
+            }
+            HomeEffect.SecurityError -> {
+                dismissProgressDialog()
+                showFailMessage("사용자 위치 권한을 승인 받지 못했습니다.")
+            }
+            HomeEffect.SuccessGetCurrentLocation -> dismissProgressDialog()
+        }
+    }
 
     override fun navigateToReserveCounseling(email: String) {
         val action = HomeFragmentDirections.actionHomeFragmentToReserveCounselingFragment(email)
